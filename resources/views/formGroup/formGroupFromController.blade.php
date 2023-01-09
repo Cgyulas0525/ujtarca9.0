@@ -1,5 +1,6 @@
 @section('css')
     @include('layouts.costumcss')
+    @include('layouts.datatables_css')
 @endsection
 
 @foreach($array as $key => $value)
@@ -9,14 +10,14 @@
                 @if ($value["width"] == 12)
                     <div class="mylabel col-sm-1">
                 @else
-                    <div class="mylabel col-sm-3">
+                    <div class="mylabel col-sm-4">
                 @endif
                     {{ $value["label"] }}
                 </div>
                 @if ($value["width"] == 12)
                     <div class="mylabel col-sm-11">
                 @else
-                    <div class="mylabel col-sm-9">
+                    <div class="mylabel col-sm-8">
                 @endif
                     @if ($value["file"])
                         <label class="image__file-upload">Válasszon
@@ -30,6 +31,10 @@
         </div>
     </div>
 @endforeach
+
+@if (isset($tableFile))
+    @include($tableFile)
+@endif
 
 @section('scripts')
     @include($scriptFile)

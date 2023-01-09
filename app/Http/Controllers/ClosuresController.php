@@ -8,6 +8,8 @@ use App\Repositories\ClosuresRepository;
 use App\Http\Controllers\AppBaseController;
 
 use App\Models\Closures;
+use App\Models\ClosureCimlets;
+use App\Models\Cimlets;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,22 +24,27 @@ class ClosuresController extends AppBaseController
 {
     /** @var ClosuresRepository $closuresRepository*/
     private $closuresRepository;
+    private $maxId;
 
     public function __construct(ClosuresRepository $closuresRepo)
     {
         $this->closuresRepository = $closuresRepo;
+        $this->maxId = Closures::all()->max('id');
     }
 
     public function dwData($data)
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('closureValue', function($data) { return ($data->card + $data->szcard + $data->dayduring + $data->closureValue - 20000); })
+            ->addColumn('closureValue', function($data) { return ($data->dailysum - 20000); })
             ->addColumn('action', function($row){
-                $btn = '<a href="' . route('closures.edit', [$row->id]) . '"
-                             class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn.'<a href="' . route('beforeDestroys', ['Closures', $row->id, 'closures']) . '"
-                                 class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
+                $btn = '';
+                if ( $this->maxId == $row->id ) {
+                    $btn = '<a href="' . route('closures.edit', [$row->id]) . '"
+                                 class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
+                    $btn = $btn.'<a href="' . route('beforeDestroys', ['Closures', $row->id, 'closures']) . '"
+                                     class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
+                }
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -58,11 +65,29 @@ class ClosuresController extends AppBaseController
 
             if ($request->ajax()) {
 
-                $data = DB::table('closurecimlets as t1')
-                    ->join('closures as t2', 't2.id', '=', 't1.closures_id')
-                    ->join('cimlets as t3', 't3.id', '=', 't1.cimlets_id')
-                    ->select('t2.id', 't2.closuredate', 't2.card', 't2.szcard', 't2.dayduring', DB::raw('sum(t3.value * t1.value) as closureValue'))
-                    ->groupBy('t2.id', 't2.card', 't2.szcard', 't2.dayduring')
+                $data = $this->closuresRepository->all();
+                return $this->dwData($data);
+
+            }
+
+            return view('closures.index');
+        }
+    }
+
+    public function closuresIndex(Request $request, $ev = null)
+    {
+        if( Auth::check() ){
+
+            if ($request->ajax()) {
+
+                $data = DB::table('closures as t1')
+                    ->where( function($query) use ($ev) {
+                        if (is_null($ev) || $ev == -9999) {
+                            $query->whereNotNull('t1.closuredate');
+                        } else {
+                            $query->where(DB::raw('year(t1.closuredate)'), $ev );
+                        }
+                    })
                     ->get();
 
                 return $this->dwData($data);
@@ -93,10 +118,23 @@ class ClosuresController extends AppBaseController
     public function store(CreateClosuresRequest $request)
     {
         $input = $request->all();
-
         $closures = $this->closuresRepository->create($input);
 
-        return redirect(route('closures.index'));
+        if (ClosureCimlets::where('closures_id', 539)->get()->count() == 0) {
+            $cimlets = Cimlets::all();
+
+            foreach ($cimlets as $cimlet) {
+                $closurecimlet = new ClosureCimlets();
+                $closurecimlet->closures_id = $closures->id;
+                $closurecimlet->cimlets_id = $cimlet->id;
+                $closurecimlet->value = 0;
+                $closurecimlet->created_at = Carbon::now();
+                $closurecimlet->save();
+            }
+
+        }
+
+        return view('closures.edit')->with('closures', $closures);
     }
 
     /**
@@ -211,18 +249,26 @@ class ClosuresController extends AppBaseController
             "width" => 2,
             "file" => false];
         array_push($formGroupArray, $item);
-        $item = ["label" => Form::label('sum', 'Összesen:'),
-            "field" => Form::text('sum', 0, ['class' => 'form-control  text-right', 'id' => 'sum', 'readonly' => 'true']),
+        $item = ["label" => Form::label('dailysum', 'Összesen:'),
+            "field" => Form::text('dailysum', isset($closures) ? $closures->dailysum : 0, ['class' => 'form-control  text-right', 'id' => 'dailysum', 'readonly' => 'true']),
             "width" => 2,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('out', 'Kivét:'),
-            "field" => Form::text('out', 0, ['class' => 'form-control  text-right', 'id' => 'out', 'readonly' => 'true']),
+            "field" => Form::text('out', isset($closures) ? ($closures->dailysum - ($closures->card + $closures->szcard + $closures->dayduring + 20000)): 0, ['class' => 'form-control  text-right', 'id' => 'out', 'readonly' => 'true']),
             "width" => 2,
             "file" => false];
         array_push($formGroupArray, $item);
         return $formGroupArray;
     }
+
+    public static function closuresYearsDDDW() {
+        return [" "] + DB::table('closures')->select(DB::raw('year(closures.closuredate) as year'))
+                ->groupBy('year')
+                ->orderBy('year', 'desc')
+                ->pluck('year', 'year')->toArray();
+    }
+
 }
 
 

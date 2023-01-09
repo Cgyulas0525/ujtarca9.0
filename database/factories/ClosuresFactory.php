@@ -23,12 +23,13 @@ class ClosuresFactory extends Factory
     {
         return [
             'closuredate' => $this->faker->word,
-        'card' => $this->faker->randomDigitNotNull,
-        'szcard' => $this->faker->randomDigitNotNull,
-        'dayduring' => $this->faker->randomDigitNotNull,
-        'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-        'deleted_at' => $this->faker->date('Y-m-d H:i:s')
+            'card' => $this->faker->randomDigitNotNull,
+            'szcard' => $this->faker->randomDigitNotNull,
+            'dayduring' => $this->faker->randomDigitNotNull,
+            'dailysum' => $this->faker->randomDigitNotNull,
+            'created_at' => $this->faker->date('Y-m-d H:i:s'),
+            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'deleted_at' => $this->faker->date('Y-m-d H:i:s')
         ];
     }
 }

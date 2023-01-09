@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DestroysController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\ClosuresController;
+use App\Http\Controllers\ClosureCimletsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +53,9 @@ Route::get('invoicesIndex/{ev?}/{partner?}', [InvoicesController::class, 'invoic
 Route::get('invoicesYearsDDDW', [InvoicesController::class, 'invoicesYearsDDDW'])->name('invoicesYearsDDDW');
 
 Route::resource('closures', App\Http\Controllers\ClosuresController::class);
+Route::get('closuresIndex/{ev?}', [ClosuresController::class, 'closuresIndex'])->name('closuresIndex');
 
 Route::resource('closureCimlets', App\Http\Controllers\ClosureCimletsController::class);
+Route::get('closureCimletsIndex/{id}', [ClosureCimletsController::class, 'closureCimletsIndex'])->name('closureCimletsIndex');
+Route::get('closureCimletsUpdate', [ClosureCimletsController::class, 'closureCimletsUpdate'])->name('closureCimletsUpdate');
+

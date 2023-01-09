@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>{{ $closures->name }}</h1>
+                    <h1>Zárás: {{ date('Y.m.d', strtotime($closures->closuredate)) }}</h1>
                 </div>
             </div>
         </div>
@@ -22,13 +22,14 @@
             <div class="card-body">
                 <div class="row">
                     @include('formGroup.formGroupFromController', ['array' => App\Http\Controllers\ClosuresController::fields(isset($closures) ? $closures : null),
-                                               'scriptFile' => 'formGroup.emptyScript'])
+                                               'scriptFile' => 'closures.fieldScript',
+                                               'tableFile' => 'closures.tableFile'])
                 </div>
             </div>
 
             <div class="card-footer">
                 {!! Form::submit('Ment', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('closures.index') }}" class="btn btn-default">Kilép</a>
+{{--                <a href="{{ route('closures.index') }}" class="btn btn-default">Kilép</a>--}}
             </div>
 
            {!! Form::close() !!}
@@ -36,3 +37,4 @@
         </div>
     </div>
 @endsection
+

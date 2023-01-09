@@ -20,7 +20,8 @@ class ClosuresRepository extends BaseRepository
         'closuredate',
         'card',
         'szcard',
-        'dayduring'
+        'dayduring',
+        'dailysum'
     ];
 
     /**

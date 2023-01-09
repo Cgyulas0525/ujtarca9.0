@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateClosureCimletsRequest;
 use App\Http\Requests\UpdateClosureCimletsRequest;
+use App\Models\Closures;
 use App\Repositories\ClosureCimletsRepository;
 use App\Http\Controllers\AppBaseController;
 
@@ -30,13 +31,9 @@ class ClosureCimletsController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', function($row){
-                $btn = '<a href="' . route('closureCimlets.edit', [$row->id]) . '"
-                             class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn.'<a href="' . route('beforeDestroys', ['ClosureCimlets', $row["id"], 'closureCimlets']) . '"
-                                 class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
-                return $btn;
-            })
+            ->addColumn('cimletName', function($data) { return $data->cimlets->name; })
+            ->addColumn('cimletValue', function($data) { return $data->cimlets->value; })
+            ->addColumn('sumValue', function($data) { return $data->value * $data->cimlets->value; })
             ->rawColumns(['action'])
             ->make(true);
     }
@@ -60,6 +57,20 @@ class ClosureCimletsController extends AppBaseController
 
             }
 
+            return view('closure_cimlets.index');
+        }
+    }
+
+    public function closureCimletsIndex(Request $request, $id)
+    {
+        if( Auth::check() ){
+
+            if ($request->ajax()) {
+
+                $data = ClosureCimlets::where('closures_id', $id)->get();
+                return $this->dwData($data);
+
+            }
             return view('closure_cimlets.index');
         }
     }
@@ -169,15 +180,42 @@ class ClosureCimletsController extends AppBaseController
         return redirect(route('closureCimlets.index'));
     }
 
-        /*
-         * Dropdown for field select
-         *
-         * return array
-         */
-        public static function DDDW() : array
-        {
-            return [" "] + closureCimlets::orderBy('name')->pluck('name', 'id')->toArray();
-        }
+    /*
+     * Dropdown for field select
+     *
+     * return array
+     */
+    public static function DDDW() : array
+    {
+        return [" "] + closureCimlets::orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+    /*
+     * ClosureCimlets értékek módosítás
+     *
+     * @param $request
+     *
+     * @return ClosureCimlets
+     */
+    public function closureCimletsUpdate(Request $request) {
+
+        $closurecimlets = ClosureCimlets::find($request->get('id'));
+
+//        $oldValue = $closurecimlets->value * $closurecimlets->cimlets->value;
+
+        $closurecimlets->value = $request->get('value');
+        $closurecimlets->updated_at = \Carbon\Carbon::now();
+        $closurecimlets->save();
+
+//        $newValue = $closurecimlets->value * $closurecimlets->cimlets->value;
+//
+//        $closure = Closures::find($closurecimlets->closures_id);
+//        $closure->dailysum  += ($newValue - $oldValue);
+//        $closure->save();
+
+        return Response::json( ClosureCimlets::find($request->get('id')) );
+
+    }
 }
 
 

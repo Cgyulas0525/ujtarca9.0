@@ -43,7 +43,7 @@
 
 
 <li class="nav-item">
-    <a href="{{ route('invoices.index', ['ev' => null, 'partner' => null]) }}"
+    <a href="{{ route('invoices.index') }}"
        class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
         <i class="fas fa-file-invoice"></i>
         <p>Számla</p>

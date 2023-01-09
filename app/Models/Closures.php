@@ -39,7 +39,8 @@ class Closures extends Model
         'closuredate',
         'card',
         'szcard',
-        'dayduring'
+        'dayduring',
+        'dailysum'
     ];
 
     /**
@@ -52,7 +53,8 @@ class Closures extends Model
         'closuredate' => 'date',
         'card' => 'integer',
         'szcard' => 'integer',
-        'dayduring' => 'integer'
+        'dayduring' => 'integer',
+        'dailysum' => 'integer'
     ];
 
     /**
@@ -65,31 +67,14 @@ class Closures extends Model
         'card' => 'required|integer',
         'szcard' => 'required|integer',
         'dayduring' => 'required|integer',
+        'dailysum' => 'required|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
-        'closureValue',
-    ];
-
-
     public function closurecimlets() {
         return $this->hasMany(ClosureCimlets::class);
     }
-
-    public function getClosureValueAttribute() {
-
-        $value = 0;
-        $closurecimlets = ClosureCimlets::where('closures_id', $this->id)->get();
-        foreach ($closurecimlets as $closurecimlet) {
-            $value += ($closurecimlet->value * $closurecimlet->cimlets->value);
-        }
-        $value +=  $this->card + $this->szcard + $this->dayduring - 20000;
-        return $value;
-    }
-
-
 
 }
