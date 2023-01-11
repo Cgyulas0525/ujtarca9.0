@@ -244,17 +244,17 @@ class InvoicesController extends AppBaseController
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('dated', 'Kelt:'),
-            "field" => Form::date('dated', isset($invoice) ? $invoice->dated : null, ['class' => 'form-control','id'=>'dated', 'required' => true]),
+            "field" => Form::date('dated', isset($invoice) ? $invoice->dated : \Carbon\Carbon::now(), ['class' => 'form-control','id'=>'dated', 'required' => true]),
             "width" => 4,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('performancedate', 'Teljesítés:'),
-            "field" => Form::date('performancedate', isset($invoice) ? $invoice->performancedate : null, ['class' => 'form-control','id'=>'performancedate', 'required' => true]),
+            "field" => Form::date('performancedate', isset($invoice) ? $invoice->performancedate : \Carbon\Carbon::now(), ['class' => 'form-control','id'=>'performancedate', 'required' => true]),
             "width" => 4,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('deadline', 'Határidő:'),
-            "field" => Form::date('deadline', isset($invoice) ? $invoice->deadline : null, ['class' => 'form-control','id'=>'deadline', 'required' => true]),
+            "field" => Form::date('deadline', isset($invoice) ? $invoice->deadline : \Carbon\Carbon::now(), ['class' => 'form-control','id'=>'deadline', 'required' => true]),
             "width" => 4,
             "file" => false];
         array_push($formGroupArray, $item);

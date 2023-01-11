@@ -12,9 +12,21 @@
 
         ajaxSetup();
 
+        var closuresId = <?php echo isset($closures) ? $closures->id : -9999; ?>;
+
         function dailyAmount() {
-            var value = parseInt($('#card').val()) + parseInt($('#szcard').val()) + parseInt($('#dayduring').val());
-            $('#sum').val(value);
+            $.ajax({
+                type:"GET",
+                url:"{{url('closureCimletsSum')}}",
+                data: { id: closuresId },
+                success: function (response) {
+                    $('#dailysum').val(parseInt($('#card').val()) + parseInt($('#szcard').val()) + parseInt($('#dayduring').val()) + parseInt(response));
+                },
+                error: function (response) {
+                    // console.log('Error:', response);
+                    alert('nem ok');
+                }
+            });
         }
 
         $('#card').change(function () {

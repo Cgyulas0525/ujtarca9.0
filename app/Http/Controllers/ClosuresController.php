@@ -105,6 +105,11 @@ class ClosuresController extends AppBaseController
      */
     public function create()
     {
+        $closures = Closures::where('closuredate', \Carbon\Carbon::now()->toDateString())->first();
+        if (!empty($closures)) {
+            return view('closures.edit')->with('closures', $closures);
+        }
+
         return view('closures.create');
     }
 

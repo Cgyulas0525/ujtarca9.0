@@ -201,20 +201,24 @@ class ClosureCimletsController extends AppBaseController
 
         $closurecimlets = ClosureCimlets::find($request->get('id'));
 
-//        $oldValue = $closurecimlets->value * $closurecimlets->cimlets->value;
-
         $closurecimlets->value = $request->get('value');
         $closurecimlets->updated_at = \Carbon\Carbon::now();
         $closurecimlets->save();
 
-//        $newValue = $closurecimlets->value * $closurecimlets->cimlets->value;
-//
-//        $closure = Closures::find($closurecimlets->closures_id);
-//        $closure->dailysum  += ($newValue - $oldValue);
-//        $closure->save();
-
         return Response::json( ClosureCimlets::find($request->get('id')) );
 
+    }
+
+    public function closureCimletsSum(Request $request) {
+
+        $sum = DB::table('closurecimlets as t1')
+            ->select(DB::raw('sum(t1.value * t2.value) as cash' ))
+            ->join('cimlets as t2', 't2.id', '=', 't1.cimlets_id')
+            ->whereNull('t1.deleted_at')
+            ->where('closures_id', $request->get('id'))
+            ->get();
+
+        return is_null($sum[0]->cash) ? 0 : $sum[0]->cash;
     }
 }
 

@@ -132,8 +132,18 @@
         color: #FFFFFF !important;
     }
 
-    .nav-link {
+    .nav-item-black {
+        color: #000000 !important;
+    }
+
+    .nav-link {0
         color: #FFFFFF !important;
+    }
+
+    .nav-link-black {
+        color: #000000 !important;
+        display: block;
+        padding: 0.5rem 1rem;
     }
 
     .nav-link.active {

@@ -8,6 +8,7 @@ use App\Http\Controllers\DestroysController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\ClosuresController;
 use App\Http\Controllers\ClosureCimletsController;
+use App\Http\Controllers\RiportsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,4 +59,8 @@ Route::get('closuresIndex/{ev?}', [ClosuresController::class, 'closuresIndex'])-
 Route::resource('closureCimlets', App\Http\Controllers\ClosureCimletsController::class);
 Route::get('closureCimletsIndex/{id}', [ClosureCimletsController::class, 'closureCimletsIndex'])->name('closureCimletsIndex');
 Route::get('closureCimletsUpdate', [ClosureCimletsController::class, 'closureCimletsUpdate'])->name('closureCimletsUpdate');
+Route::get('closureCimletsSum', [ClosureCimletsController::class, 'closureCimletsSum'])->name('closureCimletsSum');
+
+Route::get('RevenueExpenditureIndex', [RiportsController::class, 'RevenueExpenditureIndex'])->name('RevenueExpenditureIndex');
+Route::get('RevenueExpenditureMonthIndex', [RiportsController::class, 'RevenueExpenditureMonthIndex'])->name('RevenueExpenditureMonthIndex');
 
