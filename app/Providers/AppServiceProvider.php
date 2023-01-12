@@ -11,6 +11,7 @@ use App\Classes\FinanceClass;
 use App\Classes\FinancePeriodClass;
 use App\Http\Controllers\DashboardController;
 use App\Classes\ClosuresClass;
+use App\Classes\RiportsClass;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
             $loader->alias('FinanceClass', FinanceClass::class);
             $loader->alias('FinancePeriodClass', FinancePeriodClass::class);
             $loader->alias('ClosuresClass', ClosuresClass::class);
+            $loader->alias('RiportsClass', RiportsClass::class);
             $loader->alias('DashboardController', DashboardController::class);
         });
     }

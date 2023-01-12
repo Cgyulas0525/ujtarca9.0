@@ -76,6 +76,12 @@
                 <p>Havi Bevétel - Kiadás</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="TurnoverIndex" class="nav-link">
+                <i class="fas fa-chart-line"></i>
+                <p>Árbevétel</p>
+            </a>
+        </li>
     </ul>
 </li>
 

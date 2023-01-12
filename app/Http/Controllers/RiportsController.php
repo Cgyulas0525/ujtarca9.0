@@ -96,4 +96,11 @@ class RiportsController extends Controller
             return view('riports.RevenueExpenditureMonthIndex');
         }
     }
+
+    public function TurnoverIndex(Request $request) {
+
+        return view('riports.Turnover');
+
+    }
+
 }

@@ -123,13 +123,13 @@ class FinancePeriodClass
 
     public function monthInviocesResult() {
         $invoices = DB::table('invoices')
-            ->select(DB::raw('concat(year(dated), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as year, sum(amount) as amount, 0 as dailysum'))
+            ->select(DB::raw('concat(CONCAT(year(dated),"."), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as year, sum(amount) as amount, 0 as dailysum'))
             ->whereNull('deleted_at')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('year');
 
         $closures = DB::table('closures as t1')
-            ->select(DB::raw('concat(year(t1.closuredate), if(CAST(month(t1.closuredate) AS UNSIGNED) < 10, concat("0", month(t1.closuredate)), month(t1.closuredate))) as year, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
+            ->select(DB::raw('concat(CONCAT(year(t1.closuredate),"."), if(CAST(month(t1.closuredate) AS UNSIGNED) < 10, concat("0", month(t1.closuredate)), month(t1.closuredate))) as year, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
             ->whereNull('t1.deleted_at')
             ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
             ->groupBy('year')

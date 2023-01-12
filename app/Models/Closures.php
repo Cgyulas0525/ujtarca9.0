@@ -73,8 +73,21 @@ class Closures extends Model
         'deleted_at' => 'nullable'
     ];
 
+    protected $append = [
+        'cash',
+        'result'
+    ];
+
     public function closurecimlets() {
         return $this->hasMany(ClosureCimlets::class);
+    }
+
+    public function getResultAttribute() {
+        return $this->dailysum - 20000;
+    }
+
+    public function getCashAttribute() {
+        return $this->dailysum - ($this->card + $this->szcard + 20000);
     }
 
 }
