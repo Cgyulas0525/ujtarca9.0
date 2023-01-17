@@ -6,13 +6,13 @@
     </div>
     <div class="card-footer p-0">
         <ul class="nav flex-column">
-            @include('dashboard.dashboardResultBlockItem', ['title' => 'Költség',
-                                                            'route' => 'invoices.index',
-                                                            'value' => number_format(DashboardController::invoicesAmountSumThisYear([date('Y') - 1]),0,",","."),
-                                                            'class' => 'bg-primary'])
             @include('dashboard.dashboardResultBlockItem', ['title' => 'Árbevétel',
                                                             'route' => 'closures.index',
                                                             'value' => number_format(DashboardController::closuresAmountSumThisYear([date('Y') - 1]),0,",","."),
+                                                            'class' => 'bg-primary'])
+            @include('dashboard.dashboardResultBlockItem', ['title' => 'Költség',
+                                                            'route' => 'invoices.index',
+                                                            'value' => number_format(DashboardController::invoicesAmountSumThisYear([date('Y') - 1]),0,",","."),
                                                             'class' => 'bg-primary'])
             @include('dashboard.dashboardResultBlockItem', ['title' => 'Egyenleg',
                                                             'route' => 'invoices.index',

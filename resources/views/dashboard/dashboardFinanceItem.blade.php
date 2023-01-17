@@ -1,8 +1,8 @@
-<div class="col-lg-3 col-6">
+<div class="col-lg-3 col-md-6 col-sm-12">
     <!-- small box -->
     <div class="{{ $box }}">
         <div class="inner">
-            <h3>{{ $label }}: {{ $function }} {{ $endlabel }}</h3>
+            <h4>{{ $label }}: {{ $function }} {{ $endlabel }}</h4>
             <p>{{ $title }}</p>
         </div>
         <div class="icon">

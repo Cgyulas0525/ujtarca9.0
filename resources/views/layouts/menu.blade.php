@@ -79,7 +79,7 @@
         <li class="nav-item">
             <a href="TurnoverIndex" class="nav-link">
                 <i class="fas fa-chart-line"></i>
-                <p>Árbevétel</p>
+                <p>Kimutatások</p>
             </a>
         </li>
     </ul>
