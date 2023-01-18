@@ -9,6 +9,7 @@ use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\ClosuresController;
 use App\Http\Controllers\ClosureCimletsController;
 use App\Http\Controllers\RiportsController;
+use App\Http\Controllers\PartnersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,3 +66,4 @@ Route::get('RevenueExpenditureIndex', [RiportsController::class, 'RevenueExpendi
 Route::get('RevenueExpenditureMonthIndex', [RiportsController::class, 'RevenueExpenditureMonthIndex'])->name('RevenueExpenditureMonthIndex');
 Route::get('TurnoverIndex', [RiportsController::class, 'TurnoverIndex'])->name('TurnoverIndex');
 
+Route::get('postcodeSettlementDDDW',[PartnersController::class, 'postcodeSettlementDDDW'])->name('postcodeSettlementDDDW');

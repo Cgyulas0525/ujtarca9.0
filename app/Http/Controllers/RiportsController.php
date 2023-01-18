@@ -97,6 +97,29 @@ class RiportsController extends Controller
         }
     }
 
+    public function averageDailyTurnover(Request $request, $begin, $end) {
+
+        if( Auth::check() ){
+
+            if ($request->ajax()) {
+//                $begin = date('Y-m-d', strtotime('first day of this year'));
+//                $end   = date('Y-m-d', strtotime('today'));
+                $data = DB::table('closures as t')
+                    ->select(DB::raw('weekday(t.closuredate) nap, (Sum(t.dailysum - 20000) / Sum(1)) osszeg'))
+                    ->whereNull('t.deleted_at')
+                    ->whereBetween('t.closuredate', [$begin , $end] )
+                    ->groupBy('nap')
+                    ->orderby('nap')
+                    ->get();
+
+                return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+                return view('riports.RevenueExpenditureMonthIndex');
+            }
+        }
+    }
+
     public function TurnoverIndex(Request $request) {
 
         return view('riports.Turnover');

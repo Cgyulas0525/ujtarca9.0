@@ -144,12 +144,15 @@ class FinancePeriodClass
     }
 
     public function weekInviocesResult() {
+
+        // értékek a számlákból
         $invoices = DB::table('invoices')
             ->select(DB::raw('concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as year, sum(amount) as amount, 0 as dailysum'))
             ->whereNull('deleted_at')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('year');
 
+        // értékek a zárásból + union szamla
         $closures = DB::table('closures as t1')
             ->select(DB::raw('concat(year(t1.closuredate), if(CAST(week(t1.closuredate) AS UNSIGNED) < 10, concat("0", week(t1.closuredate)), week(t1.closuredate))) as year, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
             ->whereNull('t1.deleted_at')
@@ -157,6 +160,7 @@ class FinancePeriodClass
             ->groupBy('year')
             ->union($invoices);
 
+        // select az előzőből
         return DB::query()->fromSub($closures, 'p_pn')
             ->select('year', DB::raw('ROUND( SUM(amount), 0) as amount,
                                                     ROUND( SUM(dailysum), 0) as dailysum'))

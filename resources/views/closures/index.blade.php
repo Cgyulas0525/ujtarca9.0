@@ -20,7 +20,7 @@
                                     {!! Form::label('year', 'Év:') !!}
                                 </div>
                                 <div class="col-sm-2">
-                                    {!! Form::select('year', \App\Http\Controllers\ClosuresController::closuresYearsDDDW(), null,
+                                    {!! Form::select('year', \App\Http\Controllers\ClosuresController::closuresYearsDDDW(), date('Y'),
                                             ['class'=>'select2 form-control', 'id' => 'year']) !!}
                                 </div>
                                 <div class="col-sm-1">

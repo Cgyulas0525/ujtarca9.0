@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Partners</h1>
+                    <h1>Partner</h1>
                 </div>
             </div>
         </div>
@@ -22,7 +22,8 @@
             <div class="card-body">
 
                 <div class="row">
-                    @include('partners.fields')
+                    @include('formGroup.formGroupFromController', ['array' => App\Http\Controllers\PartnersController::fields(isset($invoices) ? $invoices : null),
+                                                                   'scriptFile' => 'partners.fieldScript'])
                 </div>
 
             </div>

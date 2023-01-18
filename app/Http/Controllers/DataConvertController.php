@@ -13,7 +13,7 @@ use App\Models\PartnerTypes;
 use App\Models\Partners;
 use App\Models\ClosureCimlets;
 use App\Models\Cimlets;
-
+use App\Models\Settlements;
 
 class DataConvertController extends Controller
 {
@@ -126,7 +126,21 @@ class DataConvertController extends Controller
         }
     }
 
+    public function settlementsConvert() {
 
+        $telepules = DB::connection('mysql_tarca')->table('telepules')->get();
+
+        foreach ($telepules as $item) {
+        echo $item->iranyitoszam . " " . $item->telepules . "\n";
+        $settlement = new Settlements();
+        $settlement->postcode = $item->iranyitoszam;
+        $settlement->name = $item->telepules;
+        $settlement->created_at = \Carbon\Carbon::now();
+        $settlement->save();
+
+    }
+
+}
 
 }
 

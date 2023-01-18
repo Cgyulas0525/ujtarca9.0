@@ -21,7 +21,7 @@
                                         {!! Form::label('year', 'Év:') !!}
                                     </div>
                                     <div class="col-sm-2">
-                                        {!! Form::select('year', \App\Http\Controllers\InvoicesController::invoicesYearsDDDW(), null,
+                                        {!! Form::select('year', \App\Http\Controllers\InvoicesController::invoicesYearsDDDW(),date('Y'),
                                                 ['class'=>'select2 form-control', 'id' => 'year']) !!}
                                     </div>
                                     <div class="mylabel col-sm-2">

@@ -64,6 +64,16 @@ class InvoicesController extends AppBaseController
         }
     }
 
+    /**
+     * Show the form for creating a new Invoices.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        return view('invoices.create');
+    }
+
     public function invoicesIndex(Request $request, $ev = null, $partner = null)
     {
         if( Auth::check() ){
@@ -94,16 +104,6 @@ class InvoicesController extends AppBaseController
 
             return view('invoices.index');
         }
-    }
-
-    /**
-     * Show the form for creating a new Invoices.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('invoices.create');
     }
 
     /**

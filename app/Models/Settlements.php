@@ -43,6 +43,7 @@ class Settlements extends Model
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
+        'postcode' => 'integer',
         'description' => 'string'
     ];
 
@@ -53,6 +54,7 @@ class Settlements extends Model
      */
     public static $rules = [
         'name' => 'required|string|max:100',
+        'postcode' => 'nullable|integer',
         'description' => 'nullable|string|max:500',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',

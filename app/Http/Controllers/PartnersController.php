@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePartnersRequest;
 use App\Http\Requests\UpdatePartnersRequest;
+use App\Models\PartnerTypes;
 use App\Repositories\PartnersRepository;
 use App\Http\Controllers\AppBaseController;
 
@@ -15,6 +16,10 @@ use Response;
 use Auth;
 use DB;
 use DataTables;
+
+use App\Classes\SettlementsClass;
+
+use Form;
 
 class PartnersController extends AppBaseController
 {
@@ -178,7 +183,74 @@ class PartnersController extends AppBaseController
         {
             return [" "] + partners::orderBy('name')->pluck('name', 'id')->toArray();
         }
+
+    public static function fields() {
+        $formGroupArray = [];
+        $item = ["label" => Form::label('name', 'Név:'),
+            "field" => Form::text('name', null, ['class' => 'form-control','maxlength' => 100]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+
+        $item = ["label" => Form::label('partnertypes_id', 'Típus:'),
+            "field" => Form::select('partnertypes_id', PartnerTypesController::DDDW(), null,
+                ['class'=>'select2 form-control', 'id' => 'partnertypes_id', 'required' => true]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+
+        $item = ["label" => Form::label('taxnumber', 'Adószám:'),
+            "field" => Form::text('taxnumber', null, ['class' => 'form-control','maxlength' => 13, 'data-inputmask'=>"'mask': '99999999-9-99'"]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+
+        $item = ["label" => Form::label('bankaccount', 'Bankszámla:'),
+            "field" => Form::text('bankaccount', null, ['class' => 'form-control','maxlength' => 26, 'data-inputmask'=>"'mask': '99999999-99999999-99999999'"]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+
+        $item = ["label" => Form::label('postcode', 'Irányító szám:'),
+            "field" => Form::select('postcode', SettlementsClass::settlementsPostcodeDDDW(), null,
+                ['class'=>'select2 form-control', 'id' => 'postcode', 'required' => true]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+        $item = ["label" => Form::label('settlement_id', 'Város:'),
+            "field" => Form::select('settlement_id', SettlementsClass::settlementsDDDW(), null,
+                ['class'=>'select2 form-control', 'id' => 'settlement_id', 'required' => true]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+
+        $item = ["label" => Form::label('address', 'Cím:'),
+            "field" => Form::text('address', null, ['class' => 'form-control','maxlength' => 100]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+
+        $item = ["label" => Form::label('email', 'Email:'),
+            "field" => Form::email('email', null, ['class' => 'form-control','maxlength' => 50]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+        $item = ["label" => Form::label('phonenumber', 'Telefonszám:'),
+            "field" => Form::text('phonenumber', null, ['class' => 'form-control','maxlength' => 20]),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+
+        $item = ["label" => Form::label('description', 'Megjegyzés:'),
+            "field" => Form::textarea('description', null, ['class' => 'form-control','maxlength' => 500, 'rows' => 4, 'id' => 'description']),
+            "width" => 6,
+            "file" => false];
+        array_push($formGroupArray, $item);
+        return $formGroupArray;
+    }
+
+    public function postcodeSettlementDDDW(Request $request) {
+        return SettlementsClass::postcodeSettlementDDDW($request->get('postcode'));
+    }
+
 }
-
-
-
