@@ -34,54 +34,31 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="tab-content">
-                                                <div class="active tab-pane" id="napi">
-                                                    <section class="content-header">
-                                                        <h1> Árbevétel alakulás az elmúlt 30 napban</h1>
-                                                    </section>
-                                                    <figure class="highcharts-figure">
-                                                        <div id="haviNapiArbevetel"></div>
-                                                    </figure>
-                                                </div>
-                                                <div class="tab-pane" id="heti">
-                                                    <section class="content-header">
-                                                        <h1> Árbevétel alakulás heti bontásban</h1>
-                                                    </section>
-                                                    <figure class="highcharts-figure">
-                                                        <div id="hetiArbevetel"></div>
-                                                    </figure>
-                                                </div>
-                                                <div class="tab-pane" id="havi">
-                                                    <section class="content-header">
-                                                        <h1> Árbevétel alakulás havi bontásban</h1>
-                                                    </section>
-                                                    <figure class="highcharts-figure">
-                                                        <div id="haviArbevetel"></div>
-                                                    </figure>
-                                                </div>
-                                                <div class="tab-pane" id="fizetesi">
-                                                    <section class="content-header">
-                                                        <h1>Fizetési mód az elmúlt 30 napban</h1>
-                                                    </section>
-                                                    <figure class="highcharts-figure">
-                                                        <div id="fizetesimod"></div>
-                                                    </figure>
-                                                </div>
-                                                <div class="tab-pane" id="twoyear">
-                                                    <section class="content-header">
-                                                        <h1>Bevétel az elmúlt 2 évben</h1>
-                                                    </section>
-                                                    <figure class="highcharts-figure">
-                                                        <div id="twoyears"></div>
-                                                    </figure>
-                                                </div>
-                                                <div class="tab-pane" id="bevki">
-                                                    <section class="content-header">
-                                                        <h1>Bevétel/Kiadás az elmúlt évben</h1>
-                                                    </section>
-                                                    <figure class="highcharts-figure">
-                                                        <div id="bevkiad"></div>
-                                                    </figure>
-                                                </div>
+                                                @include('riports.TurnoverItem', ['title' => 'Árbevétel alakulás az elmúlt 30 napban',
+                                                                                  'id' => 'napi',
+                                                                                  'tabPane' => 'active tab-pane',
+                                                                                  'chartId' => 'haviNapiArbevetel'])
+                                                @include('riports.TurnoverItem', ['title' => 'Árbevétel alakulás heti bontásban',
+                                                                                  'id' => 'heti',
+                                                                                  'tabPane' => 'tab-pane',
+                                                                                  'chartId' => 'hetiArbevetel'])
+                                                @include('riports.TurnoverItem', ['title' => 'Árbevétel alakulás havi bontásban',
+                                                                                  'id' => 'havi',
+                                                                                  'tabPane' => 'tab-pane',
+                                                                                  'chartId' => 'haviArbevetel'])
+                                                @include('riports.TurnoverItem', ['title' => 'Fizetési mód az elmúlt 30 napban',
+                                                                                  'id' => 'fizetesi',
+                                                                                  'tabPane' => 'tab-pane',
+                                                                                  'chartId' => 'fizetesimod'])
+                                                @include('riports.TurnoverItem', ['title' => 'Bevétel alakulás az elmúlt 2 évben',
+                                                                                  'id' => 'twoyear',
+                                                                                  'tabPane' => 'tab-pane',
+                                                                                  'chartId' => 'twoyears'])
+                                                @include('riports.TurnoverItem', ['title' => 'Bevétel/Kiadás az elmúlt évben',
+                                                                                  'id' => 'bevki',
+                                                                                  'tabPane' => 'tab-pane',
+                                                                                  'chartId' => 'bevkiad'])
+
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +74,6 @@
 
 @section('scripts')
 
-{{--    @include('layouts.highcharts_js')--}}
     <script src="{{ asset('/public/js/highchart/highchartLine.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/public/js/highchart/categoryUpload.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/public/js/highchart/chartDataUpload.js') }} " type="text/javascript"></script>
