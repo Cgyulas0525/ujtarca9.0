@@ -97,70 +97,26 @@
 
 @section('scripts')
 
-    @include('layouts.highcharts_js')
-    @include("hsjs.hsjs")
-
-    @include('functions.ajax_js')
+{{--    @include('layouts.highcharts_js')--}}
+    <script src="{{ asset('/public/js/highchart/highchartLine.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/public/js/highchart/categoryUpload.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/public/js/highchart/chartDataUpload.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {
 
-            ajaxSetup();
-
-            function LineChartKategoria(data){
-                kategoria = [];
-                for (i = 0; i < data.length; i++){
-                    kategoria.push(data[i].nap);
-                }
-                return kategoria;
-            }
-
-            function LineChartData(data, mi){
-                chartdata = [];
-                cdata = [];
-                for (i = 0; i < data.length; i++){
-                    cdata.push(parseInt(data[i].osszeg));
-                }
-                chartdata.push({name: mi, data: cdata});
-                return chartdata;
-            }
-
-            function LineChartDataPM(data, mi){
-                chartdata = [];
-                cash = [];
-                card = [];
-                szcard = [];
-                for (i = 0; i < data.length; i++){
-                    cash.push(parseInt(data[i].cash));
-                    card.push(parseInt(data[i].card))
-                    szcard.push(parseInt(data[i].szcard))
-                }
-                chartdata.push({name: 'Készpénz', data: cash});
-                chartdata.push({name: 'Kártya', data: card});
-                chartdata.push({name: 'Szép kártya', data: szcard});
-                return chartdata;
-            }
-
-            function LineChartDataTwo(data, mi){
-                chartdata = [];
-                cash = [];
-                card = [];
-                for (i = 0; i < data.length; i++){
-                    cash.push(parseInt(data[i].elso));
-                    card.push(parseInt(data[i].masodik))
-                }
-                chartdata.push({name: 'Kiadás', data: cash});
-                chartdata.push({name: 'Bevétel', data: card});
-                return chartdata;
-            }
-
-
-            var chart_napi = highchartLine( 'haviNapiArbevetel', 'line', 450, LineChartKategoria(<?php echo RiportsClass::TurnoverLast30Days(); ?>), LineChartData(<?php echo RiportsClass::TurnoverLast30Days(); ?>, ''), 'Aktuális havi árbevétel', 'napi bontás', 'forint');
-            var chart_heti = highchartLine( 'hetiArbevetel', 'line', 450, LineChartKategoria(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>), LineChartData(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>, ''), 'Havi árbevétel', 'havi bontás', 'forint');
-            var chart_havi = highchartLine( 'haviArbevetel', 'line', 450, LineChartKategoria(<?php echo RiportsClass::TurnoverLast12Month(); ?>), LineChartData(<?php echo RiportsClass::TurnoverLast12Month(); ?>, ''), 'Heti árbevétel', 'heti bontás', 'forint');
-            var chart_fizm = highchartLine( 'fizetesimod', 'line', 450, LineChartKategoria(<?php echo RiportsClass::PaymentMethodLast30days(); ?>), LineChartDataPM(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, ''), 'Fizetési mód', 'napi bontás', 'forint');
-            var chart_twoy = highchartLine( 'twoyears', 'line', 450, LineChartKategoria(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>), LineChartDataTwo(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, ''), 'Fizetési mód', 'napi bontás', 'forint');
-            var chart_bevk = highchartLine( 'bevkiad', 'line', 450, LineChartKategoria(<?php echo RiportsClass::monthInviocesResult(); ?>), LineChartDataTwo(<?php echo RiportsClass::monthInviocesResult(); ?>, ''), 'Fizetési mód', 'napi bontás', 'forint');
+            var chart_napi = highchartLine( 'haviNapiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, 'nap'),
+                chartDataUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, ['osszeg'], ['Bevétel']), 'Aktuális havi árbevétel', 'napi bontás', 'forint');
+            var chart_heti = highchartLine( 'hetiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>, 'nap'),
+                chartDataUpload(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>, ['osszeg'], ['Bevétel']), 'Havi árbevétel', 'havi bontás', 'forint');
+            var chart_havi = highchartLine( 'haviArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, 'nap'),
+                chartDataUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, ['osszeg'], ['Bevétel']), 'Heti árbevétel', 'heti bontás', 'forint');
+            var chart_fizm = highchartLine( 'fizetesimod', 'line', 450, categoryUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, 'nap'),
+                chartDataUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, ['cash', 'card', 'szcard'], ['Készpénz', 'Kártya', 'SZÉP kártya']), 'Fizetési mód', 'napi bontás', 'forint');
+            var chart_twoy = highchartLine( 'twoyears', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, 'nap'),
+                chartDataUpload(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, ['elso', 'masodik'], ['-1 év', '-2 év']), 'Fizetési mód', 'napi bontás', 'forint');
+            var chart_bevk = highchartLine( 'bevkiad', 'line', 450, categoryUpload(<?php echo RiportsClass::monthInviocesResult(); ?>, 'nap'),
+                chartDataUpload(<?php echo RiportsClass::monthInviocesResult(); ?>, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
 
         });
     </script>

@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('views.layouts.app')
 
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Invoices Details</h1>
+                    <h1>Partner Types Details</h1>
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
-                       href="{{ route('invoices.index') }}">
+                       href="{{ route('partnerTypes.index') }}">
                         Back
                     </a>
                 </div>
@@ -22,7 +22,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    @include('invoices.show_fields')
+                    @include('show_fields')
                 </div>
             </div>
 

@@ -239,18 +239,18 @@ class ClosuresController extends AppBaseController
                 "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('card', 'Kártya:'),
-                "field" => Form::number('card', isset($closures) ? $closures->card : 0, ['class' => 'form-control text-right', 'id' => 'card']),
+                "field" => Form::number('card', isset($closures) ? $closures->card : 0, ['class' => 'form-control text-right', 'required' => true, 'id' => 'card']),
                 "width" => 2,
                 "file" => false];
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('szcard', 'Szép kártya:'),
-            "field" => Form::number('szcard', isset($closures) ? $closures->szcard : 0, ['class' => 'form-control  text-right', 'id' => 'szcard']),
+            "field" => Form::number('szcard', isset($closures) ? $closures->szcard : 0, ['class' => 'form-control  text-right', 'required' => true, 'id' => 'szcard']),
             "width" => 2,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('dayduring', 'Napköz.:'),
-            "field" => Form::number('dayduring', isset($closures) ? $closures->dayduring : 0, ['class' => 'form-control  text-right', 'id' => 'dayduring']),
+            "field" => Form::number('dayduring', isset($closures) ? $closures->dayduring : 0, ['class' => 'form-control  text-right', 'required' => true, 'id' => 'dayduring']),
             "width" => 2,
             "file" => false];
         array_push($formGroupArray, $item);

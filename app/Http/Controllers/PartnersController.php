@@ -236,7 +236,7 @@ class PartnersController extends AppBaseController
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('phonenumber', 'Telefonszám:'),
-            "field" => Form::text('phonenumber', null, ['class' => 'form-control','maxlength' => 20]),
+            "field" => Form::text('phonenumber', null, ['class' => 'form-control', 'id' => 'phonenumber','maxlength' => 20, 'data-inputmask'=>"'mask': '9999-99-999-9999'"]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);

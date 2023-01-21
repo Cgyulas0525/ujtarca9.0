@@ -1,6 +1,5 @@
 @section('css')
     @include('layouts.costumcss')
-    @include('layouts.datatables_css')
 @endsection
 
 @foreach($array as $key => $value)

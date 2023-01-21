@@ -2,7 +2,6 @@
 
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    @include('layouts.datatables_css')
     @include('layouts.costumcss')
 @endsection
 
@@ -42,7 +41,9 @@
                     <div class="clearfix"></div>
                     <div class="box box-primary">
                         <div class="box-body"  >
-                            <table class="table table-hover table-bordered partners-table" style="width: 100%;"></table>
+                            <table class="table table-hover table-bordered partners-table" style="width: 100%;">
+                                @include('invoices.table')
+                            </table>
                         </div>
                     </div>
                     <div class="text-center"></div>
@@ -53,22 +54,20 @@
 @endsection
 
 @section('scripts')
-    @include('layouts.datatables_js')
+    <script src="{{ asset('/public/js/currencyFormatDE.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            ajaxSetup();
 
             var table = $('.partners-table').DataTable({
                 processing: true,
                 serverSide: true,
                 scrollY: 390,
                 scrollX: true,
+                paging: false,
                 order: [[3, 'desc'], [1, 'asc'], [2, 'asc']],
                 ajax: "{{ route('invoicesIndex', ['ev' => date('Y')]) }}",
                 columns: [
@@ -81,7 +80,36 @@
                     {title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'deadline'},
                     {title: 'Fizetési mód', data: 'paymentMethodName', name: 'paymentMethodName'},
                     {title: 'Összeg', data: 'amount', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'amount'},
-                ]
+                ],
+                buttons: [],
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(7)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(7, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(7).footer()).html(currencyFormatDE(total));
+                },
+
             });
 
             $('.filterBtn').click(function () {
@@ -94,6 +122,8 @@
             });
 
         });
+
+
     </script>
 @endsection
 

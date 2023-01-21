@@ -1,6 +1,7 @@
-@include('functions.ajax_js')
-@include('functions.sweetalert_js')
-@include('functions.addDays_js')
+<script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
+<script src="{{ asset('/public/js/addDays.js') }} " type="text/javascript"></script>
+<script src="{{ asset('/public/js/required.js') }} " type="text/javascript"></script>
+<script src="{{ asset('/public/js/sweetalert.js') }} " type="text/javascript"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -9,6 +10,9 @@
 
         $('#taxnumber').inputmask();
         $('#bankaccount').inputmask();
+        $('#phonenumber').inputmask();
+
+        RequiredBackgroundModify('.form-control')
 
         $('#postcode').change(function() {
             let postcode = $('#postcode').val() != 0 ? $('#postcode').val() : -99999;

@@ -2,7 +2,6 @@
 
 @section('css')
     <link rel="stylesheet" href="public/css/app.css">
-    <link rel="stylesheet" href="public/css/datatables.css">
     <link rel="stylesheet" href="public/css/Highcharts.css">
     @include('layouts.costumcss')
 @endsection
@@ -16,11 +15,8 @@
 @endsection
 
 @section('scripts')
-    @include('layouts.datatables_js')
     @include('layouts.RowCallBack_js')
-    @include('layouts.highcharts_js')
-    @include('hsjs.hsjs')
-    @include('functions.ajax_js')
+    <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {

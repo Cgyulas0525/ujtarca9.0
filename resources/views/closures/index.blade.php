@@ -2,7 +2,6 @@
 
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    @include('layouts.datatables_css')
     @include('layouts.costumcss')
 @endsection
 
@@ -33,7 +32,9 @@
                     <div class="clearfix"></div>
                     <div class="box box-primary">
                         <div class="box-body"  >
-                            <table class="table table-hover table-bordered partners-table" style="width: 100%;"></table>
+                            <table class="table table-hover table-bordered partners-table" style="width: 100%;">
+                                @include('closures.table')
+                            </table>
                         </div>
                     </div>
                     <div class="text-center"></div>
@@ -44,16 +45,14 @@
 @endsection
 
 @section('scripts')
-    @include('layouts.datatables_js')
+    <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/public/js/currencyFormatDE.js') }} " type="text/javascript"></script>
+
 
     <script type="text/javascript">
         $(function () {
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            ajaxSetup();
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
@@ -72,8 +71,37 @@
                     {title: 'Szép kártya', data: 'szcard', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'szcard'},
                     {title: 'Napközben', data: 'dayduring', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'dayduring'},
                     {title: 'Összesen', data: 'closureValue', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'closureValue',},
-               ]
-            });
+                ],
+                buttons: [],
+                footerCallback: function (row, data, start, end, display) {
+                var api = this.api();
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                };
+
+                // Total over all pages
+                total = api
+                    .column(5)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Total over this page
+                pageTotal = api
+                    .column(5, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Update footer
+                $(api.column(5).footer()).html(currencyFormatDE(total));
+            },
+
+        });
 
             $('.filterBtn').click(function () {
                 let year = $('#year').val() != 0 ? $('#year').val() : -9999;
