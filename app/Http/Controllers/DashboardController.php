@@ -10,6 +10,7 @@ use DataTables;
 use Auth;
 use FinanceClass;
 use ClosuresClass;
+use App\Classes\FinancePeriodClass;
 
 class DashboardController extends Controller
 {
@@ -42,6 +43,65 @@ class DashboardController extends Controller
         $financeClass = new FinanceClass($year);
         return $financeClass->invoicesAmountSumYear();
     }
+
+    public static function getBegin($witch) {
+        if ($witch == 'year') {
+            $begin = date('Y-m-d', strtotime('first day of January'));
+        } elseif ($witch == 'mount') {
+            $begin = date('Y-m-d', strtotime('first day of this month'));
+        } elseif ($witch == 'week') {
+            $begin = date('Y-m-d', strtotime('Monday this week'));
+        }
+        return $begin;
+    }
+
+    public static function getEnd($witch) {
+        if ($witch == 'year') {
+            $end   = date('Y-m-d', strtotime('last day of December'));
+        } elseif ($witch == 'mount') {
+            $end   = date('Y-m-d', strtotime('last day of this month'));
+        } elseif ($witch == 'week') {
+            $end   = date('Y-m-d', strtotime('Sunday this week'));
+        }
+        return $end;
+    }
+
+    public static function sumInvoice(Request $request) {
+        $financeClass = new FinancePeriodClass(self::getBegin($request->get('witch')), self::getEnd($request->get('witch')));
+        return $financeClass->invoicesAmountPeriod();
+    }
+
+    public static function sumClosure(Request $request) {
+        $financeClass = new FinancePeriodClass(self::getBegin($request->get('witch')), self::getEnd($request->get('witch')));
+        return $financeClass->closuresAmountPeriod();
+    }
+
+    public static function sumFinancialResult(Request $request) {
+        $financeClass = new FinancePeriodClass(self::getBegin($request->get('witch')), self::getEnd($request->get('witch')));
+        return $financeClass->closuresAmountPeriod() - $financeClass->invoicesAmountPeriod();
+    }
+
+    public static function sumCash(Request $request) {
+        $closuresClass = new ClosuresClass(self::getBegin($request->get('witch')), self::getEnd($request->get('witch')));
+        return $closuresClass->cashPeriod();
+    }
+
+    public static function sumCard(Request $request) {
+        $closuresClass = new ClosuresClass(self::getBegin($request->get('witch')), self::getEnd($request->get('witch')));
+        return $closuresClass->cardPeriod();
+    }
+
+    public static function sumSZCard(Request $request) {
+        $closuresClass = new ClosuresClass(self::getBegin($request->get('witch')), self::getEnd($request->get('witch')));
+        return $closuresClass->szcardPeriod();
+    }
+
+    public static function sumAverige(Request $request) {
+        $closuresClass = new ClosuresClass(self::getBegin($request->get('witch')), self::getEnd($request->get('witch')));
+        return $closuresClass->averigePeriod();
+    }
+
+
 
     public static function closuresAmountSumThisYear($year) {
         $financeClass = new FinanceClass($year);

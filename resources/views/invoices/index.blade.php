@@ -29,7 +29,7 @@
                                     <div class="col-sm-6">
                                         {!! Form::select('partner', \App\Http\Controllers\PartnersController::DDDW(), null,
                                                 ['class'=>'select2 form-control', 'id' => 'partner']) !!}
-                                    </div>
+                                        </div>
                                     <div class="col-sm-1">
                                         <a href="#" class="btn btn-success filterBtn">Szűrés</a>
                                     </div>

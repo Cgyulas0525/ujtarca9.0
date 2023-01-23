@@ -28,7 +28,7 @@ class ClosuresClass
             ->whereBetween('closuredate', [$this->begin, $this->end])
             ->get();
 
-        return $data[0]->cash;
+        return !is_null($data[0]->cash) ? $data[0]->cash : 0;
     }
 
     public function cardPeriod() {
@@ -52,7 +52,7 @@ class ClosuresClass
             ->whereBetween('closuredate', [$this->begin, $this->end])
             ->get();
 
-        return Round($data[0]->sum / $data[0]->day, 0);
+        return Round(!is_null($data[0]->sum) ? $data[0]->sum / $data[0]->day : 0, 0);
 
     }
 }

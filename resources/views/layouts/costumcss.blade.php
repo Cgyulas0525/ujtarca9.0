@@ -1,5 +1,16 @@
 <style>
 
+    .finance-button-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .finance-button{
+        border: none;
+        padding: 8px;
+        margin-left: 10px;
+    }
     .alapgomb {
         border: 2px solid gray;
         box-shadow: 0px 8px 15px rgba(0,0,0,0.1);

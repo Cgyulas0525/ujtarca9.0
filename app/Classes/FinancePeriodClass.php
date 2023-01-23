@@ -3,6 +3,7 @@
 namespace App\Classes;
 
 use DB;
+use function PHPUnit\Framework\isNull;
 
 class FinancePeriodClass
 {
@@ -22,7 +23,7 @@ class FinancePeriodClass
             ->whereBetween('dated', [$this->begin, $this->end])
             ->get();
 
-        return $data[0]->amount;
+        return isset($data[0]->amount) ? $data[0]->amount : 0;
     }
 
     public function closuresAmountPeriod() {
@@ -32,7 +33,7 @@ class FinancePeriodClass
             ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
             ->get();
 
-        return $data[0]->dailysum;
+        return isset($data[0]->dailysum) ? $data[0]->dailysum : 0;
     }
 
     public function resultPeriod() {
