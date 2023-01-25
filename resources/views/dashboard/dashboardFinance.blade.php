@@ -14,7 +14,7 @@
                                                 'endlabel' => 'ft',
                                                 'function' => number_format(DashboardController::invoicesAmountSumThisYear([date('Y')]),0,",",".") ])
     @include('dashboard.dashboardFinanceItem', ['title' => 'Eredmény',
-                                                'route' => 'invoices.index',
+                                                'route' => 'TurnoverIndex',
                                                 'icon' => 'ion-pie-graph',
                                                 'box' => 'small-box bg-danger',
                                                 'label' => date('Y'),

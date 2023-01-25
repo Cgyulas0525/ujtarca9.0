@@ -82,6 +82,12 @@
                 <p>Kimutatások</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('pTIndex') }}" class="nav-link">
+                <i class="fas fa-wallet"></i>
+                <p>Partner időszaki forgalom</p>
+            </a>
+        </li>
     </ul>
 </li>
 

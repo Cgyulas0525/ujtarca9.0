@@ -10,6 +10,7 @@ use App\Http\Controllers\ClosuresController;
 use App\Http\Controllers\ClosureCimletsController;
 use App\Http\Controllers\RiportsController;
 use App\Http\Controllers\PartnersController;
+use App\Http\Controllers\PartnerTrafficController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +70,5 @@ Route::get('RevenueExpenditureMonthIndex', [RiportsController::class, 'RevenueEx
 Route::get('TurnoverIndex', [RiportsController::class, 'TurnoverIndex'])->name('TurnoverIndex');
 
 Route::get('postcodeSettlementDDDW',[PartnersController::class, 'postcodeSettlementDDDW'])->name('postcodeSettlementDDDW');
+Route::get('pTIndex',[PartnerTrafficController::class, 'pTIndex'])->name('pTIndex');
+Route::get('partnerTrafficIndex/{begin}/{end}/{partner}',[PartnerTrafficController::class, 'partnerTrafficIndex'])->name('partnerTrafficIndex');
