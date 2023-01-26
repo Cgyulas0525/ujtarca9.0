@@ -1,5 +1,4 @@
 <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
-<script src="{{ asset('/public/js/addDays.js') }} " type="text/javascript"></script>
 <script src="{{ asset('/public/js/required.js') }} " type="text/javascript"></script>
 <script src="{{ asset('/public/js/sweetalert.js') }} " type="text/javascript"></script>
 

@@ -1,5 +1,5 @@
 <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
-<script src="{{ asset('/public/js/addDays.js') }} " type="text/javascript"></script>
+<script src="{{ asset('/public/js/addDate.js') }} " type="text/javascript"></script>
 <script src="{{ asset('/public/js/required.js') }} " type="text/javascript"></script>
 <script src="{{ asset('/public/js/sweetalert.js') }} " type="text/javascript"></script>
 
@@ -16,6 +16,7 @@
             $("#deadline").css("background-color", color);
             $("#performancedate").css("background-color", color);
         }
+
 
         function paymentMethodDate(isDated) {
             var paymentMethod = $('#paymentmethod_id').val();
@@ -34,7 +35,7 @@
                 dateFieldModifying(false, "yellow");
                 if (paymentMethod == 2) {
                     if (Date.parse(dated)) {
-                        var deadline = addDays(dated, 8);
+                        var deadline = addDate(dated, 8);
                         $('#deadline').val(deadline);
                     }
                 }
