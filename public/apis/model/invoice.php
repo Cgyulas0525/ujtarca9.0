@@ -2,11 +2,6 @@
 
 class invoice
 {
-    public $id;
-    public $filename;
-    public $created_at;
-    public $updated_at;
-    public $deleted_at;
 
     function __construct()
     {

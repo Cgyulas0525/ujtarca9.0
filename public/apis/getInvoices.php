@@ -4,7 +4,4 @@ require PATH_MODEL . "/mySQLDatabase.php";
 require PATH_MODEL . "/invoice.php";
 
 $invoice = new Invoice();
-
-$results = $invoice->getAll();
-
-echo json_encode($results);
+echo json_encode($invoice->getAll());
