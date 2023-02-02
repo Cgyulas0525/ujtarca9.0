@@ -72,3 +72,9 @@ Route::get('TurnoverIndex', [RiportsController::class, 'TurnoverIndex'])->name('
 Route::get('postcodeSettlementDDDW',[PartnersController::class, 'postcodeSettlementDDDW'])->name('postcodeSettlementDDDW');
 Route::get('pTIndex',[PartnerTrafficController::class, 'pTIndex'])->name('pTIndex');
 Route::get('partnerTrafficIndex/{begin}/{end}/{partner}',[PartnerTrafficController::class, 'partnerTrafficIndex'])->name('partnerTrafficIndex');
+
+
+Route::resource('quantities', App\Http\Controllers\QuantitiesController::class);
+
+
+Route::resource('products', App\Http\Controllers\ProductsController::class);

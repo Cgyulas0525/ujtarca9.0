@@ -9,6 +9,7 @@
 <li class="nav-item has-treeview">
     <a href="#" class="nav-link {{ Request::is('cimlets*') ||
                                    Request::is('paymentMethods*') ||
+                                   Request::is('quantities*') ||
                                    Request::is('partnerTypes*') ? 'active' : '' }}">
         <i class="fas fa-university"></i>
         <p>Szótár<i class="right fas fa-angle-left"></i></p>
@@ -28,13 +29,20 @@
                 <p>Fizetési mód</p>
             </a>
         </li>
-    <li class="nav-item">
-        <a href="{{ route('partnerTypes.index') }}"
-           class="nav-link {{ Request::is('partnerTypes*') ? 'active' : '' }}">
-            <i class="fas fa-user-tag"></i>
-            <p>Partner típus</p>
-        </a>
-    </li>
+        <li class="nav-item">
+            <a href="{{ route('partnerTypes.index') }}"
+               class="nav-link {{ Request::is('partnerTypes*') ? 'active' : '' }}">
+                <i class="fas fa-user-tag"></i>
+                <p>Partner típus</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('quantities.index') }}"
+               class="nav-link {{ Request::is('quantities*') ? 'active' : '' }}">
+                <i class="fas fa-box"></i>
+                <p>Mennyiségi egység</p>
+            </a>
+        </li>
     </ul>
 </li>
 <li class="nav-item">
@@ -42,6 +50,13 @@
        class="nav-link {{ Request::is('partners*') ? 'active' : '' }}">
         <i class="fas fa-handshake"></i>
         <p>Partner</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('products.index') }}"
+       class="nav-link {{ Request::is('products*') ? 'active' : '' }}">
+        <i class="fab fa-product-hunt"></i>
+        <p>Termékek</p>
     </a>
 </li>
 <li class="nav-item">
@@ -90,6 +105,7 @@
         </li>
     </ul>
 </li>
+
 
 
 
