@@ -60,6 +60,13 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ route('offers.index') }}"
+       class="nav-link {{ Request::is('offers*') ? 'active' : '' }}">
+        <i class="fab fa-buffer"></i>
+        <p>Megrendelés</p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('invoices.index') }}"
        class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
         <i class="fas fa-file-invoice"></i>
@@ -105,8 +112,5 @@
         </li>
     </ul>
 </li>
-
-
-
 
 

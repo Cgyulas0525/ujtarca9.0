@@ -78,3 +78,9 @@ Route::resource('quantities', App\Http\Controllers\QuantitiesController::class);
 
 
 Route::resource('products', App\Http\Controllers\ProductsController::class);
+
+
+Route::resource('offers', App\Http\Controllers\OffersController::class);
+
+
+Route::resource('offerdetails', App\Http\Controllers\OfferdetailsController::class);

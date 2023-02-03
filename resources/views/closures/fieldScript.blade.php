@@ -76,9 +76,6 @@
             ],
             buttons: []
         });
-
-
-
     });
 
     function QuantityChange(Row, value) {
@@ -89,10 +86,8 @@
 
         if ( d.value != value ) {
 
-            console.log(d.value, value);
             out = out - (parseInt(d.value) * parseInt(d.cimletValue));
             dailysum = dailysum - (parseInt(d.value) * parseInt(d.cimletValue));
-
 
             d.value = value;
             d.sumValue = value * d.cimletValue;

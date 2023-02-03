@@ -102,4 +102,8 @@ class Partners extends Model
     public function invoices() {
         return $this->hasMany(Invoices::class);
     }
+
+    public function offers() {
+        return $this->hasMany(Offers::class);
+    }
 }
