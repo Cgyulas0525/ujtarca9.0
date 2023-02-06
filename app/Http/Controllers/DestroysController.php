@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Classes\SWAlertClass;
-
-use App\Models\Contractdeadlineitem;
+use App\Models\Partners;
 
 class DestroysController extends Controller
 {
-
     public function beforeDestroys($table, $id, $route) {
         $view = 'layouts.show';
         $model_name = 'App\Models\\'.$table;
@@ -40,7 +38,6 @@ class DestroysController extends Controller
         return view($view)->with('table', $data);
     }
 
-
     public function destroy($table, $id, $route) {
         $route .= '.index';
         $model_name = 'App\Models\\'.$table;
@@ -55,17 +52,6 @@ class DestroysController extends Controller
         return redirect(route($route));
     }
 
-    public function deletingContractAnnex($data) {
-        if (!is_null($data->document_url)) {
-            unlink($data->document_url);
-        }
-    }
-
-    public function deletingContractDeadLine($data) {
-        Contractdeadlineitem::where('contractdeadline_id', $data->id)->delete();
-    }
-
-
     public function destroyWithParam($table, $id, $route, $param) {
         $model_name = 'App\Models\\'.$table;
         $data = $model_name::find($id);
@@ -74,19 +60,30 @@ class DestroysController extends Controller
             return redirect(route($route, $param));
         }
 
-        switch (strtolower($table)) {
-            case "contractannex":
-                $this->deletingContractAnnex($data);
-                break;
-            case "contractdeadline":
-                $this->deletingContractDeadLine($data);
-                break;
-            default:
-                echo "Your favorite color is neither red, blue, nor green!";
-        }
-
         $data->delete();
         return redirect(route($route,  $param));
+    }
+
+    public function beforePartnerActivation($id, $route) {
+        $view = 'layouts.show';
+        $data = Partners::find($id);
+        SWAlertClass::choice($id, 'Biztosan változtatni akarja az aktívitás jelzőt?', '/'.$route, 'Kilép', '/partnerActivation/'.$id.'/'.$route, 'Váltás');
+
+        return view($view)->with('table', $data);
+    }
+
+    public function partnerActivation($id, $route) {
+        $route .= '.index';
+        $partner = Partners::find($id);
+
+        if (empty($partner)) {
+            return redirect(route($route));
+        }
+
+        $partner->active = $partner->active == 0 ? 1 : 0;
+        $partner->save();
+
+        return redirect(route($route));
     }
 
 }

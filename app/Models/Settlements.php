@@ -62,7 +62,7 @@ class Settlements extends Model
     ];
 
     public function partners() {
-        return $this->hasMany(Partners::class);
+        return $this->hasMany(Partners::class, 'settlement_id');
     }
 
 

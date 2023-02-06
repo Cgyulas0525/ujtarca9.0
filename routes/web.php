@@ -11,6 +11,7 @@ use App\Http\Controllers\ClosureCimletsController;
 use App\Http\Controllers\RiportsController;
 use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\PartnerTrafficController;
+use App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,6 @@ Route::get('/home', [
 
 Route::get('index', [DashboardController::class, 'index'])->name('dashboard');
 
-
 Route::resource('cimlets', App\Http\Controllers\CimletsController::class);
 
 Route::get('destroy/{table}/{id}/{route}', [DestroysController::class, 'destroy'])->name('destroys');
@@ -43,6 +43,9 @@ Route::get('destroyWithParam/{table}/{id}/{route}/{param}', [DestroysController:
 
 Route::get('beforeDestroys/{table}/{id}/{route}', [DestroysController::class, 'beforeDestroys'])->name('beforeDestroys');
 Route::get('beforeDestroysWithParam/{table}/{id}/{route}/{param}', [DestroysController::class, 'beforeDestroysWithParam'])->name('beforeDestroysWithParam');
+
+Route::get('beforePartnerActivation/{id}/{route}', [DestroysController::class, 'beforePartnerActivation'])->name('beforePartnerActivation');
+Route::get('partnerActivation/{id}/{route}', [DestroysController::class, 'partnerActivation'])->name('partnerActivation');
 
 Route::resource('paymentMethods', App\Http\Controllers\PaymentMethodsController::class);
 
@@ -70,17 +73,18 @@ Route::get('RevenueExpenditureMonthIndex', [RiportsController::class, 'RevenueEx
 Route::get('TurnoverIndex', [RiportsController::class, 'TurnoverIndex'])->name('TurnoverIndex');
 
 Route::get('postcodeSettlementDDDW',[PartnersController::class, 'postcodeSettlementDDDW'])->name('postcodeSettlementDDDW');
+Route::get('partnersIndex/{active?}', [PartnersController::class, 'partnersIndex'])->name('partnersIndex');
+Route::get('partnerFactSheet/{id}', [PartnersController::class, 'partnerFactSheet'])->name('partnerFactSheet');
+
 Route::get('pTIndex',[PartnerTrafficController::class, 'pTIndex'])->name('pTIndex');
 Route::get('partnerTrafficIndex/{begin}/{end}/{partner}',[PartnerTrafficController::class, 'partnerTrafficIndex'])->name('partnerTrafficIndex');
 
-
 Route::resource('quantities', App\Http\Controllers\QuantitiesController::class);
 
-
 Route::resource('products', App\Http\Controllers\ProductsController::class);
-
+Route::get('products.print',[ProductsController::class, 'print'])->name('productsPrint');
+Route::get('products.pdfEmail',[ProductsController::class, 'pdfEmail'])->name('pdfEmail');
 
 Route::resource('offers', App\Http\Controllers\OffersController::class);
-
 
 Route::resource('offerdetails', App\Http\Controllers\OfferdetailsController::class);

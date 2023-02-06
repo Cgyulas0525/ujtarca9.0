@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use DB;
 
 /**
  * Class Offers
@@ -68,8 +69,7 @@ class Offers extends Model
     ];
 
     public function partners() {
-        return $this->belongsTo(Partners::class);
+        return $this->belongsTo(Partners::class, 'partners_id');
     }
-
 
 }

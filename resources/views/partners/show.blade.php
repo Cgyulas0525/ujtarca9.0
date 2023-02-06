@@ -1,11 +1,17 @@
 @extends('layouts.app')
 
+@section('css')
+    <link rel="stylesheet" href="pubic/css/app.css">
+    @include('layouts.costumcss')
+@endsection
+
+
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>{{ $partners->name }}</h1>
+                    <h1>{{ $partners->name }} adatlap</h1>
                 </div>
             </div>
         </div>
@@ -17,17 +23,11 @@
 
         <div class="card">
 
-            {!! Form::model($partners, ['route' => ['partners.update', $partners->id], 'method' => 'patch']) !!}
-
-            <div class="card-body">
-                <div class="row">
-                    @include('formGroup.formGroupFromController', ['array' => App\Http\Controllers\PartnersController::fields(isset($partners) ? $partners : null),
-                                                                   'scriptFile' => 'partners.fieldScript'])
-                </div>
+             <div class="card-body">
+                @include('partners.show_fields')
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Ment', ['class' => 'btn btn-primary']) !!}
                 <a href="{{ route('partners.index') }}" class="btn btn-default">Kilép</a>
             </div>
 

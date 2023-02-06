@@ -48,7 +48,8 @@ class Partners extends Model
         'address',
         'email',
         'phonenumber',
-        'description'
+        'description',
+        'active'
     ];
 
     /**
@@ -67,7 +68,8 @@ class Partners extends Model
         'address' => 'string',
         'email' => 'string',
         'phonenumber' => 'string',
-        'description' => 'string'
+        'description' => 'string',
+        'active' => 'integer'
     ];
 
     /**
@@ -86,24 +88,39 @@ class Partners extends Model
         'email' => 'nullable|string|max:50',
         'phonenumber' => 'nullable|string|max:20',
         'description' => 'nullable|string|max:500',
+        'active' => 'nullable|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
     ];
 
+    protected $append = ['settlementName', 'fullAddress'];
+
     public function partnertypes() {
-        return $this->belongsTo(Partnertypes::class);
+        return $this->belongsTo(Partnertypes::class, 'partnertypes_id');
     }
 
     public function settlement() {
-        return $this->belongsTo(Settlement::class);
+        return $this->belongsTo(Settlements::class, 'settlement_id');
     }
 
     public function invoices() {
-        return $this->hasMany(Invoices::class);
+        return $this->hasMany(Invoices::class, 'partner_id');
     }
 
     public function offers() {
-        return $this->hasMany(Offers::class);
+        return $this->hasMany(Offers::class, 'partners_id');
+    }
+
+    public function aviable() {
+        return (empty(Invoices::where('partner_id', $this->id)->first()) && empty(Offers::where('partners_id', $this->id)->first())) ? true : false;
+    }
+
+    public function getSettlementNameAttribute() {
+        return (empty($this->settlement_id) || $this->settlement_id == 0) ? '' : Settlements::find($this->settlement_id)->name;
+    }
+
+    public function getFullAddressAttribute() {
+        return (empty($this->postcode) ? '' : $this->postcode) . " " . (empty($this->settlement_id) ? '' : Settlements::find($this->settlement_id)->name) . ' ' . (empty($this->address) ? '' : $this->address);
     }
 }

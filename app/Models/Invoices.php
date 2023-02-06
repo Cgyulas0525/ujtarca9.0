@@ -84,11 +84,11 @@ class Invoices extends Model
     ];
 
     public function paymentmethod() {
-        return $this->belongsTo(PaymentMethods::class);
+        return $this->belongsTo(PaymentMethods::class, 'paymentmethod_id');
     }
 
     public function partner() {
-        return $this->belongsTo(Partners::class);
+        return $this->belongsTo(Partners::class, 'partner_id');
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ToolsClass;
 use App\Http\Requests\CreatePartnersRequest;
 use App\Http\Requests\UpdatePartnersRequest;
 use App\Models\PartnerTypes;
@@ -37,9 +38,22 @@ class PartnersController extends AppBaseController
             ->addIndexColumn()
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('partners.edit', [$row->id]) . '"
-                             class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn.'<a href="' . route('beforeDestroys', ['Partners', $row["id"], 'partners']) . '"
-                                 class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
+                             class="edit btn btn-success btn-sm  editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
+                if ($row->partnertypes_id != 5) {
+                    if ($row->active == 0) {
+                        if (ToolsClass::aviable($row->id)) {
+                            $btn = $btn.'<a href="' . route('beforeDestroys', ['Partners', $row->id, 'partners']) . '"
+                                             class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
+                        }
+                        $btn = $btn.'<a href="' . route('beforePartnerActivation', [$row->id, 'partners']) . '"
+                                         class="btn btn-warning btn-sm deleteProduct" title="Aktiválás"><i class="fas fa-user-check"></i></a>';
+                    } else {
+                        $btn = $btn.'<a href="' . route('beforePartnerActivation', [$row->id, 'partners']) . '"
+                                         class="btn btn-warning btn-sm deleteProduct" title="Deaktiválás"><i class="fas fa-user-alt-slash"></i></a>';
+                    }
+                    $btn = $btn.'<a href="' . route('partners.show', [$row->id]) . '"
+                                     class="btn btn-info btn-sm deleteProduct" title="Adatlap"><i class="fas fa-newspaper"></i></a>';
+                }
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -60,7 +74,38 @@ class PartnersController extends AppBaseController
 
             if ($request->ajax()) {
 
-                $data = $this->partnersRepository->all();
+                $data = DB::table('partners as t1')
+                          ->join('partnertypes as t2', 't2.id', '=', 't1.partnertypes_id')
+                          ->select('t1.*', 't2.name as partnerTypesName')
+                          ->whereNull('t1.deleted_at')
+                          ->where('t1.active', 1)
+                          ->get();
+                return $this->dwData($data);
+
+            }
+
+            return view('partners.index');
+        }
+    }
+
+    public function partnersIndex(Request $request, $active = null)
+    {
+        if( Auth::check() ){
+
+            if ($request->ajax()) {
+
+                $data = DB::table('partners as t1')
+                          ->join('partnertypes as t2', 't2.id', '=', 't1.partnertypes_id')
+                          ->select('t1.*', 't2.name as partnerTypesName')
+                          ->whereNull('t1.deleted_at')
+                          ->where( function($query) use ($active) {
+                              if (is_null($active) || $active == -9999 ) {
+                                  $query->whereNotNull('t1.active');
+                              } else {
+                                  $query->where('t1.active', '=', $active);
+                              }
+                          })
+                          ->get();
                 return $this->dwData($data);
 
             }
@@ -181,62 +226,72 @@ class PartnersController extends AppBaseController
          */
         public static function DDDW() : array
         {
-            return [" "] + partners::orderBy('name')->pluck('name', 'id')->toArray();
+            return [" "] + partners::where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
         }
 
-    public static function fields() {
+    public static function fields($partners) : array{
         $formGroupArray = [];
         $item = ["label" => Form::label('name', 'Név:'),
-            "field" => Form::text('name', null, ['class' => 'form-control','maxlength' => 100]),
+            "field" => Form::text('name', null, ['class' => 'form-control','maxlength' => 100,
+                                        'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('partnertypes_id', 'Típus:'),
             "field" => Form::select('partnertypes_id', PartnerTypesController::DDDW(), null,
-                ['class'=>'select2 form-control', 'id' => 'partnertypes_id', 'required' => true]),
+                ['class'=>'select2 form-control', 'id' => 'partnertypes_id', 'required' => true, 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('taxnumber', 'Adószám:'),
-            "field" => Form::text('taxnumber', null, ['class' => 'form-control','maxlength' => 13, 'data-inputmask'=>"'mask': '99999999-9-99'"]),
+            "field" => Form::text('taxnumber', null, ['class' => 'form-control','maxlength' => 13, 'data-inputmask'=>"'mask': '99999999-9-99'", 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('bankaccount', 'Bankszámla:'),
-            "field" => Form::text('bankaccount', null, ['class' => 'form-control','maxlength' => 26, 'data-inputmask'=>"'mask': '99999999-99999999-99999999'"]),
+            "field" => Form::text('bankaccount', null, ['class' => 'form-control','maxlength' => 26, 'data-inputmask'=>"'mask': '99999999-99999999-99999999'", 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
-
+        if (isset($partners) && $partners->active == 0) {
+            $form = Form::text('postcode', $partners->postcode, ['class' => 'form-control', 'readonly' => true]);
+        } else {
+            $form = Form::select('postcode', SettlementsClass::settlementsPostcodeDDDW(), null,
+                ['class'=>'select2 form-control', 'id' => 'postcode', 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]);
+        }
         $item = ["label" => Form::label('postcode', 'Irányító szám:'),
-            "field" => Form::select('postcode', SettlementsClass::settlementsPostcodeDDDW(), null,
-                ['class'=>'select2 form-control', 'id' => 'postcode', 'required' => true]),
+            "field" => $form,
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
+        if (isset($partners) && $partners->active == 0) {
+            $form = Form::text('settlement_id', $partners->settlementName, ['class' => 'form-control', 'readonly' => true]);
+        } else {
+            $form = Form::select('settlement_id', SettlementsClass::settlementsDDDW(), null,
+                ['class'=>'select2 form-control', 'id' => 'settlement_id', 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]);
+        }
         $item = ["label" => Form::label('settlement_id', 'Város:'),
-            "field" => Form::select('settlement_id', SettlementsClass::settlementsDDDW(), null,
-                ['class'=>'select2 form-control', 'id' => 'settlement_id', 'required' => true]),
+            "field" => $form,
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('address', 'Cím:'),
-            "field" => Form::text('address', null, ['class' => 'form-control','maxlength' => 100]),
+            "field" => Form::text('address', null, ['class' => 'form-control','maxlength' => 100, 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('email', 'Email:'),
-            "field" => Form::email('email', null, ['class' => 'form-control','maxlength' => 50]),
+            "field" => Form::email('email', null, ['class' => 'form-control','maxlength' => 50, 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('phonenumber', 'Telefonszám:'),
-            "field" => Form::text('phonenumber', null, ['class' => 'form-control', 'id' => 'phonenumber','maxlength' => 20, 'data-inputmask'=>"'mask': '9999-99-999-9999'"]),
+            "field" => Form::text('phonenumber', null, ['class' => 'form-control', 'id' => 'phonenumber','maxlength' => 20, 'data-inputmask'=>"'mask': '9999-99-999-9999'", 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true)  : false]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
@@ -251,6 +306,29 @@ class PartnersController extends AppBaseController
 
     public function postcodeSettlementDDDW(Request $request) {
         return SettlementsClass::postcodeSettlementDDDW($request->get('postcode'));
+    }
+
+    public function partnerFactSheet(Request $request, $id) {
+        if( Auth::check() ) {
+
+            if ($request->ajax()) {
+
+                $data = DB::table('invoices')
+                    ->join('paymentmethods', 'paymentmethods.id', '=', 'invoices.paymentmethod_id')
+                    ->select('invoices.*', 'paymentmethods.name as paymentMethodName')
+                    ->where('invoices.partner_id', $id)
+                    ->whereNull('invoices.deleted_at')
+                    ->orderBy('invoices.dated')
+                    ->get();
+
+                return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+
+            }
+
+            return view('partners.index');
+        }
     }
 
 }

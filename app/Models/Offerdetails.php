@@ -68,11 +68,11 @@ class Offerdetails extends Model
     ];
 
     public function quantities() {
-        return $this->belongsTo(Quantities::class);
+        return $this->belongsTo(Quantities::class, 'quantities_id');
     }
 
     public function products() {
-        return $this->belongsTo(Products::class);
+        return $this->belongsTo(Products::class, 'products_id');
     }
 
 

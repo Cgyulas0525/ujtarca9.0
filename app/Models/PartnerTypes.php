@@ -60,6 +60,6 @@ class PartnerTypes extends Model
     ];
 
     public function partners() {
-        return $this->hasMany(Partners::class);
+        return $this->hasMany(Partners::class, 'partnertypes_id');
     }
 }

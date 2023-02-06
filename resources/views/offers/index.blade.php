@@ -41,12 +41,14 @@
                 serverSide: true,
                 scrollY: 390,
                 scrollX: true,
-                order: [[1, 'desc']],
+                order: [[1, 'desc'], [2, 'asc']],
                 ajax: "{{ route('offers.index') }}",
                 columns: [
                     {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('offers.create') !!}"><i class="fa fa-plus-square"></i></a>',
                         data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
+                    {title: 'Dátum', data: 'offerdate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'offerdate'},
                     {title: 'Megrendelés', data: 'offernumber', name: 'offernumber'},
+                    {title: 'Partner', data: 'partnerName', name: 'partnerName'},
                 ],
                 buttons: [],
             });

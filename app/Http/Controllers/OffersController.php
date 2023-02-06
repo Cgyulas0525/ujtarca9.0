@@ -33,7 +33,7 @@ class OffersController extends AppBaseController
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('offers.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn.'<a href="' . route('beforeDestroys', ['Offers', $row["id"], 'offers']) . '"
+                $btn = $btn.'<a href="' . route('beforeDestroys', ['Offers', $row->id, 'offers']) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
                 return $btn;
             })
@@ -55,7 +55,11 @@ class OffersController extends AppBaseController
 
             if ($request->ajax()) {
 
-                $data = $this->offersRepository->all();
+                $data = DB::table('offers as t1')
+                    ->join('partners as t2', 't2.id', '=', 't1.partners_id')
+                    ->select('t1.*', 't2.name as partnerName')
+                    ->whereNull('t1.deleted_at')
+                    ->get();
                 return $this->dwData($data);
 
             }

@@ -64,11 +64,11 @@ class ClosureCimlets extends Model
     ];
 
     public function closures() {
-        return $this->belongsTo(Closures::class);
+        return $this->belongsTo(Closures::class, 'closures_id');
     }
 
     public function cimlets() {
-        return $this->belongsTo(Cimlets::class);
+        return $this->belongsTo(Cimlets::class, 'cimlets_id');
     }
 
 }

@@ -64,7 +64,7 @@ class Cimlets extends Model
     ];
 
     public function closurecimlets() {
-        return $this->hasMany(ClosureCimlets::class);
+        return $this->hasMany(ClosureCimlets::class, 'cimlets_id');
     }
 
 }

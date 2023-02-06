@@ -32,6 +32,7 @@ class PartnersFactory extends Factory
         'email' => $this->faker->word,
         'phonenumber' => $this->faker->word,
         'description' => $this->faker->word,
+        'avtive' => $this->faker->randomDigitNotNull,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s'),
         'deleted_at' => $this->faker->date('Y-m-d H:i:s')
