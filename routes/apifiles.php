@@ -15,4 +15,6 @@ use App\Http\Controllers\MyApiController;
 */
 
 Route::get('api/partnerActiveFlag', [MyApiController::class, 'partnerActiveFlag']);
+Route::get('api/getProduct', [MyApiController::class, 'getProduct']);
+Route::get('api/getQuantity', [MyApiController::class, 'getQuantity']);
 

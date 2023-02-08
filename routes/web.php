@@ -12,6 +12,7 @@ use App\Http\Controllers\RiportsController;
 use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\PartnerTrafficController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\OfferdetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +89,5 @@ Route::get('products.pdfEmail',[ProductsController::class, 'pdfEmail'])->name('p
 Route::resource('offers', App\Http\Controllers\OffersController::class);
 
 Route::resource('offerdetails', App\Http\Controllers\OfferdetailsController::class);
+Route::get('offerdetailsIndex/{id}', [OfferdetailsController::class, 'offerdetailsIndex'])->name('offerdetailsIndex');
+Route::get('offerdetailsCreate/{id}', [OfferdetailsController::class, 'offerdetailsCreate'])->name('offerdetailsCreate');

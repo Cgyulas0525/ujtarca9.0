@@ -219,15 +219,29 @@ class PartnersController extends AppBaseController
         return redirect(route('partners.index'));
     }
 
-        /*
-         * Dropdown for field select
-         *
-         * return array
-         */
-        public static function DDDW() : array
-        {
-            return [" "] + partners::where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
-        }
+    /*
+     * Dropdown for field select
+     *
+     * return array
+     */
+    public static function DDDW($partnertypes = null) : array
+    {
+        return [" "] + Partners::where( function($query) use ($partnertypes) {
+                if (is_null($partnertypes)) {
+                    $query->whereNotNull('partnertypes_id');
+                } else {
+                    $query->where('partnertypes_id', '=', $partnertypes);
+                }
+            })
+            ->where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+
+    public static function DDDWSupplier() : array
+    {
+        return [" "] + Partners::whereIn( 'partnertypes_id', [1,2,4,6,7,8])
+                ->where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
+    }
 
     public static function fields($partners) : array{
         $formGroupArray = [];

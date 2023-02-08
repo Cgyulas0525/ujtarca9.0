@@ -184,7 +184,21 @@ class ProductsController extends AppBaseController
      */
     public static function DDDW() : array
     {
-        return [" "] + products::orderBy('name')->pluck('name', 'id')->toArray();
+        return [" "] + Products::orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+    /*
+     * Dropdown for field select
+     *
+     * return array
+     */
+    public static function offerDetailsProductsDDDW($offerId) : array
+    {
+        return [" "] + DB::table('products')
+                         ->whereNull('deleted_at')
+                         ->whereNotIn('id', function ($query) use($offerId) {
+                             return $query->from('offerdetails')->select('offerdetails.products_id')->where('offerdetails.offers_id', $offerId)->get();
+                         })->orderBy('name')->pluck('name', 'id')->toArray();
     }
 
     public function print() {

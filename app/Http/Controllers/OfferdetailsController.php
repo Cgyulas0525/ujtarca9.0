@@ -8,6 +8,7 @@ use App\Repositories\OfferdetailsRepository;
 use App\Http\Controllers\AppBaseController;
 
 use App\Models\Offerdetails;
+use App\Models\Offers;
 
 use Illuminate\Http\Request;
 use Flash;
@@ -55,7 +56,40 @@ class OfferdetailsController extends AppBaseController
 
             if ($request->ajax()) {
 
-                $data = $this->offerdetailsRepository->all();
+                $data = DB::table('offerdetails as t1')
+                          ->join('products as t2', 't2.id', '=', 't1.products_id')
+                          ->join('quantities as t3', 't3.id', '=', 't1.quantities_id')
+                          ->select('t1.*', 't2.name as productName', 't3.name as quantityName')
+                          ->whereNull('t1.deleted_at')
+                          ->get();
+                return $this->dwData($data);
+
+            }
+
+            return view('offerdetails.index');
+        }
+    }
+
+    /**
+     * Display a listing of the Offerdetails.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function offerdetailsIndex(Request $request, $id)
+    {
+        if( Auth::check() ){
+
+            if ($request->ajax()) {
+
+                $data = DB::table('offerdetails as t1')
+                    ->join('products as t2', 't2.id', '=', 't1.products_id')
+                    ->join('quantities as t3', 't3.id', '=', 't1.quantities_id')
+                    ->select('t1.*', 't2.name as productName', 't3.name as quantityName')
+                    ->where('t1.offers_id', $id)
+                    ->whereNull('t1.deleted_at')
+                    ->get();
                 return $this->dwData($data);
 
             }
@@ -72,6 +106,17 @@ class OfferdetailsController extends AppBaseController
     public function create()
     {
         return view('offerdetails.create');
+    }
+
+    /**
+     * Show the form for creating a new Offerdetails.
+     *
+     * @return Response
+     */
+    public function offerdetailsCreate($id)
+    {
+        $offers = Offers::find($id);
+        return view('offerdetails.create')->with('offers', $offers);
     }
 
     /**

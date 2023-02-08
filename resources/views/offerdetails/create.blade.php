@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Offerdetails</h1>
+                    <h1>{{ $offers->offernumber }} tétel</h1>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
 
             <div class="card-footer">
                 {!! Form::submit('Ment', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('offerdetails.index') }}" class="btn btn-default">Kilép</a>
+                <a href="{{ route('offers.edit', [$offers->id]) }}" class="btn btn-default">Kilép</a>
             </div>
 
             {!! Form::close() !!}
