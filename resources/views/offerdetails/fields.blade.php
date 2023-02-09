@@ -7,8 +7,8 @@
 
 <!-- Quantities Id Field -->
 <div class="form-group col-sm-3">
-    {!! Form::label('quantities_id', 'Mennyiségi egység:') !!}
-    {!! Form::text('quantities_id', null, ['class' => 'form-control', 'id' => 'quantities_id', 'readonly' => true ]) !!}
+    {!! Form::label('quantities_text', 'Mennyiségi egység:') !!}
+    {!! Form::text('quantities_text', null, ['class' => 'form-control', 'id' => 'quantities_text', 'readonly' => true ]) !!}
 </div>
 
 <!-- Value Field -->
@@ -21,6 +21,11 @@
 <div class="form-group col-sm-6">
     {!! Form::hidden('offers_id', 'Offers Id:') !!}
     {!! Form::hidden('offers_id', $offers->id, ['class' => 'form-control']) !!}
+</div>
+<!-- Offers Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::hidden('quantities_id', 'Offers Id:') !!}
+    {!! Form::hidden('quantities_id', null, ['class' => 'form-control', 'id' => 'quantities_id']) !!}
 </div>
 
 @section('scripts')
@@ -46,14 +51,15 @@
                         success: function (res) {
                             if (res.quantities_id != null || res.quantities_id == '') {
                                 let quantity = res.quantities_id;
+                                $('#quantities_id').val(quantity);
                                 $.ajax({
                                     type: "GET",
                                     url: "{{url('api/getQuantity')}}",
                                     data: {id: quantity},
                                     success: function (res) {
                                         if (res.name != null || res.name == '') {
-                                            $("#quantities_id").val(res.name);
-                                            $('#quantities_id').prop('readonly', true);
+                                            $("#quantities_text").val(res.name);
+                                            $('#quantities_text').prop('readonly', true);
                                             $("#value").focus();
                                         }
                                     }

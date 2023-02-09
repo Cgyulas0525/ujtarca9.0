@@ -10,7 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>{{ $offers->offernumber }} {{ date('Y.m.d', strtotime($offers->offerdate)) }}</h1>
+                    <section class="content-header">
+                        <h4>{{ $offers->offernumber }} {{ date('Y.m.d', strtotime($offers->offerdate)) }}
+                            <a href="{{ route('offerPrint', ['id' => $offers->id]) }}" class="btn btn-success alapgomb printBtn" title="Nyomtatás"><i class="fas fa-print"></i></a>
+                            <a href="{{ route('offerEmail', ['id' => $offers->id]) }}" class="btn btn-success alapgomb printBtn" title="Email"><i class="fas fa-envelope-open"></i></a>
+                        </h4>
+                    </section>
                 </div>
             </div>
         </div>
@@ -69,28 +74,72 @@
     <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
+
+        var table;
+
         $(function () {
 
             ajaxSetup();
 
-            var table = $('.detailstable').DataTable({
+            table = $('.detailstable').DataTable({
                 serverSide: true,
                 scrollY: 390,
                 scrollX: true,
                 order: [[1, 'asc']],
                 paging: false,
+                searching: false,
+                select: false,
                 ajax: "{{ route('offerdetailsIndex', ['id' => $offers->id]) }}",
                 columns: [
                     {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('offerdetailsCreate', ['id' => $offers->id]) !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
-                    {title: 'Termék', data: 'productName', name: 'productName'},
-                    {title: 'Me.', data: 'quantityName', name: 'quantityName'},
-                    {title: 'Mennyiség', data: 'value', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'value'},
+                        data: 'action', sClass: "text-center", width: '50px', name: 'action', orderable: false, searchable: false},
+                    {title: 'Termék', data: 'productName', name: 'productName', id: 'productName'},
+                    {title: 'Me.', data: 'quantityName', name: 'quantityName', id: 'quantityName'},
+                    {title: 'Mennyiség', data: 'value', name: 'value', id: 'value'},
+                    {title: 'Id', data: 'id', name: 'id', id: 'id'},
+                ],
+                columnDefs: [
+                    {
+                        targets: [4],
+                        visible: false
+                    },
+                    {
+                        targets: [3],
+                        sClass: 'text-right',
+                        width:'150px',
+                        render: function ( data, type, full, meta ) {
+                            return '<input class="form-control text-right" type="number" value="'+ data +'" onfocusout="QuantityChange('+meta["row"]+', this.value)" pattern="[0-9]+([\.,][0-9]+)?" step="1" style="width:250px;height:20px;font-size: 15px;"/>';
+                        },
+                    }
                 ],
                 buttons: [],
             });
 
         });
+
+        function QuantityChange(Row, value) {
+            var d = table.row(Row).data();
+            if ( d.value != value ) {
+
+                d.value = value;
+                $.ajax({
+                    type:"GET",
+                    url:"{{url('offerdetailsUpdate')}}",
+                    data: { id: d.id, value: value },
+                    success: function (response) {
+                        // console.log('Response:', response);
+                    },
+                    error: function (response) {
+                        // console.log('Error:', response);
+                        alert('nem ok');
+                    }
+                });
+
+                table.row(Row).invalidate();
+
+            }
+        }
+
     </script>
 @endsection
 

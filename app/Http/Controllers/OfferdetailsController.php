@@ -90,7 +90,16 @@ class OfferdetailsController extends AppBaseController
                     ->where('t1.offers_id', $id)
                     ->whereNull('t1.deleted_at')
                     ->get();
-                return $this->dwData($data);
+
+                return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                        $btn = '<a href="' . route('beforeDestroysWithParam', ['Offerdetails', $row->id, 'offersEdit', $row->offers_id]) . '"
+                                 class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
 
             }
 
@@ -131,8 +140,9 @@ class OfferdetailsController extends AppBaseController
         $input = $request->all();
 
         $offerdetails = $this->offerdetailsRepository->create($input);
+        $offers = Offers::find($offerdetails->offers_id);
 
-        return redirect(route('offerdetails.index'));
+        return view('offerdetails.create')->with('offers', $offers);
     }
 
     /**
@@ -214,15 +224,34 @@ class OfferdetailsController extends AppBaseController
         return redirect(route('offerdetails.index'));
     }
 
-        /*
-         * Dropdown for field select
-         *
-         * return array
-         */
-        public static function DDDW() : array
-        {
-            return [" "] + offerdetails::orderBy('name')->pluck('name', 'id')->toArray();
-        }
+    /*
+     * Dropdown for field select
+     *
+     * return array
+     */
+    public static function DDDW() : array
+    {
+        return [" "] + offerdetails::orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+    /*
+     * ClosureCimlets értékek módosítás
+     *
+     * @param $request
+     *
+     * @return ClosureCimlets
+     */
+    public function offerDetailsUpdate(Request $request) {
+
+        $offerdetail = Offerdetails::find($request->get('id'));
+
+        $offerdetail->value = $request->get('value');
+        $offerdetail->updated_at = \Carbon\Carbon::now();
+        $offerdetail->save();
+
+        return Response::json( Offerdetails::find($request->get('id')) );
+
+    }
 }
 
 

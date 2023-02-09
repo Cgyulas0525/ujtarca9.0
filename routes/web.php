@@ -13,6 +13,7 @@ use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\PartnerTrafficController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\OfferdetailsController;
+use App\Http\Controllers\OffersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,7 +88,13 @@ Route::get('products.print',[ProductsController::class, 'print'])->name('product
 Route::get('products.pdfEmail',[ProductsController::class, 'pdfEmail'])->name('pdfEmail');
 
 Route::resource('offers', App\Http\Controllers\OffersController::class);
+Route::get('offersEdit/{id}', [OffersController::class, 'offersEdit'])->name('offersEdit');
 
 Route::resource('offerdetails', App\Http\Controllers\OfferdetailsController::class);
 Route::get('offerdetailsIndex/{id}', [OfferdetailsController::class, 'offerdetailsIndex'])->name('offerdetailsIndex');
 Route::get('offerdetailsCreate/{id}', [OfferdetailsController::class, 'offerdetailsCreate'])->name('offerdetailsCreate');
+Route::get('offerdetailsUpdate', [OfferdetailsController::class, 'offerdetailsUpdate'])->name('offerdetailsUpdate');
+
+Route::get('offers.print/{id}',[OffersController::class, 'print'])->name('offerPrint');
+Route::get('offerEmail/{id}',[OffersController::class, 'offerEmail'])->name('offerEmail');
+

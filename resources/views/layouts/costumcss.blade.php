@@ -1,6 +1,12 @@
 <style>
+    #myfooter {
+        position:fixed;
+        bottom:0px;
+        height:30px;
+        width:100%;
+    }
 
-    .finance-button-container{
+     .finance-button-container{
         display: flex;
         justify-content: center;
         align-items: center;

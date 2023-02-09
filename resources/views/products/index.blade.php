@@ -14,8 +14,8 @@
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
                         <h4>Termékek
-                            <a href="{{ route('productsPrint') }}" class="btn btn-primary alapgomb printBtn"><i class="fas fa-print"></i></a>
-                            <a href="{{ route('pdfEmail') }}" class="btn btn-primary alapgomb printBtn"><i class="fas fa-envelope-open"></i></a>
+                            <a href="{{ route('productsPrint') }}" class="btn btn-success alapgomb printBtn" title="Nyomtatás"><i class="fas fa-print"></i></a>
+                            <a href="{{ route('pdfEmail') }}" class="btn btn-success alapgomb printBtn" title="Email"><i class="fas fa-envelope-open"></i></a>
                         </h4>
                     </section>
                     @include('flash::message')
