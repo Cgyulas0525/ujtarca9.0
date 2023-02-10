@@ -22,4 +22,8 @@ class ToolsClass
                 empty(Offers::where('partners_id', $partner)->first()) && (Partners::find($partner)->active == 0)) ? true : false;
     }
 
+    public static function monthsPeriodDDDW() {
+        return ['1 hónap', "3 hónap", "6 hónap", "12 hónap"];
+    }
+
 }

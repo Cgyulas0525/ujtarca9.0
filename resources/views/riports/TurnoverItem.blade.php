@@ -1,6 +1,21 @@
 <div class="{{ $tabPane }}" id="{{ $id }}">
     <section class="content-header">
-        <h1> {{ $title }}</h1>
+        @if ($id == 'bevkiheti')
+            <div class="row">
+                <div class="mylabel col-sm-6">
+                    <h1> {{ $title }} </h1>
+                </div>
+                <div class="mylabel col-sm-2">
+                    {!! Form::label('year', 'Időszak (hónap):') !!}
+                </div>
+                <div class="col-sm-2">
+                    {!! Form::select('year', ToolsClass::monthsPeriodDDDW(), 2,
+                            ['class'=>'select2 form-control', 'id' => 'period']) !!}
+                </div>
+            </div>
+        @else
+            <h1> {{ $title }}</h1>
+        @endif
     </section>
     <figure class="highcharts-figure">
         <div id="{{ $chartId }}"></div>

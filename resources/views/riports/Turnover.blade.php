@@ -30,6 +30,7 @@
                                                 <li class="nav-item"><a class="nav-link" href="#fizetesi" data-toggle="tab">Fizetési mód</a></li>
                                                 <li class="nav-item"><a class="nav-link" href="#twoyear" data-toggle="tab">Elmúlt 2 év</a></li>
                                                 <li class="nav-item"><a class="nav-link" href="#bevki" data-toggle="tab">Bevétel/Kiadás</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#bevkiheti" data-toggle="tab">Heti Bevétel/Kiadás</a></li>
                                             </ul>
                                         </div>
                                         <div class="card-body">
@@ -58,6 +59,10 @@
                                                                                   'id' => 'bevki',
                                                                                   'tabPane' => 'tab-pane',
                                                                                   'chartId' => 'bevkiad'])
+                                                @include('riports.TurnoverItem', ['title' => 'Heti Bevétel/Kiadás az adott időszakban',
+                                                                                  'id' => 'bevkiheti',
+                                                                                  'tabPane' => 'tab-pane',
+                                                                                  'chartId' => 'bevkiadheti'])
 
                                             </div>
                                         </div>
@@ -93,6 +98,31 @@
                 chartDataUpload(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, ['elso', 'masodik'], ['-1 év', '-2 év']), 'Fizetési mód', 'napi bontás', 'forint');
             var chart_bevk = highchartLine( 'bevkiad', 'line', 450, categoryUpload(<?php echo RiportsClass::monthInviocesResult(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::monthInviocesResult(); ?>, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
+            var chart_bevkheti = highchartLine( 'bevkiadheti', 'line', 450, categoryUpload(<?php echo RiportsClass::weekInviocesResult(); ?>, 'nap'),
+                chartDataUpload(<?php echo RiportsClass::weekInviocesResult(); ?>, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
+
+            $('#period').change(function() {
+                let period = parseInt($(this).val());
+                let data = [];
+                switch (period) {
+                    case 0:
+                        data = <?php echo RiportsClass::weekInviocesResult(1); ?>;
+                        break;
+                    case 1:
+                        data = <?php echo RiportsClass::weekInviocesResult(3); ?>;
+                        break;
+                    case 2:
+                        data = <?php echo RiportsClass::weekInviocesResult(6); ?>;
+                        break;
+                    case 3:
+                        data = <?php echo RiportsClass::weekInviocesResult(12); ?>;
+                        break;
+                    default:
+                        alert('Ilyen nincs!');
+                }
+                chart_bevkheti = highchartLine( 'bevkiadheti', 'line', 450, categoryUpload(data, 'nap'),
+                    chartDataUpload(data, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');;
+            });
 
         });
     </script>
