@@ -49,6 +49,7 @@
                     {title: 'Dátum', data: 'offerdate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'offerdate'},
                     {title: 'Megrendelés', data: 'offernumber', name: 'offernumber'},
                     {title: 'Partner', data: 'partnerName', name: 'partnerName'},
+                    {title: 'Összesen', data: 'sumPrice', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'sumPrice'},
                 ],
                 buttons: [],
             });

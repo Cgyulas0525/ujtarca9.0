@@ -13,13 +13,13 @@
 
 <!-- Price Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('price', 'Ár:') !!}
-    {!! Form::number('price', isset($procuts->price) ? $products->price : 0, ['class' => 'form-control  text-right', 'id' => 'price']) !!}
+    {!! Form::label('price', 'Ára:') !!}
+    {!! Form::number('price', isset($products) ? $products->price : 0, ['class' => 'form-control  text-right', 'id' => 'price']) !!}
 </div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('supplierprice', 'Beszerzési ár:') !!}
-    {!! Form::number('supplierprice', isset($procuts->supplierprice) ? $products->supplierprice : 0, ['class' => 'form-control  text-right', 'id' => 'supplierprice']) !!}
+    {!! Form::number('supplierprice', isset($products) ? $products->supplierprice : 0, ['class' => 'form-control  text-right', 'id' => 'supplierprice']) !!}
 </div>
 
 <!-- Description Field -->
@@ -38,8 +38,9 @@
             function priceControll() {
                 let price = $("#price").val();
                 let supplierprice = $("#supplierprice").val();
+                console.log(price, supplierprice);
                 if (price != null && supplierprice != null) {
-                    if (price < supplierprice) {
+                    if (parseInt(price) < parseInt(supplierprice)) {
                         sw('A beszerzési ár nem lehet nagyobb mint az ár!');
                         $("#supplierprice").val(0)
                         $('#supplierprice').focus();

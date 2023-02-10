@@ -22,3 +22,4 @@
     {!! Form::label('description', 'Megjegyzés:') !!}
     {!! Form::textarea('description', null, ['class' => 'form-control','maxlength' => 500, 'rows' => 1]) !!}
 </div>
+

@@ -12,6 +12,7 @@
                 <div class="col-sm-12">
                     <section class="content-header">
                         <h4>{{ $offers->offernumber }} {{ date('Y.m.d', strtotime($offers->offerdate)) }}
+                              Összesen: {{ number_format(OfferClass::sumOfferSupplierPrice($offers->id),0,",",".") }} Ft.
                             <a href="{{ route('offerPrint', ['id' => $offers->id]) }}" class="btn btn-success alapgomb printBtn" title="Nyomtatás"><i class="fas fa-print"></i></a>
                             <a href="{{ route('offerEmail', ['id' => $offers->id]) }}" class="btn btn-success alapgomb printBtn" title="Email"><i class="fas fa-envelope-open"></i></a>
                         </h4>

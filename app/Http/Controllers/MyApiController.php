@@ -28,4 +28,9 @@ class MyApiController extends Controller
         return Response::json( Quantities::find($request->get('id')) );
     }
 
+    public function getOfferDetailQuantityName(Request $request)
+    {
+        return Response::json( Offerdetails::find($request->get('id'))->quantities->name);
+    }
+
 }

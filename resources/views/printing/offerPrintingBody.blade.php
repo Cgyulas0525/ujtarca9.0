@@ -9,7 +9,7 @@
 
 <div class="row w-100">
     <div class="col-xs-6 w-50">
-        Vevő:
+        Szállító:
         <address>
             <strong>{{ $partner->name }}</strong><br>
             {{ $partner->fullAddress }}<br>
@@ -19,7 +19,7 @@
     </div>
     <!-- /.col -->
     <div class="col-xs-6 w-50">
-        Szállító:
+        Megrendelő:
         <address>
             <strong>{{ $owner->name }}</strong><br>
             {{ $owner->fullAddress }}<br>
@@ -52,6 +52,12 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <p class="h4">Összesen: {{ number_format(OfferClass::sumOfferSupplierPrice($offer->id),0,",",".") }} Ft.</p>
     </div>
 </div>
 

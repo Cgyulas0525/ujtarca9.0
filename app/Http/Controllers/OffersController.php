@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\OfferClass;
 use App\Http\Requests\CreateOffersRequest;
 use App\Http\Requests\UpdateOffersRequest;
 use App\Models\Offerdetails;
@@ -40,6 +41,7 @@ class OffersController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('sumPrice', function($data) { return OfferClass::sumOfferSupplierPrice($data->id); })
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('offers.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
