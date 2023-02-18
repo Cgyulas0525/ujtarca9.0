@@ -14,6 +14,7 @@ use App\Http\Controllers\PartnerTrafficController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\OfferdetailsController;
 use App\Http\Controllers\OffersController;
+use App\Http\Controllers\OfferServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,4 +98,6 @@ Route::get('offerdetailsUpdate', [OfferdetailsController::class, 'offerdetailsUp
 
 Route::get('offers.print/{id}',[OffersController::class, 'print'])->name('offerPrint');
 Route::get('offerEmail/{id}',[OffersController::class, 'offerEmail'])->name('offerEmail');
+
+Route::get('offerReplay/{id}',[OfferServiceController::class, 'offerReplay'])->name('offerReplay');
 

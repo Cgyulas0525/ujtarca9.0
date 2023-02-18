@@ -51,6 +51,8 @@ class OffersController extends AppBaseController
                                  class="btn btn-warning btn-sm deleteProduct" title="Nyomtatás"><i class="fas fa-print"></i></a>';
                 $btn = $btn.'<a href="' . route('offerEmail', [$row->id]) . '"
                                  class="btn btn-warning btn-sm deleteProduct" title="Email"><i class="fas fa-envelope-open"></i></a>';
+                $btn = $btn.'<a href="' . route('offerReplay', [$row->id]) . '"
+                                 class="btn btn-primary btn-sm deleteProduct" title="Ismétlés"><i class="fas fa-copy"></i></a>';
                 return $btn;
             })
             ->rawColumns(['action'])

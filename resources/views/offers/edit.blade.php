@@ -84,7 +84,7 @@
 
             table = $('.detailstable').DataTable({
                 serverSide: true,
-                scrollY: 390,
+                scrollY: 300,
                 scrollX: true,
                 order: [[1, 'asc']],
                 paging: false,

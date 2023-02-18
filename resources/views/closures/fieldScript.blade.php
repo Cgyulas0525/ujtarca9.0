@@ -88,6 +88,8 @@
             out = out - (parseInt(d.value) * parseInt(d.cimletValue));
             dailysum = dailysum - (parseInt(d.value) * parseInt(d.cimletValue));
 
+            console.log(out, dailysum);
+
             d.value = value;
             d.sumValue = value * d.cimletValue;
             $('#out').val(out + parseInt(d.sumValue));

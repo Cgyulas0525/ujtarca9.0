@@ -14,7 +14,7 @@
 <!-- Value Field -->
 <div class="form-group col-sm-3">
     {!! Form::label('value', 'Mennyiség:') !!}
-    {!! Form::number('value', 0, ['class' => 'form-control text-right', 'id' => 'value', 'required' => true]) !!}
+    {!! Form::number('value', null, ['class' => 'form-control text-right', 'id' => 'value', 'required' => true]) !!}
 </div>
 
 <!-- Offers Id Field -->
@@ -60,6 +60,8 @@
                                         if (res.name != null || res.name == '') {
                                             $("#quantities_text").val(res.name);
                                             $('#quantities_text').prop('readonly', true);
+
+                                            $("#value").val(null);
                                             $("#value").focus();
                                         }
                                     }
