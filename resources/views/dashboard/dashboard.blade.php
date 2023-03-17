@@ -9,6 +9,7 @@
 @section('content')
     <div class="content">
         @include('dashboard.dashboardHeader')
+        @include('dashboard.dashboardInfo')
         @include('dashboard.dashboardFinance')
         @include('dashboard.dashboardResult')
     </div>
