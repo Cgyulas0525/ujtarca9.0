@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Classes\OwnClass;
+namespace App\Services;
 
 use DB;
 use App\Models\Closures;
 
-class ClosuresClass
+class ClosuresService
 {
-    public static function getDailySum($date) {
-        $data = DB::table('closures')->whereNull('deleted_at')->where('closuredate', $date)->first();
-        return !empty($data) ? $data->dailysum : 0;
+    public static function getDailySum($date)
+    {
+        $data = Closures::firstwhere('closuredate', $date);
+        return !empty($data) ? ($data->dailysum - 20000) : 0;
     }
 
     public static function getPeriodDailySum($day, $begin = NULL, $end = NULL)
     {
         return DB::table('closures')
             ->select(DB::raw('sum(1) as db, sum(dailysum) as ossz'))
-            ->where(DB::raw('WEEKDAY(closuredate)'), "=", $day->format('N'))
+            ->where(DB::raw('WEEKDAY(closuredate)'), "=", ($day->format('N') - 1))
             ->whereNull('deleted_at')
             ->whereBetween('closuredate', [is_null($begin) ? Closures::min('closuredate') : $begin,
-                                                  is_null($end) ? Closures::max('closuredate') : $end])
+                is_null($end) ? Closures::max('closuredate') : $end])
             ->groupBy(DB::raw('DAYNAME(closuredate)'))
             ->get();
     }
@@ -27,6 +28,7 @@ class ClosuresClass
     public static function getPeriodAverageDailysum($day, $begin = NULL, $end = NULL)
     {
         $data = self::getPeriodDailySum($day, $begin, $end);
-        return Round($data[0]->ossz / $data[0]->db, 0);
+        return count($data) > 0 ? Round($data->first()->ossz / (is_null($data->first()->db) ? 1 : $data->first()->db), 0) : 0;
     }
 }
+

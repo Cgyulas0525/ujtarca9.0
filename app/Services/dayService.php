@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Classes;
+namespace App\Services;
 
-class dayClass
+class dayService
 {
     public static function hungarianDayName($date)
     {
@@ -33,4 +33,5 @@ class dayClass
                 return 'Hibás dátum!';
         }
     }
+
 }

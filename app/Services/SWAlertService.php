@@ -1,13 +1,14 @@
 <?php
-namespace App\Classes;
+
+namespace App\Services;
 
 use URL;
 use Alert;
 
-Class SWAlertClass {
+class SWAlertService
+{
 
-    public static function choice($id, $title, $cancelPath, $cancelText, $confirmPath, $confirmText)
-    {
+    public static function choice($id, $title, $cancelPath, $cancelText, $confirmPath, $confirmText) {
         Alert::question( $title )
             ->showCancelButton('<a href="'. URL::asset($cancelPath) .'" style="color:white;">' . $cancelText .'</a>',
                 'red')
@@ -17,9 +18,8 @@ Class SWAlertClass {
             )->autoClose(false);
     }
 
-    public static function error( $title, $text)
-    {
+    public static function error( $title, $text) {
         Alert::error( $title, $text )->autoClose(false);
     }
-}
 
+}

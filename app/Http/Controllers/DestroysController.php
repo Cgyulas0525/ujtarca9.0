@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Classes\SWAlertClass;
+use App\Services\SWAlertService;
 use App\Models\Partners;
 
 class DestroysController extends Controller
@@ -13,7 +13,7 @@ class DestroysController extends Controller
         $view = 'layouts.show';
         $model_name = 'App\Models\\'.$table;
         $data = $model_name::find($id);
-        SWAlertClass::choice($id, 'Biztos, hogy törli a tételt?', '/'.$route, 'Kilép', '/destroy/'.$table.'/'.$id.'/'.$route, 'Töröl');
+        SWAlertService::choice($id, 'Biztos, hogy törli a tételt?', '/'.$route, 'Kilép', '/destroy/'.$table.'/'.$id.'/'.$route, 'Töröl');
 
         return view($view)->with('table', $data);
     }
@@ -23,7 +23,7 @@ class DestroysController extends Controller
         $model_name = 'App\Models\\'.$table;
         $data = $model_name::find($id);
         $text = 'Törlődik a tétel és a hozzá kapcsolódó adatok! Biztos, hogy törli a tételt?';
-        SWAlertClass::choice($id, $text, '/'.$route. '/' . $param, 'Kilép', '/destroyWithParam/'.$table.'/'.$id.'/'.$route. '/'.$param, 'Töröl');
+        SWAlertService::choice($id, $text, '/'.$route. '/' . $param, 'Kilép', '/destroyWithParam/'.$table.'/'.$id.'/'.$route. '/'.$param, 'Töröl');
 
         return view($view)->with('table', $data);
     }
@@ -33,7 +33,7 @@ class DestroysController extends Controller
         $model_name = 'App\Models\\'.$table;
         $data = $model_name::find($id);
         $text = 'Törlődik a tétel és a hozzá kapcsolódó adatok! Biztos, hogy törli a tételt?';
-        SWAlertClass::choice($id, $text, '/'.$route. '/' . $param, 'Kilép', '/destroyWithParam/'.$table.'/'.$id.'/'.$route. '/'.$param, 'Töröl');
+        SWAlertService::choice($id, $text, '/'.$route. '/' . $param, 'Kilép', '/destroyWithParam/'.$table.'/'.$id.'/'.$route. '/'.$param, 'Töröl');
 
         return view($view)->with('table', $data);
     }
@@ -67,7 +67,7 @@ class DestroysController extends Controller
     public function beforePartnerActivation($id, $route) {
         $view = 'layouts.show';
         $data = Partners::find($id);
-        SWAlertClass::choice($id, 'Biztosan változtatni akarja az aktívitás jelzőt?', '/'.$route, 'Kilép', '/partnerActivation/'.$id.'/'.$route, 'Váltás');
+        SWAlertService::choice($id, 'Biztosan változtatni akarja az aktívitás jelzőt?', '/'.$route, 'Kilép', '/partnerActivation/'.$id.'/'.$route, 'Váltás');
 
         return view($view)->with('table', $data);
     }
