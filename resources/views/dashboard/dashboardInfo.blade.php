@@ -5,7 +5,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Dátum</span>
-                <span class="info-box-number">{{ date('Y.m.d', strtotime(\Carbon\Carbon::now())) }} {{ App\Services\dayService::hungarianDayName(\Carbon\Carbon::now()) }}</span>
+                <span class="info-box-number">{{ date('Y.m.d', strtotime(\Carbon\Carbon::now())) }} {{ App\Services\hungarianDateName::getDayName(\Carbon\Carbon::now()) }}</span>
             </div>
             <!-- /.info-box-content -->
         </div>
