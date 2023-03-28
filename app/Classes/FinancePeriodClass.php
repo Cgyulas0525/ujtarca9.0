@@ -23,7 +23,7 @@ class FinancePeriodClass
             ->whereBetween('dated', [$this->begin, $this->end])
             ->get();
 
-        return isset($data[0]->amount) ? $data[0]->amount : 0;
+        return isset($data->first()->amount) ? $data->first()->amount : 0;
     }
 
     public function closuresAmountPeriod() {
@@ -33,7 +33,7 @@ class FinancePeriodClass
             ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
             ->get();
 
-        return isset($data[0]->dailysum) ? $data[0]->dailysum : 0;
+        return isset($data->first()->dailysum) ? $data->first()->dailysum : 0;
     }
 
     public function resultPeriod() {

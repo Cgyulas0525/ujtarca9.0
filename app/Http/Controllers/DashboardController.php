@@ -180,7 +180,4 @@ class DashboardController extends Controller
         return Round($data[0]->sum / $data[0]->day, 0);
 
     }
-
-
-
 }

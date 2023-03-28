@@ -12,6 +12,6 @@ class OfferClass
             ->selectRaw('sum(offerdetails.value * if(products.supplierprice is null, 0, products.supplierprice) ) as sp')
             ->where('offerdetails.offers_id', $id)
             ->whereNull('offerdetails.deleted_at')
-            ->get()[0]->sp;
+            ->get()->first()->sp;
     }
 }
