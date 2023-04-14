@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property integer $revenue
  * @property integer $spend
  * @property integer $average
- * @property integer $caed
+ * @property integer $card
  * @property integer $szcard
  * @property integer $cash
  */
@@ -27,7 +27,7 @@ class Weekstacked extends Model
     use HasFactory;
 
     public $table = 'weekstackeds';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -42,7 +42,7 @@ class Weekstacked extends Model
         'revenue',
         'spend',
         'average',
-        'caed',
+        'card',
         'szcard',
         'cash'
     ];
@@ -59,7 +59,7 @@ class Weekstacked extends Model
         'revenue' => 'integer',
         'spend' => 'integer',
         'average' => 'integer',
-        'caed' => 'integer',
+        'card' => 'integer',
         'szcard' => 'integer',
         'cash' => 'integer'
     ];
@@ -75,7 +75,7 @@ class Weekstacked extends Model
         'revenue' => 'required|integer',
         'spend' => 'required|integer',
         'average' => 'required|integer',
-        'caed' => 'required|integer',
+        'card' => 'required|integer',
         'szcard' => 'required|integer',
         'cash' => 'required|integer',
         'created_at' => 'nullable',
@@ -83,5 +83,5 @@ class Weekstacked extends Model
         'deleted_at' => 'nullable'
     ];
 
-    
+
 }
