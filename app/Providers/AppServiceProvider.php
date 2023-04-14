@@ -17,6 +17,9 @@ use App\Classes\ToolsClass;
 use App\Http\Controllers\OfferServiceController;
 use App\Http\Controllers\MyApiController;
 
+use App\Models\Closures;
+use App\Observers\ClosuresObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -47,6 +50,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Closures::observe(ClosuresObserver::class);
     }
 }

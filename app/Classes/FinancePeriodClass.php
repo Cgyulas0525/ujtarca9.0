@@ -52,7 +52,7 @@ class FinancePeriodClass
 
     public function yearClosuresPeriod() {
         return DB::table('closures as t1')
-            ->select(DB::raw('year(t1.closuredate) as year, sum(t1.dailysum - 20000) as dailysum'))
+            ->select(DB::raw('year(t1.closuredate) as year, sum(t1.dailysum - 20000) as dailysum, sum(1) as days'))
             ->whereNull('t1.deleted_at')
             ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
             ->groupBy(DB::raw('year(t1.closuredate)'))
@@ -72,7 +72,7 @@ class FinancePeriodClass
 
     public function mounthClosuresPeriod() {
         return DB::table('closures as t1')
-            ->select(DB::raw('concat(year(t1.closuredate), if(CAST(month(t1.closuredate) AS UNSIGNED) < 10, concat("0", month(t1.closuredate)), month(t1.closuredate))) as yearmonth, sum(t1.dailysum - 20000) as dailysum'))
+            ->select(DB::raw('concat(year(t1.closuredate), if(CAST(month(t1.closuredate) AS UNSIGNED) < 10, concat("0", month(t1.closuredate)), month(t1.closuredate))) as yearmonth, sum(t1.dailysum - 20000) as dailysum, sum(1) as days'))
             ->whereNull('t1.deleted_at')
             ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
             ->groupBy('yearmonth')
@@ -92,7 +92,7 @@ class FinancePeriodClass
 
     public function weekClosuresPeriod() {
         return DB::table('closures as t1')
-            ->select(DB::raw('concat(year(t1.closuredate), if(CAST(week(t1.closuredate) AS UNSIGNED) < 10, concat("0", week(t1.closuredate)), week(t1.closuredate))) as yearweek, sum(t1.dailysum - 20000) as dailysum'))
+            ->select(DB::raw('concat(year(t1.closuredate), if(CAST(week(t1.closuredate) AS UNSIGNED) < 10, concat("0", week(t1.closuredate)), week(t1.closuredate))) as yearweek, sum(t1.dailysum - 20000) as dailysum, sum(1) as days'))
             ->whereNull('t1.deleted_at')
             ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
             ->groupBy('yearweek')

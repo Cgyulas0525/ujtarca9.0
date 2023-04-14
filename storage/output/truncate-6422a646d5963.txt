@@ -1,0 +1,17 @@
+Budget truncateTables
+Start: 2023.03.28 10:03:10
+Truncate: cimlets
+Truncate: closurecimlets
+Truncate: closures
+Truncate: invoices
+Truncate: offerdetails
+Truncate: offers
+Truncate: partners
+Truncate: partnertypes
+Truncate: paymentmethods
+Truncate: products
+Truncate: quantities
+Truncate: tables
+Truncate: userstatuses
+OK
+End: 2023.03.28 10:03:11

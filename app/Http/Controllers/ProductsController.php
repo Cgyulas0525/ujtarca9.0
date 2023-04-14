@@ -8,17 +8,14 @@ use App\Repositories\ProductsRepository;
 use App\Http\Controllers\AppBaseController;
 
 use App\Models\Products;
-use App\Models\Partners;
 
 use Illuminate\Http\Request;
-use Flash;
 use Response;
 use Auth;
 use DB;
 use DataTables;
 
-use PDF;
-use Mail;
+use App\Traits\ProductPdfEmailTrait;
 
 class ProductsController extends AppBaseController
 {
@@ -29,6 +26,8 @@ class ProductsController extends AppBaseController
     {
         $this->productsRepository = $productsRepo;
     }
+
+    use ProductPdfEmailTrait;
 
     public function dwData($data)
     {
@@ -205,47 +204,6 @@ class ProductsController extends AppBaseController
 
         return view('printing.productsPrint')->with(['products' => Products::all()]);
 
-    }
-
-    public function pdfEmail()
-    {
-        $owner = Partners::where('partnertypes_id', 5)->first();
-        $partners = Partners::where('partnertypes_id', 3)->get();
-
-        foreach ($partners as $partner) {
-
-            $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-                ->loadView('printing.productsPrintingEmail', ['owner' => $owner,
-                                                             'partner' => $partner,
-                                                             'products' => Products::all()]);
-
-            $fileName = $partner->name . '-' . date('Y-m-d',strtotime('today')) .'-pékáru.pdf';
-            $path = public_path('print/'.$fileName);
-
-            $pdf->save($path);
-
-            $data["email"] = $partner->email;
-            $data["title"] = $owner->name.' pékáru lista!';
-            $data["body"] = $owner->name.' új pékáru listát küldött Önnek.';
-            $data["ugyfel"] = $owner->name;
-            $data["datum"] = date('Y-m-d');
-
-            $files = [
-                $path,
-            ];
-
-            Mail::send('emails.pekaruMail', $data, function($message) use($data, $files) {
-                $message->to($data["email"], $data["email"])
-                    ->subject($data["title"]);
-
-                foreach ($files as $file){
-                    $message->attach($file);
-                }
-            });
-
-        }
-
-        return back();
     }
 
 }

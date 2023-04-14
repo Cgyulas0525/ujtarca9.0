@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\OfferPdfAction;
 use App\Classes\OfferClass;
+use App\Events\SendMail;
 use App\Http\Requests\CreateOffersRequest;
 use App\Http\Requests\UpdateOffersRequest;
 use App\Models\Offerdetails;
@@ -21,6 +23,9 @@ use DataTables;
 
 use PDF;
 use Mail;
+use Event;
+
+use App\Traits\OfferEmailTrait;
 
 class OffersController extends AppBaseController
 {
@@ -36,6 +41,8 @@ class OffersController extends AppBaseController
     {
         $this->offersRepository = $offersRepo;
     }
+
+    use OfferEmailTrait;
 
     public function dwData($data)
     {
@@ -212,53 +219,16 @@ class OffersController extends AppBaseController
         return [" "] + offers::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    public function init($id) : void {
+    public function print($id) {
+
         $this->offer = Offers::find($id);
         $this->owner = Partners::where('partnertypes_id', 5)->first();
         $this->partner = Partners::find($this->offer->partners_id);
         $this->details = Offerdetails::where('offers_id', $this->offer->id)->get();
-    }
 
-    public function print($id) {
-        $this->init($id);
         return view('printing.offerPrint')->with(['offer' => $this->offer, 'owner' => $this->owner, 'partner' => $this->partner, 'details' => $this->details]);
 
     }
-
-    public function offerEmail($id)
-    {
-        $this->init($id);
-
-        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-            ->loadView('printing.offerPrintingEmail', ['offer' => $this->offer, 'owner' => $this->owner, 'partner' => $this->partner, 'details' => $this->details]);
-
-            $fileName = $this->partner->name . '-' . $this->offer->offernumber . '-' . date('Y-m-d',strtotime('today')) .'-megrendelés.pdf';
-            $path = public_path('print/'.$fileName);
-
-        $pdf->save($path);
-
-        $data["email"] = $this->partner->email;
-        $data["title"] = $this->owner->name.' megrendelés!';
-        $data["body"] = $this->owner->name.' új megrendelést küldött Önnek.';
-        $data["ugyfel"] = $this->owner->name;
-        $data["datum"] = date('Y-m-d');
-
-        $files = [
-            $path,
-        ];
-
-        Mail::send('emails.pekaruMail', $data, function($message) use($data, $files) {
-            $message->to($data["email"], $data["email"])
-                ->subject($data["title"]);
-
-            foreach ($files as $file){
-                $message->attach($file);
-            }
-        });
-
-        return back();
-    }
-
 
 }
 
