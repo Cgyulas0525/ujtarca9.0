@@ -3,7 +3,7 @@
 namespace App\Actions\Average\DatabaseAction;
 
 use App\Actions\Average\DatabaseAction\StackedArray;
-use Carbon\Carbon;
+use App\Actions\Average\DatabaseAction\TableUpdateOrInsert;
 use DB;
 
 class YearstackedUpdateOrInsert
@@ -11,10 +11,7 @@ class YearstackedUpdateOrInsert
 
     public static function handle($revenue, $spend) {
 
-        $array = StackedArray::handle($revenue, $spend);
-
-        DB::table('yearstackeds')->updateOrInsert(
-            ['year' => $revenue->first()->year], $array);
+        TableUpdateOrInsert::handle('yearstackeds', ['year' => $revenue->first()->year], StackedArray::handle($revenue, $spend));
 
     }
 }
