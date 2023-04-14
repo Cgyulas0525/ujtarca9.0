@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Yearstacked
  * @package App\Models
- * @version April 14, 2023, 10:05 am CEST
+ * @version April 14, 2023, 10:46 am CEST
  *
  * @property integer $year
  * @property integer $revenue
  * @property integer $spend
  * @property integer $average
+ * @property integer $card
+ * @property integer $szcard
+ * @property integer $cash
  */
 class Yearstacked extends Model
 {
@@ -36,7 +39,10 @@ class Yearstacked extends Model
         'year',
         'revenue',
         'spend',
-        'average'
+        'average',
+        'card',
+        'szcard',
+        'cash'
     ];
 
     /**
@@ -49,7 +55,10 @@ class Yearstacked extends Model
         'year' => 'integer',
         'revenue' => 'integer',
         'spend' => 'integer',
-        'average' => 'integer'
+        'average' => 'integer',
+        'card' => 'integer',
+        'szcard' => 'integer',
+        'cash' => 'integer'
     ];
 
     /**
@@ -62,6 +71,9 @@ class Yearstacked extends Model
         'revenue' => 'required|integer',
         'spend' => 'required|integer',
         'average' => 'required|integer',
+        'card' => 'required|integer',
+        'szcard' => 'required|integer',
+        'cash' => 'required|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'

@@ -17,6 +17,7 @@
         "infyomlabs/adminlte-templates": "^2.0",
         "infyomlabs/generator-builder": "dev-master",
         "infyomlabs/laravel-generator": "8.0.x-dev",
+        "itsgoingd/clockwork": "^5.1",
         "ladumor/one-signal": "^0.3.4",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",

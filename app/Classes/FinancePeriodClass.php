@@ -52,7 +52,11 @@ class FinancePeriodClass
 
     public function yearClosuresPeriod() {
         return DB::table('closures as t1')
-            ->select(DB::raw('year(t1.closuredate) as year, sum(t1.dailysum - 20000) as dailysum, sum(1) as days'))
+            ->select(DB::raw('year(t1.closuredate) as year,
+                    sum(t1.dailysum - 20000) as dailysum,
+                    sum(1) as days,
+                    sum(card) as card,
+                    sum(szcard) as szcard'))
             ->whereNull('t1.deleted_at')
             ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
             ->groupBy(DB::raw('year(t1.closuredate)'))

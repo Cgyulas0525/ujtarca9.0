@@ -9,13 +9,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Weekstacked
  * @package App\Models
- * @version April 14, 2023, 10:02 am CEST
+ * @version April 14, 2023, 10:46 am CEST
  *
  * @property integer $year
  * @property integer $week
  * @property integer $revenue
  * @property integer $spend
  * @property integer $average
+ * @property integer $caed
+ * @property integer $szcard
+ * @property integer $cash
  */
 class Weekstacked extends Model
 {
@@ -38,7 +41,10 @@ class Weekstacked extends Model
         'week',
         'revenue',
         'spend',
-        'average'
+        'average',
+        'caed',
+        'szcard',
+        'cash'
     ];
 
     /**
@@ -52,7 +58,10 @@ class Weekstacked extends Model
         'week' => 'integer',
         'revenue' => 'integer',
         'spend' => 'integer',
-        'average' => 'integer'
+        'average' => 'integer',
+        'caed' => 'integer',
+        'szcard' => 'integer',
+        'cash' => 'integer'
     ];
 
     /**
@@ -66,6 +75,9 @@ class Weekstacked extends Model
         'revenue' => 'required|integer',
         'spend' => 'required|integer',
         'average' => 'required|integer',
+        'caed' => 'required|integer',
+        'szcard' => 'required|integer',
+        'cash' => 'required|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
