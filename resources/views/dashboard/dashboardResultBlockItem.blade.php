@@ -1,3 +1,9 @@
+<?php
+    $yearStacked = App\Models\YearStacked::where('year', date('Y'))->first();
+    $monthStacked = App\Models\Monthstacked::where('year', date('Y'))->where('month', date('m'))->first();
+    $weekStacked = App\Models\Weekstacked::where('year', date('Y'))->where('week', date('W'))->first();
+?>
+
 <li class="nav-item">
     <a href="{!! route($route) !!}" class="nav-link-black">
         <div class="row">
@@ -13,58 +19,44 @@
 
 @section('scripts')
     <script src="{{ asset('/public/js/currencyFormatDE.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {
 
-            ajaxSetup();
-            var SITEURL = "{{url('/')}}";
-
-
-            function modifyValue(api, parameter, field) {
-                let url = SITEURL + '/' + api;
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    data: { witch: parameter},
-                    success: function (response) {
-                        $(field).val(currencyFormatDE(parseInt(response)));
-                    },
-                    error: function (response) {
-                        alert('nem ok');
-                    }
-                });
-            }
-
             $('.yearBtn').click(function () {
-                modifyValue('sumClosure', 'year', '#arbevetel');
-                modifyValue('sumInvoice', 'year', '#koltseg');
-                modifyValue('sumFinancialResult', 'year', '#egyenleg');
-                modifyValue('sumCash', 'year', '#kp');
-                modifyValue('sumCard', 'year', '#kartya');
-                modifyValue('sumSZCard', 'year', '#szkartya');
-                modifyValue('sumAverige', 'year', '#atlag');
+
+                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo $yearStacked->revenue; ?>)));
+                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo $yearStacked->spend; ?>)));
+                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo $yearStacked->result; ?>)));
+                $('#kp').val(currencyFormatDE(parseInt(<?php echo $yearStacked->cash; ?>)));
+                $('#kartya').val(currencyFormatDE(parseInt(<?php echo $yearStacked->card; ?>)));
+                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo $yearStacked->szcard; ?>)));
+                $('#atlag').val(currencyFormatDE(parseInt(<?php echo $yearStacked->average; ?>)));
+
             });
 
             $('.mountBtn').click(function () {
-                modifyValue('sumClosure', 'mount', '#arbevetel');
-                modifyValue('sumInvoice', 'mount', '#koltseg');
-                modifyValue('sumFinancialResult', 'mount', '#egyenleg');
-                modifyValue('sumCash', 'mount', '#kp');
-                modifyValue('sumCard', 'mount', '#kartya');
-                modifyValue('sumSZCard', 'mount', '#szkartya');
-                modifyValue('sumAverige', 'mount', '#atlag');
+
+                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo $monthStacked->revenue; ?>)));
+                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo $monthStacked->spend; ?>)));
+                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo $monthStacked->result; ?>)));
+                $('#kp').val(currencyFormatDE(parseInt(<?php echo $monthStacked->cash; ?>)));
+                $('#kartya').val(currencyFormatDE(parseInt(<?php echo $monthStacked->card; ?>)));
+                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo $monthStacked->szcard; ?>)));
+                $('#atlag').val(currencyFormatDE(parseInt(<?php echo $monthStacked->average; ?>)));
+
             });
 
             $('.weekBtn').click(function () {
-                modifyValue('sumClosure', 'week', '#arbevetel');
-                modifyValue('sumInvoice', 'week', '#koltseg');
-                modifyValue('sumFinancialResult', 'week', '#egyenleg');
-                modifyValue('sumCash', 'week', '#kp');
-                modifyValue('sumCard', 'week', '#kartya');
-                modifyValue('sumSZCard', 'week', '#szkartya');
-                modifyValue('sumAverige', 'week', '#atlag');
+
+                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo $weekStacked->revenue; ?>)));
+                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo $weekStacked->spend; ?>)));
+                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo $weekStacked->result; ?>)));
+                $('#kp').val(currencyFormatDE(parseInt(<?php echo $weekStacked->cash; ?>)));
+                $('#kartya').val(currencyFormatDE(parseInt(<?php echo $weekStacked->card; ?>)));
+                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo $weekStacked->szcard; ?>)));
+                $('#atlag').val(currencyFormatDE(parseInt(<?php echo $weekStacked->average; ?>)));
+
             });
 
         });

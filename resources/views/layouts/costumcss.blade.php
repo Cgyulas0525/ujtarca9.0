@@ -136,12 +136,22 @@
         color: #FFFFFF;
     }
 
+    .main-sidebar {
+        background-color: #023c75 !important
+    }
+
+    .brand-text {
+        color: #FFFFFF;
+        font-weight: 600 !important;
+    }
+
     .main-header {
-        background-color: #343a40 !important
+        background-color: #023c75 !important;
+        font-weight: 900;
     }
 
     .main-footer {
-        background-color: #343a40 !important;
+        background-color: #023c75 !important;
         color: #FFFFFF !important;
     }
 

@@ -83,5 +83,13 @@ class Weekstacked extends Model
         'deleted_at' => 'nullable'
     ];
 
+    protected $append = [
+        'result'
+    ];
+
+
+    public function getResultAttribute() {
+        return $this->revenue - $this->spend;
+    }
 
 }

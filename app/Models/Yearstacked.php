@@ -26,7 +26,7 @@ class Yearstacked extends Model
     use HasFactory;
 
     public $table = 'yearstackeds';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -79,5 +79,13 @@ class Yearstacked extends Model
         'deleted_at' => 'nullable'
     ];
 
-    
+    protected $append = [
+        'result'
+    ];
+
+
+    public function getResultAttribute() {
+        return $this->revenue - $this->spend;
+    }
+
 }
