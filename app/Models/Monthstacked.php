@@ -84,12 +84,17 @@ class Monthstacked extends Model
     ];
 
     protected $append = [
-        'result'
+        'result',
+        'yearmonth'
     ];
 
 
     public function getResultAttribute() {
         return $this->revenue - $this->spend;
+    }
+
+    public function getYearMonthAttribute() {
+        return $this->year . "." . str_pad($this->month, 2, '0', STR_PAD_LEFT);
     }
 
 }

@@ -88,8 +88,10 @@
 
             var chart_napi = highchartLine( 'haviNapiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, ['osszeg'], ['Bevétel']), 'Aktuális havi árbevétel', 'napi bontás', 'forint');
+
             var chart_heti = highchartLine( 'hetiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>, ['osszeg'], ['Bevétel']), 'Havi árbevétel', 'havi bontás', 'forint');
+
             var chart_havi = highchartLine( 'haviArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, ['osszeg'], ['Bevétel']), 'Heti árbevétel', 'heti bontás', 'forint');
             var chart_fizm = highchartLine( 'fizetesimod', 'line', 450, categoryUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, 'nap'),

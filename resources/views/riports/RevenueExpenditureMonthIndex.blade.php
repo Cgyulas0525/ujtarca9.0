@@ -45,9 +45,9 @@
                 paging: false,
                 select: false,
                 columns: [
-                    {title: 'Hónap', data: 'yearweek', sClass: "text-center", width:'150px', name: 'yearweek'},
-                    {title: 'Bevétel', data: 'dailysum', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'dailysum'},
-                    {title: 'Kiadás', data: 'amount', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'amount'},
+                    {title: 'Hónap', data: 'yearmonth', sClass: "text-center", width:'150px', name: 'yearmonth'},
+                    {title: 'Bevétel', data: 'revenue', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'revenue'},
+                    {title: 'Kiadás', data: 'spend', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'spend'},
                     {title: 'Egyenleg', data: 'result', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'result'},
                ]
             });

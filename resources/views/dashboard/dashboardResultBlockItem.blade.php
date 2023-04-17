@@ -25,37 +25,37 @@
 
             $('.yearBtn').click(function () {
 
-                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo $yearStacked->revenue; ?>)));
-                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo $yearStacked->spend; ?>)));
-                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo $yearStacked->result; ?>)));
-                $('#kp').val(currencyFormatDE(parseInt(<?php echo $yearStacked->cash; ?>)));
-                $('#kartya').val(currencyFormatDE(parseInt(<?php echo $yearStacked->card; ?>)));
-                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo $yearStacked->szcard; ?>)));
-                $('#atlag').val(currencyFormatDE(parseInt(<?php echo $yearStacked->average; ?>)));
+                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo !is_null($yearStacked) ? $yearStacked->revenue : 0; ?>)));
+                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo !is_null($yearStacked) ? $yearStacked->spend : 0; ?>)));
+                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo !is_null($yearStacked) ? $yearStacked->result : 0; ?>)));
+                $('#kp').val(currencyFormatDE(parseInt(<?php echo !is_null($yearStacked) ? $yearStacked->cash : 0; ?>)));
+                $('#kartya').val(currencyFormatDE(parseInt(<?php echo !is_null($yearStacked) ? $yearStacked->card : 0; ?>)));
+                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo !is_null($yearStacked) ? $yearStacked->szcard : 0; ?>)));
+                $('#atlag').val(currencyFormatDE(parseInt(<?php echo !is_null($yearStacked) ? $yearStacked->average : 0; ?>)));
 
             });
 
             $('.mountBtn').click(function () {
 
-                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo $monthStacked->revenue; ?>)));
-                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo $monthStacked->spend; ?>)));
-                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo $monthStacked->result; ?>)));
-                $('#kp').val(currencyFormatDE(parseInt(<?php echo $monthStacked->cash; ?>)));
-                $('#kartya').val(currencyFormatDE(parseInt(<?php echo $monthStacked->card; ?>)));
-                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo $monthStacked->szcard; ?>)));
-                $('#atlag').val(currencyFormatDE(parseInt(<?php echo $monthStacked->average; ?>)));
+                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo !is_null($monthStacked) ? $monthStacked->revenue : 0; ?>)));
+                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo !is_null($monthStacked) ? $monthStacked->spend : 0; ?>)));
+                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo !is_null($monthStacked) ? $monthStacked->result : 0; ?>)));
+                $('#kp').val(currencyFormatDE(parseInt(<?php echo !is_null($monthStacked) ? $monthStacked->cash : 0; ?>)));
+                $('#kartya').val(currencyFormatDE(parseInt(<?php echo !is_null($monthStacked) ? $monthStacked->card : 0; ?>)));
+                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo !is_null($monthStacked) ? $monthStacked->szcard : 0; ?>)));
+                $('#atlag').val(currencyFormatDE(parseInt(<?php echo !is_null($monthStacked) ? $monthStacked->average : 0; ?>)));
 
             });
 
             $('.weekBtn').click(function () {
 
-                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo $weekStacked->revenue; ?>)));
-                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo $weekStacked->spend; ?>)));
-                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo $weekStacked->result; ?>)));
-                $('#kp').val(currencyFormatDE(parseInt(<?php echo $weekStacked->cash; ?>)));
-                $('#kartya').val(currencyFormatDE(parseInt(<?php echo $weekStacked->card; ?>)));
-                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo $weekStacked->szcard; ?>)));
-                $('#atlag').val(currencyFormatDE(parseInt(<?php echo $weekStacked->average; ?>)));
+                $('#arbevetel').val(currencyFormatDE(parseInt(<?php echo !is_null($weekStacked) ? $weekStacked->revenue : 0; ?>)));
+                $('#koltseg').val(currencyFormatDE(parseInt(<?php echo !is_null($weekStacked) ?$weekStacked->spend : 0; ?>)));
+                $('#egyenleg').val(currencyFormatDE(parseInt(<?php echo !is_null($weekStacked) ?$weekStacked->result : 0; ?>)));
+                $('#kp').val(currencyFormatDE(parseInt(<?php echo !is_null($weekStacked) ?$weekStacked->cash : 0; ?>)));
+                $('#kartya').val(currencyFormatDE(parseInt(<?php echo !is_null($weekStacked) ?$weekStacked->card : 0; ?>)));
+                $('#szkartya').val(currencyFormatDE(parseInt(<?php echo !is_null($weekStacked) ?$weekStacked->szcard : 0; ?>)));
+                $('#atlag').val(currencyFormatDE(parseInt(<?php echo !is_null($weekStacked) ?$weekStacked->average : 0; ?>)));
 
             });
 

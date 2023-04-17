@@ -84,12 +84,17 @@ class Weekstacked extends Model
     ];
 
     protected $append = [
-        'result'
+        'result',
+        'yearweek'
     ];
 
 
     public function getResultAttribute() {
         return $this->revenue - $this->spend;
+    }
+
+    public function getYearWeekAttribute() {
+        return $this->year . "." . str_pad($this->week, 2, '0', STR_PAD_LEFT);
     }
 
 }
