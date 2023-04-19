@@ -4,7 +4,6 @@ namespace App\Actions\Average\DatabaseAction;
 
 use App\Actions\Average\DatabaseAction\StackedArray;
 use App\Actions\Average\DatabaseAction\TableUpdateOrInsert;
-use DB;
 
 class WeekstackedUpdateOrInsert
 {

@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\Closures;
 
-use App\Actions\Average\CumulativeValuesDatabase;
+use App\Actions\Observer\Closures\CumulativeValuesDatabase;
 
 class ClosuresObserver
 {

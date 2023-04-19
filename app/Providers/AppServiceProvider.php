@@ -19,6 +19,8 @@ use App\Http\Controllers\MyApiController;
 
 use App\Models\Closures;
 use App\Observers\ClosuresObserver;
+use App\Models\Invoices;
+use App\Observers\InvoicesObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -51,5 +53,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Closures::observe(ClosuresObserver::class);
+        Invoices::observe(InvoicesObserver::class);
     }
 }

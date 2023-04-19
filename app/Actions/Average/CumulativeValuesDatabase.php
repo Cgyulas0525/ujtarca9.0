@@ -12,8 +12,6 @@ use App\Actions\Average\DatabaseAction\YearstackedUpdateOrInsert;
 use App\Actions\Average\DatabaseAction\MonthstackedUpdateOrInsert;
 use App\Actions\Average\DatabaseAction\WeekstackedUpdateOrInsert;
 
-use App\Models\Yearstacked;
-use \Carbon\Carbon;
 use Exeption;
 use DB;
 
