@@ -54,9 +54,9 @@
             ajax: "{{ route('closureCimletsIndex', ['id' => (isset($closures) ? $closures->id : -9999)]) }}",
             columns: [
                 {title: 'Cimlet', data: 'cimletName', name: 'cimletName', id: 'cimletName' },
-                {title: 'Érték', data: 'value', name: 'value', id: 'value'},
+                {title: 'Darab', data: 'value', name: 'value', id: 'value'},
                 {title: 'cimletValue', data: 'cimletValue', name: 'cimletValue', id: 'cimletValue'},
-                {title: 'sumValue', data: 'sumValue', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'sumValue', id: 'sumValue'},
+                {title: 'Érték', data: 'sumValue', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'sumValue', id: 'sumValue'},
                 {title: 'Id', data: 'id', name: 'id', id: 'id'},
             ],
             columnDefs: [

@@ -91,4 +91,7 @@ class Invoices extends Model
         return $this->belongsTo(Partners::class, 'partner_id');
     }
 
+    public function scopeThisYear($query, $year) {
+        return $query->whereYear('dated', $year);
+    }
 }

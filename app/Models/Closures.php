@@ -87,4 +87,12 @@ class Closures extends Model
         return $this->dailysum - ($this->card + $this->szcard + 20000);
     }
 
+    public function scopeThisYear($query, $year) {
+        return $query->whereYear('closuredate', '=', $year);
+    }
+
+    public function scopeThisYearMonth($query, $year, $month) {
+        return $query->whereYear('closuredate', '=', $year)->whereMonth('closuredate', '=', $month);
+    }
+
 }

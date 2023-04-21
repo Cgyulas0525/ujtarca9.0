@@ -33,7 +33,7 @@ class ClosureCimletsController extends AppBaseController
             ->addIndexColumn()
             ->addColumn('cimletName', function($data) { return $data->cimlets->name; })
             ->addColumn('cimletValue', function($data) { return $data->cimlets->value; })
-            ->addColumn('sumValue', function($data) { return $data->value * $data->cimlets->value; })
+            ->addColumn('sumValue', function($data) { return $data->cash; })
             ->rawColumns(['action'])
             ->make(true);
     }
@@ -199,11 +199,8 @@ class ClosureCimletsController extends AppBaseController
      */
     public function closureCimletsUpdate(Request $request) {
 
-        $closurecimlets = ClosureCimlets::find($request->get('id'));
-
-        $closurecimlets->value = $request->get('value');
-        $closurecimlets->updated_at = \Carbon\Carbon::now();
-        $closurecimlets->save();
+        ClosureCimlets::find($request->get('id'))->update(['value' => $request->get('value'),
+                                               'updated_at' => \Carbon\Carbon::now()]);
 
         return Response::json( ClosureCimlets::find($request->get('id')) );
 
@@ -211,14 +208,8 @@ class ClosureCimletsController extends AppBaseController
 
     public function closureCimletsSum(Request $request) {
 
-        $sum = DB::table('closurecimlets as t1')
-            ->select(DB::raw('sum(t1.value * t2.value) as cash' ))
-            ->join('cimlets as t2', 't2.id', '=', 't1.cimlets_id')
-            ->whereNull('t1.deleted_at')
-            ->where('closures_id', $request->get('id'))
-            ->get();
+        return ClosureCimlets::closureclosurecimlets($request->get('id'))->get()->sum('cash');
 
-        return is_null($sum[0]->cash) ? 0 : $sum[0]->cash;
     }
 }
 

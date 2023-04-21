@@ -72,4 +72,8 @@ class Offers extends Model
         return $this->belongsTo(Partners::class, 'partners_id');
     }
 
+    public function offerdetails() {
+        return $this->hasMany(Offerdetails::class, 'offers_id');
+    }
+
 }

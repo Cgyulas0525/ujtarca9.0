@@ -63,12 +63,25 @@ class ClosureCimlets extends Model
         'deleted_at' => 'nullable'
     ];
 
+    protected $append = [
+        'cash',
+    ];
+
+
     public function closures() {
         return $this->belongsTo(Closures::class, 'closures_id');
     }
 
     public function cimlets() {
         return $this->belongsTo(Cimlets::class, 'cimlets_id');
+    }
+
+    public function getCashAttribute() {
+        return $this->value * $this->cimlets->value;
+    }
+
+    public function scopeClosureClosureCimlets($query, $id) {
+        return $query->where('closures_id', $id);
     }
 
 }

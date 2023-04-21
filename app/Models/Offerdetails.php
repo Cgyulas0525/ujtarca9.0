@@ -75,5 +75,9 @@ class Offerdetails extends Model
         return $this->belongsTo(Products::class, 'products_id');
     }
 
+    public function offers() {
+        return $this->belongsTo(Offers::class, 'offers_id');
+    }
+
 
 }
