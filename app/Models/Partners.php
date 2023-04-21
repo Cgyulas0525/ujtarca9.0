@@ -123,4 +123,12 @@ class Partners extends Model
     public function getFullAddressAttribute() {
         return (empty($this->postcode) ? '' : $this->postcode) . " " . (empty($this->settlement_id) ? '' : Settlements::find($this->settlement_id)->name) . ' ' . (empty($this->address) ? '' : $this->address);
     }
+
+    public function scopeActivePartner($query) {
+        return $query->where('active', 1);
+    }
+
+    public function scopeInActivePartner($query) {
+        return $query->where('active', 0);
+    }
 }

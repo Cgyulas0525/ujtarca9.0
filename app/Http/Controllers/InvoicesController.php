@@ -31,6 +31,8 @@ class InvoicesController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('paymentMethodName', function($data) { return ($data->paymentmethod->name); })
+            ->addColumn('partnerName', function($data) { return ($data->partner->name); })
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('invoices.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
@@ -74,30 +76,28 @@ class InvoicesController extends AppBaseController
         return view('invoices.create');
     }
 
-    public function invoicesIndex(Request $request, $ev = null, $partner = null)
+    public function invoicesIndex(Request $request, $year = null, $partner = null)
     {
         if( Auth::check() ){
             if ($request->ajax()) {
 
-                 $data = DB::table('invoices')
-                    ->join('paymentmethods', 'paymentmethods.id', '=', 'invoices.paymentmethod_id')
-                    ->join('partners', 'partners.id', '=', 'invoices.partner_id')
-                    ->select('invoices.*', 'paymentmethods.name as paymentMethodName', 'partners.name as partnerName')
-                    ->whereNull('invoices.deleted_at')
-                    ->where( function($query) use ($partner) {
-                        if (is_null($partner) || $partner == -9999 ) {
-                            $query->whereNotNull('invoices.partner_id');
-                        } else {
-                            $query->where('invoices.partner_id', '=', $partner);
-                        }
-                    })
-                    ->where( function($query) use ($ev) {
-                        if (is_null($ev) || $ev == -9999) {
-                            $query->whereNotNull('invoices.dated');
-                        } else {
-                            $query->where(DB::raw('year(invoices.dated)'), $ev );
-                        }
-                    })->get();
+                $data = Invoices::with('paymentmethod')
+                                ->with('partner')
+                                ->where( function($query) use ($partner) {
+                                    if (is_null($partner) || $partner == -9999 ) {
+                                        $query->whereNotNull('partner_id');
+                                    } else {
+                                        $query->where('partner_id', '=', $partner);
+                                    }
+                                })
+                                ->where( function($query) use ($year) {
+                                    if (is_null($year) || $year == -9999) {
+                                        $query->whereNotNull('dated');
+                                    } else {
+                                        $query->whereYear('dated', '=', $year );
+                                    }
+                                })->get();
+
                 return $this->dwData($data);
 
             }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoices;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -25,6 +26,8 @@ class PartnerTrafficController extends Controller
     {
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('paymentMethodName', function($data) { return ($data->paymentmethod->name); })
+            ->addColumn('partnerName', function($data) { return ($data->partner->name); })
             ->make(true);
     }
 
@@ -33,13 +36,11 @@ class PartnerTrafficController extends Controller
 
             if ($request->ajax()) {
 
-                $data = DB::table('invoices')
-                    ->join('paymentmethods', 'paymentmethods.id', '=', 'invoices.paymentmethod_id')
-                    ->join('partners', 'partners.id', '=', 'invoices.partner_id')
-                    ->select('invoices.*', 'paymentmethods.name as paymentMethodName', 'partners.name as partnerName')
-                    ->whereNull('invoices.deleted_at')
-                    ->where(DB::raw('year(invoices.dated)'), date('Y'))
+                $data = Invoices::with('paymentmethod')
+                    ->with('partner')
+                    ->whereYear('dated', date('Y'))
                     ->get();
+
                 return $this->dwData($data);
 
             }
@@ -53,20 +54,18 @@ class PartnerTrafficController extends Controller
 
             if ($request->ajax()) {
 
-                $data = DB::table('invoices')
-                    ->join('paymentmethods', 'paymentmethods.id', '=', 'invoices.paymentmethod_id')
-                    ->join('partners', 'partners.id', '=', 'invoices.partner_id')
-                    ->select('invoices.*', 'paymentmethods.name as paymentMethodName', 'partners.name as partnerName')
-                    ->whereNull('invoices.deleted_at')
+                $data = Invoices::with('paymentmethod')
+                    ->with('partner')
                     ->where( function($query) use ($partner) {
                         if ($partner == -9999) {
-                            $query->whereNotNull('invoices.partner_id');
+                            $query->whereNotNull('partner_id');
                         } else {
-                            $query->where('invoices.partner_id', '=', $partner);
+                            $query->where('partner_id', $partner);
                         }
                     })
-                    ->whereBetween( 'invoices.dated', [$begin, $end])
+                    ->whereBetween( 'dated', [$begin, $end])
                     ->get();
+
                 return $this->dwData($data);
 
             }

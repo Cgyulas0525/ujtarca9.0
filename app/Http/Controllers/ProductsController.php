@@ -33,6 +33,7 @@ class ProductsController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('quantityName', function($data) { return ($data->quantities->name); })
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('products.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
@@ -58,11 +59,8 @@ class ProductsController extends AppBaseController
 
             if ($request->ajax()) {
 
-                $data = DB::table('products as t1')
-                    ->join('quantities as t2', 't2.id', '=', 't1.quantities_id')
-                    ->select('t1.*', 't2.name as quantityName')
-                    ->whereNull('t1.deleted_at')
-                    ->get();
+                $data = Products::with('quantities')->get();
+
                 return $this->dwData($data);
 
             }

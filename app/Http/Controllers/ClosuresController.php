@@ -20,6 +20,8 @@ use DB;
 use DataTables;
 use Form;
 
+use App\Services\ClosureCimletInsert;
+
 class ClosuresController extends AppBaseController
 {
     /** @var ClosuresRepository $closuresRepository*/
@@ -74,21 +76,20 @@ class ClosuresController extends AppBaseController
         }
     }
 
-    public function closuresIndex(Request $request, $ev = null)
+    public function closuresIndex(Request $request, $year = null)
     {
         if( Auth::check() ){
 
             if ($request->ajax()) {
 
-                $data = DB::table('closures as t1')
-                    ->where( function($query) use ($ev) {
-                        if (is_null($ev) || $ev == -9999) {
-                            $query->whereNotNull('t1.closuredate');
-                        } else {
-                            $query->where(DB::raw('year(t1.closuredate)'), $ev );
-                        }
-                    })
-                    ->get();
+                $data = Closures::where( function($query) use ($year) {
+                                            if (is_null($year) || $year == -9999) {
+                                                $query->whereNotNull('closuredate');
+                                            } else {
+                                                $query->whereYear('closuredate', '=', $year);
+                                            }
+                                        })
+                                        ->get();
 
                 return $this->dwData($data);
 
@@ -125,16 +126,12 @@ class ClosuresController extends AppBaseController
         $input = $request->all();
         $closures = $this->closuresRepository->create($input);
 
-        if (ClosureCimlets::where('closures_id', 539)->get()->count() == 0) {
+        if (ClosureCimlets::where('closures_id', $closures->id)->get()->count() == 0) {
             $cimlets = Cimlets::all();
 
             foreach ($cimlets as $cimlet) {
-                $closurecimlet = new ClosureCimlets();
-                $closurecimlet->closures_id = $closures->id;
-                $closurecimlet->cimlets_id = $cimlet->id;
-                $closurecimlet->value = 0;
-                $closurecimlet->created_at = Carbon::now();
-                $closurecimlet->save();
+                $closurecimlet = new ClosureCimletInsert($cimlet->id, $closures->id);
+                $closurecimlet->handle();
             }
 
         }

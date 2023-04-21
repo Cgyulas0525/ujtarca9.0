@@ -59,8 +59,6 @@ class RiportsController extends Controller
         if( Auth::check() ){
 
             if ($request->ajax()) {
-//                $begin = date('Y-m-d', strtotime('first day of this year'));
-//                $end   = date('Y-m-d', strtotime('today'));
                 $data = DB::table('closures as t')
                     ->select(DB::raw('weekday(t.closuredate) nap, (Sum(t.dailysum - 20000) / Sum(1)) osszeg'))
                     ->whereNull('t.deleted_at')
