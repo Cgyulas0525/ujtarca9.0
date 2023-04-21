@@ -83,6 +83,14 @@ class Invoices extends Model
         'deleted_at' => 'nullable'
     ];
 
+    protected $append = [
+        'paymentMethodName'
+    ];
+
+    public function getPaymentMethodNameAttribute() {
+        return !empty($this->paymentmethod_id) ? PaymentMethods::find($this->paymentmethod_id)->name : '';
+    }
+
     public function paymentmethod() {
         return $this->belongsTo(PaymentMethods::class, 'paymentmethod_id');
     }

@@ -26,7 +26,7 @@ class PartnerTrafficController extends Controller
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('paymentMethodName', function($data) { return ($data->paymentmethod->name); })
+            ->addColumn('paymentMethodName', function($data) { return ($data->paymentMethodName); })
             ->addColumn('partnerName', function($data) { return ($data->partner->name); })
             ->make(true);
     }

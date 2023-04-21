@@ -31,7 +31,7 @@ class InvoicesController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('paymentMethodName', function($data) { return ($data->paymentmethod->name); })
+            ->addColumn('paymentMethodName', function($data) { return ($data->paymentMethodName); })
             ->addColumn('partnerName', function($data) { return ($data->partner->name); })
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('invoices.edit', [$row->id]) . '"
