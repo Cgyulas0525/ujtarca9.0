@@ -9,6 +9,7 @@
 @section('content')
     <div class="content">
         @include('dashboard.dashboardHeader')
+        @include('dashboard.dashboardPeriodAverage')
         @include('dashboard.dashboardInfo')
         @include('dashboard.dashboardView')
         @include('dashboard.dashboardFinance', ['yearctacked' => App\Models\Yearstacked::where('year', date('Y'))->first()])
