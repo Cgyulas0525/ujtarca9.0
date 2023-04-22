@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 
 /**
  * Class Weekstacked
@@ -85,7 +86,8 @@ class Weekstacked extends Model
 
     protected $append = [
         'result',
-        'yearweek'
+        'yearweek',
+        'weekofmonth'
     ];
 
 
@@ -95,6 +97,10 @@ class Weekstacked extends Model
 
     public function getYearWeekAttribute() {
         return $this->year . "." . str_pad($this->week, 2, '0', STR_PAD_LEFT);
+    }
+
+    public function getWeekOfMOnthAttribute() {
+        return Carbon::create(date('Y-m-d',strtotime($this->year. 'W' . str_pad($this->week, 2, '0', STR_PAD_LEFT))))->weekOfMonth;
     }
 
 }
