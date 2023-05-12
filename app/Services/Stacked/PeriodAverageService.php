@@ -3,23 +3,33 @@
 namespace App\Services\Stacked;
 
 use App\Models\Weekstacked;
+use \Carbon\Carbon;
 
-class PeriodAverageService
-{
+class PeriodAverageService {
+
     public static function weekPeriodResultAverage($howmany, $withweek) {
 
-        $number = 0;
-        $average = 0;
+        $date = new \DateTime;
 
-        foreach (Weekstacked::where('id', '<', Weekstacked::get()->last()->id)->orderBy('year', 'desc')->orderBy('week', 'desc')->get()->take($howmany) as $data) {
+        $resultArray = ['revenue' => 0, 'spend' => 0, 'result' => 0, 'number' => 0];
 
-            if ($data->weekofmonth == $withweek) {
-                $average += $data->result;
-                ++$number;
+        foreach ( Weekstacked::where('id', '<', Weekstacked::get()->last()->id)->orderBy('year', 'desc')->orderBy('week', 'desc')->get()->take($howmany) as $data) {
+
+            $date = $date->setISODate($data->year, $data->week);
+            $week =  Carbon::parse($date->format('Y-m-d'));
+
+            if ($week->weekOfMonth == $withweek) {
+
+                $resultArray['result'] += $data->result;
+                $resultArray['revenue'] += $data->revenue;
+                $resultArray['spend'] += $data->spend;
+                ++$resultArray['number'];
+
             }
 
         }
 
-        return $number != 0 ? round($average / $number, 0, PHP_ROUND_HALF_UP) : 0;
+        return $resultArray;
     }
+
 }
