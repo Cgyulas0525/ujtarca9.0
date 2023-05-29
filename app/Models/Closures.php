@@ -95,4 +95,8 @@ class Closures extends Model
         return $query->whereYear('closuredate', '=', $year)->whereMonth('closuredate', '=', $month);
     }
 
+    public function scopeThisYearSumResult($query, $year) {
+        return $query->ThisYear($year)->get()->sum('result');
+    }
+
 }

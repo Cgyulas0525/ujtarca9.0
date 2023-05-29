@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appblack')
 
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
@@ -82,9 +82,12 @@
     <script src="{{ asset('/public/js/highchart/highchartLine.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/public/js/highchart/categoryUpload.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/public/js/highchart/chartDataUpload.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/public/js/highchart/highchartsTheme.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {
+
+            hightchartsTheme();
 
             var chart_napi = highchartLine( 'haviNapiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, ['osszeg'], ['Bevétel']), 'Aktuális havi árbevétel', 'napi bontás', 'forint');

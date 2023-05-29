@@ -150,8 +150,18 @@
         font-weight: 900;
     }
 
+    .main-header-dark {
+        background-color: #343a40 !important;
+        font-weight: 900;
+    }
+
     .main-footer {
         background-color: #023c75 !important;
+        color: #FFFFFF !important;
+    }
+
+    .main-footer-dark {
+        background-color: #343a40 !important;
         color: #FFFFFF !important;
     }
 
@@ -379,6 +389,14 @@
         margin-left: auto;
         margin-right: auto;
         width: 50%;
+    }
+
+    .gifcenter {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        height: 4em;
     }
 
     .image__file-upload {

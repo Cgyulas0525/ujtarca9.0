@@ -52,9 +52,29 @@
     <div class="col-lg-8 col-md-8 col-xs-12">
         <div class="clearfix"></div>
         <div class="box box-primary">
-            <h4>Összes számla</h4>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <div class="row">
+                        <div class="mylabel col-sm-2">
+                            {!! Form::label('year', 'Számlák:') !!}
+                        </div>
+                        <div class="mylabel col-sm-2">
+                            {!! Form::label('year', 'Év:') !!}
+                        </div>
+                        <div class="col-sm-5">
+                            {!! Form::select('year', \App\Http\Controllers\InvoicesController::invoicesYearsDDDW(),date('Y'),
+                                    ['class'=>'select2 form-control', 'id' => 'year']) !!}
+                        </div>
+                        <div class="col-sm-3" id="gifDiv">
+                            <img src={{ URL::asset('/public/img/loading.gif') }}
+                                class="gifcenter" >
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="box-body"  >
-                <table class="table table-hover table-bordered invoicetable" style="width: 100%;">
+                <table class="table table-hover table-bordered invoicetable w-100">
                     @include('partners.table')
                 </table>
             </div>
@@ -76,7 +96,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body text-right">
-                        <h4>{{ number_format(FinanceClass::sumPartnerInvoice($partners->id),0,",",".") }} forint</h4>
+                        <h4>{{ number_format(App\Models\Invoices::PartnerYearInvoicesSumAmount($partners->id) ,0,",",".") }} forint</h4>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -92,7 +112,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body text-right">
-                        <h4>{{ number_format(FinanceClass::sumPartnerInvoice($partners->id, date('Y')),0,",",".") }} forint</h4>
+                        <h4>{{ number_format(App\Models\Invoices::PartnerYearInvoicesSumAmount($partners->id, date('Y')),0,",",".") }} forint</h4>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -110,6 +130,7 @@
     <script type="text/javascript">
 
         var table;
+        var loading = true;
 
         $(function () {
 
@@ -125,7 +146,7 @@
                 paging: false,
                 searching: false,
                 select: false,
-                ajax: "{{ route('partnerFactSheet', ['id' => $partners->id]) }}",
+                ajax: "{{ route('partnerFactSheet', ['partner' => $partners->id, 'year' => date('Y')]) }}",
                 columns: [
                     {title: 'Számlaszám', data: 'invoicenumber', name: 'invoicenumber'},
                     {title: 'Kelt', data: 'dated', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'dated'},
@@ -164,6 +185,21 @@
                 },
 
             });
+
+            $('#year').change(function() {
+
+                $('#gifDiv').show();
+
+                let url = '{{ route('partnerFactSheet', [":partner", ":year"]) }}';
+                url = url.replace(':partner', <?php echo $partners->id; ?>).replace(':year', ($('#year').val() != 0) ? $('#year').val() : -9999)
+                table.ajax.url(url).load();
+
+                setTimeout(function() {
+                    $('#gifDiv').hide();}, 4000);
+
+            });
+
+            $('#gifDiv').hide();
         });
 
 

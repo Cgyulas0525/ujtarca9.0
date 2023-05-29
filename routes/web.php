@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\OfferdetailsController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\OfferServiceController;
+use \App\Http\Controllers\BusinessAnalysisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::get('/home', [
 ])->name('home');
 
 Route::get('index', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('business-analysis', [BusinessAnalysisController::class, 'index'])->name('business-analysis');
 
 Route::resource('cimlets', App\Http\Controllers\CimletsController::class);
 
@@ -77,7 +79,7 @@ Route::get('TurnoverIndex', [RiportsController::class, 'TurnoverIndex'])->name('
 
 Route::get('postcodeSettlementDDDW',[PartnersController::class, 'postcodeSettlementDDDW'])->name('postcodeSettlementDDDW');
 Route::get('partnersIndex/{active?}', [PartnersController::class, 'partnersIndex'])->name('partnersIndex');
-Route::get('partnerFactSheet/{id}', [PartnersController::class, 'partnerFactSheet'])->name('partnerFactSheet');
+Route::get('partnerFactSheet/{partner}/{year}', [PartnersController::class, 'partnerFactSheet'])->name('partnerFactSheet');
 
 Route::get('pTIndex',[PartnerTrafficController::class, 'pTIndex'])->name('pTIndex');
 Route::get('partnerTrafficIndex/{begin}/{end}/{partner}',[PartnerTrafficController::class, 'partnerTrafficIndex'])->name('partnerTrafficIndex');

@@ -102,4 +102,45 @@ class Invoices extends Model
     public function scopeThisYear($query, $year) {
         return $query->whereYear('dated', $year);
     }
+
+    public function scopePartnerInvoices($query, $partner) {
+        return $query->where(function($q) use($partner) {
+            if (is_null($partner)) {
+                $q->whereNotNull('partner_id');
+            } else {
+                $q->where('partner_id', $partner);
+            }
+        });
+    }
+
+    public function scopeYearInvoices($query, $year) {
+        return $query->where(function($q) use($year) {
+            if (is_null($year) || ($year == -9999)) {
+                $q->whereNotNull('dated');
+            } else {
+                $q->whereYear('dated', $year);
+            }
+        });
+    }
+
+    public function scopePartnerYearInvoices($query, $partner = null, $year = null) {
+        return $query->where(function($q) use($partner) {
+            if (is_null($partner)) {
+                $q->whereNotNull('partner_id');
+            } else {
+                $q->where('partner_id', $partner);
+            }
+        })->where(function($q) use($year) {
+            if (is_null($year) || ($year == -9999)) {
+                $q->whereNotNull('dated');
+            } else {
+                $q->whereYear('dated', $year);
+            }
+        });
+    }
+
+    public function scopePartnerYearInvoicesSumAmount($query, $partner = null, $year = null) {
+        return $query->PartnerYearInvoices($partner, $year)->sum('amount');
+    }
+
 }

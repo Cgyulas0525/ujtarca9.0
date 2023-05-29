@@ -17,7 +17,7 @@
             <h1> {{ $title }}</h1>
         @endif
     </section>
-    <figure class="highcharts-figure">
+    <figure class="highcharts-figure w-100">
         <div id="{{ $chartId }}"></div>
     </figure>
 </div>

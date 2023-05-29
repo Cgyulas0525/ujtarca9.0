@@ -5,6 +5,13 @@
         <p>Indító pult</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('business-analysis') }}"
+       class="nav-link {{ Request::is('business*') ? 'active' : '' }}">
+        <i class="fas fa-chart-area"></i>
+        <p>Analízis</p>
+    </a>
+</li>
 
 <li class="nav-item has-treeview">
     <a href="#" class="nav-link {{ Request::is('cimlets*') ||

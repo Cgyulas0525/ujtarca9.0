@@ -208,12 +208,11 @@ class InvoicesController extends AppBaseController
      */
     public static function DDDW() : array
     {
-        return [" "] + invoices::orderBy('name')->pluck('name', 'id')->toArray();
+        return [" "] + Invoices::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
     public static function invoicesYearsDDDW() {
-        return [" "] + DB::table('invoices')->select(DB::raw('year(invoices.dated) as year'))
-                ->groupBy('year')
+        return [" "] + Invoices::selectRaw('year(invoices.dated) as year')->groupBy('year')
                 ->orderBy('year', 'desc')
                 ->pluck('year', 'year')->toArray();
     }

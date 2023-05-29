@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Classes\ToolsClass;
 use App\Http\Requests\CreatePartnersRequest;
 use App\Http\Requests\UpdatePartnersRequest;
-use App\Models\PartnerTypes;
 use App\Repositories\PartnersRepository;
 use App\Http\Controllers\AppBaseController;
 
 use App\Models\Partners;
+
+use App\Classes\SettlementsClass;
 
 use Illuminate\Http\Request;
 use Flash;
@@ -17,10 +18,9 @@ use Response;
 use Auth;
 use DB;
 use DataTables;
-
-use App\Classes\SettlementsClass;
-
 use Form;
+
+use App\Traits\Others\PartnerFactSheetTrait;
 
 class PartnersController extends AppBaseController
 {
@@ -31,6 +31,8 @@ class PartnersController extends AppBaseController
     {
         $this->partnersRepository = $partnersRepo;
     }
+
+    use PartnerFactSheetTrait;
 
     public function dwData($data)
     {
@@ -320,29 +322,6 @@ class PartnersController extends AppBaseController
 
     public function postcodeSettlementDDDW(Request $request) {
         return SettlementsClass::postcodeSettlementDDDW($request->get('postcode'));
-    }
-
-    public function partnerFactSheet(Request $request, $id) {
-        if( Auth::check() ) {
-
-            if ($request->ajax()) {
-
-                $data = DB::table('invoices')
-                    ->join('paymentmethods', 'paymentmethods.id', '=', 'invoices.paymentmethod_id')
-                    ->select('invoices.*', 'paymentmethods.name as paymentMethodName')
-                    ->where('invoices.partner_id', $id)
-                    ->whereNull('invoices.deleted_at')
-                    ->orderBy('invoices.dated')
-                    ->get();
-
-                return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->make(true);
-
-            }
-
-            return view('partners.index');
-        }
     }
 
 }

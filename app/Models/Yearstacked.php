@@ -88,4 +88,16 @@ class Yearstacked extends Model
         return $this->revenue - $this->spend;
     }
 
+    public function scopeGetCardPercent() {
+        return Round($this->card / ($this->revenue / 100), 0);
+    }
+
+    public function scopeGetSzCardPercent() {
+        return Round($this->szcard / ($this->revenue / 100), 0);
+    }
+
+    public function scopeGetCashPercent() {
+        return Round($this->cash / ($this->revenue / 100), 0);
+    }
+
 }
