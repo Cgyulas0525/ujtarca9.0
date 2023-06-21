@@ -1,17 +1,6 @@
 function HighChartColumn(
-    renderTo, type, kategoria, data, height, borderRadius, borderColor, borderWidth, titleText, subtitleText, valueSuffix, inverted, polar) {
+    renderTo, type, category, data, height, borderRadius, borderColor, borderWidth, titleText, subtitleText, yAxisTitle, inverted, polar) {
     var chart = Highcharts.chart({
-        chart: {
-            renderTo: renderTo,
-            height: height,
-            backgroundColor: '#EDE6E6',
-            borderRadius: borderRadius,
-            borderColor: borderColor,
-            borderWidth: borderWidth,
-            inverted: inverted,
-            polar: polar,
-            type: type
-        },
         lang: {
             loading: 'Betöltés...',
             viewFullscreen: 'Teljes képernyő',
@@ -38,6 +27,17 @@ function HighChartColumn(
             viewData: 'Táblázat',
             printChart: 'Nyomtatás'
         },
+        chart: {
+            renderTo: renderTo,
+            height: height,
+            backgroundColor: '#EDE6E6',
+            borderRadius: borderRadius,
+            borderColor: borderColor,
+            borderWidth: borderWidth,
+            inverted: inverted,
+            polar: polar,
+            type: type
+        },
         title: {
             text: titleText
         },
@@ -47,12 +47,29 @@ function HighChartColumn(
         },
 
         xAxis: {
-            categories: kategoria
+            categories: category
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: yAxisTitle
+            }
         },
         tooltip: {
-            split: false,
-            valueSuffix: valueSuffix
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
         },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+
         series: data
 
     });

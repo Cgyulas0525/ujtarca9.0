@@ -4,6 +4,7 @@ namespace App\Classes;
 
 use DB;
 use App\Classes\FinancePeriodClass;
+use App\Models\Closures;
 
 class RiportsClass
 {
@@ -13,12 +14,7 @@ class RiportsClass
         $begin = date('Y-m-d', strtotime('-30 day'));
         $end = date('Y-m-d', strtotime('today'));
 
-        return DB::table('closures')
-            ->select(DB::raw('closuredate as nap, (dailysum - 20000) as osszeg'))
-            ->whereNull('deleted_at')
-            ->whereBetween('closuredate', [$begin, $end])
-            ->get();
-
+        return Closures::selectRaw('closuredate as nap, (dailysum - 20000) as osszeg', )->whereBetween('closuredate', [$begin, $end])->get();
     }
 
     public static function TurnoverLast26Weeks() {
@@ -139,7 +135,35 @@ class RiportsClass
             ->orderBy('nap', 'asc')
             ->get();
 
+    }
+
+    public function daysInviocesResult($begin = null, $end = null) {
+
+        $begin = is_null($begin) ? date('Y-m-d', strtotime(Closures::orderBy('closuredate', 'asc')->first()->closuredate)) : $begin;
+        $end   = is_null($end) ? date('Y-m-d', strtotime('today')) : $end;
+
+        $invoices = DB::table('invoices')
+            ->select(DB::raw('dated as nap, sum(amount) as amount, 0 as dailysum'))
+            ->whereNull('deleted_at')
+            ->whereBetween('dated', [$begin, $end])
+            ->groupBy('nap');
+
+        $closures = DB::table('closures as t1')
+            ->select(DB::raw('t1.closuredate as nap, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
+            ->whereNull('t1.deleted_at')
+            ->whereBetween('t1.closuredate', [$begin , $end] )
+            ->groupBy('nap')
+            ->union($invoices);
+
+        return DB::query()->fromSub($closures, 'p_pn')
+            ->select('nap', DB::raw('ROUND( SUM(amount), 0) as kiadas,
+                                                  ROUND( SUM(dailysum), 0) as bevetel,
+                                                  ROUND( SUM(dailysum - amount), 0) as eredmeny'))
+            ->groupBy('nap')
+            ->orderBy('nap', 'asc')
+            ->get();
 
     }
+
 }
 

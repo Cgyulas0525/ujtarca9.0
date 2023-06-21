@@ -2,8 +2,13 @@
     <a href="#" class="nav-link">
         {{ $title }}
         <span class="{{ $c1 }}">
-            <i class="{{ $icon }}"></i>
-            {{ App\Services\YearstackedService::getSumPercent($field) }} %
+{{--            <i class="{{ $icon }}"></i>--}}
+            @if ($witch === 'all')
+                {{ (new App\Services\YearstackedService)->getSumPercent($field) }} %
+            @endif
+            @if ($witch === 'year')
+                {{ (new App\Services\MonthstackedService)->getSumPercent($field) }} %
+            @endif
         </span>
     </a>
 </li>

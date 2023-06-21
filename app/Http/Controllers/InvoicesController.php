@@ -119,7 +119,8 @@ class InvoicesController extends AppBaseController
 
         $invoices = $this->invoicesRepository->create($input);
 
-        return redirect(route('invoices.index'));
+//        return redirect(route('invoices.index'));
+        return view('invoices.create');
     }
 
     /**

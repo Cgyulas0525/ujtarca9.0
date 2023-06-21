@@ -10,6 +10,7 @@
     <div class="content">
         @include('businessanalysis.baHeader')
         @include('businessanalysis.baRevenuePercent')
+        @include('businessanalysis.baHighestSuppliers')
 
     </div>
 @endsection
