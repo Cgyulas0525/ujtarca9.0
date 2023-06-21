@@ -4,6 +4,14 @@
 @endsection
 
 <div class="row">
+
+    @include('partners.datapage.financialTurnover', ['title' => 'Forgalom összesen',
+                                                     'card' => 'card bg-primary',
+                                                     'count' => number_format(App\Models\Invoices::PartnerYearInvoicesSumAmount($partners->id) ,0,",",".") ])
+    @include('partners.datapage.financialTurnover', ['title' => 'Idei forgalom összesen',
+                                                     'card' => 'card bg-success',
+                                                     'count' => number_format(App\Models\Invoices::PartnerYearInvoicesSumAmount($partners->id, date('Y')),0,",",".") ])
+
     <div class="mylabel col-sm-1">
         {!! Form::label('name', 'Név:') !!}
     </div>
@@ -49,13 +57,13 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-8 col-md-8 col-xs-12">
+    <div class="col-lg-6 col-md-6 col-xs-12">
         <div class="clearfix"></div>
         <div class="box box-primary">
             <div class="row">
                 <div class="form-group col-sm-6">
                     <div class="row">
-                        <div class="mylabel col-sm-2">
+                        <div class="mylabel col-sm-3">
                             {!! Form::label('year', 'Számlák:') !!}
                         </div>
                         <div class="mylabel col-sm-2">
@@ -65,7 +73,7 @@
                             {!! Form::select('year', \App\Http\Controllers\InvoicesController::invoicesYearsDDDW(),date('Y'),
                                     ['class'=>'select2 form-control', 'id' => 'year']) !!}
                         </div>
-                        <div class="col-sm-3" id="gifDiv">
+                        <div class="col-sm-2" id="gifDiv">
                             <img src={{ URL::asset('/public/img/loading.gif') }}
                                 class="gifcenter" >
                         </div>
@@ -80,42 +88,31 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-xs-12">
+    <div class="col-lg-6 col-md-6 col-xs-12">
         <div class="clearfix"></div>
         <div class="box box-primary">
-            <div class="box-body">
-                <div class="card bg-primary">
-                    <div class="card-header">
-                        <h4 class="card-title text-bold">Forgalom összesen:</h4>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                            </button>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <div class="row">
+                        <div class="mylabel col-sm-3">
+                            {!! Form::label('year', 'Időszak:') !!}
                         </div>
-                        <!-- /.card-tools -->
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body text-right">
-                        <h4>{{ number_format(App\Models\Invoices::PartnerYearInvoicesSumAmount($partners->id) ,0,",",".") }} forint</h4>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <div class="card bg-success">
-                    <div class="card-header">
-                        <h4 class="card-title text-bold">Idei forgalom összesen:</h4>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                            </button>
+                        <div class="col-sm-5">
+                            {!! Form::select('year', ToolsClass::monthsPeriodDDDW(), 2,
+                                    ['class'=>'select2 form-control', 'id' => 'period']) !!}
                         </div>
-                        <!-- /.card-tools -->
+                        <div class="col-sm-3" id="gifDiv1">
+                            <img src={{ URL::asset('/public/img/loading.gif') }}
+                                class="gifcenter" >
+                        </div>
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body text-right">
-                        <h4>{{ number_format(App\Models\Invoices::PartnerYearInvoicesSumAmount($partners->id, date('Y')),0,",",".") }} forint</h4>
-                    </div>
-                    <!-- /.card-body -->
                 </div>
+
+            </div>
+            <div class="box-body"  >
+                <table class="table table-hover table-bordered weekstable w-100">
+                    @include('partners.table')
+                </table>
             </div>
         </div>
     </div>
@@ -130,6 +127,7 @@
     <script type="text/javascript">
 
         var table;
+        var weeksTable;
         var loading = true;
 
         $(function () {
@@ -186,6 +184,54 @@
 
             });
 
+            weeksTable = $('.weekstable').DataTable({
+                serverSide: true,
+                scrollY: 390,
+                scrollX: true,
+                order: [[0, 'desc']],
+                paging: false,
+                searching: false,
+                select: false,
+                ajax: "{{ route('partnerPeriodicAccounts', ['partner' => $partners->id, 'months' => 6]) }}",
+                columns: [
+                    {title: 'Számlaszám', data: 'invoicenumber', name: 'invoicenumber'},
+                    {title: 'Kelt', data: 'dated', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'dated'},
+                    {title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'performancedate'},
+                    {title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'deadline'},
+                    {title: 'Fizetési mód', data: 'paymentMethodName', name: 'paymentMethodName'},
+                    {title: 'Összeg', data: 'amount', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'amount'},
+                ],
+                buttons: [],
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(5)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(5, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(5).footer()).html(currencyFormatDE(total));
+                },
+
+            });
+
             $('#year').change(function() {
 
                 $('#gifDiv').show();
@@ -199,7 +245,45 @@
 
             });
 
+
+            function getMonths(period) {
+
+                var months = 0;
+
+                switch (parseInt(period)) {
+                    case 0:
+                        months = 1;
+                        break;
+                    case 1:
+                        months = 3;
+                        alert
+                        break;
+                    case 2:
+                        months = 6;
+                        break;
+                    case 3:
+                        months = 12;
+                        break;
+                }
+
+                return months;
+            }
+
+            $('#period').change(function() {
+
+                $('#gifDiv1').show();
+
+                let url = '{{ route('partnerPeriodicAccounts', [":partner", ":months"]) }}';
+                url = url.replace(':partner', <?php echo $partners->id; ?>).replace(':months', getMonths($('#period').val()))
+                weeksTable.ajax.url(url).load();
+
+                setTimeout(function() {
+                    $('#gifDiv1').hide();}, 4000);
+
+            });
+
             $('#gifDiv').hide();
+            $('#gifDiv1').hide();
         });
 
 

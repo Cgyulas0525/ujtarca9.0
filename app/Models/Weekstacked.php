@@ -103,4 +103,9 @@ class Weekstacked extends Model
         return Carbon::create(date('Y-m-d',strtotime($this->year. 'W' . str_pad($this->week, 2, '0', STR_PAD_LEFT))))->weekOfMonth;
     }
 
+    public function scopeGetPreviousRecord($query) {
+        return $query->where('id', '<', $this->id)->get()->last();
+    }
+
+
 }

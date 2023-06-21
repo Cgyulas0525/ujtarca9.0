@@ -25,9 +25,21 @@
         <!-- /.card-body -->
         <div class="card-footer p-0">
             <ul class="nav nav-pills flex-column">
-                @include('businessanalysis.baRevenuePercentItemNavItem', ['title' => 'Kártya', 'field' => 'card', 'c1' => 'float-right text-danger', 'icon' => 'fas fa-arrow-down text-sm'])
-                @include('businessanalysis.baRevenuePercentItemNavItem', ['title' => 'Szépkártya', 'field' => 'szcard', 'c1' => 'float-right text-warning', 'icon' => 'fas fa-arrow-up text-sm'])
-                @include('businessanalysis.baRevenuePercentItemNavItem', ['title' => 'Készpénz', 'field' => 'cash', 'c1' => 'float-right text-success', 'icon' => 'fas fa-arrow-left text-sm'])
+                @if ($witch === 'all' || $witch === 'year')
+                    @include('businessanalysis.baRevenuePercentItemNavItem', ['title' => 'Kártya', 'field' => 'card', 'c1' => 'float-right text-danger', 'icon' => 'fas fa-arrow-down text-sm', 'witch' => $witch])
+                    @include('businessanalysis.baRevenuePercentItemNavItem', ['title' => 'Szépkártya', 'field' => 'szcard', 'c1' => 'float-right text-warning', 'icon' => 'fas fa-arrow-up text-sm', 'witch' => $witch])
+                    @include('businessanalysis.baRevenuePercentItemNavItem', ['title' => 'Készpénz', 'field' => 'cash', 'c1' => 'float-right text-success', 'icon' => 'fas fa-arrow-left text-sm', 'witch' => $witch])
+                @endif
+                @if ($witch === 'month')
+                    @include('businessanalysis.baRevenueAmountDailySumNavItem', ['title' => 'Bevétel', 'field' => 'bevetel', 'c1' => 'float-right text-danger', 'icon' => 'fas fa-arrow-down text-sm', 'witch' => $witch])
+                    @include('businessanalysis.baRevenueAmountDailySumNavItem', ['title' => 'Kiadás', 'field' => 'kiadas', 'c1' => 'float-right text-warning', 'icon' => 'fas fa-arrow-up text-sm', 'witch' => $witch])
+                    @include('businessanalysis.baRevenueAmountDailySumNavItem', ['title' => 'Eredmény', 'field' => 'eredmeny', 'c1' => 'float-right text-success', 'icon' => 'fas fa-arrow-left text-sm', 'witch' => $witch])
+                @endif
+                @if ($witch === 'amount')
+                    @include('businessanalysis.baRevenueAmountDailySumNavItem', ['title' => 'Bevétel', 'field' => 'bevetel', 'c1' => 'float-right text-danger', 'icon' => 'fas fa-arrow-down text-sm', 'witch' => $witch])
+                    @include('businessanalysis.baRevenueAmountDailySumNavItem', ['title' => 'Kiadás', 'field' => 'kiadas', 'c1' => 'float-right text-warning', 'icon' => 'fas fa-arrow-up text-sm', 'witch' => $witch])
+                    @include('businessanalysis.baRevenueAmountDailySumNavItem', ['title' => 'Eredmény', 'field' => 'eredmeny', 'c1' => 'float-right text-success', 'icon' => 'fas fa-arrow-left text-sm', 'witch' => $witch])
+                @endif
             </ul>
         </div>
         <!-- /.footer -->

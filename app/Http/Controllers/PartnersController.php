@@ -21,6 +21,7 @@ use DataTables;
 use Form;
 
 use App\Traits\Others\PartnerFactSheetTrait;
+use App\Traits\Others\PartnerPeriodicAccountsTrait;
 
 class PartnersController extends AppBaseController
 {
@@ -32,7 +33,7 @@ class PartnersController extends AppBaseController
         $this->partnersRepository = $partnersRepo;
     }
 
-    use PartnerFactSheetTrait;
+    use PartnerFactSheetTrait, PartnerPeriodicAccountsTrait;
 
     public function dwData($data)
     {

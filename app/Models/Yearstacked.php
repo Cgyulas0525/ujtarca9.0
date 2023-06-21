@@ -100,4 +100,8 @@ class Yearstacked extends Model
         return Round($this->cash / ($this->revenue / 100), 0);
     }
 
+    public function scopeGetPreviousRecord($query) {
+        return $query->where('id', '<', $this->id)->get()->last();
+    }
+
 }
