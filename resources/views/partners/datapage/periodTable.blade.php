@@ -12,15 +12,17 @@
 
         </div>
         <div class="box-body"  >
-            <div class="col-lg-4 col-md-6 col-xs-12">
-                <table @class([ $table ])">
-                    @include('partners.weekstable')
-                </table>
-            </div>
-            <div class="col-lg-8 col-md-6 col-xs-12">
-                <figure class="highcharts-figure w-100">
-                    <div id="{{ $chartId }}"></div>
-                </figure>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-xs-12">
+                    <table @class([ $table ])">
+                        @include('partners.weekstable')
+                    </table>
+                </div>
+                <div class="col-lg-8 col-md-6 col-xs-12">
+                    <figure class="highcharts-figure w-100">
+                        <div id="{{ $chartId }}"></div>
+                    </figure>
+                </div>
             </div>
         </div>
     </div>

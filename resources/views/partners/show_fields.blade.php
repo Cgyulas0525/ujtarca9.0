@@ -34,28 +34,30 @@
 
     @include('partners.datapage.periodTable', ['title' => 'Év',
                                                'table' => "table table-hover table-bordered yeartable w-100",
-                                               'chart'])
+                                               'chartId' => 'year2'])
 
-    @include('partners.datapage.hcItem', ['title' => 'Év',
-                                          'chartId' => 'year2'])
+{{--    @include('partners.datapage.hcItem', ['title' => 'Év',--}}
+{{--                                          'chartId' => 'year2'])--}}
 
 </div>
 <div class="row">
 
     @include('partners.datapage.periodTable', ['title' => 'Hónap',
-                                               'table' => "table table-hover table-bordered monthtable w-100"])
+                                               'table' => "table table-hover table-bordered monthtable w-100",
+                                               'chartId' => 'month2'])
 
-    @include('partners.datapage.hcItem', ['title' => 'Hónap',
-                                          'chartId' => 'month2'])
+{{--    @include('partners.datapage.hcItem', ['title' => 'Hónap',--}}
+{{--                                          'chartId' => 'month2'])--}}
 
 </div>
 <div class="row">
 
     @include('partners.datapage.periodTable', ['title' => 'Hét',
-                                               'table' => "table table-hover table-bordered weektable w-100"])
+                                               'table' => "table table-hover table-bordered weektable w-100",
+                                               'chartId' => 'week2'])
 
-    @include('partners.datapage.hcItem', ['title' => 'Hét',
-                                          'chartId' => 'week2'])
+{{--    @include('partners.datapage.hcItem', ['title' => 'Hét',--}}
+{{--                                          'chartId' => 'week2'])--}}
 
 </div>
 
@@ -88,7 +90,7 @@
 
         $(function () {
 
-            $('[data-widget="pushmenu"]').PushMenu('collapse');
+            // $('[data-widget="pushmenu"]').PushMenu('collapse');
 
             ajaxSetup();
 
