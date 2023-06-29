@@ -24,6 +24,10 @@
                                     {!! Form::select('active', ToolsClass::yesNoDDDW(), 1,
                                             ['class'=>'select2 form-control', 'id' => 'active']) !!}
                                 </div>
+                                <div class="col-sm-3">
+                                    <a href="#" class="btn btn-danger deaktivBtn">1 éve nem aktív partnerek deaktíválása</a>
+                                </div>
+
                             </div>
                         </div>
                     </section>
@@ -82,6 +86,32 @@
                 table.ajax.url(url).load();
             })
 
+            $('.deaktivBtn').click(function () {
+                swal.fire({
+                    title: "Partner deaktíválás!",
+                    text: "Biztosan deaktíválja a 12 hónapja nem számlázó patnereket?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Deaktíválás",
+                    cancelButtonText: "Kilép",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type:"GET",
+                            url:"{{url('api/partnerDeactivation')}}",
+                            success: function (response) {
+                                console.log('ok:', response);
+                                window.location.reload(true);
+                            },
+                            error: function (response) {
+                                console.log('Error:', response);
+                                alert('nem ok');
+                            }
+                        });
+                    }
+                });
+            });
 
         });
     </script>
