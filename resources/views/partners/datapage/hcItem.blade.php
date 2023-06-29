@@ -1,4 +1,4 @@
-<div class="col-lg-4 col-md-6 col-xs-12">
+<div class="col-lg-8 col-md-6 col-xs-12">
 
     <div class="card card-primary">
         <div class="card-header">

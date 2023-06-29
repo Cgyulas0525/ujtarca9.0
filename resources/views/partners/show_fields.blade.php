@@ -21,97 +21,43 @@
                                                      'card' => 'card bg-danger',
                                                      'count' => number_format((new App\Services\InvoiceService)->partnerInvicesPeriodAverage('W', date('Y-m-d', strtotime('first day of January')), Carbon\Carbon::now(), $partners->id), 0, ",", ".") ])
 
-    <div class="mylabel col-sm-1">
-        {!! Form::label('name', 'Név:') !!}
-    </div>
-    <div class="mylabel col-sm-2">
-        <p>{{ $partners->name }}</p>
-    </div>
-    <div class="mylabel col-sm-1">
-        {!! Form::label('name', 'Cím:') !!}
-    </div>
-    <div class="mylabel col-sm-6">
-        <p>{{ $partners->fulladdress }}</p>
-    </div>
-    <div class="mylabel col-sm-1">
-        {!! Form::label('name', 'Státusz:') !!}
-    </div>
-    <div class="mylabel col-sm-1">
-        <p>{{ ($partners->active == 1) ? 'Aktív' : 'Nem aktív'  }}</p>
-    </div>
-    <div class="mylabel col-sm-1">
-        {!! Form::label('name', 'Adószám:') !!}
-    </div>
-    <div class="mylabel col-sm-2">
-        <p>{{ $partners->taxtnumber }}</p>
-    </div>
-    <div class="mylabel col-sm-1">
-        {!! Form::label('name', 'Bankszámla:') !!}
-    </div>
-    <div class="mylabel col-sm-3">
-        <p>{{ $partners->bankaccount }}</p>
-    </div>
-    <div class="mylabel col-sm-1">
-        {!! Form::label('name', 'Telefonszám:') !!}
-    </div>
-    <div class="mylabel col-sm-1">
-        <p>{{ $partners->phonenumber }}</p>
-    </div>
-    <div class="mylabel col-sm-1">
-        {!! Form::label('name', 'Email:') !!}
-    </div>
-    <div class="mylabel col-sm-2">
-        <p>{{ $partners->email }}</p>
-    </div>
+    @include('partners.datapage.showData')
+
 </div>
 
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-xs-12">
-        <div class="clearfix"></div>
-        <div class="box box-primary">
-            <div class="row">
-                <div class="form-group col-sm-6">
-                    <div class="row">
-                        <div class="mylabel col-sm-3">
-                            {!! Form::label('year', 'Számlák:') !!}
-                        </div>
-                        <div class="mylabel col-sm-2">
-                            {!! Form::label('year', 'Év:') !!}
-                        </div>
-                        <div class="col-sm-4">
-                            {!! Form::select('year', \App\Http\Controllers\InvoicesController::invoicesYearsDDDW(),date('Y'),
-                                    ['class'=>'select2 form-control', 'id' => 'year']) !!}
-                        </div>
-                        <div class="col-sm-3" id="gifDiv">
-                            <img src={{ URL::asset('/public/img/loading.gif') }}
-                                class="gifcenter" >
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-            <div class="box-body"  >
-                <table class="table table-hover table-bordered invoicetable w-100">
-                    @include('partners.table')
-                </table>
-            </div>
-        </div>
-    </div>
+    @include('partners.datapage.showTable')
+
+</div>
+<div class="row">
+
     @include('partners.datapage.periodTable', ['title' => 'Év',
-                                               'table' => "table table-hover table-bordered yeartable w-100"])
-    @include('partners.datapage.periodTable', ['title' => 'Hónap',
-                                               'table' => "table table-hover table-bordered monthtable w-100"])
-    @include('partners.datapage.periodTable', ['title' => 'Hét',
-                                               'table' => "table table-hover table-bordered weektable w-100"])
+                                               'table' => "table table-hover table-bordered yeartable w-100",
+                                               'chart'])
 
     @include('partners.datapage.hcItem', ['title' => 'Év',
                                           'chartId' => 'year2'])
 
+</div>
+<div class="row">
+
+    @include('partners.datapage.periodTable', ['title' => 'Hónap',
+                                               'table' => "table table-hover table-bordered monthtable w-100"])
+
     @include('partners.datapage.hcItem', ['title' => 'Hónap',
                                           'chartId' => 'month2'])
 
+</div>
+<div class="row">
+
+    @include('partners.datapage.periodTable', ['title' => 'Hét',
+                                               'table' => "table table-hover table-bordered weektable w-100"])
+
     @include('partners.datapage.hcItem', ['title' => 'Hét',
                                           'chartId' => 'week2'])
+
+</div>
 
 
 
