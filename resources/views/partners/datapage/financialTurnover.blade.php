@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <div class="col-lg-6 col-md-6 col-xs-12">
+=======
+<div class="col-lg-3 col-md-6 col-xs-12">
+>>>>>>> origin/master
     <div class="clearfix"></div>
     <div class="box box-primary">
         <div class="box-body">
