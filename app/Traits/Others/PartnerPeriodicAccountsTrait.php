@@ -9,6 +9,9 @@ use Carbon\Carbon;
 
 trait PartnerPeriodicAccountsTrait {
 
+    /*
+     * Partner számlái az adott dátumtól
+     */
     public function partnerPeriodicAccounts(Request $request, $partner, $months) {
 
         if( Auth::check() ) {
