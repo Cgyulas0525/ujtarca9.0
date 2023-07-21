@@ -6,15 +6,18 @@ use App\Models\Invoices;
 use App\Models\Offers;
 use App\Models\Partners;
 
+use App\Enums\IgenNemEnum;
+
+
 class ToolsClass
 {
 
     public static function yesNoDDDW() {
-        return ["Nem", "Igen"];
+        return IgenNemEnum::values();
     }
 
     public static function yesNo($value) {
-        return $value == 0 ? "Nem" : ($value == 1 ? "Igen" : "Nincs érték");
+        return $value == 0 ? IgenNemEnum::NEM() : ($value == 1 ? IgenNemEnum::IGEN() : "Nincs érték");
     }
 
     public static function aviable($partner) {

@@ -21,8 +21,10 @@
                                     {!! Form::label('active', 'Aktív:') !!}
                                 </div>
                                 <div class="col-sm-2">
-                                    {!! Form::select('active', ToolsClass::yesNoDDDW(), 1,
+                                    {!! Form::select('active', App\Enums\IgenNemEnum::values(), 1,
                                             ['class'=>'select2 form-control', 'id' => 'active']) !!}
+{{--                                    {!! Form::select('active', ToolsClass::yesNoDDDW(), 1,--}}
+{{--                                            ['class'=>'select2 form-control', 'id' => 'active']) !!}--}}
                                 </div>
                                 <div class="col-sm-3">
                                     <a href="#" class="btn btn-danger deaktivBtn">1 éve nem aktív partnerek deaktíválása</a>
