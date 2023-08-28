@@ -7,9 +7,10 @@ use DB;
 class TableUpdateOrInsert
 {
 
-    public static function handle($table, $keyArray, $array) {
+    public static function handle($table, $keyArray, $array): void
+    {
 
-        DB::table($table)->updateOrInsert( $keyArray, $array);
+        DB::table($table)->updateOrInsert($keyArray, $array);
 
     }
 

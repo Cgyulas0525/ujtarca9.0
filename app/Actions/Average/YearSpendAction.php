@@ -10,13 +10,15 @@ class YearSpendAction
     private $end;
     private $fpc;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->begin = date('Y-m-d', strtotime('first day of january this year'));
         $this->end = date('Y-m-d', strtotime('today'));
         $this->fpc = new FinancePeriodClass($this->begin, $this->end);
     }
 
-    public function handle() {
+    public function handle(): object
+    {
         return $this->fpc->yearInviocesPeriod();
     }
 

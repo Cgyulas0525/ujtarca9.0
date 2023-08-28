@@ -8,11 +8,12 @@ use App\Actions\Average\DatabaseAction\TableUpdateOrInsert;
 class WeekstackedUpdateOrInsert
 {
 
-    public static function handle($revenue, $spend) {
+    public static function handle($revenue, $spend): void
+    {
 
         TableUpdateOrInsert::handle('weekstackeds',
             ['year' => (int)substr($revenue->first()->yearweek, 0, 4),
-             'week' =>  (int)substr($revenue->first()->yearweek, 4, 2)],
+                'week' => (int)substr($revenue->first()->yearweek, 4, 2)],
             StackedArray::handle($revenue, $spend));
 
     }
