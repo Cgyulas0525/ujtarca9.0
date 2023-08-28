@@ -19,7 +19,7 @@ use DataTables;
 
 class ClosureCimletsController extends AppBaseController
 {
-    /** @var ClosureCimletsRepository $closureCimletsRepository*/
+    /** @var ClosureCimletsRepository $closureCimletsRepository */
     private $closureCimletsRepository;
 
     public function __construct(ClosureCimletsRepository $closureCimletsRepo)
@@ -27,13 +27,19 @@ class ClosureCimletsController extends AppBaseController
         $this->closureCimletsRepository = $closureCimletsRepo;
     }
 
-    public function dwData($data)
+    public function dwData($data): object
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('cimletName', function($data) { return $data->cimlets->name; })
-            ->addColumn('cimletValue', function($data) { return $data->cimlets->value; })
-            ->addColumn('sumValue', function($data) { return $data->cash; })
+            ->addColumn('cimletName', function ($data) {
+                return $data->cimlets->name;
+            })
+            ->addColumn('cimletValue', function ($data) {
+                return $data->cimlets->value;
+            })
+            ->addColumn('sumValue', function ($data) {
+                return $data->cash;
+            })
             ->rawColumns(['action'])
             ->make(true);
     }
@@ -48,7 +54,7 @@ class ClosureCimletsController extends AppBaseController
      */
     public function index(Request $request)
     {
-        if( Auth::check() ){
+        if (Auth::check()) {
 
             if ($request->ajax()) {
 
@@ -63,7 +69,7 @@ class ClosureCimletsController extends AppBaseController
 
     public function closureCimletsIndex(Request $request, $id)
     {
-        if( Auth::check() ){
+        if (Auth::check()) {
 
             if ($request->ajax()) {
 
@@ -163,9 +169,9 @@ class ClosureCimletsController extends AppBaseController
      *
      * @param int $id
      *
+     * @return Response
      * @throws \Exception
      *
-     * @return Response
      */
     public function destroy($id)
     {
@@ -185,7 +191,7 @@ class ClosureCimletsController extends AppBaseController
      *
      * return array
      */
-    public static function DDDW() : array
+    public static function DDDW(): array
     {
         return [" "] + closureCimlets::orderBy('name')->pluck('name', 'id')->toArray();
     }
@@ -197,16 +203,18 @@ class ClosureCimletsController extends AppBaseController
      *
      * @return ClosureCimlets
      */
-    public function closureCimletsUpdate(Request $request) {
+    public function closureCimletsUpdate(Request $request): Response
+    {
 
         ClosureCimlets::find($request->get('id'))->update(['value' => $request->get('value'),
-                                               'updated_at' => \Carbon\Carbon::now()]);
+            'updated_at' => \Carbon\Carbon::now()]);
 
-        return Response::json( ClosureCimlets::find($request->get('id')) );
+        return Response::json(ClosureCimlets::find($request->get('id')));
 
     }
 
-    public function closureCimletsSum(Request $request) {
+    public function closureCimletsSum(Request $request): object
+    {
 
         return ClosureCimlets::closureclosurecimlets($request->get('id'))->get()->sum('cash');
 

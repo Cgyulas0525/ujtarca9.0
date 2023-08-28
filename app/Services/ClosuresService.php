@@ -11,6 +11,7 @@ class ClosuresService
     {
         $data = Closures::firstwhere('closuredate', $date);
         return !empty($data) ? ($data->dailysum - 20000) : 0;
+
     }
 
     public static function getPeriodDailySum($day, $begin = NULL, $end = NULL)

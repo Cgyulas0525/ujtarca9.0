@@ -19,7 +19,7 @@ use Form;
 
 class CimletsController extends AppBaseController
 {
-    /** @var CimletsRepository $cimletsRepository*/
+    /** @var CimletsRepository $cimletsRepository */
     private $cimletsRepository;
 
     public function __construct(CimletsRepository $cimletsRepo)
@@ -27,14 +27,14 @@ class CimletsController extends AppBaseController
         $this->cimletsRepository = $cimletsRepo;
     }
 
-    public function dwData($data)
+    public function dwData($data): object
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', function($row){
+            ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('cimlets.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn.'<a href="' . route('beforeDestroys', ['Cimlets', $row["id"], 'cimlets']) . '"
+                $btn = $btn . '<a href="' . route('beforeDestroys', ['Cimlets', $row["id"], 'cimlets']) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
                 return $btn;
             })
@@ -52,7 +52,7 @@ class CimletsController extends AppBaseController
      */
     public function index(Request $request)
     {
-        if( Auth::check() ){
+        if (Auth::check()) {
 
             if ($request->ajax()) {
 
@@ -153,9 +153,9 @@ class CimletsController extends AppBaseController
      *
      * @param int $id
      *
+     * @return Response
      * @throws \Exception
      *
-     * @return Response
      */
     public function destroy($id)
     {
@@ -175,15 +175,16 @@ class CimletsController extends AppBaseController
      *
      * return array
      */
-    public static function DDDW() : array
+    public static function DDDW(): array
     {
         return [" "] + cimlets::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    public static function fields() {
+    public static function fields(): array
+    {
         $formGroupArray = [];
         $item = ["label" => Form::label('name', 'Név:'),
-            "field" => Form::text('name', null, ['class' => 'form-control','maxlength' => 100]),
+            "field" => Form::text('name', null, ['class' => 'form-control', 'maxlength' => 100]),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
@@ -193,10 +194,11 @@ class CimletsController extends AppBaseController
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('description', 'Megjegyzés:'),
-            "field" => Form::textarea('description', null, ['class' => 'form-control','maxlength' => 500, 'rows' => 4, 'id' => 'description']),
+            "field" => Form::textarea('description', null, ['class' => 'form-control', 'maxlength' => 500, 'rows' => 4, 'id' => 'description']),
             "width" => 6,
             "file" => false];
         array_push($formGroupArray, $item);
+
         return $formGroupArray;
     }
 }
