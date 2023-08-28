@@ -8,12 +8,12 @@ use DB;
 
 class InvoiceService
 {
-    public function bestSupplier($year = null, $count = null)
+    public function bestSupplier($year = null, $count = null): object
     {
 
         $datas = Invoices::with('partner')
             ->selectRaw('sum(amount) as sumamount, sum(1) as invoiceCount, partner_id')
-            ->where(function($q) use($year) {
+            ->where(function ($q) use ($year) {
                 if (is_null($year) || ($year == -9999)) {
                     $q->whereNotNull('dated');
                 } else {
@@ -28,16 +28,17 @@ class InvoiceService
 
     }
 
-    public function partnerInvoicesPeriod($witch, $begin = null, $end = null, $partner = null) {
+    public function partnerInvoicesPeriod($witch, $begin = null, $end = null, $partner = null): object
+    {
 
         $selectMonth = 'partner_id, concat(year(dated), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as period, sum(amount) as amount';
-        $selectWeek  = 'partner_id, concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as period, sum(amount) as amount';
-        $selectYear  = 'partner_id, year(dated) as period, sum(amount) as amount';
+        $selectWeek = 'partner_id, concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as period, sum(amount) as amount';
+        $selectYear = 'partner_id, year(dated) as period, sum(amount) as amount';
 
         return Invoices::with('partner')
             ->select(DB::raw($witch === 'H' ? $selectMonth : ($witch === 'W' ? $selectWeek : $selectYear)))
             ->whereBetween('dated', [is_null($begin) ? Invoices::first()->dated : $begin, is_null($end) ? Carbon::now() : $end])
-            ->where( function($query) use ($partner) {
+            ->where(function ($query) use ($partner) {
                 if (is_null($partner)) {
                     $query->whereNotNull('partner_id');
                 } else {
