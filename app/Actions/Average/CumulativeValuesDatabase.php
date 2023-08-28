@@ -24,7 +24,8 @@ class CumulativeValuesDatabase
     private $wra;
     private $wsa;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->yra = new YearRevenueAction();
         $this->ysa = new YearSpendAction();
         $this->mra = new MonthRevenueAction();
@@ -33,7 +34,8 @@ class CumulativeValuesDatabase
         $this->wsa = new WeekSpendAction();
     }
 
-    public function handle() {
+    public function handle(): void
+    {
 
         DB::beginTransaction();
 
@@ -69,7 +71,7 @@ class CumulativeValuesDatabase
 
             DB::commit();
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
 
             DB::rollBack();
 
