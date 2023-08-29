@@ -16,20 +16,22 @@ class OfferPdfAction
     public $partner;
     public $details;
 
-    public function __construct($offer, $owner, $partner, $details) {
+    public function __construct($offer, $owner, $partner, $details)
+    {
         $this->offer = $offer;
         $this->owner = $owner;
         $this->partner = $partner;
         $this->details = $details;
     }
 
-    public function handle() {
+    public function handle()
+    {
 
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
             ->loadView('printing.offerPrintingEmail', ['offer' => $this->offer, 'owner' => $this->owner, 'partner' => $this->partner, 'details' => $this->details]);
 
-        $fileName = $this->partner->name . '-' . $this->offer->offernumber . '-' . date('Y-m-d',strtotime('today')) .'-megrendelés.pdf';
-        $path = public_path('print/'.$fileName);
+        $fileName = $this->partner->name . '-' . $this->offer->offernumber . '-' . date('Y-m-d', strtotime('today')) . '-megrendelés.pdf';
+        $path = public_path('print/' . $fileName);
 
         $pdf->save($path);
 

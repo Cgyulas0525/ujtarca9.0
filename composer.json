@@ -32,7 +32,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
         "barryvdh/laravel-ide-helper": "^2.12",
-        "spatie/laravel-ignition": "^1.0",
+        "brianium/paratest": "^6.10",
         "fakerphp/faker": "^1.9.1",
         "kitloong/laravel-migrations-generator": "^6.9",
         "laravel/sail": "^0.0.5",
@@ -40,6 +40,7 @@
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.3.3",
         "psy/psysh": "0.11.2",
+        "spatie/laravel-ignition": "^1.0",
         "spatie/laravel-ray": "^1.14"
     },
     "config": {
