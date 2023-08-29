@@ -24,7 +24,7 @@ class OfferPdfAction
         $this->details = $details;
     }
 
-    public function handle()
+    public function handle(): string
     {
 
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])

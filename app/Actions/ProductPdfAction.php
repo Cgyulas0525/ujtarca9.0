@@ -16,7 +16,7 @@ class ProductPdfAction
         $this->partner = $partner;
     }
 
-    public function handle()
+    public function handle(): string
     {
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
             ->loadView('printing.productsPrintingEmail', ['owner' => $this->owner,
