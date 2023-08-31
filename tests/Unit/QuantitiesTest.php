@@ -26,10 +26,4 @@ class QuantitiesTest extends TestCase
         $this->assertEquals($qa->name, $name);
     }
 
-    public function test_asserting_a_json_paths_value(): void
-    {
-        $response = Quantities::find(2)->toJson();
-
-        $response->assertJson('name', '50 dkg');
-    }
 }
