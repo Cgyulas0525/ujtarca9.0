@@ -21,7 +21,7 @@ class PartnerDeactivationController extends Controller
      *
      * return
      */
-    public function partnerDeactivation()
+    public function partnerDeactivation(): void
     {
 
         $this->partnerService->deactivation();

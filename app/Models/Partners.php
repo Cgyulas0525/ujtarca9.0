@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $email
  * @property string $phonenumber
  * @property string $description
+ * @property integer $active
  */
 class Partners extends Model
 {
