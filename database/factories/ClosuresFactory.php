@@ -19,17 +19,33 @@ class ClosuresFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'closuredate' => $this->faker->word,
-            'card' => $this->faker->randomDigitNotNull,
-            'szcard' => $this->faker->randomDigitNotNull,
-            'dayduring' => $this->faker->randomDigitNotNull,
-            'dailysum' => $this->faker->randomDigitNotNull,
+            'closuredate' => $this->faker->date('Y-m-d H:i:s'),
+            'card' => 0,
+            'szcard' => 0,
+            'dayduring' => 0,
+            'dailysum' => 0,
             'created_at' => $this->faker->date('Y-m-d H:i:s'),
             'updated_at' => $this->faker->date('Y-m-d H:i:s'),
             'deleted_at' => $this->faker->date('Y-m-d H:i:s')
         ];
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

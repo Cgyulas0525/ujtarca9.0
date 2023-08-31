@@ -7,9 +7,11 @@ use Carbon\Carbon;
 class StackedArray
 {
 
-    public static function handle($spend) {
+    public static function handle($spend): array
+    {
 
-        return ['revenue' => $spend->first()->dailysum,
+        return [
+            'revenue' => $spend->first()->dailysum,
             'average' => Round($spend->first()->dailysum / $spend->first()->days, 0),
             'card' => $spend->first()->card,
             'szcard' => $spend->first()->szcard,

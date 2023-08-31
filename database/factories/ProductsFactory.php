@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Products;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Quantities;
 
 class ProductsFactory extends Factory
 {
@@ -19,17 +20,17 @@ class ProductsFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->word,
-        'quantities_id' => $this->faker->randomDigitNotNull,
-        'price' => $this->faker->randomDigitNotNull,
-        'supplierprice' => $this->faker->randomDigitNotNull,
-        'description' => $this->faker->word,
-        'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-        'deleted_at' => $this->faker->date('Y-m-d H:i:s')
+            'quantities_id' => Quantities::factory()->create(),
+            'price' => $this->faker->randomDigitNotNull,
+            'supplierprice' => $this->faker->randomDigitNotNull,
+            'description' => $this->faker->word,
+            'created_at' => $this->faker->date('Y-m-d H:i:s'),
+            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'deleted_at' => $this->faker->date('Y-m-d H:i:s')
         ];
     }
 }

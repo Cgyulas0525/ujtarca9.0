@@ -23,11 +23,8 @@ class ClosureCimletsFactory extends Factory
     {
         return [
             'closures_id' => $this->faker->randomDigitNotNull,
-        'cimlets_id' => $this->faker->randomDigitNotNull,
-        'value' => $this->faker->randomDigitNotNull,
-        'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-        'deleted_at' => $this->faker->date('Y-m-d H:i:s')
+            'cimlets_id' => $this->faker->randomDigitNotNull,
+            'value' => $this->faker->randomDigitNotNull,
         ];
     }
 }
