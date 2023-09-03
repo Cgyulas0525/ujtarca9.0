@@ -94,7 +94,6 @@ class InvoicesController extends AppBaseController
                         is_null($year) ? $query->whereNotNull('dated') : $query->whereYear('dated', '=', $year);
                     })->get());
             }
-
             return view('invoices.index');
         }
     }
