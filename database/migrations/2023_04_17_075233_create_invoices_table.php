@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('invoices')) {
+            return;
+        }
+
         Schema::create('invoices', function (Blueprint $table) {
             $table->integer('id', true)->unique('invoices_id_uindex');
             $table->integer('partner_id');
@@ -31,7 +35,6 @@ return new class extends Migration
             $table->index(['partner_id', 'paymentmethod_id', 'id']);
             $table->index(['paymentmethod_id', 'partner_id', 'id']);
             $table->index(['partner_id', 'id'], 'partner');
-            $table->primary(['id']);
         });
     }
 

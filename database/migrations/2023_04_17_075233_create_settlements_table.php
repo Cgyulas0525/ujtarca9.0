@@ -12,6 +12,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        if (Schema::hasTable('settlements')) {
+            return;
+        }
         Schema::create('settlements', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('name', 100);
@@ -20,7 +23,6 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['id'], 'settlements_id_uindex');
             $table->index(['name', 'postcode', 'id']);
             $table->index(['postcode', 'name', 'id']);
         });

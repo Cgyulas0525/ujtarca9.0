@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('partners')) {
+            return;
+        }
         Schema::create('partners', function (Blueprint $table) {
             $table->integer('id', true)->unique('partners_id_uindex');
             $table->string('name', 100);
@@ -31,7 +34,6 @@ return new class extends Migration
 
             $table->unique(['name', 'id'], 'partners_name_id_uindex');
             $table->unique(['partnertypes_id', 'id'], 'partners_partnertypes_id_id_uindex');
-            $table->primary(['id']);
         });
     }
 

@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('offers')) {
+            return;
+        }
         Schema::create('offers', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('offernumber', 25)->unique('offers_offernumber_uindex');

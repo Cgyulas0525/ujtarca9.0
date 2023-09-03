@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('paymentmethods')) {
+            return;
+        }
         Schema::create('paymentmethods', function (Blueprint $table) {
             $table->integer('id', true)->unique('paymentmethods_id_uindex');
             $table->string('name', 100)->unique('paymentmethods_name_uindex');
             $table->string('description', 500)->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->primary(['id']);
         });
     }
 

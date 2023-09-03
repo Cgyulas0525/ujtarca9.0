@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('closures')) {
+            return;
+        }
+
         Schema::create('closures', function (Blueprint $table) {
             $table->integer('id', true)->unique('closures_id_uindex');
             $table->date('closuredate')->unique('closures_closuredate_uindex');
@@ -23,7 +27,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->primary(['id']);
         });
     }
 

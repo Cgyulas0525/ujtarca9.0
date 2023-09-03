@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('yearstackeds')) {
+            return;
+        }
         Schema::create('yearstackeds', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('year')->unique('yearstacked_year_uindex');

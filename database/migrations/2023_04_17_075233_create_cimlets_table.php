@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('cimlets')) {
+            return;
+        }
+
         Schema::create('cimlets', function (Blueprint $table) {
             $table->integer('id', true)->unique('cimlets_id_uindex');
             $table->string('name', 100)->unique('cimlets_name_uindex');
@@ -21,7 +25,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->primary(['id']);
         });
     }
 

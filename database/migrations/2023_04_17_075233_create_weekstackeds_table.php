@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('weekstackeds')) {
+            return;
+        }
         Schema::create('weekstackeds', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('year');

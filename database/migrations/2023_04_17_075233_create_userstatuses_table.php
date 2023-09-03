@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('userstatuses')) {
+            return;
+        }
         Schema::create('userstatuses', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('name', 191)->nullable()->index('IDX_UserStatus_Name');

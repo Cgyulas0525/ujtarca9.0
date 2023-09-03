@@ -19,7 +19,7 @@ use Form;
 
 class InvoicesController extends AppBaseController
 {
-    /** @var InvoicesRepository $invoicesRepository*/
+    /** @var InvoicesRepository $invoicesRepository */
     private $invoicesRepository;
 
     public function __construct(InvoicesRepository $invoicesRepo)
@@ -31,12 +31,16 @@ class InvoicesController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('paymentMethodName', function($data) { return ($data->paymentMethodName); })
-            ->addColumn('partnerName', function($data) { return ($data->partner->name); })
-            ->addColumn('action', function($row){
+            ->addColumn('paymentMethodName', function ($data) {
+                return ($data->paymentMethodName);
+            })
+            ->addColumn('partnerName', function ($data) {
+                return ($data->partner->name);
+            })
+            ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('invoices.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn.'<a href="' . route('beforeDestroys', ['Invoices', $row->id, 'invoices']) . '"
+                $btn = $btn . '<a href="' . route('beforeDestroys', ['Invoices', $row->id, 'invoices']) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
                 return $btn;
             })
@@ -54,7 +58,7 @@ class InvoicesController extends AppBaseController
      */
     public function index(Request $request)
     {
-        if( Auth::check() ){
+        if (Auth::check()) {
             if ($request->ajax()) {
 
                 $data = $this->invoicesRepository->all();
@@ -78,28 +82,17 @@ class InvoicesController extends AppBaseController
 
     public function invoicesIndex(Request $request, $year = null, $partner = null)
     {
-        if( Auth::check() ){
+        if (Auth::check()) {
             if ($request->ajax()) {
 
-                $data = Invoices::with('paymentmethod')
-                                ->with('partner')
-                                ->where( function($query) use ($partner) {
-                                    if (is_null($partner) || $partner == -9999 ) {
-                                        $query->whereNotNull('partner_id');
-                                    } else {
-                                        $query->where('partner_id', '=', $partner);
-                                    }
-                                })
-                                ->where( function($query) use ($year) {
-                                    if (is_null($year) || $year == -9999) {
-                                        $query->whereNotNull('dated');
-                                    } else {
-                                        $query->whereYear('dated', '=', $year );
-                                    }
-                                })->get();
-
-                return $this->dwData($data);
-
+                return $this->dwData(Invoices::with('paymentmethod')
+                    ->with('partner')
+                    ->where(function ($query) use ($partner) {
+                        is_null($partner) ? $query->whereNotNull('partner_id') : $query->where('partner_id', '=', $partner);
+                    })
+                    ->where(function ($query) use ($year) {
+                        is_null($year) ? $query->whereNotNull('dated') : $query->whereYear('dated', '=', $year);
+                    })->get());
             }
 
             return view('invoices.index');
@@ -185,9 +178,9 @@ class InvoicesController extends AppBaseController
      *
      * @param int $id
      *
+     * @return Response
      * @throws \Exception
      *
-     * @return Response
      */
     public function destroy($id)
     {
@@ -207,33 +200,35 @@ class InvoicesController extends AppBaseController
      *
      * return array
      */
-    public static function DDDW() : array
+    public static function DDDW(): array
     {
         return [" "] + Invoices::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    public static function invoicesYearsDDDW() {
+    public static function invoicesYearsDDDW()
+    {
         return [" "] + Invoices::selectRaw('year(invoices.dated) as year')->groupBy('year')
                 ->orderBy('year', 'desc')
                 ->pluck('year', 'year')->toArray();
     }
 
-    public static function fields($invoice) {
+    public static function fields($invoice)
+    {
         $formGroupArray = [];
         $item = ["label" => Form::label('partner_id', 'Partner:'),
             "field" => Form::select('partner_id', PartnersController::DDDWSupplier(), null,
-                ['class'=>'select2 form-control', 'id' => 'partner_id', 'required' => true]),
+                ['class' => 'select2 form-control', 'id' => 'partner_id', 'required' => true]),
             "width" => 12,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('invoicenumber', 'Számlaszám:'),
-            "field" => Form::text('invoicenumber', null, ['class' => 'form-control','maxlength' => 25, 'required' => true]),
+            "field" => Form::text('invoicenumber', null, ['class' => 'form-control', 'maxlength' => 25, 'required' => true]),
             "width" => 4,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('paymentmethod_id', 'Fizetési mód:'),
             "field" => Form::select('paymentmethod_id', PaymentMethodsController::DDDW(), null,
-                ['class'=>'select2 form-control', 'id' => 'paymentmethod_id', 'required' => true]),
+                ['class' => 'select2 form-control', 'id' => 'paymentmethod_id', 'required' => true]),
             "width" => 4,
             "file" => false];
         array_push($formGroupArray, $item);
@@ -244,22 +239,22 @@ class InvoicesController extends AppBaseController
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('dated', 'Kelt:'),
-            "field" => Form::date('dated', isset($invoice) ? $invoice->dated : \Carbon\Carbon::now(), ['class' => 'form-control','id'=>'dated', 'required' => true]),
+            "field" => Form::date('dated', isset($invoice) ? $invoice->dated : \Carbon\Carbon::now(), ['class' => 'form-control', 'id' => 'dated', 'required' => true]),
             "width" => 4,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('performancedate', 'Teljesítés:'),
-            "field" => Form::date('performancedate', isset($invoice) ? $invoice->performancedate : \Carbon\Carbon::now(), ['class' => 'form-control','id'=>'performancedate', 'required' => true]),
+            "field" => Form::date('performancedate', isset($invoice) ? $invoice->performancedate : \Carbon\Carbon::now(), ['class' => 'form-control', 'id' => 'performancedate', 'required' => true]),
             "width" => 4,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('deadline', 'Határidő:'),
-            "field" => Form::date('deadline', isset($invoice) ? $invoice->deadline : \Carbon\Carbon::now(), ['class' => 'form-control','id'=>'deadline', 'required' => true]),
+            "field" => Form::date('deadline', isset($invoice) ? $invoice->deadline : \Carbon\Carbon::now(), ['class' => 'form-control', 'id' => 'deadline', 'required' => true]),
             "width" => 4,
             "file" => false];
         array_push($formGroupArray, $item);
         $item = ["label" => Form::label('description', 'Megjegyzés:'),
-            "field" => Form::textarea('description', null, ['class' => 'form-control','maxlength' => 500, 'rows' => 4, 'id' => 'description']),
+            "field" => Form::textarea('description', null, ['class' => 'form-control', 'maxlength' => 500, 'rows' => 4, 'id' => 'description']),
             "width" => 12,
             "file" => false];
         array_push($formGroupArray, $item);

@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('products')) {
+            return;
+        }
         Schema::create('products', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('name', 100);
@@ -22,8 +25,6 @@ return new class extends Migration
             $table->string('description', 500)->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->index(['name', 'id']);
         });
     }
 
