@@ -18,7 +18,7 @@ return new class extends Migration
         }
 
         Schema::create('cimlets', function (Blueprint $table) {
-            $table->integer('id', true)->unique('cimlets_id_uindex');
+            $table->id();
             $table->string('name', 100)->unique('cimlets_name_uindex');
             $table->integer('value')->index();
             $table->string('description', 500)->nullable();

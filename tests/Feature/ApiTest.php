@@ -2,12 +2,16 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Partners;
+use App\Models\Invoices;
 
 class ApiTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -15,6 +19,14 @@ class ApiTest extends TestCase
      */
     public function test_partner_deactivation(): void
     {
+        $partner = Partners::factory()->create();
+        $invoice = Invoices::factory()->create(
+            [
+                'partner_id' => $partner->id,
+            ]
+        );
+        $partner = PArtners::factory()->create();
+
         $this->get( "api/partnerDeactivation")
             ->assertStatus(Response::HTTP_OK);
     }

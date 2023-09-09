@@ -27,9 +27,6 @@ class ClosuresFactory extends Factory
             'szcard' => 0,
             'dayduring' => 0,
             'dailysum' => 0,
-            'created_at' => $this->faker->date('Y-m-d H:i:s'),
-            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-            'deleted_at' => $this->faker->date('Y-m-d H:i:s')
         ];
     }
 }

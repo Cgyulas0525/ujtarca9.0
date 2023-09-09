@@ -18,7 +18,7 @@ return new class extends Migration
         }
 
         Schema::create('invoices', function (Blueprint $table) {
-            $table->integer('id', true)->unique('invoices_id_uindex');
+            $table->id();
             $table->integer('partner_id');
             $table->string('invoicenumber', 25);
             $table->integer('paymentmethod_id');
@@ -30,11 +30,11 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['paymentmethod_id', 'id'], 'fizitesimod');
+            $table->index(['paymentmethod_id', 'id']);
             $table->index(['dated', 'partner_id', 'id']);
             $table->index(['partner_id', 'paymentmethod_id', 'id']);
             $table->index(['paymentmethod_id', 'partner_id', 'id']);
-            $table->index(['partner_id', 'id'], 'partner');
+            $table->index(['partner_id', 'id']);
         });
     }
 

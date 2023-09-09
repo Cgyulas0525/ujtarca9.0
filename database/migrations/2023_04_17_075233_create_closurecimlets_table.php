@@ -18,7 +18,7 @@ return new class extends Migration
         }
 
         Schema::create('closurecimlets', function (Blueprint $table) {
-            $table->integer('id', true)->unique('closurecimlets_id_uindex');
+            $table->id();
             $table->integer('closures_id');
             $table->integer('cimlets_id');
             $table->integer('value')->default(0);

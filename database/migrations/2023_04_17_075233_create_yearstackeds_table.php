@@ -17,7 +17,7 @@ return new class extends Migration
             return;
         }
         Schema::create('yearstackeds', function (Blueprint $table) {
-            $table->integer('id', true);
+            $table->id();
             $table->integer('year')->unique('yearstacked_year_uindex');
             $table->integer('revenue')->default(0);
             $table->integer('spend')->default(0);
