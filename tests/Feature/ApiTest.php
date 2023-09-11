@@ -19,10 +19,10 @@ class ApiTest extends TestCase
      */
     public function test_partner_deactivation(): void
     {
-        $partner = Partners::factory()->create();
+        $partners = Partners::factory()->count(3)->create();
         $invoice = Invoices::factory()->create(
             [
-                'partner_id' => $partner->id,
+                'partner_id' => $partners->first()->id,
             ]
         );
         $partner = PArtners::factory()->create();
