@@ -34,7 +34,6 @@ class Yearstacked extends Model
     protected $dates = ['deleted_at'];
 
 
-
     public $fillable = [
         'year',
         'revenue',
@@ -84,24 +83,28 @@ class Yearstacked extends Model
     ];
 
 
-    public function getResultAttribute() {
+    public function getResultAttribute(): int
+    {
         return $this->revenue - $this->spend;
     }
 
-    public function scopeGetCardPercent() {
+    public function scopeGetCardPercent(): mixed
+    {
         return Round($this->card / ($this->revenue / 100), 0);
     }
 
-    public function scopeGetSzCardPercent() {
+    public function scopeGetSzCardPercent(): mixed
+    {
         return Round($this->szcard / ($this->revenue / 100), 0);
     }
 
-    public function scopeGetCashPercent() {
+    public function scopeGetCashPercent(): mixed
+    {
         return Round($this->cash / ($this->revenue / 100), 0);
     }
 
-    public function scopeGetPreviousRecord($query) {
+    public function scopeGetPreviousRecord($query): mixed
+    {
         return $query->where('id', '<', $this->id)->get()->last();
     }
-
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -27,7 +28,6 @@ class PartnerTypes extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -59,7 +59,8 @@ class PartnerTypes extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function partners() {
+    public function partners(): string|HasMany
+    {
         return $this->hasMany(Partners::class, 'partnertypes_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Quantities;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             SettlementsSeeder::class,
+            CimletsSeeder::class,
+            QuantitiesSeeder::class,
+            UserstatusesSeeder::class,
         ]);
     }
 }

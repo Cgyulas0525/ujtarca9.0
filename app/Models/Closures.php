@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -75,27 +76,33 @@ class Closures extends Model
         'result'
     ];
 
-    public function closurecimlets() {
+    public function closurecimlets(): string|HasMany
+    {
         return $this->hasMany(ClosureCimlets::class);
     }
 
-    public function getResultAttribute() {
+    public function getResultAttribute(): int
+    {
         return $this->dailysum - 20000;
     }
 
-    public function getCashAttribute() {
+    public function getCashAttribute(): int
+    {
         return $this->dailysum - ($this->card + $this->szcard + 20000);
     }
 
-    public function scopeThisYear($query, $year) {
+    public function scopeThisYear($query, $year): mixed
+    {
         return $query->whereYear('closuredate', '=', $year);
     }
 
-    public function scopeThisYearMonth($query, $year, $month) {
+    public function scopeThisYearMonth($query, $year, $month): mixed
+    {
         return $query->whereYear('closuredate', '=', $year)->whereMonth('closuredate', '=', $month);
     }
 
-    public function scopeThisYearSumResult($query, $year) {
+    public function scopeThisYearSumResult($query, $year): mixed
+    {
         return $query->ThisYear($year)->get()->sum('result');
     }
 

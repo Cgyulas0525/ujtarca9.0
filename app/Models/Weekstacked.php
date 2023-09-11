@@ -36,7 +36,6 @@ class Weekstacked extends Model
     protected $dates = ['deleted_at'];
 
 
-
     public $fillable = [
         'year',
         'week',
@@ -91,21 +90,23 @@ class Weekstacked extends Model
     ];
 
 
-    public function getResultAttribute() {
+    public function getResultAttribute(): int
+    {
         return $this->revenue - $this->spend;
     }
 
-    public function getYearWeekAttribute() {
+    public function getYearWeekAttribute(): string
+    {
         return $this->year . "." . str_pad($this->week, 2, '0', STR_PAD_LEFT);
     }
 
-    public function getWeekOfMOnthAttribute() {
-        return Carbon::create(date('Y-m-d',strtotime($this->year. 'W' . str_pad($this->week, 2, '0', STR_PAD_LEFT))))->weekOfMonth;
+    public function getWeekOfMOnthAttribute(): string
+    {
+        return Carbon::create(date('Y-m-d', strtotime($this->year . 'W' . str_pad($this->week, 2, '0', STR_PAD_LEFT))))->weekOfMonth;
     }
 
-    public function scopeGetPreviousRecord($query) {
+    public function scopeGetPreviousRecord($query): mixed
+    {
         return $query->where('id', '<', $this->id)->get()->last();
     }
-
-
 }

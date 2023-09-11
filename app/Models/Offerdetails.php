@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Yajra\DataTables\Html\Editor\Fields\BelongsTo;
 
 /**
  * Class Offerdetails
@@ -29,7 +30,6 @@ class Offerdetails extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -67,17 +67,18 @@ class Offerdetails extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function quantities() {
+    public function quantities(): string|BelongsTo
+    {
         return $this->belongsTo(Quantities::class, 'quantities_id');
     }
 
-    public function products() {
+    public function products(): string|BelongsTo
+    {
         return $this->belongsTo(Products::class, 'products_id');
     }
 
-    public function offers() {
+    public function offers(): string|BelongsTo
+    {
         return $this->belongsTo(Offers::class, 'offers_id');
     }
-
-
 }
