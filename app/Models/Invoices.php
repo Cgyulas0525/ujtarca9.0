@@ -5,7 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Yajra\DataTables\Html\Editor\Fields\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Invoices
@@ -76,7 +76,7 @@ class Invoices extends Model
         'amount' => 'required|integer',
         'dated' => 'required',
         'performancedate' => 'required',
-        'deadline' => 'required',
+        'deadline' => 'requireddate|after_or_equal:dated',
         'description' => 'nullable|string|max:500',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',

@@ -25,7 +25,7 @@ class ApiTest extends TestCase
                 'partner_id' => $partners->first()->id,
             ]
         );
-        $partner = PArtners::factory()->create();
+        $partner = Partners::factory()->create();
 
         $this->get( "api/partnerDeactivation")
             ->assertStatus(Response::HTTP_OK);
