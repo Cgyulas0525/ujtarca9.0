@@ -24,6 +24,6 @@ class CreateInvoicesRequest extends FormRequest
      */
     public function rules()
     {
-        return Invoices::$rules;
+//        return Invoices::$rules;
     }
 }
