@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Barryvdh\DomPDF\Tests\TestCase;
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Products
@@ -29,7 +32,6 @@ class Products extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -70,13 +72,13 @@ class Products extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function quantities() {
+    public function quantities(): string|BelongsTo
+    {
         return $this->belongsTo(Quantities::class, 'quantities_id');
     }
 
-    public function offerdetails() {
+    public function offerdetails(): string|HasMany
+    {
         return $this->hasMany(Offerdetails::class, 'products_id');
     }
-
-
 }

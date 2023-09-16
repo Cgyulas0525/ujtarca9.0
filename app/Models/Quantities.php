@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -27,7 +28,6 @@ class Quantities extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -59,12 +59,13 @@ class Quantities extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function products() {
+    public function products(): string|HasMany
+    {
         return $this->hasMany(Products::class, 'quantities_id');
     }
 
-    public function offerdetails() {
+    public function offerdetails(): string|HasMany
+    {
         return $this->hasMany(Offerdetails::class, 'quantities_id');
     }
-
 }

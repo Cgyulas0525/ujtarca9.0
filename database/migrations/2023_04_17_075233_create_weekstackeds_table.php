@@ -17,7 +17,7 @@ return new class extends Migration
             return;
         }
         Schema::create('weekstackeds', function (Blueprint $table) {
-            $table->integer('id', true);
+            $table->id();
             $table->integer('year');
             $table->integer('week');
             $table->integer('revenue')->default(0);

@@ -18,7 +18,7 @@ return new class extends Migration
         }
 
         Schema::create('monthstackeds', function (Blueprint $table) {
-            $table->integer('id', true);
+            $table->id();
             $table->integer('year');
             $table->integer('month');
             $table->integer('revenue')->default(0);

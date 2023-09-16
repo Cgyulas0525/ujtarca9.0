@@ -98,6 +98,32 @@ class InvoicesController extends AppBaseController
         }
     }
 
+    public function validating($request)
+    {
+        return $request->validate([
+            'partner_id' => 'required|integer',
+            'invoicenumber' => 'required|string|max:25',
+            'paymentmethod_id' => 'required|integer',
+            'amount' => 'required|integer',
+            'dated' => 'required|date',
+            'performancedate' => 'required|date',
+            'deadline' => 'required|date|after_or_equal:dated',
+            'description' => 'nullable|string|max:500',
+            'created_at' => 'nullable',
+            'updated_at' => 'nullable',
+            'deleted_at' => 'nullable',
+        ],
+            [
+                'partner_id' => 'A partner kötelező mező!',
+                'invoicenumber' => 'A számlaszám kötelező mező!',
+                'paymentmethod_id' => 'A fizetési mód kötelező mező!',
+                'amount' => 'Az összeg kötelező mező!',
+                'dated' => 'A kelt kötelező mező!',
+                'performancedate' => 'A teljesítés kötelező mező!',
+                'deadline' => 'A határidő nem lehet kissebb a keltnél!',
+            ]);
+    }
+
     /**
      * Store a newly created Invoices in storage.
      *
@@ -105,13 +131,14 @@ class InvoicesController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateInvoicesRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
 
+        $result = $this->validating($request);
+
         $invoices = $this->invoicesRepository->create($input);
 
-//        return redirect(route('invoices.index'));
         return view('invoices.create');
     }
 
@@ -159,13 +186,15 @@ class InvoicesController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateInvoicesRequest $request)
+    public function update($id, Request $request)
     {
         $invoices = $this->invoicesRepository->find($id);
 
         if (empty($invoices)) {
             return redirect(route('invoices.index'));
         }
+
+        $result = $this->validating($request);
 
         $invoices = $this->invoicesRepository->update($request->all(), $id);
 

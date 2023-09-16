@@ -35,7 +35,6 @@ class Monthstacked extends Model
     protected $dates = ['deleted_at'];
 
 
-
     public $fillable = [
         'year',
         'month',
@@ -85,21 +84,22 @@ class Monthstacked extends Model
 
     protected $append = [
         'result',
-        'yearmonth'
+        ''
     ];
 
 
-    public function getResultAttribute() {
+    public function getResultAttribute(): int
+    {
         return $this->revenue - $this->spend;
     }
 
-    public function getYearMonthAttribute() {
+    public function getYearMonthAttribute(): string
+    {
         return $this->year . "." . str_pad($this->month, 2, '0', STR_PAD_LEFT);
     }
 
-    public function scopeGetPreviousRecord($query) {
+    public function scopeGetPreviousRecord($query): mixed
+    {
         return $query->where('id', '<', $this->id)->get()->last();
     }
-
-
 }

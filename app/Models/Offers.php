@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use DB;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Offers
@@ -30,7 +31,6 @@ class Offers extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -68,11 +68,13 @@ class Offers extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function partners() {
+    public function partners(): string|BelongsTo
+    {
         return $this->belongsTo(Partners::class, 'partners_id');
     }
 
-    public function offerdetails() {
+    public function offerdetails(): string|HasMany
+    {
         return $this->hasMany(Offerdetails::class, 'offers_id');
     }
 

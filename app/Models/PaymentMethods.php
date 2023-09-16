@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -27,7 +28,6 @@ class PaymentMethods extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -59,7 +59,8 @@ class PaymentMethods extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function invoices() {
+    public function invoices(): string|HasMany
+    {
         return $this->hasMany(Invoices::class, 'paymentmethod_id');
     }
 }

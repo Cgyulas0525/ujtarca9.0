@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -28,7 +29,6 @@ class Cimlets extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -63,7 +63,8 @@ class Cimlets extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function closurecimlets() {
+    public function closurecimlets(): string|HasMany
+    {
         return $this->hasMany(ClosureCimlets::class, 'cimlets_id');
     }
 

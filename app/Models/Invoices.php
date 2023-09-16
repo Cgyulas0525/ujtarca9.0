@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Invoices
@@ -33,7 +34,6 @@ class Invoices extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -74,9 +74,9 @@ class Invoices extends Model
         'invoicenumber' => 'required|string|max:25',
         'paymentmethod_id' => 'required|integer',
         'amount' => 'required|integer',
-        'dated' => 'required',
-        'performancedate' => 'required',
-        'deadline' => 'required',
+        'dated' => 'required|date',
+        'performancedate' => 'required|date',
+        'deadline' => 'required|date|after_or_equal:dated',
         'description' => 'nullable|string|max:500',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
@@ -87,24 +87,29 @@ class Invoices extends Model
         'paymentMethodName'
     ];
 
-    public function getPaymentMethodNameAttribute() {
+    public function getPaymentMethodNameAttribute(): string
+    {
         return !empty($this->paymentmethod_id) ? PaymentMethods::find($this->paymentmethod_id)->name : '';
     }
 
-    public function paymentmethod() {
+    public function paymentmethod(): string|BelongsTo
+    {
         return $this->belongsTo(PaymentMethods::class, 'paymentmethod_id');
     }
 
-    public function partner() {
+    public function partner(): string|BelongsTo
+    {
         return $this->belongsTo(Partners::class, 'partner_id');
     }
 
-    public function scopeThisYear($query, $year) {
+    public function scopeThisYear($query, $year): mixed
+    {
         return $query->whereYear('dated', $year);
     }
 
-    public function scopePartnerInvoices($query, $partner) {
-        return $query->where(function($q) use($partner) {
+    public function scopePartnerInvoices($query, $partner): mixed
+    {
+        return $query->where(function ($q) use ($partner) {
             if (is_null($partner)) {
                 $q->whereNotNull('partner_id');
             } else {
@@ -113,8 +118,9 @@ class Invoices extends Model
         });
     }
 
-    public function scopeYearInvoices($query, $year) {
-        return $query->where(function($q) use($year) {
+    public function scopeYearInvoices($query, $year): mixed
+    {
+        return $query->where(function ($q) use ($year) {
             if (is_null($year) || ($year == -9999)) {
                 $q->whereNotNull('dated');
             } else {
@@ -123,14 +129,15 @@ class Invoices extends Model
         });
     }
 
-    public function scopePartnerYearInvoices($query, $partner = null, $year = null) {
-        return $query->where(function($q) use($partner) {
+    public function scopePartnerYearInvoices($query, $partner = null, $year = null): mixed
+    {
+        return $query->where(function ($q) use ($partner) {
             if (is_null($partner)) {
                 $q->whereNotNull('partner_id');
             } else {
                 $q->where('partner_id', $partner);
             }
-        })->where(function($q) use($year) {
+        })->where(function ($q) use ($year) {
             if (is_null($year) || ($year == -9999)) {
                 $q->whereNotNull('dated');
             } else {
@@ -139,8 +146,8 @@ class Invoices extends Model
         });
     }
 
-    public function scopePartnerYearInvoicesSumAmount($query, $partner = null, $year = null) {
+    public function scopePartnerYearInvoicesSumAmount($query, $partner = null, $year = null): mixed
+    {
         return $query->PartnerYearInvoices($partner, $year)->sum('amount');
     }
-
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class ClosureCimlets
@@ -28,7 +29,6 @@ class ClosureCimlets extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -68,19 +68,23 @@ class ClosureCimlets extends Model
     ];
 
 
-    public function closures() {
+    public function closures(): string|BelongsTo
+    {
         return $this->belongsTo(Closures::class, 'closures_id');
     }
 
-    public function cimlets() {
+    public function cimlets(): string|BelongsTo
+    {
         return $this->belongsTo(Cimlets::class, 'cimlets_id');
     }
 
-    public function getCashAttribute() {
+    public function getCashAttribute(): int
+    {
         return $this->value * $this->cimlets->value;
     }
 
-    public function scopeClosureClosureCimlets($query, $id) {
+    public function scopeClosureClosureCimlets($query, $id): mixed
+    {
         return $query->where('closures_id', $id);
     }
 

@@ -17,7 +17,7 @@ return new class extends Migration
             return;
         }
         Schema::create('tables', function (Blueprint $table) {
-            $table->integer('id', true);
+            $table->id();
             $table->string('name', 100);
             $table->string('title', 100);
             $table->string('routeprefix', 100);

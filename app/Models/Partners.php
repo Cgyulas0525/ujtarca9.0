@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -36,7 +38,6 @@ class Partners extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -97,39 +98,48 @@ class Partners extends Model
 
     protected $append = ['settlementName', 'fullAddress'];
 
-    public function partnertypes() {
+    public function partnertypes(): string|BelongsTo
+    {
         return $this->belongsTo(Partnertypes::class, 'partnertypes_id');
     }
 
-    public function settlement() {
+    public function settlement(): string|BelongsTo
+    {
         return $this->belongsTo(Settlements::class, 'settlement_id');
     }
 
-    public function invoices() {
+    public function invoices(): string|HasMany
+    {
         return $this->hasMany(Invoices::class, 'partner_id');
     }
 
-    public function offers() {
+    public function offers(): string|HasMany
+    {
         return $this->hasMany(Offers::class, 'partners_id');
     }
 
-    public function aviable() {
+    public function aviable(): bool
+    {
         return (empty(Invoices::where('partner_id', $this->id)->first()) && empty(Offers::where('partners_id', $this->id)->first())) ? true : false;
     }
 
-    public function getSettlementNameAttribute() {
+    public function getSettlementNameAttribute(): string
+    {
         return (empty($this->settlement_id) || $this->settlement_id == 0) ? '' : Settlements::find($this->settlement_id)->name;
     }
 
-    public function getFullAddressAttribute() {
+    public function getFullAddressAttribute(): string
+    {
         return (empty($this->postcode) ? '' : $this->postcode) . " " . (empty($this->settlement_id) ? '' : Settlements::find($this->settlement_id)->name) . ' ' . (empty($this->address) ? '' : $this->address);
     }
 
-    public function scopeActivePartner($query) {
+    public function scopeActivePartner($query): mixed
+    {
         return $query->where('active', 1);
     }
 
-    public function scopeInActivePartner($query) {
+    public function scopeInActivePartner($query): mixed
+    {
         return $query->where('active', 0);
     }
 }
