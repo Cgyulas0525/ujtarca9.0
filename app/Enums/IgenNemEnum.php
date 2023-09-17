@@ -12,6 +12,6 @@ enum IgenNemEnum: string
 {
     use InvokableCases, Options, Names, Values, From;
 
-    case IGEN = 'Igen';
     case NEM = 'Nem';
+    case IGEN = 'Igen';
 }
