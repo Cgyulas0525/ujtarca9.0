@@ -11,14 +11,14 @@ class makeDateFormatClass
       *
       * @return string
       */
-    public function sqlDate($date)
+    public function sqlDate($date): string
     {
-        return "DATE_FORMAT('" . $date ."', '%Y-%m-%d %H:%i:%s')";
+        return "DATE_FORMAT('" . $date . "', '%Y-%m-%d %H:%i:%s')";
     }
 
-    public function sqlDateAlter($date)
+    public function sqlDateAlter($date): string
     {
-        return 'DATE_FORMAT("' . $date .'", "%Y-%m-%d %H:%i:%s")';
+        return 'DATE_FORMAT("' . $date . '", "%Y-%m-%d %H:%i:%s")';
     }
 
     public function makeDate($dateString)
@@ -26,16 +26,16 @@ class makeDateFormatClass
         $pos = strpos($dateString, 'T');
         $day = substr($dateString, 0, $pos);
         $time = substr($dateString, $pos + 1, 8);
-        $date = $day . " ". $time;
+        $date = $day . " " . $time;
         return $date;
     }
 
-    public function makeSQLDate($dateString)
+    public function makeSQLDate($dateString): string
     {
         return $this->sqlDate($this->makeDate($dateString));
     }
 
-    public function makeSQLDateAlter($dateString)
+    public function makeSQLDateAlter($dateString): string
     {
         return $this->sqlDateAlter($this->makeDate($dateString));
     }

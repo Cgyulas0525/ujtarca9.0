@@ -12,8 +12,10 @@ class MonthstackedUpdateOrInsert
     {
 
         TableUpdateOrInsert::handle('monthstackeds',
-            ['year' => (int)substr($revenue->first()->yearmonth, 0, 4),
-                'month' => (int)substr($revenue->first()->yearmonth, 4, 2)],
+                [
+                    'year' => (int)substr($revenue->first()->yearmonth, 0, 4),
+                    'month' => (int)substr($revenue->first()->yearmonth, 4, 2),
+                ],
             StackedArray::handle($revenue, $spend));
 
     }

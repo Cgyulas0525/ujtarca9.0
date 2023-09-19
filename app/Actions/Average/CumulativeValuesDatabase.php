@@ -17,21 +17,21 @@ use DB;
 
 class CumulativeValuesDatabase
 {
-    private $yra;
-    private $ysa;
-    private $mra;
-    private $msa;
-    private $wra;
-    private $wsa;
+    private $yearRevenueAction;
+    private $yearSpendAction;
+    private $monthRevenueAction;
+    private $monthSpendAction;
+    private $weekRevenueAction;
+    private $weekSpendAction;
 
     public function __construct()
     {
-        $this->yra = new YearRevenueAction();
-        $this->ysa = new YearSpendAction();
-        $this->mra = new MonthRevenueAction();
-        $this->msa = new MonthSpendAction();
-        $this->wra = new WeekRevenueAction();
-        $this->wsa = new WeekSpendAction();
+        $this->yearRevenueAction = new YearRevenueAction();
+        $this->yearSpendAction = new YearSpendAction();
+        $this->monthRevenueAction = new MonthRevenueAction();
+        $this->monthSpendAction = new MonthSpendAction();
+        $this->weekRevenueAction = new WeekRevenueAction();
+        $this->weekSpendAction = new WeekSpendAction();
     }
 
     public function handle(): void
@@ -41,27 +41,27 @@ class CumulativeValuesDatabase
 
         try {
 
-            $revenue = $this->yra->handle();
+            $revenue = $this->yearRevenueAction->handle();
 
             if ($revenue->count() > 0) {
 
-                $spend = $this->ysa->handle();
+                $spend = $this->yearSpendAction->handle();
 
                 YearstackedUpdateOrInsert::handle($revenue, $spend);
 
-                $monthrevenue = $this->mra->handle();
+                $monthrevenue = $this->monthRevenueAction->handle();
 
                 if ($monthrevenue->count() > 0) {
 
-                    $monthspend = $this->msa->handle();
+                    $monthspend = $this->monthSpendAction->handle();
 
                     MonthstackedUpdateOrInsert::handle($monthrevenue, $monthspend);
 
-                    $weekrevenue = $this->wra->handle();
+                    $weekrevenue = $this->weekRevenueAction->handle();
 
                     if ($weekrevenue->count() > 0) {
 
-                        $weekspend = $this->wsa->handle();
+                        $weekspend = $this->weekSpendAction->handle();
 
                         WeekstackedUpdateOrInsert::handle($weekrevenue, $weekspend);
 
@@ -76,6 +76,5 @@ class CumulativeValuesDatabase
             DB::rollBack();
 
         }
-
     }
 }

@@ -4,17 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateClosureCimletsRequest;
 use App\Http\Requests\UpdateClosureCimletsRequest;
-use App\Models\Closures;
 use App\Repositories\ClosureCimletsRepository;
 use App\Http\Controllers\AppBaseController;
 
 use App\Models\ClosureCimlets;
 
 use Illuminate\Http\Request;
-use Flash;
 use Response;
 use Auth;
-use DB;
 use DataTables;
 
 class ClosureCimletsController extends AppBaseController

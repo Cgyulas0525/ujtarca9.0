@@ -22,7 +22,7 @@ class ClosuresClass
             ->get();
     }
 
-    public static function getPeriodAverageDailysum($day, $begin = NULL, $end = NULL): int
+    public static function getPeriodAverageDailySum($day, $begin = NULL, $end = NULL): int
     {
         $data = self::getPeriodDailySum($day, $begin, $end);
         return count($data) > 0 ? Round($data[0]->ossz / (is_null($data[0]->db) ? 1 : $data[0]->db), 0) : 0;

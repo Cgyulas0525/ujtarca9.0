@@ -4,7 +4,7 @@ namespace App\Classes\Api;
 
 class apiUtilityClass
 {
-    public function fileLoader($url)
+    public function fileLoader($url): array
     {
         $xmlDataString = file_get_contents($url);
         $xmlDataString = preg_replace('/(<\?xml[^?]+?)utf-16/i', '$1utf-8', $xmlDataString);
@@ -14,17 +14,17 @@ class apiUtilityClass
     }
 
 
-    public function fileUnlink($file)
+    public function fileUnlink($file): void
     {
         if (!unlink($file)) {
-            echo ("$file cannot be deleted due to an error");
-        }
-        else {
-            echo ("$file has been deleted");
+            echo("$file cannot be deleted due to an error");
+        } else {
+            echo("$file has been deleted");
         }
     }
 
-    public function httpPost($url, $data){
+    public function httpPost($url, $data): void
+    {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(array('post' => $data)));
@@ -34,7 +34,8 @@ class apiUtilityClass
     }
 
 
-    public function unZip($file) {
+    public function unZip($file): void
+    {
         $zip = new ZipArchive;
         $res = $zip->open(PATH_INPUT . $file);
         if ($res === TRUE) {
@@ -45,7 +46,8 @@ class apiUtilityClass
         }
     }
 
-    public function fileWrite($file, $content) {
+    public function fileWrite($file, $content): void
+    {
         fwrite($file, $content);
     }
 

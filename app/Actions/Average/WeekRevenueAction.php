@@ -9,17 +9,17 @@ class WeekRevenueAction
 
     private $begin;
     private $end;
-    private $fpc;
+    private $financePeriodClass;
 
     public function __construct()
     {
-        $this->begin = date('Y-m-d', strtotime('monday this week'));
-        $this->end = date('Y-m-d', strtotime('today'));
-        $this->fpc = new FinancePeriodClass($this->begin, $this->end);
+        $this->begin = now()->startOfWeek()->toDateString();
+        $this->end = now()->toDateString();
+        $this->financePeriodClass = new FinancePeriodClass($this->begin, $this->end);
     }
 
     public function handle(): object
     {
-        return $this->fpc->weekClosuresPeriod();
+        return $this->financePeriodClass->weekClosuresPeriod();
     }
 }

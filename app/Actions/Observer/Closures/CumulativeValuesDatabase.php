@@ -14,15 +14,15 @@ use DB;
 
 class CumulativeValuesDatabase
 {
-    private $ysa;
-    private $msa;
-    private $wsa;
+    private $yearRevenueAction;
+    private $monthRevenueAction;
+    private $weekRevenueAction;
 
     public function __construct()
     {
-        $this->ysa = new YearRevenueAction();
-        $this->msa = new MonthRevenueAction();
-        $this->wsa = new WeekRevenueAction();
+        $this->yearRevenueAction = new YearRevenueAction();
+        $this->monthRevenueAction = new MonthRevenueAction();
+        $this->weekRevenueAction = new WeekRevenueAction();
     }
 
     public function handle(): void
@@ -32,11 +32,11 @@ class CumulativeValuesDatabase
 
         try {
 
-            YearstackedUpdateOrInsert::handle($this->ysa->handle());
+            YearstackedUpdateOrInsert::handle($this->yearRevenueAction->handle());
 
-            MonthstackedUpdateOrInsert::handle($this->msa->handle());
+            MonthstackedUpdateOrInsert::handle($this->monthRevenueAction->handle());
 
-            WeekstackedUpdateOrInsert::handle($this->wsa->handle());
+            WeekstackedUpdateOrInsert::handle($this->weekRevenueAction->handle());
 
             DB::commit();
 
@@ -45,6 +45,5 @@ class CumulativeValuesDatabase
             DB::rollBack();
 
         }
-
     }
 }

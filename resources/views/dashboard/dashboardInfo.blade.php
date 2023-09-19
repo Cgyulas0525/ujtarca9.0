@@ -27,7 +27,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">3 hónap  átlaga</span>
-                <span class="info-box-number">{{ number_format(ClosuresClass::getPeriodAverageDailysum(now(), now()->subMonths(3)),0,",",".") }} Ft.</span>
+                <span class="info-box-number">{{ number_format(ClosuresClass::getPeriodAverageDailySum(now(), now()->subMonths(3)),0,",",".") }} Ft.</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -38,7 +38,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Átlag</span>
-                <span class="info-box-number">{{ number_format(ClosuresClass::getPeriodAverageDailysum(now(), NULL, NULL),0,",",".") }} Ft.</span>
+                <span class="info-box-number">{{ number_format(ClosuresClass::getPeriodAverageDailySum(now(), NULL, NULL),0,",",".") }} Ft.</span>
             </div>
         </div>
     </div>

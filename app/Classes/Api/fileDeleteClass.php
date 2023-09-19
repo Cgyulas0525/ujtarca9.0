@@ -8,15 +8,17 @@ class fileDeleteClass
 {
     public $utility = NULL;
 
-    function __construct() {
-        require_once dirname(__DIR__, 2). "/Classes/Api/Inc/config.php";
+    function __construct()
+    {
+        require_once dirname(__DIR__, 2) . "/Classes/Api/Inc/config.php";
         $this->utility = new apiUtilityClass();
     }
 
-    public function deleteOutputFiles() {
+    public function deleteOutputFiles(): void
+    {
         $files = $files = array_diff(preg_grep('~\.(txt)$~', scandir(PATH_OUTPUT)), array('.', '..'));
         foreach ($files as $file) {
-            $this->utility->fileUnlink(PATH_OUTPUT.$file);
+            $this->utility->fileUnlink(PATH_OUTPUT . $file);
         }
     }
 

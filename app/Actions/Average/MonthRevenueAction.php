@@ -9,17 +9,17 @@ class MonthRevenueAction
 
     private $begin;
     private $end;
-    private $fpc;
+    private $financePeriodClass;
 
     public function __construct()
     {
-        $this->begin = date('Y-m-d', strtotime('first day of this month'));
-        $this->end = date('Y-m-d', strtotime('today'));
-        $this->fpc = new FinancePeriodClass($this->begin, $this->end);
+        $this->begin = now()->firstOfMonth()->toDateString();
+        $this->end = now()->toDateString();
+        $this->financePeriodClass = new FinancePeriodClass($this->begin, $this->end);
     }
 
     public function handle(): object
     {
-        return $this->fpc->mounthClosuresPeriod();
+        return $this->financePeriodClass->mounthClosuresPeriod();
     }
 }

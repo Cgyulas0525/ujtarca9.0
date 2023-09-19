@@ -4,6 +4,8 @@ namespace App\Classes;
 
 use DB;
 use function PHPUnit\Framework\isNull;
+use App\Models\Closures;
+use App\Models\Invoices;
 
 class FinancePeriodClass
 {
@@ -17,23 +19,17 @@ class FinancePeriodClass
     }
 
     public function invoicesAmountPeriod() {
-        $data = DB::table('invoices')
-            ->select(DB::raw('sum(amount) as amount'))
-            ->whereNull('deleted_at')
-            ->whereBetween('dated', [$this->begin, $this->end])
-            ->get();
-
-        return isset($data->first()->amount) ? $data->first()->amount : 0;
+        return Invoices::whereBetween('dated', [$this->begin, $this->end])
+            ->get()
+            ->sum('amount');
     }
 
     public function closuresAmountPeriod() {
-        $data = DB::table('closures as t1')
-            ->select(DB::raw('sum(t1.dailysum - 20000) as dailysum'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
-            ->get();
-
-        return isset($data->first()->dailysum) ? $data->first()->dailysum : 0;
+        return Closures::whereBetween('closuredate', [$this->begin, $this->end])
+                ->selectRaw('sum(dailysum - 20000) as dailysum')
+                ->get()
+                ->first()
+                ->dailysum ?? 0;
     }
 
     public function resultPeriod() {

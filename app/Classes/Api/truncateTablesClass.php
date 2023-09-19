@@ -20,16 +20,17 @@ class truncateTablesClass
         $this->utility = new apiUtilityClass();
         $this->baseTables = new baseTables();
 
-        $this->outputFile = fopen(PATH_OUTPUT . 'truncate-'. uniqid() . '.txt', "w") or die("Unable to open file!");
+        $this->outputFile = fopen(PATH_OUTPUT . 'truncate-' . uniqid() . '.txt', "w") or die("Unable to open file!");
         $this->utility->fileWrite($this->outputFile, "Budget truncateTables\n");
         $this->utility->fileWrite($this->outputFile, "Start: " . date('Y.m.d H:m:s', strtotime('now')) . "\n");
     }
 
-    public function truncateTables() {
+    public function truncateTables(): void
+    {
 
         $array = $this->baseTables->getArray();
         $envName = env('DB_DATABASE');
-        $dbName = "Tables_in_". $envName;
+        $dbName = "Tables_in_" . $envName;
         $tables = Schema::getAllTables();
         foreach ($tables as $table) {
             if (array_search($table->$dbName, $array) == NULL) {
@@ -42,7 +43,5 @@ class truncateTablesClass
         $this->utility->fileWrite($this->outputFile, "OK\n");
         $this->utility->fileWrite($this->outputFile, "End: " . date('Y.m.d H:m:s', strtotime('now')) . "\n");
         fclose($this->outputFile);
-
     }
-
 }
