@@ -16,7 +16,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Napi bevétel</span>
-                <span class="info-box-number">{{ number_format(ClosuresClass::getDailySum(now()),0,",",".") }} Ft.</span>
+                <span class="info-box-number">{{ number_format(ClosuresClass::getDailySum(now()->toDateString()),0,",",".") }} Ft.</span>
             </div>
             <!-- /.info-box-content -->
         </div>

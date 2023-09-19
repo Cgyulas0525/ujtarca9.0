@@ -9,19 +9,16 @@ class ClosuresClass
 {
     public static function getDailySum($date): int
     {
-        $data = DB::table('closures')->whereNull('deleted_at')->where('closuredate', $date)->first();
+        $data = Closures::where('closuredate', $date)->first();
         return !empty($data) ? ($data->dailysum - 20000) : 0;
     }
 
     public static function getPeriodDailySum($day, $begin = NULL, $end = NULL): mixed
     {
-        return DB::table('closures')
-            ->select(DB::raw('sum(1) as db, sum(dailysum) as ossz'))
-            ->where(DB::raw('WEEKDAY(closuredate)'), "=", ($day->format('N') - 1))
-            ->whereNull('deleted_at')
-            ->whereBetween('closuredate', [is_null($begin) ? Closures::min('closuredate') : $begin,
-                is_null($end) ? Closures::max('closuredate') : $end])
-            ->groupBy(DB::raw('DAYNAME(closuredate)'))
+        return Closures::whereBetween('closuredate', [is_null($begin) ? Closures::min('closuredate') : $begin, is_null($end) ? Closures::max('closuredate') : $end])
+            ->selectRaw('sum(1) as db, sum(dailysum) as ossz')
+            ->whereRaw('WEEKDAY(closuredate) =?', ($day->format('N') - 1))
+            ->groupByRaw('DAYNAME(closuredate)')
             ->get();
     }
 

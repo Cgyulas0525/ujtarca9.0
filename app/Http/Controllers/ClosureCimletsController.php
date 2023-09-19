@@ -203,7 +203,7 @@ class ClosureCimletsController extends AppBaseController
      *
      * @return ClosureCimlets
      */
-    public function closureCimletsUpdate(Request $request): Response
+    public function closureCimletsUpdate(Request $request): mixed
     {
 
         ClosureCimlets::find($request->get('id'))->update(['value' => $request->get('value'),
@@ -213,7 +213,7 @@ class ClosureCimletsController extends AppBaseController
 
     }
 
-    public function closureCimletsSum(Request $request): object
+    public function closureCimletsSum(Request $request): int
     {
 
         return ClosureCimlets::closureclosurecimlets($request->get('id'))->get()->sum('cash');
