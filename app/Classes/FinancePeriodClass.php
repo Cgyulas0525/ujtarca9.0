@@ -3,7 +3,6 @@
 namespace App\Classes;
 
 use DB;
-use function PHPUnit\Framework\isNull;
 use App\Models\Closures;
 use App\Models\Invoices;
 
@@ -13,18 +12,21 @@ class FinancePeriodClass
     private $begin;
     private $end;
 
-    public function __construct($begin, $end) {
+    public function __construct($begin, $end)
+    {
         $this->begin = $begin;
         $this->end = $end;
     }
 
-    public function invoicesAmountPeriod() {
+    public function invoicesAmountPeriod(): int
+    {
         return Invoices::whereBetween('dated', [$this->begin, $this->end])
             ->get()
             ->sum('amount');
     }
 
-    public function closuresAmountPeriod() {
+    public function closuresAmountPeriod(): int
+    {
         return Closures::whereBetween('closuredate', [$this->begin, $this->end])
                 ->selectRaw('sum(dailysum - 20000) as dailysum')
                 ->get()
@@ -32,93 +34,89 @@ class FinancePeriodClass
                 ->dailysum ?? 0;
     }
 
-    public function resultPeriod() {
+    public function resultPeriod(): int
+    {
         return $this->closuresAmountPeriod() - $this->invoicesAmountPeriod();
     }
 
-    public function yearInviocesPeriod() {
-        return DB::table('invoices')
-            ->select(DB::raw('year(dated) as year, sum(amount) as amount'))
-            ->whereNull('deleted_at')
+    public function yearInviocesPeriod(): object
+    {
+        return Invoices::selectRaw('year(dated) as year, sum(amount) as amount')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('year')
             ->orderBy('year')
             ->get();
     }
 
-    public function yearClosuresPeriod() {
-        return DB::table('closures as t1')
-            ->select(DB::raw('year(t1.closuredate) as year,
-                    sum(t1.dailysum - 20000) as dailysum,
+    public function yearClosuresPeriod(): object
+    {
+        return Closures::selectRaw('year(closuredate) as year,
+                    sum(dailysum - 20000) as dailysum,
                     sum(1) as days,
                     sum(card) as card,
-                    sum(szcard) as szcard'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
-            ->groupBy(DB::raw('year(t1.closuredate)'))
-            ->orderBy(DB::raw('year(t1.closuredate)'))
+                    sum(szcard) as szcard')
+            ->whereBetween('closuredate', [$this->begin, $this->end])
+            ->groupBy('year')
+            ->orderBy('year')
             ->get();
     }
 
-    public function mountInviocesPeriod() {
-        return DB::table('invoices')
-            ->select(DB::raw('concat(year(dated), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as yearmonth, sum(amount) as amount'))
-            ->whereNull('deleted_at')
+    public function mountInviocesPeriod(): object
+    {
+        return Invoices::selectRaw('concat(year(dated), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as yearmonth, sum(amount) as amount')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('yearmonth')
             ->orderBy('yearmonth')
             ->get();
     }
 
-    public function mounthClosuresPeriod() {
-        return DB::table('closures as t1')
-            ->select(DB::raw('concat(year(t1.closuredate), if(CAST(month(t1.closuredate) AS UNSIGNED) < 10, concat("0", month(t1.closuredate)), month(t1.closuredate))) as yearmonth,
-                    sum(t1.dailysum - 20000) as dailysum,
+    public function mounthClosuresPeriod(): object
+    {
+        return Closures::selectRaw('concat(year(closuredate), if(CAST(month(closuredate) AS UNSIGNED) < 10, concat("0", month(closuredate)), month(closuredate))) as yearmonth,
+                    sum(dailysum - 20000) as dailysum,
                     sum(1) as days,
                     sum(card) as card,
-                    sum(szcard) as szcard'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
+                    sum(szcard) as szcard')
+            ->whereBetween('closuredate', [$this->begin, $this->end])
             ->groupBy('yearmonth')
             ->orderBy('yearmonth')
             ->get();
     }
 
-    public function weekInviocesPeriod() {
-        return DB::table('invoices')
-            ->select(DB::raw('concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as yearweek, sum(amount) as amount'))
-            ->whereNull('deleted_at')
+    public function weekInviocesPeriod(): object
+    {
+        return Invoices::selectRaw('concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as yearweek, sum(amount) as amount')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('yearweek')
             ->orderBy('yearweek')
             ->get();
     }
 
-    public function weekClosuresPeriod() {
-        return DB::table('closures as t1')
-            ->select(DB::raw('concat(year(t1.closuredate), if(CAST(week(t1.closuredate) AS UNSIGNED) < 10, concat("0", week(t1.closuredate)), week(t1.closuredate))) as yearweek,
-                    sum(t1.dailysum - 20000) as dailysum,
+    public function weekClosuresPeriod(): object
+    {
+        return Closures::selectRaw('concat(year(closuredate), if(CAST(week(closuredate) AS UNSIGNED) < 10, concat("0", week(closuredate)), week(closuredate))) as yearweek,
+                    sum(dailysum - 20000) as dailysum,
                     sum(1) as days,
                     sum(card) as card,
-                    sum(szcard) as szcard'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
+                    sum(szcard) as szcard')
+            ->whereBetween('closuredate', [$this->begin, $this->end])
             ->groupBy('yearweek')
             ->orderBy('yearweek')
             ->get();
     }
 
-    public function yearInviocesResult() {
+    public function yearInvoicesResult(): object
+    {
         $invoices = DB::table('invoices')
             ->select(DB::raw('year(dated) as year, sum(amount) as amount, 0 as dailysum'))
             ->whereNull('deleted_at')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('year');
 
-        $closures = DB::table('closures as t1')
-            ->select(DB::raw('year(t1.closuredate) as year, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
+        $closures = DB::table('closures')
+            ->select(DB::raw('year(closuredate) as year, 0 as amount, sum(dailysum - 20000) as dailysum'))
+            ->whereNull('deleted_at')
+            ->whereBetween('closuredate', [$this->begin, $this->end])
             ->groupBy('year')
             ->union($invoices);
 
@@ -130,17 +128,18 @@ class FinancePeriodClass
             ->get();
     }
 
-    public function monthInviocesResult() {
+    public function monthInvoicesResult(): object
+    {
         $invoices = DB::table('invoices')
             ->select(DB::raw('concat(CONCAT(year(dated),"."), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as year, sum(amount) as amount, 0 as dailysum'))
             ->whereNull('deleted_at')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('year');
 
-        $closures = DB::table('closures as t1')
-            ->select(DB::raw('concat(CONCAT(year(t1.closuredate),"."), if(CAST(month(t1.closuredate) AS UNSIGNED) < 10, concat("0", month(t1.closuredate)), month(t1.closuredate))) as year, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
+        $closures = DB::table('closures')
+            ->select(DB::raw('concat(CONCAT(year(closuredate),"."), if(CAST(month(closuredate) AS UNSIGNED) < 10, concat("0", month(closuredate)), month(closuredate))) as year, 0 as amount, sum(dailysum - 20000) as dailysum'))
+            ->whereNull('deleted_at')
+            ->whereBetween('closuredate', [$this->begin, $this->end])
             ->groupBy('year')
             ->union($invoices);
 
@@ -152,24 +151,22 @@ class FinancePeriodClass
             ->get();
     }
 
-    public function weekInviocesResult() {
+    public function weekInvoicesResult(): object
+    {
 
-        // értékek a számlákból
         $invoices = DB::table('invoices')
             ->select(DB::raw('concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as year, sum(amount) as amount, 0 as dailysum'))
             ->whereNull('deleted_at')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('year');
 
-        // értékek a zárásból + union szamla
-        $closures = DB::table('closures as t1')
-            ->select(DB::raw('concat(year(t1.closuredate), if(CAST(week(t1.closuredate) AS UNSIGNED) < 10, concat("0", week(t1.closuredate)), week(t1.closuredate))) as year, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$this->begin , $this->end] )
+        $closures = DB::table('closures')
+            ->select(DB::raw('concat(year(closuredate), if(CAST(week(closuredate) AS UNSIGNED) < 10, concat("0", week(closuredate)), week(closuredate))) as year, 0 as amount, sum(dailysum - 20000) as dailysum'))
+            ->whereNull('deleted_at')
+            ->whereBetween('closuredate', [$this->begin, $this->end])
             ->groupBy('year')
             ->union($invoices);
 
-        // select az előzőből
         return DB::query()->fromSub($closures, 'p_pn')
             ->select('year', DB::raw('ROUND( SUM(amount), 0) as amount,
                                                     ROUND( SUM(dailysum), 0) as dailysum'))
@@ -177,5 +174,4 @@ class FinancePeriodClass
             ->orderBy('year', 'desc')
             ->get();
     }
-
 }

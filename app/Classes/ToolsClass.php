@@ -5,13 +5,10 @@ namespace App\Classes;
 use App\Models\Invoices;
 use App\Models\Offers;
 use App\Models\Partners;
-
 use App\Enums\YesNoEnum;
-
 
 class ToolsClass
 {
-
     public static function yesNoDDDW(): array
     {
         return YesNoEnum::values();

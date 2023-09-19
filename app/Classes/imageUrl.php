@@ -34,5 +34,4 @@ Class imageUrl{
     {
         return "../" . $this->file;
     }
-
 }
