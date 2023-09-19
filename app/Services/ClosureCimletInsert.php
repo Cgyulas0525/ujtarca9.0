@@ -11,15 +11,14 @@ class ClosureCimletInsert
     private $cimletId;
     private $closureId;
 
-    /**
-     * @return mixed
-     */
-    public function __construct($cimletId, $closureId) {
+    public function __construct($cimletId, $closureId)
+    {
         $this->cimletId = $cimletId;
         $this->closureId = $closureId;
     }
 
-    public function handle() {
+    public function handle()
+    {
         ClosureCimlets::insert([
             'closures_id' => $this->closureId,
             'cimlets_id' => $this->cimletId,

@@ -4,40 +4,33 @@ namespace App\Services;
 
 use App\Models\Invoices;
 use Carbon\Carbon;
-use DB;
 
 class InvoiceService
 {
     public function bestSupplier($year = null, $count = null): object
     {
-
         $datas = Invoices::with('partner')
             ->selectRaw('sum(amount) as sumamount, sum(1) as invoiceCount, partner_id')
-            ->where(function ($q) use ($year) {
-                if (is_null($year) || ($year == -9999)) {
-                    $q->whereNotNull('dated');
-                } else {
-                    $q->whereYear('dated', $year);
-                }
-            })
+            ->whereNotNull('dated')
+            ->orWhereYear('dated', $year)
             ->groupBy('partner_id')
             ->orderBy('sumamount', 'desc')
             ->get();
 
         return is_null($count) ? $datas : $datas->take($count);
-
     }
 
     public function partnerInvoicesPeriod($witch, $begin = null, $end = null, $partner = null): object
     {
-
-        $selectMonth = 'partner_id, concat(year(dated), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as period, sum(amount) as amount';
-        $selectWeek = 'partner_id, concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as period, sum(amount) as amount';
-        $selectYear = 'partner_id, year(dated) as period, sum(amount) as amount';
+        $sqlString = match($witch) {
+            'H' => 'partner_id, concat(year(dated), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as period, sum(amount) as amount',
+            'W' => 'partner_id, concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as period, sum(amount) as amount',
+            'Y' => 'partner_id, year(dated) as period, sum(amount) as amount',
+        };
 
         return Invoices::with('partner')
-            ->select(DB::raw($witch === 'H' ? $selectMonth : ($witch === 'W' ? $selectWeek : $selectYear)))
-            ->whereBetween('dated', [is_null($begin) ? Invoices::first()->dated : $begin, is_null($end) ? Carbon::now() : $end])
+            ->selectRaw($sqlString)
+            ->whereBetween('dated', [$begin ?? Invoices::first()->dated, $end ?? Carbon::now()])
             ->where(function ($query) use ($partner) {
                 if (is_null($partner)) {
                     $query->whereNotNull('partner_id');
@@ -47,6 +40,5 @@ class InvoiceService
             })
             ->groupBy('partner_id', 'period')
             ->get();
-
     }
 }

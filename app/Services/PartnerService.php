@@ -6,7 +6,6 @@ use App\Models\Partners;
 
 class PartnerService
 {
-
     public function deactivation(): void
     {
         Partners::whereNotIn('id', function ($query) {
@@ -21,5 +20,4 @@ class PartnerService
                 return $partner;
             });
     }
-
 }
