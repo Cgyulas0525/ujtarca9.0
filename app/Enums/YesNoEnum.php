@@ -8,10 +8,10 @@ use ArchTech\Enums\Names;
 use ArchTech\Enums\Values;
 use ArchTech\Enums\From;
 
-enum IgenNemEnum: string
+enum YesNoEnum: string
 {
     use InvokableCases, Options, Names, Values, From;
 
-    case NEM = 'Nem';
-    case IGEN = 'Igen';
+    case NO = 'Nem';
+    case YES = 'Igen';
 }

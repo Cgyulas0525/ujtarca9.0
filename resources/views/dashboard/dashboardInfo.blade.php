@@ -5,7 +5,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Dátum</span>
-                <span class="info-box-number">{{ date('Y.m.d', strtotime(\Carbon\Carbon::now())) }} {{ App\Services\hungarianDateName::getDayName(\Carbon\Carbon::now()) }}</span>
+                <span class="info-box-number">{{ date('Y.m.d', strtotime(\Carbon\Carbon::now())) }} {{ App\Services\hungarianDateName::getDayName(now()) }}</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -16,7 +16,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Napi bevétel</span>
-                <span class="info-box-number">{{ number_format(App\Services\ClosuresService::getDailySum(date('Y.m.d', strtotime(\Carbon\Carbon::now()))),0,",",".") }} Ft.</span>
+                <span class="info-box-number">{{ number_format(ClosuresClass::getDailySum(now()),0,",",".") }} Ft.</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -27,8 +27,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">3 hónap  átlaga</span>
-                <span class="info-box-number">{{ number_format(App\Services\ClosuresService::getPeriodAverageDailysum(\Carbon\Carbon::now(),
-                                                                                                                            date('Y.m.d', strtotime('today - 3 month'))),0,",",".") }} Ft.</span>
+                <span class="info-box-number">{{ number_format(ClosuresClass::getPeriodAverageDailysum(now(), now()->subMonths(3)),0,",",".") }} Ft.</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -39,7 +38,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Átlag</span>
-                <span class="info-box-number">{{ number_format(App\Services\ClosuresService::getPeriodAverageDailysum(\Carbon\Carbon::now(), NULL, NULL),0,",",".") }} Ft.</span>
+                <span class="info-box-number">{{ number_format(ClosuresClass::getPeriodAverageDailysum(now(), NULL, NULL),0,",",".") }} Ft.</span>
             </div>
         </div>
     </div>

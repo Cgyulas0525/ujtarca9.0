@@ -11,7 +11,7 @@ use App\Classes\FinanceClass;
 use App\Classes\OfferClass;
 use App\Classes\FinancePeriodClass;
 use App\Http\Controllers\DashboardController;
-use App\Classes\ClosuresClass;
+use App\Classes\OwnClass\ClosuresClass;
 use App\Classes\RiportsClass;
 use App\Classes\ToolsClass;
 use App\Http\Controllers\OfferServiceController;

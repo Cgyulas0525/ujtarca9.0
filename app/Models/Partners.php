@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\YesNoEnum;
 
 /**
  * Class Partners
@@ -71,7 +72,7 @@ class Partners extends Model
         'email' => 'string',
         'phonenumber' => 'string',
         'description' => 'string',
-        'active' => 'integer'
+        'active' => 'integer',
     ];
 
     /**
@@ -96,7 +97,11 @@ class Partners extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = ['settlementName', 'fullAddress'];
+    protected $append = [
+        'settlementName',
+        'fullAddress',
+        'activeName',
+    ];
 
     public function partnertypes(): string|BelongsTo
     {
@@ -131,6 +136,11 @@ class Partners extends Model
     public function getFullAddressAttribute(): string
     {
         return (empty($this->postcode) ? '' : $this->postcode) . " " . (empty($this->settlement_id) ? '' : Settlements::find($this->settlement_id)->name) . ' ' . (empty($this->address) ? '' : $this->address);
+    }
+
+    public function getActiveNameAttribute(): string
+    {
+        return YesNoEnum::values()[$this->active];
     }
 
     public function scopeActivePartner($query): mixed
