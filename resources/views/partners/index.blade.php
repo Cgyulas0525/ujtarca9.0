@@ -23,8 +23,6 @@
                                 <div class="col-sm-2">
                                     {!! Form::select('active', App\Enums\YesNoEnum::values(), 1,
                                             ['class'=>'select2 form-control', 'id' => 'active']) !!}
-{{--                                    {!! Form::select('active', ToolsClass::yesNoDDDW(), 1,--}}
-{{--                                            ['class'=>'select2 form-control', 'id' => 'active']) !!}--}}
                                 </div>
                                 <div class="col-sm-3">
                                     <a href="#" class="btn btn-danger deaktivBtn">1 éve nem aktív partnerek deaktíválása</a>
@@ -57,11 +55,11 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 550,
+                scrollY:  550,
                 scrollX: true,
                 paging: false,
                 order: [[1, 'asc']],
-                ajax: "{{ route('partners.index') }}",
+                ajax: "{{ route('partnersIndex', [1]) }}",
                 columns: [
                     {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('partners.create') !!}"><i class="fa fa-plus-square"></i></a>',
                         data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},

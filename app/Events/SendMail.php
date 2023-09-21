@@ -21,11 +21,6 @@ class SendMail
     public $title;
     public $text;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
     public function __construct($partner, $owner, $path, $mail, $title, $text)
     {
         $this->partner = $partner;
@@ -36,11 +31,6 @@ class SendMail
         $this->text = $text;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
     public function broadcastOn()
     {
         return new PrivateChannel('channel-name');

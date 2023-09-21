@@ -6,14 +6,9 @@ use App\Http\Requests\CreateCimletsRequest;
 use App\Http\Requests\UpdateCimletsRequest;
 use App\Repositories\CimletsRepository;
 use App\Http\Controllers\AppBaseController;
-
 use App\Models\Cimlets;
-
 use Illuminate\Http\Request;
-use Flash;
-use Response;
 use Auth;
-use DB;
 use DataTables;
 use Form;
 
@@ -42,46 +37,22 @@ class CimletsController extends AppBaseController
             ->make(true);
     }
 
-
-    /**
-     * Display a listing of the Cimlets.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function index(Request $request)
     {
         if (Auth::check()) {
-
             if ($request->ajax()) {
-
                 $data = $this->cimletsRepository->all();
                 return $this->dwData($data);
-
             }
-
             return view('cimlets.index');
         }
     }
 
-    /**
-     * Show the form for creating a new Cimlets.
-     *
-     * @return Response
-     */
     public function create()
     {
         return view('cimlets.create');
     }
 
-    /**
-     * Store a newly created Cimlets in storage.
-     *
-     * @param CreateCimletsRequest $request
-     *
-     * @return Response
-     */
     public function store(CreateCimletsRequest $request)
     {
         $input = $request->all();
@@ -91,13 +62,6 @@ class CimletsController extends AppBaseController
         return redirect(route('cimlets.index'));
     }
 
-    /**
-     * Display the specified Cimlets.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
     public function show($id)
     {
         $cimlets = $this->cimletsRepository->find($id);
@@ -109,13 +73,6 @@ class CimletsController extends AppBaseController
         return view('cimlets.show')->with('cimlets', $cimlets);
     }
 
-    /**
-     * Show the form for editing the specified Cimlets.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
     public function edit($id)
     {
         $cimlets = $this->cimletsRepository->find($id);
@@ -127,14 +84,6 @@ class CimletsController extends AppBaseController
         return view('cimlets.edit')->with('cimlets', $cimlets);
     }
 
-    /**
-     * Update the specified Cimlets in storage.
-     *
-     * @param int $id
-     * @param UpdateCimletsRequest $request
-     *
-     * @return Response
-     */
     public function update($id, UpdateCimletsRequest $request)
     {
         $cimlets = $this->cimletsRepository->find($id);
@@ -148,15 +97,6 @@ class CimletsController extends AppBaseController
         return redirect(route('cimlets.index'));
     }
 
-    /**
-     * Remove the specified Cimlets from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
-     * @throws \Exception
-     *
-     */
     public function destroy($id)
     {
         $cimlets = $this->cimletsRepository->find($id);
@@ -170,11 +110,6 @@ class CimletsController extends AppBaseController
         return redirect(route('cimlets.index'));
     }
 
-    /*
-     * Dropdown for field select
-     *
-     * return array
-     */
     public static function DDDW(): array
     {
         return [" "] + cimlets::orderBy('name')->pluck('name', 'id')->toArray();

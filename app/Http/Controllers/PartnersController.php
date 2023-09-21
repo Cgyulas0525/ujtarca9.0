@@ -13,15 +13,15 @@ use App\Models\Partners;
 use App\Classes\SettlementsClass;
 
 use Illuminate\Http\Request;
-use Flash;
 use Response;
 use Auth;
-use DB;
 use DataTables;
 use Form;
 
 use App\Traits\Others\PartnerFactSheetTrait;
 use App\Traits\Others\PartnerPeriodicAccountsTrait;
+
+use Illuminate\Support\Facades\Redis;
 
 class PartnersController extends AppBaseController
 {
@@ -39,6 +39,7 @@ class PartnersController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('partnerTypesName', function($data) { return ($data->partnertypes->name); })
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('partners.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm  editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
@@ -63,56 +64,51 @@ class PartnersController extends AppBaseController
             ->make(true);
     }
 
-
-    /**
-     * Display a listing of the Partners.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function index(Request $request)
     {
         if( Auth::check() ){
-
             if ($request->ajax()) {
-
-                $data = DB::table('partners as t1')
-                          ->join('partnertypes as t2', 't2.id', '=', 't1.partnertypes_id')
-                          ->select('t1.*', 't2.name as partnerTypesName')
-                          ->whereNull('t1.deleted_at')
-                          ->where('t1.active', 1)
-                          ->get();
+                $data = Partners::with('partnertypes')->activePartner()->get();
                 return $this->dwData($data);
-
             }
-
             return view('partners.index');
+        }
+    }
+
+    public function getRedis($redis, $active)
+    {
+        if (is_null($active)) {
+            return $redis->get('partners_all');
+        } else {
+            return ($active == 0) ? $redis->get('partners_inactive') : $redis->get('partners_active');
+        }
+    }
+
+    public function setRedis($redis, $active): void
+    {
+        if (is_null($active)) {
+            $redis->setex('partners_all', 3600, Partners::with('partnertypes')->get());
+        } else {
+            if ($active == 0) {
+                $redis->setex('partners_inactive', 3600,Partners::with('partnertypes')->inActivePartner()->get());
+            } else {
+                $redis->setex('partners_active', 3600,Partners::with('partnertypes')->activePartner()->get());
+            }
         }
     }
 
     public function partnersIndex(Request $request, $active = null)
     {
         if( Auth::check() ){
-
             if ($request->ajax()) {
-
-                $data = DB::table('partners as t1')
-                          ->join('partnertypes as t2', 't2.id', '=', 't1.partnertypes_id')
-                          ->select('t1.*', 't2.name as partnerTypesName')
-                          ->whereNull('t1.deleted_at')
-                          ->where( function($query) use ($active) {
-                              if (is_null($active) || $active == -9999 ) {
-                                  $query->whereNotNull('t1.active');
-                              } else {
-                                  $query->where('t1.active', '=', $active);
-                              }
-                          })
-                          ->get();
-                return $this->dwData($data);
-
+                $redis = Redis::connection();
+                $data = $this->getRedis($redis, $active);
+                if (empty($data)) {
+                    $this->setRedis($redis, $active);
+                    $data = $this->getRedis($redis, $active);
+                }
+                return $this->dwData(json_decode($data));
             }
-
             return view('partners.index');
         }
     }
