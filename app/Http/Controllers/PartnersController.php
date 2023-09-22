@@ -7,25 +7,18 @@ use App\Http\Requests\CreatePartnersRequest;
 use App\Http\Requests\UpdatePartnersRequest;
 use App\Repositories\PartnersRepository;
 use App\Http\Controllers\AppBaseController;
-
 use App\Models\Partners;
-
 use App\Classes\SettlementsClass;
-
 use Illuminate\Http\Request;
-use Response;
 use Auth;
 use DataTables;
 use Form;
-
 use App\Traits\Others\PartnerFactSheetTrait;
 use App\Traits\Others\PartnerPeriodicAccountsTrait;
-
 use Illuminate\Support\Facades\Redis;
 
 class PartnersController extends AppBaseController
 {
-    /** @var PartnersRepository $partnersRepository */
     private $partnersRepository;
 
     public function __construct(PartnersRepository $partnersRepo)
@@ -104,7 +97,7 @@ class PartnersController extends AppBaseController
         }
     }
 
-    public function create(): Response
+    public function create()
     {
         return view('partners.create');
     }
@@ -176,7 +169,7 @@ class PartnersController extends AppBaseController
     {
         $formGroupArray = [];
         $item = ["label" => Form::label('name', 'Név:'),
-            "field" => Form::text('name', null, ['class' => 'form-control', 'maxlength' => 100,
+            "field" => Form::text('name',null, ['class' => 'form-control', 'maxlength' => 100, 'required' => true,
                 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true) : false]),
             "width" => 6,
             "file" => false];
@@ -248,7 +241,7 @@ class PartnersController extends AppBaseController
         return $formGroupArray;
     }
 
-    public function postcodeSettlementDDDW(Request $request)
+    public function postcodeSettlementDDDW(Request $request): array
     {
         return SettlementsClass::postcodeSettlementDDDW($request->get('postcode'));
     }

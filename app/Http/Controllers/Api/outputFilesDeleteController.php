@@ -9,7 +9,6 @@ class outputFilesDeleteController extends Controller
 {
     public function deleteOutputFiles(): void
     {
-        $fd = new fileDeleteClass();
-        $fd->deleteOutputFiles();
+        (new fileDeleteClass())->deleteOutputFiles();
     }
 }

@@ -9,7 +9,6 @@ class truncateTablesController extends Controller
 {
     public function truncateAllTables(): void
     {
-        $td = new truncateTablesClass();
-        $td->truncateTables();
+        (new truncateTablesClass())->truncateTables();
     }
 }

@@ -19,11 +19,8 @@
                                     {!! Form::label('year', 'Év:') !!}
                                 </div>
                                 <div class="col-sm-2">
-                                    {!! Form::select('year', \App\Http\Controllers\ClosuresController::closuresYearsDDDW(), date('Y'),
+                                    {!! Form::select('year', (new App\Services\ClosuresService())->closuresYearsDDDW(), date('Y'),
                                             ['class'=>'select2 form-control', 'id' => 'year']) !!}
-                                </div>
-                                <div class="col-sm-1">
-                                    <a href="#" class="btn btn-success filterBtn">Szűrés</a>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +45,6 @@
     <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/public/js/currencyFormatDE.js') }} " type="text/javascript"></script>
 
-
     <script type="text/javascript">
         $(function () {
 
@@ -56,7 +52,7 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 390,
+                scrollY: 500,
                 scrollX: true,
                 order: [[1, 'desc']],
                 ajax: "{{ route('closuresIndex', ['ev' => date('Y')]) }}",
@@ -74,43 +70,40 @@
                 ],
                 buttons: [],
                 footerCallback: function (row, data, start, end, display) {
-                var api = this.api();
+                    var api = this.api();
 
-                // Remove the formatting to get integer data for summation
-                var intVal = function (i) {
-                    return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
-                };
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                    };
 
-                // Total over all pages
-                total = api
-                    .column(5)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
+                    // Total over all pages
+                    total = api
+                        .column(5)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
 
-                // Total over this page
-                pageTotal = api
-                    .column(5, { page: 'current' })
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
+                    // Total over this page
+                    pageTotal = api
+                        .column(5, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
 
-                // Update footer
-                $(api.column(5).footer()).html(currencyFormatDE(total));
-            },
+                    // Update footer
+                    $(api.column(5).footer()).html(currencyFormatDE(total));
+                },
 
-        });
-
-            $('.filterBtn').click(function () {
-                let year = $('#year').val() != 0 ? $('#year').val() : -9999;
-                let url = '{{ route('closuresIndex', [":ev"]) }}';
-                url = url.replace(':ev', year);
-                table.ajax.url(url).load();
             });
 
-
+            $('#year').change(function () {
+                let url = '{{ route('closuresIndex', [":ev"]) }}';
+                url = url.replace(':ev', $('#year').val());
+                table.ajax.url(url).load();
+            })
         });
     </script>
 @endsection

@@ -39,7 +39,7 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 390,
+                scrollY: 500,
                 scrollX: true,
                 order: [[2, 'asc']],
                 paging: false,
