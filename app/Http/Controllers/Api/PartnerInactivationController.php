@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\PartnerService;
 
-class PartnerDeactivationController extends Controller
+class PartnerInactivationController extends Controller
 {
     private $partnerService;
 
@@ -14,8 +14,8 @@ class PartnerDeactivationController extends Controller
         $this->partnerService = $ps;
     }
 
-    public function partnerDeactivation(): void
+    public function partnerInactivation(): void
     {
-        $this->partnerService->deactivation();
+        $this->partnerService->inactivation();
     }
 }

@@ -25,7 +25,7 @@
                                             ['class'=>'select2 form-control', 'id' => 'active']) !!}
                                 </div>
                                 <div class="col-sm-3">
-                                    <a href="#" class="btn btn-danger deaktivBtn">1 éve nem aktív partnerek deaktíválása</a>
+                                    <a href="#" class="btn btn-danger deaktivBtn">1 éve nem aktív partnerek inaktíválása</a>
                                 </div>
 
                             </div>
@@ -88,18 +88,18 @@
 
             $('.deaktivBtn').click(function () {
                 swal.fire({
-                    title: "Partner deaktíválás!",
-                    text: "Biztosan deaktíválja a 12 hónapja nem számlázó patnereket?",
+                    title: "Partner inaktíválás!",
+                    text: "Biztosan inaktíválja a 12 hónapja nem számlázó patnereket?",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Deaktíválás",
+                    confirmButtonText: "Inaktíválás",
                     cancelButtonText: "Kilép",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
                             type:"GET",
-                            url:"{{url('api/partnerDeactivation')}}",
+                            url:"{{url('api/partnerInactivation')}}",
                             success: function (response) {
                                 console.log('ok:', response);
                                 window.location.reload(true);

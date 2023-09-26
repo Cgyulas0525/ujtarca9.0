@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\truncateTablesController;
 use App\Http\Controllers\Api\outputFilesDeleteController;
-use App\Http\Controllers\Api\PartnerDeactivationController;
+use App\Http\Controllers\Api\PartnerInactivationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +24,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('truncateAllTables', [truncateTablesController::class, 'truncateAllTables']);
 Route::get('deleteOutputFiles', [outputFilesDeleteController::class, 'deleteOutputFiles']);
-Route::get('partnerDeactivation', [PartnerDeactivationController::class, 'partnerDeactivation']);
+Route::get('partnerInactivation', [PartnerInactivationController::class, 'partnerInactivation']);
 

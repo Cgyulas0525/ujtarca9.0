@@ -17,7 +17,7 @@ class ApiTest extends TestCase
      *
      * @return void
      */
-    public function test_partner_deactivation(): void
+    public function test_partner_inactivation(): void
     {
         $partners = Partners::factory()->count(3)->create();
         $invoice = Invoices::factory()->create(
@@ -27,7 +27,7 @@ class ApiTest extends TestCase
         );
         $partner = Partners::factory()->create();
 
-        $this->get( "api/partnerDeactivation")
+        $this->get( "api/partnerInactivation")
             ->assertStatus(Response::HTTP_OK);
     }
 
