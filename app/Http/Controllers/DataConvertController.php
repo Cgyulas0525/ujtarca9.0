@@ -17,9 +17,8 @@ use App\Models\Settlements;
 
 class DataConvertController extends Controller
 {
-
-    public function paymentMethodsConvert() {
-
+    public function paymentMethodsConvert(): void
+    {
         foreach (DB::connection('mysql_tarca')->table('dictionaries')
                      ->where('tipus', 25)->get() as $data) {
             $paymentMethod = PaymentMethods::where('name', $data->nev)->first();
@@ -30,14 +29,13 @@ class DataConvertController extends Controller
                 $paymentMethods->save();
             }
         }
-
     }
 
-    public function partnerTypesCovert() {
-
+    public function partnerTypesCovert(): void
+    {
         foreach (DB::connection('mysql_tarca')->table('dictionaries')
                      ->where('tipus', 24)->get() as $data) {
-            $partnertypes= PartnerTypes::where('name', $data->nev)->first();
+            $partnertypes = PartnerTypes::where('name', $data->nev)->first();
             if (empty($partnertypes)) {
                 $partnertypes = new PartnerTypes();
                 $partnertypes->name = $data->nev;
@@ -45,11 +43,10 @@ class DataConvertController extends Controller
                 $partnertypes->save();
             }
         }
-
     }
 
-    public function partnersConvert() {
-
+    public function partnersConvert(): void
+    {
         foreach (DB::connection('mysql_tarca')->table('partner')->get() as $data) {
             $partner = new Partners();
             $partner->name = $data->nev;
@@ -66,15 +63,15 @@ class DataConvertController extends Controller
         }
     }
 
-    public function getPartner($id)
+    public function getPartner($id): int
     {
         $tarcaPartner = DB::connection('mysql_tarca')->table('partner')->where('id', $id)->first();
         return DB::connection('mysql')->table('partners')->where('name', $tarcaPartner->nev)->first()->id;
     }
 
-    public function invoiceConvert() {
+    public function invoiceConvert(): void
+    {
         foreach (DB::connection('mysql_tarca')->table('szamla')->whereNull('deleted_at')->get() as $data) {
-
             $invoice = new Invoices();
             $invoice->partner_id = $this->getPartner($data->partner);
             $invoice->invoicenumber = $data->szamlaszam;
@@ -84,12 +81,12 @@ class DataConvertController extends Controller
             $invoice->performancedate = $data->teljesites;
             $invoice->deadline = $data->fizetesihatarido;
             $invoice->description = $data->id;
-
             $invoice->save();
         }
     }
 
-    public function cc($cimlet, $closure, $value) {
+    public function cc($cimlet, $closure, $value): void
+    {
         $closureCimlet = new ClosureCimlets();
         $closureCimlet->closures_id = $closure;
         $closureCimlet->cimlets_id = $cimlet;
@@ -97,51 +94,44 @@ class DataConvertController extends Controller
         $closureCimlet->save();
     }
 
-    public function closureConvert() {
-
+    public function closureConvert(): void
+    {
         $zaras = DB::connection('mysql_tarca')->table('zaras')->whereNull('deleted_at')->get();
-
         foreach ($zaras as $item) {
-
-        $closure = DB::table('closures')
-            ->insertGetId([
-            'closuredate' => $item->datum,
-            'card'        => $item->kartya,
-            'szcard'      => $item->szep,
-            'dayduring'   => $item->napkozben,
-        ]);
-
-        $this->cc(Cimlets::where('value', 5)->first()->id, $closure, $item->A5);
-        $this->cc(Cimlets::where('value', 10)->first()->id, $closure, $item->A10);
-        $this->cc(Cimlets::where('value', 20)->first()->id, $closure, $item->A20);
-        $this->cc(Cimlets::where('value', 50)->first()->id, $closure, $item->A50);
-        $this->cc(Cimlets::where('value', 100)->first()->id, $closure, $item->A100);
-        $this->cc(Cimlets::where('value', 200)->first()->id, $closure, $item->A200);
-        $this->cc(Cimlets::where('value', 500)->first()->id, $closure, $item->A500);
-        $this->cc(Cimlets::where('value', 1000)->first()->id, $closure, $item->A1000);
-        $this->cc(Cimlets::where('value', 2000)->first()->id, $closure, $item->A2000);
-        $this->cc(Cimlets::where('value', 5000)->first()->id, $closure, $item->A5000);
-        $this->cc(Cimlets::where('value', 10000)->first()->id, $closure, $item->A10000);
-        $this->cc(Cimlets::where('value', 20000)->first()->id, $closure, $item->A20000);
+            $closure = DB::table('closures')
+                ->insertGetId([
+                    'closuredate' => $item->datum,
+                    'card' => $item->kartya,
+                    'szcard' => $item->szep,
+                    'dayduring' => $item->napkozben,
+                ]);
+            $this->cc(Cimlets::where('value', 5)->first()->id, $closure, $item->A5);
+            $this->cc(Cimlets::where('value', 10)->first()->id, $closure, $item->A10);
+            $this->cc(Cimlets::where('value', 20)->first()->id, $closure, $item->A20);
+            $this->cc(Cimlets::where('value', 50)->first()->id, $closure, $item->A50);
+            $this->cc(Cimlets::where('value', 100)->first()->id, $closure, $item->A100);
+            $this->cc(Cimlets::where('value', 200)->first()->id, $closure, $item->A200);
+            $this->cc(Cimlets::where('value', 500)->first()->id, $closure, $item->A500);
+            $this->cc(Cimlets::where('value', 1000)->first()->id, $closure, $item->A1000);
+            $this->cc(Cimlets::where('value', 2000)->first()->id, $closure, $item->A2000);
+            $this->cc(Cimlets::where('value', 5000)->first()->id, $closure, $item->A5000);
+            $this->cc(Cimlets::where('value', 10000)->first()->id, $closure, $item->A10000);
+            $this->cc(Cimlets::where('value', 20000)->first()->id, $closure, $item->A20000);
         }
     }
 
-    public function settlementsConvert() {
-
+    public function settlementsConvert(): void
+    {
         $telepules = DB::connection('mysql_tarca')->table('telepules')->get();
-
         foreach ($telepules as $item) {
-        echo $item->iranyitoszam . " " . $item->telepules . "\n";
-        $settlement = new Settlements();
-        $settlement->postcode = $item->iranyitoszam;
-        $settlement->name = $item->telepules;
-        $settlement->created_at = \Carbon\Carbon::now();
-        $settlement->save();
-
+            echo $item->iranyitoszam . " " . $item->telepules . "\n";
+            $settlement = new Settlements();
+            $settlement->postcode = $item->iranyitoszam;
+            $settlement->name = $item->telepules;
+            $settlement->created_at = \Carbon\Carbon::now();
+            $settlement->save();
+        }
     }
-
-}
-
 }
 
 

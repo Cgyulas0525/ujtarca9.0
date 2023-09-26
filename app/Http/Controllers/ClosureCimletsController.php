@@ -49,7 +49,7 @@ class ClosureCimletsController extends AppBaseController
         }
     }
 
-    public function closureCimletsIndex(Request $request, $id)
+    public function closureCimletsIndex(Request $request, $id = null)
     {
         if (Auth::check()) {
             if ($request->ajax()) {
@@ -117,7 +117,7 @@ class ClosureCimletsController extends AppBaseController
 
     public function closureCimletsUpdate(Request $request): mixed
     {
-       ClosureCimlets::find($request->get('id'))->update(['value' => $request->get('value'),
+        ClosureCimlets::find($request->get('id'))->update(['value' => $request->get('value'),
             'updated_at' => \Carbon\Carbon::now()]);
         return Response::json(ClosureCimlets::find($request->get('id')));
     }
