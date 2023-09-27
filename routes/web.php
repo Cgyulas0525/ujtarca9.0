@@ -110,3 +110,6 @@ Route::get('offerEmail/{id}',[OffersController::class, 'offerEmail'])->name('off
 
 Route::get('offerReplay/{id}',[OfferServiceController::class, 'offerReplay'])->name('offerReplay');
 
+
+Route::resource('orders', App\Http\Controllers\OrdersController::class);
+Route::resource('orderdetails', App\Http\Controllers\OrderdetailsController::class);

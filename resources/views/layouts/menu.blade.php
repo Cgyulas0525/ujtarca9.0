@@ -66,12 +66,28 @@
         <p>Termékek</p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="{{ route('offers.index') }}"
-       class="nav-link {{ Request::is('offers*') ? 'active' : '' }}">
-        <i class="fab fa-buffer"></i>
-        <p>Megrendelés</p>
+<li class="nav-item has-treeview">
+    <a href="#" class="nav-link {{ Request::is('offers*') ||
+                                   Request::is('orders*') ? 'active' : '' }}">
+        <i class="fas fa-list-alt"></i>
+        <p>Megrendelések<i class="right fas fa-angle-left"></i></p>
     </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('offers.index') }}"
+               class="nav-link {{ Request::is('offers*') ? 'active' : '' }}">
+                <i class="fab fa-buffer"></i>
+                <p>Vevői megrendelés</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('orders.index') }}"
+               class="nav-link {{ Request::is('orders*') ? 'active' : '' }}">
+                <i class="fas fa-money-bill"></i>
+                <p>Szállítói megrendelés</p>
+            </a>
+        </li>
+    </ul>
 </li>
 <li class="nav-item">
     <a href="{{ route('invoices.index') }}"
@@ -121,3 +137,9 @@
 </li>
 
 
+{{--<li class="nav-item">--}}
+{{--    <a href="{{ route('orderdetails.index') }}" class="nav-link {{ Request::is('orderdetails*') ? 'active' : '' }}">--}}
+{{--        <i class="nav-icon fas fa-home"></i>--}}
+{{--        <p>Orderdetails</p>--}}
+{{--    </a>--}}
+{{--</li>--}}

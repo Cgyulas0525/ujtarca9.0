@@ -198,6 +198,15 @@ class ProductsController extends AppBaseController
                          })->orderBy('name')->pluck('name', 'id')->toArray();
     }
 
+    public static function orderDetailsProductsDDDW($orderId) : array
+    {
+        return [" "] + DB::table('products')
+                         ->whereNull('deleted_at')
+                         ->whereNotIn('id', function ($query) use($orderId) {
+                             return $query->from('orderdetails')->select('orderdetails.products_id')->where('orderdetails.orders_id', $orderId)->get();
+                         })->orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
     public function print() {
 
         return view('printing.productsPrint')->with(['products' => Products::all()]);

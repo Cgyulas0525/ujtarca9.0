@@ -12,7 +12,7 @@
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
-                        <h4>Megrendelések</h4>
+                        <h4>Vevői megrendelések</h4>
                     </section>
                     @include('flash::message')
                     <div class="clearfix"></div>

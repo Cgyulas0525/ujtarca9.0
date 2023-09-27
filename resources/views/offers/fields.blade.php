@@ -7,7 +7,7 @@
 <!-- Offerdate Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('offerdate', 'Dátum:') !!}
-    {!! Form::date('offerdate', isset($offer) ? $offers->offerdate : Carbon\Carbon::now(), ['class' => 'form-control','id'=>'offerdate']) !!}
+    {!! Form::date('offerdate', isset($offers) ? $offers->offerdate : Carbon\Carbon::now(), ['class' => 'form-control','id'=>'offerdate']) !!}
 </div>
 
 <!-- Partners Id Field -->

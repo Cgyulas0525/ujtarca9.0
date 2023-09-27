@@ -3,32 +3,22 @@
 namespace Database\Factories;
 
 use App\Models\Offerdetails;
+use App\Models\Offers;
+use App\Models\Products;
+use App\Models\Quantities;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OfferdetailsFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Offerdetails::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         return [
-            'offers_id' => $this->faker->randomDigitNotNull,
-        'products_id' => $this->faker->randomDigitNotNull,
-        'quantities_id' => $this->faker->randomDigitNotNull,
-        'value' => $this->faker->randomDigitNotNull,
-        'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-        'deleted_at' => $this->faker->date('Y-m-d H:i:s')
+            'offers_id' => Offers::factory()->create(),
+            'products_id' => Products::factory()->create(),
+            'quantities_id' => Quantities::factory()->create(),
+            'value' => $this->faker->randomDigitNotNull,
         ];
     }
 }

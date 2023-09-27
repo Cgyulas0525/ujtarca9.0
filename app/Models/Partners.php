@@ -123,6 +123,11 @@ class Partners extends Model
         return $this->hasMany(Offers::class, 'partners_id');
     }
 
+    public function orders(): string|HasMany
+    {
+        return $this->hasMany(Orders::class, 'partners_id');
+    }
+
     public function aviable(): bool
     {
         return (empty(Invoices::where('partner_id', $this->id)->first()) && empty(Offers::where('partners_id', $this->id)->first())) ? true : false;
