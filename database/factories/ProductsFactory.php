@@ -8,18 +8,8 @@ use App\Models\Quantities;
 
 class ProductsFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Products::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition(): array
     {
         return [
@@ -28,6 +18,7 @@ class ProductsFactory extends Factory
             'price' => $this->faker->randomDigitNotNull,
             'supplierprice' => $this->faker->randomDigitNotNull,
             'description' => $this->faker->word,
+            'active' => 1,
         ];
     }
 }

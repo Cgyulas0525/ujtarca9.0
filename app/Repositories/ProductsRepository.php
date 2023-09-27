@@ -20,7 +20,8 @@ class ProductsRepository extends BaseRepository
         'name',
         'quantities_id',
         'price',
-        'description'
+        'description',
+        'active',
     ];
 
     /**

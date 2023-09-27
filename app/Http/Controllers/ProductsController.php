@@ -45,150 +45,71 @@ class ProductsController extends AppBaseController
             ->make(true);
     }
 
-
-    /**
-     * Display a listing of the Products.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function index(Request $request)
     {
         if( Auth::check() ){
-
             if ($request->ajax()) {
-
-                $data = Products::with('quantities')->get();
-
-                return $this->dwData($data);
-
+                return $this->dwData(Products::with('quantities')->get());
             }
-
             return view('products.index');
         }
     }
 
-    /**
-     * Show the form for creating a new Products.
-     *
-     * @return Response
-     */
     public function create()
     {
         return view('products.create');
     }
 
-    /**
-     * Store a newly created Products in storage.
-     *
-     * @param CreateProductsRequest $request
-     *
-     * @return Response
-     */
     public function store(CreateProductsRequest $request)
     {
         $input = $request->all();
-
         $products = $this->productsRepository->create($input);
-
         return redirect(route('products.index'));
     }
 
-    /**
-     * Display the specified Products.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
     public function show($id)
     {
         $products = $this->productsRepository->find($id);
-
         if (empty($products)) {
             return redirect(route('products.index'));
         }
-
         return view('products.show')->with('products', $products);
     }
 
-    /**
-     * Show the form for editing the specified Products.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
     public function edit($id)
     {
         $products = $this->productsRepository->find($id);
-
         if (empty($products)) {
             return redirect(route('products.index'));
         }
-
         return view('products.edit')->with('products', $products);
     }
 
-    /**
-     * Update the specified Products in storage.
-     *
-     * @param int $id
-     * @param UpdateProductsRequest $request
-     *
-     * @return Response
-     */
     public function update($id, UpdateProductsRequest $request)
     {
         $products = $this->productsRepository->find($id);
-
         if (empty($products)) {
             return redirect(route('products.index'));
         }
-
         $products = $this->productsRepository->update($request->all(), $id);
-
         return redirect(route('products.index'));
     }
 
-    /**
-     * Remove the specified Products from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
     public function destroy($id)
     {
         $products = $this->productsRepository->find($id);
-
         if (empty($products)) {
             return redirect(route('products.index'));
         }
-
         $this->productsRepository->delete($id);
-
         return redirect(route('products.index'));
     }
 
-    /*
-     * Dropdown for field select
-     *
-     * return array
-     */
     public static function DDDW() : array
     {
         return [" "] + Products::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    /*
-     * Dropdown for field select
-     *
-     * return array
-     */
     public static function offerDetailsProductsDDDW($offerId) : array
     {
         return [" "] + DB::table('products')
@@ -208,9 +129,7 @@ class ProductsController extends AppBaseController
     }
 
     public function print() {
-
         return view('printing.productsPrint')->with(['products' => Products::all()]);
-
     }
 
 }

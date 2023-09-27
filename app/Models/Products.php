@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ActiveEnum;
 use Barryvdh\DomPDF\Tests\TestCase;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property integer $quantities_id
  * @property integer $price
  * @property string $description
+ * @property integer $active
  */
 class Products extends Model
 {
@@ -39,7 +41,8 @@ class Products extends Model
         'quantities_id',
         'price',
         'supplierprice',
-        'description'
+        'description',
+        'active',
     ];
 
     /**
@@ -53,7 +56,8 @@ class Products extends Model
         'quantities_id' => 'integer',
         'price' => 'integer',
         'supplierprice' => 'integer',
-        'description' => 'string'
+        'description' => 'string',
+        'active' => 'integer',
     ];
 
     /**
@@ -67,10 +71,16 @@ class Products extends Model
         'price' => 'required|integer',
         'supplierprice' => 'nullable|integer',
         'description' => 'nullable|string|max:500',
+        'active' => 'integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
     ];
+
+    protected $append = [
+        'activeName',
+    ];
+
 
     public function quantities(): string|BelongsTo
     {
@@ -80,5 +90,20 @@ class Products extends Model
     public function offerdetails(): string|HasMany
     {
         return $this->hasMany(Offerdetails::class, 'products_id');
+    }
+
+    public function getActiveNameAttribute(): string
+    {
+        return ActiveEnum::values()[$this->active];
+    }
+
+    public function scopeActiveProducts($query): mixed
+    {
+        return $query->where('active', 1);
+    }
+
+    public function scopeInActiveProducts($query): mixed
+    {
+        return $query->where('active', 0);
     }
 }
