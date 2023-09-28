@@ -51,6 +51,8 @@ Route::get('beforeDestroysWithParam/{table}/{id}/{route}/{param}', [DestroysCont
 
 Route::get('beforePartnerActivation/{id}/{route}', [DestroysController::class, 'beforePartnerActivation'])->name('beforePartnerActivation');
 Route::get('partnerActivation/{id}/{route}', [DestroysController::class, 'partnerActivation'])->name('partnerActivation');
+Route::get('beforeProductActivation/{id}/{route}', [DestroysController::class, 'beforeProductActivation'])->name('beforeProductActivation');
+Route::get('productActivation/{id}/{route}', [DestroysController::class, 'productActivation'])->name('productActivation');
 
 Route::resource('paymentMethods', App\Http\Controllers\PaymentMethodsController::class);
 

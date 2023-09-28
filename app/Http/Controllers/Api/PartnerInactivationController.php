@@ -9,9 +9,9 @@ class PartnerInactivationController extends Controller
 {
     private $partnerService;
 
-    public function __construct(PartnerService $ps)
+    public function __construct(PartnerService $partnerService)
     {
-        $this->partnerService = $ps;
+        $this->partnerService = $partnerService;
     }
 
     public function partnerInactivation(): void

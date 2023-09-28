@@ -3,44 +3,48 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
 use App\Services\SWAlertService;
 use App\Models\Partners;
+use App\Models\Products;
 
 class DestroysController extends Controller
 {
-    public function beforeDestroys($table, $id, $route) {
+    public function beforeDestroys($table, $id, $route): object
+    {
         $view = 'layouts.show';
-        $model_name = 'App\Models\\'.$table;
+        $model_name = 'App\Models\\' . $table;
         $data = $model_name::find($id);
-        SWAlertService::choice($id, 'Biztos, hogy törli a tételt?', '/'.$route, 'Kilép', '/destroy/'.$table.'/'.$id.'/'.$route, 'Töröl');
+        SWAlertService::choice($id, 'Biztos, hogy törli a tételt?', '/' . $route, 'Kilép', '/destroy/' . $table . '/' . $id . '/' . $route, 'Töröl');
 
         return view($view)->with('table', $data);
     }
 
-    public function beforeDestroysWithParam($table, $id, $route, $param = NULL) {
+    public function beforeDestroysWithParam($table, $id, $route, $param = NULL): object
+    {
         $view = 'layouts.show';
-        $model_name = 'App\Models\\'.$table;
-        $data = $model_name::find($id);
-        $text = 'Törlődik a tétel és a hozzá kapcsolódó adatok! Biztos, hogy törli a tételt?';
-        SWAlertService::choice($id, $text, '/'.$route. '/' . $param, 'Kilép', '/destroyWithParam/'.$table.'/'.$id.'/'.$route. '/'.$param, 'Töröl');
-
-        return view($view)->with('table', $data);
-    }
-
-    public function beforeDestroysWithParamArray($table, $id, $route, $param = NULL) {
-        $view = 'layouts.show';
-        $model_name = 'App\Models\\'.$table;
+        $model_name = 'App\Models\\' . $table;
         $data = $model_name::find($id);
         $text = 'Törlődik a tétel és a hozzá kapcsolódó adatok! Biztos, hogy törli a tételt?';
-        SWAlertService::choice($id, $text, '/'.$route. '/' . $param, 'Kilép', '/destroyWithParam/'.$table.'/'.$id.'/'.$route. '/'.$param, 'Töröl');
+        SWAlertService::choice($id, $text, '/' . $route . '/' . $param, 'Kilép', '/destroyWithParam/' . $table . '/' . $id . '/' . $route . '/' . $param, 'Töröl');
 
         return view($view)->with('table', $data);
     }
 
-    public function destroy($table, $id, $route) {
+    public function beforeDestroysWithParamArray($table, $id, $route, $param = NULL): object
+    {
+        $view = 'layouts.show';
+        $model_name = 'App\Models\\' . $table;
+        $data = $model_name::find($id);
+        $text = 'Törlődik a tétel és a hozzá kapcsolódó adatok! Biztos, hogy törli a tételt?';
+        SWAlertService::choice($id, $text, '/' . $route . '/' . $param, 'Kilép', '/destroyWithParam/' . $table . '/' . $id . '/' . $route . '/' . $param, 'Töröl');
+
+        return view($view)->with('table', $data);
+    }
+
+    public function destroy($table, $id, $route): object
+    {
         $route .= '.index';
-        $model_name = 'App\Models\\'.$table;
+        $model_name = 'App\Models\\' . $table;
         $data = $model_name::find($id);
 
         if (empty($data)) {
@@ -52,8 +56,9 @@ class DestroysController extends Controller
         return redirect(route($route));
     }
 
-    public function destroyWithParam($table, $id, $route, $param) {
-        $model_name = 'App\Models\\'.$table;
+    public function destroyWithParam($table, $id, $route, $param): object
+    {
+        $model_name = 'App\Models\\' . $table;
         $data = $model_name::find($id);
 
         if (empty($data)) {
@@ -61,18 +66,20 @@ class DestroysController extends Controller
         }
 
         $data->delete();
-        return redirect(route($route,  $param));
+        return redirect(route($route, $param));
     }
 
-    public function beforePartnerActivation($id, $route) {
+    public function beforePartnerActivation($id, $route): object
+    {
         $view = 'layouts.show';
         $data = Partners::find($id);
-        SWAlertService::choice($id, 'Biztosan változtatni akarja az aktívitás jelzőt?', '/'.$route, 'Kilép', '/partnerActivation/'.$id.'/'.$route, 'Váltás');
+        SWAlertService::choice($id, 'Biztosan változtatni akarja az aktívitás jelzőt?', '/' . $route, 'Kilép', '/partnerActivation/' . $id . '/' . $route, 'Váltás');
 
         return view($view)->with('table', $data);
     }
 
-    public function partnerActivation($id, $route) {
+    public function partnerActivation($id, $route): object
+    {
         $route .= '.index';
         $partner = Partners::find($id);
 
@@ -82,6 +89,30 @@ class DestroysController extends Controller
 
         $partner->active = $partner->active == 0 ? 1 : 0;
         $partner->save();
+
+        return redirect(route($route));
+    }
+
+    public function beforeProductActivation($id, $route): object
+    {
+        $view = 'layouts.show';
+        $data = Products::find($id);
+        SWAlertService::choice($id, 'Biztosan változtatni akarja az aktívitás jelzőt?', '/' . $route, 'Kilép', '/productActivation/' . $id . '/' . $route, 'Váltás');
+
+        return view($view)->with('table', $data);
+    }
+
+    public function productActivation($id, $route): object
+    {
+        $route .= '.index';
+        $product = Products::find($id);
+
+        if (empty($product)) {
+            return redirect(route($route));
+        }
+
+        $product->active = $product->active == 0 ? 1 : 0;
+        $product->save();
 
         return redirect(route($route));
     }

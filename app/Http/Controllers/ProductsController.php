@@ -42,6 +42,13 @@ class ProductsController extends AppBaseController
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('products.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
+                if ($row->active == 0) {
+                    $btn = $btn . '<a href="' . route('beforeProductActivation', [$row->id, 'products']) . '"
+                                         class="btn btn-warning btn-sm deleteProduct" title="Aktiválás"><i class="fas fa-user-check"></i></a>';
+                } else {
+                    $btn = $btn . '<a href="' . route('beforeProductActivation', [$row->id, 'products']) . '"
+                                         class="btn btn-warning btn-sm deleteProduct" title="Inaktiválás"><i class="fas fa-user-alt-slash"></i></a>';
+                }
                 $btn = $btn . '<a href="' . route('beforeDestroys', ['Products', $row->id, 'products']) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
                 return $btn;

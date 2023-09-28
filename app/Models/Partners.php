@@ -157,4 +157,17 @@ class Partners extends Model
     {
         return $query->where('active', 0);
     }
+
+    public function scopeActiveNumbers($query): mixed
+    {
+        return $query->activePartner()->whereNotIn('partnertypes_id', [3, 5]);
+    }
+
+    public function scopeLastMonthsInactiveNumbers($query, $months): mixed
+    {
+        return $query->activeNumbers()
+                    ->whereNotIn('id', function ($query) use ($months) {
+                        return $query->from('invoices')->select('partner_id')->where('dated', '>=', now()->subMonth($months))->get();
+                    });
+    }
 }

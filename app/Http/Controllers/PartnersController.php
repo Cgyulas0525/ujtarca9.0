@@ -48,7 +48,7 @@ class PartnersController extends AppBaseController
                                          class="btn btn-warning btn-sm deleteProduct" title="Aktiválás"><i class="fas fa-user-check"></i></a>';
                     } else {
                         $btn = $btn . '<a href="' . route('beforePartnerActivation', [$row->id, 'partners']) . '"
-                                         class="btn btn-warning btn-sm deleteProduct" title="Deaktiválás"><i class="fas fa-user-alt-slash"></i></a>';
+                                         class="btn btn-warning btn-sm deleteProduct" title="Inaktiválás"><i class="fas fa-user-alt-slash"></i></a>';
                     }
                     $btn = $btn . '<a href="' . route('partners.show', [$row->id]) . '"
                                      class="btn btn-info btn-sm deleteProduct" title="Adatlap"><i class="fas fa-newspaper"></i></a>';
