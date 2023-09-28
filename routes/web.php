@@ -60,10 +60,10 @@ Route::resource('partners', App\Http\Controllers\PartnersController::class);
 
 Route::resource('invoices', App\Http\Controllers\InvoicesController::class);
 
-Route::get('invoicesIndex/{ev?}', [InvoicesController::class, 'invoicesIndex'])->name('invoicesIndex');
+//Route::get('invoicesIndex/{ev?}', [InvoicesController::class, 'invoicesIndex'])->name('invoicesIndex');
 Route::get('invoicesIndex/{ev?}/{partner?}', [InvoicesController::class, 'invoicesIndex'])->name('invoicesIndex');
 
-Route::get('invoicesYearsDDDW', [InvoicesController::class, 'invoicesYearsDDDW'])->name('invoicesYearsDDDW');
+Route::get('invoicesYearsSelect', [InvoicesController::class, 'invoicesYearsSelect'])->name('invoicesYearsSelect');
 
 Route::resource('closures', App\Http\Controllers\ClosuresController::class);
 Route::get('closuresIndex/{ev?}', [ClosuresController::class, 'index'])->name('closuresIndex');
@@ -96,6 +96,7 @@ Route::resource('quantities', App\Http\Controllers\QuantitiesController::class);
 Route::resource('products', App\Http\Controllers\ProductsController::class);
 Route::get('products.print',[ProductsController::class, 'print'])->name('productsPrint');
 Route::get('products.pdfEmail',[ProductsController::class, 'pdfEmail'])->name('pdfEmail');
+Route::get('products.index/{active?}',[ProductsController::class, 'index'])->name('productsIndex');
 
 Route::resource('offers', App\Http\Controllers\OffersController::class);
 Route::get('offersEdit/{id}', [OffersController::class, 'offersEdit'])->name('offersEdit');

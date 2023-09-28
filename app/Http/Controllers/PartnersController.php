@@ -28,7 +28,7 @@ class PartnersController extends AppBaseController
 
     use PartnerFactSheetTrait, PartnerPeriodicAccountsTrait;
 
-    public function dwData($data)
+    public function dwData($data): mixed
     {
         return Datatables::of($data)
             ->addIndexColumn()
@@ -59,7 +59,7 @@ class PartnersController extends AppBaseController
             ->make(true);
     }
 
-    public function index(Request $request, $active = null)
+    public function index(Request $request, ?int $active = null): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {
@@ -75,7 +75,7 @@ class PartnersController extends AppBaseController
         }
     }
 
-    public function getRedis($redis, $active)
+    public function getRedis($redis, $active): mixed
     {
         if (is_null($active)) {
             return $redis->get('partners_all');
@@ -97,19 +97,19 @@ class PartnersController extends AppBaseController
         }
     }
 
-    public function create()
+    public function create(): object
     {
         return view('partners.create');
     }
 
-    public function store(CreatePartnersRequest $request)
+    public function store(CreatePartnersRequest $request): object
     {
         $input = $request->all();
         $partners = $this->partnersRepository->create($input);
         return redirect(route('partners.index'));
     }
 
-    public function show($id)
+    public function show($id): object
     {
         $partners = $this->partnersRepository->find($id);
         if (empty($partners)) {
@@ -118,7 +118,7 @@ class PartnersController extends AppBaseController
         return view('partners.show')->with('partners', $partners);
     }
 
-    public function edit($id)
+    public function edit($id): object
     {
         $partners = $this->partnersRepository->find($id);
         if (empty($partners)) {
@@ -127,7 +127,7 @@ class PartnersController extends AppBaseController
         return view('partners.edit')->with('partners', $partners);
     }
 
-    public function update($id, UpdatePartnersRequest $request)
+    public function update($id, UpdatePartnersRequest $request): object
     {
         $partners = $this->partnersRepository->find($id);
         if (empty($partners)) {
@@ -137,7 +137,7 @@ class PartnersController extends AppBaseController
         return redirect(route('partners.index'));
     }
 
-    public function destroy($id)
+    public function destroy($id): object
     {
         $partners = $this->partnersRepository->find($id);
         if (empty($partners)) {
@@ -159,17 +159,11 @@ class PartnersController extends AppBaseController
                 ->where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    public static function DDDWSupplier(): array
-    {
-        return [" "] + Partners::whereIn('partnertypes_id', [1, 2, 4, 6, 7, 8])
-                ->where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
-    }
-
     public static function fields($partners): array
     {
         $formGroupArray = [];
         $item = ["label" => Form::label('name', 'Név:'),
-            "field" => Form::text('name',null, ['class' => 'form-control', 'maxlength' => 100, 'required' => true,
+            "field" => Form::text('name', null, ['class' => 'form-control', 'maxlength' => 100, 'required' => true,
                 'readonly' => isset($partners) ? ($partners->active == 1 ? false : true) : false]),
             "width" => 6,
             "file" => false];

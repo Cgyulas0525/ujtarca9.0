@@ -27,7 +27,7 @@ class InvoicesController extends AppBaseController
         $this->invoicesRepository = $invoicesRepo;
     }
 
-    public function dwData($data)
+    public function dwData($data): mixed
     {
         return Datatables::of($data)
             ->addIndexColumn()
@@ -48,50 +48,33 @@ class InvoicesController extends AppBaseController
             ->make(true);
     }
 
-
-    /**
-     * Display a listing of the Invoices.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function index(Request $request)
+    public function index(Request $request): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-
                 $data = $this->invoicesRepository->all();
                 return $this->dwData($data);
-
             }
-
             return view('invoices.index');
         }
     }
 
-    /**
-     * Show the form for creating a new Invoices.
-     *
-     * @return Response
-     */
-    public function create()
+    public function create(): object
     {
         return view('invoices.create');
     }
 
-    public function invoicesIndex(Request $request, $year = null, $partner = null)
+    public function invoicesIndex(Request $request, ?int $year = null, ?int $partner = null): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-
                 return $this->dwData(Invoices::with('paymentmethod')
                     ->with('partner')
                     ->where(function ($query) use ($partner) {
-                        is_null($partner) ? $query->whereNotNull('partner_id') : $query->where('partner_id', '=', $partner);
+                        (is_null($partner) || $partner == 0) ? $query->whereNotNull('partner_id') : $query->where('partner_id', '=', $partner);
                     })
                     ->where(function ($query) use ($year) {
-                        is_null($year) ? $query->whereNotNull('dated') : $query->whereYear('dated', '=', $year);
+                        (is_null($year) || $year == 0) ? $query->whereNotNull('dated') : $query->whereYear('dated', '=', $year);
                     })->get());
             }
             return view('invoices.index');
@@ -124,127 +107,63 @@ class InvoicesController extends AppBaseController
             ]);
     }
 
-    /**
-     * Store a newly created Invoices in storage.
-     *
-     * @param CreateInvoicesRequest $request
-     *
-     * @return Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): object
     {
         $input = $request->all();
-
         $result = $this->validating($request);
-
         $invoices = $this->invoicesRepository->create($input);
-
         return view('invoices.create');
     }
 
-    /**
-     * Display the specified Invoices.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
+    public function show($id): object
     {
         $invoices = $this->invoicesRepository->find($id);
-
         if (empty($invoices)) {
             return redirect(route('invoices.index'));
         }
-
         return view('invoices.show')->with('invoices', $invoices);
     }
 
-    /**
-     * Show the form for editing the specified Invoices.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
+    public function edit($id): object
     {
         $invoices = $this->invoicesRepository->find($id);
-
         if (empty($invoices)) {
             return redirect(route('invoices.index'));
         }
-
         return view('invoices.edit')->with('invoices', $invoices);
     }
 
-    /**
-     * Update the specified Invoices in storage.
-     *
-     * @param int $id
-     * @param UpdateInvoicesRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, Request $request)
+    public function update($id, Request $request): object
     {
         $invoices = $this->invoicesRepository->find($id);
-
         if (empty($invoices)) {
             return redirect(route('invoices.index'));
         }
-
         $result = $this->validating($request);
-
         $invoices = $this->invoicesRepository->update($request->all(), $id);
-
         return redirect(route('invoices.index'));
     }
 
-    /**
-     * Remove the specified Invoices from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
-     * @throws \Exception
-     *
-     */
-    public function destroy($id)
+    public function destroy($id): object
     {
         $invoices = $this->invoicesRepository->find($id);
-
         if (empty($invoices)) {
             return redirect(route('invoices.index'));
         }
-
         $this->invoicesRepository->delete($id);
-
         return redirect(route('invoices.index'));
     }
 
-    /*
-     * Dropdown for field select
-     *
-     * return array
-     */
     public static function DDDW(): array
     {
         return [" "] + Invoices::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    public static function invoicesYearsDDDW()
-    {
-        return [" "] + Invoices::selectRaw('year(invoices.dated) as year')->groupBy('year')
-                ->orderBy('year', 'desc')
-                ->pluck('year', 'year')->toArray();
-    }
-
-    public static function fields($invoice)
+    public static function fields($invoice): array
     {
         $formGroupArray = [];
         $item = ["label" => Form::label('partner_id', 'Partner:'),
-            "field" => Form::select('partner_id', PartnersController::DDDWSupplier(), null,
+            "field" => Form::select('partner_id', SelectService::selectSuplier(), null,
                 ['class' => 'select2 form-control', 'id' => 'partner_id', 'required' => true]),
             "width" => 12,
             "file" => false];

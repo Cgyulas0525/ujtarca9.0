@@ -19,7 +19,7 @@ use App\Traits\ProductPdfEmailTrait;
 
 class ProductsController extends AppBaseController
 {
-    /** @var ProductsRepository $productsRepository*/
+    /** @var ProductsRepository $productsRepository */
     private $productsRepository;
 
     public function __construct(ProductsRepository $productsRepo)
@@ -29,15 +29,20 @@ class ProductsController extends AppBaseController
 
     use ProductPdfEmailTrait;
 
-    public function dwData($data)
+    public function dwData($data): mixed
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('quantityName', function($data) { return ($data->quantities->name); })
-            ->addColumn('action', function($row){
+            ->addColumn('quantityName', function ($data) {
+                return ($data->quantities->name);
+            })
+            ->addColumn('activeName', function ($data) {
+                return ($data->activeName);
+            })
+            ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('products.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn.'<a href="' . route('beforeDestroys', ['Products', $row->id, 'products']) . '"
+                $btn = $btn . '<a href="' . route('beforeDestroys', ['Products', $row->id, 'products']) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
                 return $btn;
             })
@@ -45,29 +50,33 @@ class ProductsController extends AppBaseController
             ->make(true);
     }
 
-    public function index(Request $request)
+    public function index(Request $request, ?int $active = null): object
     {
-        if( Auth::check() ){
+        if (Auth::check()) {
             if ($request->ajax()) {
-                return $this->dwData(Products::with('quantities')->get());
+                if (is_null($active)) {
+                    return $this->dwData(Products::with('quantities')->get());
+                } else {
+                    return $this->dwData(Products::with('quantities')->where('active', $active)->get());
+                }
             }
             return view('products.index');
         }
     }
 
-    public function create()
+    public function create(): object
     {
         return view('products.create');
     }
 
-    public function store(CreateProductsRequest $request)
+    public function store(CreateProductsRequest $request): object
     {
         $input = $request->all();
         $products = $this->productsRepository->create($input);
         return redirect(route('products.index'));
     }
 
-    public function show($id)
+    public function show($id): object
     {
         $products = $this->productsRepository->find($id);
         if (empty($products)) {
@@ -76,7 +85,7 @@ class ProductsController extends AppBaseController
         return view('products.show')->with('products', $products);
     }
 
-    public function edit($id)
+    public function edit($id): object
     {
         $products = $this->productsRepository->find($id);
         if (empty($products)) {
@@ -85,7 +94,7 @@ class ProductsController extends AppBaseController
         return view('products.edit')->with('products', $products);
     }
 
-    public function update($id, UpdateProductsRequest $request)
+    public function update($id, UpdateProductsRequest $request): object
     {
         $products = $this->productsRepository->find($id);
         if (empty($products)) {
@@ -95,7 +104,7 @@ class ProductsController extends AppBaseController
         return redirect(route('products.index'));
     }
 
-    public function destroy($id)
+    public function destroy($id): object
     {
         $products = $this->productsRepository->find($id);
         if (empty($products)) {
@@ -105,33 +114,15 @@ class ProductsController extends AppBaseController
         return redirect(route('products.index'));
     }
 
-    public static function DDDW() : array
+    public static function DDDW(): array
     {
         return [" "] + Products::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    public static function offerDetailsProductsDDDW($offerId) : array
+    public function print(): object
     {
-        return [" "] + DB::table('products')
-                         ->whereNull('deleted_at')
-                         ->whereNotIn('id', function ($query) use($offerId) {
-                             return $query->from('offerdetails')->select('offerdetails.products_id')->where('offerdetails.offers_id', $offerId)->get();
-                         })->orderBy('name')->pluck('name', 'id')->toArray();
-    }
-
-    public static function orderDetailsProductsDDDW($orderId) : array
-    {
-        return [" "] + DB::table('products')
-                         ->whereNull('deleted_at')
-                         ->whereNotIn('id', function ($query) use($orderId) {
-                             return $query->from('orderdetails')->select('orderdetails.products_id')->where('orderdetails.orders_id', $orderId)->get();
-                         })->orderBy('name')->pluck('name', 'id')->toArray();
-    }
-
-    public function print() {
         return view('printing.productsPrint')->with(['products' => Products::all()]);
     }
-
 }
 
 

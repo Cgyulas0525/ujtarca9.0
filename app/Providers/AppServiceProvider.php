@@ -14,7 +14,8 @@ use App\Http\Controllers\DashboardController;
 use App\Classes\OwnClass\ClosuresClass;
 use App\Classes\RiportsClass;
 use App\Classes\ToolsClass;
-use App\Http\Controllers\OfferServiceController;
+use App\Services\OfferService;
+use App\Services\SelectService;
 use App\Http\Controllers\MyApiController;
 
 use App\Models\Closures;
@@ -40,8 +41,9 @@ class AppServiceProvider extends ServiceProvider
             $loader->alias('RiportsClass', RiportsClass::class);
             $loader->alias('ToolsClass', ToolsClass::class);
             $loader->alias('DashboardController', DashboardController::class);
-            $loader->alias('OfferServiceController', OfferServiceController::class);
+            $loader->alias('OfferService', OfferService::class);
             $loader->alias('MyApiController', MyApiController::class);
+            $loader->alias('SelectService', SelectService::class);
         });
     }
 

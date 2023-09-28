@@ -60,7 +60,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('products.index') }}"
+    <a href="{{ route('productsIndex') }}"
        class="nav-link {{ Request::is('products*') ? 'active' : '' }}">
         <i class="fab fa-product-hunt"></i>
         <p>Termékek</p>

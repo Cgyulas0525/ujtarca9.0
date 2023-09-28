@@ -70,7 +70,7 @@
                             {!! Form::label('year', 'Év:') !!}
                         </div>
                         <div class="col-sm-5">
-                            {!! Form::select('year', \App\Http\Controllers\InvoicesController::invoicesYearsDDDW(),date('Y'),
+                            {!! Form::select('year', SelectService::invoicesYearsSelect(),date('Y'),
                                     ['class'=>'select2 form-control', 'id' => 'year']) !!}
                         </div>
                         <div class="col-sm-2" id="gifDiv">

@@ -1,6 +1,6 @@
 <div class="form-group col-sm-6">
     {!! Form::label('ordernumber', 'Megrendelés szám:') !!}
-    {!! Form::text('ordernumber', isset($orders) ? $orders->ordernumber : OfferServiceController::nextOrderNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
+    {!! Form::text('ordernumber', isset($orders) ? $orders->ordernumber : OfferService::nextOrderNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
 </div>
 
 <!-- Offerdate Field -->
@@ -12,7 +12,7 @@
 <!-- Partners Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('partners_id', 'Partner:') !!}
-    {!! Form::select('partners_id', \App\Http\Controllers\PartnersController::DDDWSupplier(), null,
+    {!! Form::select('partners_id', SelectService::selectSuplier(), null,
                 ['class'=>'select2 form-control', 'id' => 'partners_id', 'required' => true]) !!}
 </div>
 

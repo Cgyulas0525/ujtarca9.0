@@ -1,7 +1,7 @@
 <!-- Offernumber Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('offernumber', 'Megrendelés szám:') !!}
-    {!! Form::text('offernumber', isset($offers) ? $offers->offernumber : OfferServiceController::nextOfferNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
+    {!! Form::text('offernumber', isset($offers) ? $offers->offernumber : OfferService::nextOfferNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
 </div>
 
 <!-- Offerdate Field -->
@@ -13,7 +13,7 @@
 <!-- Partners Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('partners_id', 'Partner:') !!}
-    {!! Form::select('partners_id', \App\Http\Controllers\PartnersController::DDDWSupplier(), null,
+    {!! Form::select('partners_id', SelectService::selectSuplier(), null,
                 ['class'=>'select2 form-control', 'id' => 'partners_id', 'required' => true]) !!}
 </div>
 

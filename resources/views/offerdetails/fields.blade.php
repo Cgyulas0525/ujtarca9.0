@@ -1,7 +1,7 @@
 <!-- Products Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('products_id', 'Termék:') !!}
-    {!! Form::select('products_id', App\Http\Controllers\ProductsController::offerDetailsProductsDDDW($offers->id), null,
+    {!! Form::select('products_id', SelectService::offerDetailsProductsSelect($offers->id), null,
                 ['class'=>'select2 form-control', 'id' => 'products_id', 'required' => true]) !!}
 </div>
 

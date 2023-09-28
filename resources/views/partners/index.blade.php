@@ -17,11 +17,8 @@
                                 <div class="col-sm-2">
                                     <h4>Partnerek</h4>
                                 </div>
-                                <div class="mylabel col-sm-1">
-                                    {!! Form::label('active', 'Aktív:') !!}
-                                </div>
                                 <div class="col-sm-2">
-                                    {!! Form::select('active', App\Enums\YesNoEnum::values(), 1,
+                                    {!! Form::select('active', App\Enums\ActiveEnum::values(), 1,
                                             ['class'=>'select2 form-control', 'id' => 'active']) !!}
                                 </div>
                                 <div class="col-sm-3">

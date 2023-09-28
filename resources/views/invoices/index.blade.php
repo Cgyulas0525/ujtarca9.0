@@ -20,14 +20,14 @@
                                         {!! Form::label('year', 'Év:') !!}
                                     </div>
                                     <div class="col-sm-2">
-                                        {!! Form::select('year', \App\Http\Controllers\InvoicesController::invoicesYearsDDDW(),date('Y'),
+                                        {!! Form::select('year', SelectService::invoicesYearsSelect(),date('Y'),
                                                 ['class'=>'select2 form-control', 'id' => 'year']) !!}
                                     </div>
                                     <div class="mylabel col-sm-2">
                                         {!! Form::label('partner', 'Partner:') !!}
                                     </div>
                                     <div class="col-sm-6">
-                                        {!! Form::select('partner', \App\Http\Controllers\PartnersController::DDDWSupplier(), null,
+                                        {!! Form::select('partner', SelectService::selectSuplier(), null,
                                                 ['class'=>'select2 form-control', 'id' => 'partner']) !!}
                                         </div>
                                     <div class="col-sm-1">
@@ -65,7 +65,7 @@
             var table = $('.partners-table').DataTable({
                 processing: true,
                 serverSide: true,
-                scrollY: 390,
+                scrollY: 500,
                 scrollX: true,
                 paging: false,
                 order: [[3, 'desc'], [1, 'asc'], [2, 'asc']],
@@ -113,17 +113,14 @@
             });
 
             $('.filterBtn').click(function () {
-                let year = $('#year').val() != 0 ? $('#year').val() : -9999;
-                let partner = $('#partner').val() != 0 ? $('#partner').val() : -9999;
+                let year = $('#year').val();
+                let partner = $('#partner').val();
                 let url = '{{ route('invoicesIndex', [":ev", ":partner"]) }}';
                 url = url.replace(':ev', year);
                 url = url.replace(':partner', partner);
                 table.ajax.url(url).load();
-            });
-
+            })
         });
-
-
     </script>
 @endsection
 

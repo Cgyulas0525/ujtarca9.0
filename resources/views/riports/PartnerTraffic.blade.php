@@ -34,7 +34,7 @@
                                         {!! Form::label('partner', 'Partner:') !!}
                                     </div>
                                     <div class="col-sm-4">
-                                        {!! Form::select('partner', \App\Http\Controllers\PartnersController::DDDWSupplier(), null,
+                                        {!! Form::select('partner', SelectService::selectSuplier(), null,
                                                 ['class'=>'select2 form-control', 'id' => 'partner']) !!}
                                     </div>
                                     <div class="col-sm-1">
