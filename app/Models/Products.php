@@ -57,7 +57,7 @@ class Products extends Model
         'price' => 'integer',
         'supplierprice' => 'integer',
         'description' => 'string',
-        'active' => 'integer',
+        'active' => ActiveEnum::class,
     ];
 
     /**
@@ -71,16 +71,11 @@ class Products extends Model
         'price' => 'required|integer',
         'supplierprice' => 'nullable|integer',
         'description' => 'nullable|string|max:500',
-        'active' => 'integer',
+        'active' => 'required|string|max:25',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
     ];
-
-    protected $append = [
-        'activeName',
-    ];
-
 
     public function quantities(): string|BelongsTo
     {
@@ -92,18 +87,13 @@ class Products extends Model
         return $this->hasMany(Offerdetails::class, 'products_id');
     }
 
-    public function getActiveNameAttribute(): string
-    {
-        return ActiveEnum::values()[$this->active];
-    }
-
     public function scopeActiveProducts($query): mixed
     {
-        return $query->where('active', 1);
+        return $query->where('active', ActiveEnum::ACTIVE);
     }
 
     public function scopeInActiveProducts($query): mixed
     {
-        return $query->where('active', 0);
+        return $query->where('active', ActiveEnum::INACTIVE);
     }
 }

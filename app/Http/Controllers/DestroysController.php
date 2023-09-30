@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ActiveEnum;
 use Illuminate\Http\Request;
 use App\Services\SWAlertService;
 use App\Models\Partners;
@@ -111,7 +112,7 @@ class DestroysController extends Controller
             return redirect(route($route));
         }
 
-        $product->active = $product->active == 0 ? 1 : 0;
+        $product->active = ($product->active == ActiveEnum::INACTIVE->value) ? ActiveEnum::ACTIVE->value : ActiveEnum::INACTIVE->value;
         $product->save();
 
         return redirect(route($route));

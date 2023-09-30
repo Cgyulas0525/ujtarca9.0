@@ -37,7 +37,7 @@ class ProductsController extends AppBaseController
                 return ($data->quantities->name);
             })
             ->addColumn('activeName', function ($data) {
-                return ($data->activeName);
+                return ($data->active->value);
             })
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('products.edit', [$row->id]) . '"
@@ -57,7 +57,7 @@ class ProductsController extends AppBaseController
             ->make(true);
     }
 
-    public function index(Request $request, ?int $active = null): object
+    public function index(Request $request, ?string $active = null): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {
