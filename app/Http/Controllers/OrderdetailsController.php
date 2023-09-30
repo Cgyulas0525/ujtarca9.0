@@ -9,6 +9,9 @@ use App\Models\Orderdetails;
 use App\Models\Orders;
 use App\Repositories\OrderdetailsRepository;
 use Illuminate\Http\Request;
+use Response;
+use Auth;
+use DataTables;
 
 class OrderdetailsController extends AppBaseController
 {
@@ -48,9 +51,10 @@ class OrderdetailsController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                return Datatables::of(Orderdetails::with('products')->with('quantities')->where('orders_id', $id)->get())
+                $data = Orderdetails::with('products')->with('quantities')->where('orders_id', $id)->get();
+                return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('productName', function($data) { return $data->produts->name; })
+                    ->addColumn('productName', function($data) { return $data->products->name; })
                     ->addColumn('quantityName', function($data) { return $data->quantities->name; })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="' . route('beforeDestroysWithParam', ['Orderdetails', $row->id, 'ordersEdit', $row->orders_id]) . '"
@@ -130,7 +134,7 @@ class OrderdetailsController extends AppBaseController
     {
         $orderdetail = Orderdetails::find($request->get('id'));
         $orderdetail->value = $request->get('value');
-        $orderdetail->updated_at = \Carbon\Carbon::now();
+        $orderdetail->updated_at = now();
         $orderdetail->save();
 
         return Response::json(Orderdetails::find($request->get('id')));

@@ -1,6 +1,6 @@
 <div class="form-group col-sm-6">
     {!! Form::label('ordernumber', 'Megrendelés szám:') !!}
-    {!! Form::text('ordernumber', isset($orders) ? $orders->ordernumber : OfferService::nextOrderNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
+    {!! Form::text('ordernumber', isset($orders) ? $orders->ordernumber : OrderService::nextOrderNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
 </div>
 
 <!-- Offerdate Field -->

@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $orderdate
  * @property integer $partners_id
  * @property string $description
+ * @property integer $ordertype
  */
 class Orders extends Model
 {
@@ -37,7 +38,8 @@ class Orders extends Model
         'ordernumber',
         'orderdate',
         'partners_id',
-        'description'
+        'description',
+        'ordertype',
     ];
 
     /**
@@ -50,7 +52,8 @@ class Orders extends Model
         'ordernumber' => 'string',
         'orderdate' => 'date',
         'partners_id' => 'integer',
-        'description' => 'string'
+        'description' => 'string',
+        'ordertype' => 'integer',
     ];
 
     /**
@@ -63,6 +66,7 @@ class Orders extends Model
         'orderdate' => 'required',
         'partners_id' => 'required|integer',
         'description' => 'nullable|string|max:500',
+        'ordertype' => 'required|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
@@ -78,4 +82,13 @@ class Orders extends Model
         return $this->hasMany(Orderdetails::class, 'orders_id');
     }
 
+    public function scopeCustomerOrders($query): mixed
+    {
+        return $query->where('ordertype', 0);
+    }
+
+    public function scopeSupplierOrders($query): mixed
+    {
+        return $query->where('ordertype', 1);
+    }
 }

@@ -14,7 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Classes\OwnClass\ClosuresClass;
 use App\Classes\RiportsClass;
 use App\Classes\ToolsClass;
-use App\Services\OfferService;
+use App\Services\OrderService;
 use App\Services\SelectService;
 use App\Http\Controllers\MyApiController;
 
@@ -25,12 +25,7 @@ use App\Observers\InvoicesObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
         $this->app->booting(function() {
             $loader = AliasLoader::getInstance();
@@ -41,18 +36,13 @@ class AppServiceProvider extends ServiceProvider
             $loader->alias('RiportsClass', RiportsClass::class);
             $loader->alias('ToolsClass', ToolsClass::class);
             $loader->alias('DashboardController', DashboardController::class);
-            $loader->alias('OfferService', OfferService::class);
+            $loader->alias('OrderService', OrderService::class);
             $loader->alias('MyApiController', MyApiController::class);
             $loader->alias('SelectService', SelectService::class);
         });
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         Closures::observe(ClosuresObserver::class);
         Invoices::observe(InvoicesObserver::class);

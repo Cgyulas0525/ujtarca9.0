@@ -12,12 +12,12 @@ class OrderdetailsFactory extends Factory
 {
     protected $model = Orderdetails::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'offers_id' => Orders::factory()->create(),
+            'orders_id' => 1,
             'products_id' => Products::factory()->create(),
-            'quantities_id' => Quantities::factory()->create(),
+            'quantities_id' => 1,
             'value' => $this->faker->randomDigitNotNull,
         ];
     }

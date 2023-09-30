@@ -14,7 +14,9 @@ use App\Http\Controllers\PartnerTrafficController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\OfferdetailsController;
 use App\Http\Controllers\OffersController;
-use App\Http\Controllers\OfferServiceController;
+use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\OrderdetailsController;
+use App\Http\Controllers\OrderReplyController;
 use \App\Http\Controllers\BusinessAnalysisController;
 
 /*
@@ -110,9 +112,15 @@ Route::get('offerdetailsUpdate', [OfferdetailsController::class, 'offerdetailsUp
 
 Route::get('offers.print/{id}',[OffersController::class, 'print'])->name('offerPrint');
 Route::get('offerEmail/{id}',[OffersController::class, 'offerEmail'])->name('offerEmail');
+//Route::get('offerReplay/{id}',[OrderReplyController::class, 'offerReplay'])->name('offerReplay');
 
-Route::get('offerReplay/{id}',[OfferServiceController::class, 'offerReplay'])->name('offerReplay');
-
+Route::get('orders.print/{id}',[OrdersController::class, 'print'])->name('orderPrint');
+Route::get('orderEmail/{id}',[OrdersController::class, 'orderEmail'])->name('orderEmail');
+Route::get('orderReplay/{id}',[OrderReplyController::class, 'orderReplay'])->name('orderReplay');
 
 Route::resource('orders', App\Http\Controllers\OrdersController::class);
 Route::resource('orderdetails', App\Http\Controllers\OrderdetailsController::class);
+
+Route::get('orderdetailsIndex/{id}', [OrderdetailsController::class, 'orderdetailsIndex'])->name('orderdetailsIndex');
+Route::get('orderdetailsCreate/{id}', [OrderdetailsController::class, 'orderdetailsCreate'])->name('orderdetailsCreate');
+Route::get('orderdetailsUpdate', [OrderdetailsController::class, 'orderdetailsUpdate'])->name('orderdetailsUpdate');

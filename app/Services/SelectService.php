@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Invoices;
 use App\Models\Partners;
 use App\Models\Products;
+use App\Enums\ActiveEnum;
+use Spatie\LaravelOptions\Options;
 
 class SelectService
 {
@@ -35,5 +37,10 @@ class SelectService
         return [" "] + Invoices::selectRaw('year(invoices.dated) as year')->groupBy('year')
                 ->orderBy('year', 'desc')
                 ->pluck('year', 'year')->toArray();
+    }
+
+    public static function activeEnumsSelect(): mixed
+    {
+        return Options::forEnum(ActiveEnum::class)->toArray();
     }
 }

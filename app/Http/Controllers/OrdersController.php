@@ -11,10 +11,7 @@ use App\Models\Orders;
 use App\Models\Partners;
 use App\Repositories\OrdersRepository;
 use Illuminate\Http\Request;
-use Flash;
-
 use Auth;
-use DB;
 use DataTables;
 
 use App\Traits\OrderEmailTrait;
@@ -35,7 +32,7 @@ class OrdersController extends AppBaseController
 
     use OrderEmailTrait;
 
-    public function dwData($data)
+    public function dwData($data): mixed
     {
         return Datatables::of($data)
             ->addIndexColumn()
@@ -48,13 +45,13 @@ class OrdersController extends AppBaseController
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('orders.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn . '<a href="' . route('beforeDestroys', ['Offers', $row->id, 'orders']) . '"
+                $btn = $btn . '<a href="' . route('beforeDestroys', ['Orders', $row->id, 'orders']) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
-                $btn = $btn . '<a href="' . route('offerPrint', [$row->id]) . '"
+                $btn = $btn . '<a href="' . route('orderPrint', [$row->id]) . '"
                                  class="btn btn-warning btn-sm deleteProduct" title="Nyomtatás"><i class="fas fa-print"></i></a>';
-                $btn = $btn . '<a href="' . route('offerEmail', [$row->id]) . '"
+                $btn = $btn . '<a href="' . route('orderEmail', [$row->id]) . '"
                                  class="btn btn-warning btn-sm deleteProduct" title="Email"><i class="fas fa-envelope-open"></i></a>';
-                $btn = $btn . '<a href="' . route('offerReplay', [$row->id]) . '"
+                $btn = $btn . '<a href="' . route('orderReplay', [$row->id]) . '"
                                  class="btn btn-primary btn-sm deleteProduct" title="Ismétlés"><i class="fas fa-copy"></i></a>';
                 return $btn;
             })
@@ -62,7 +59,7 @@ class OrdersController extends AppBaseController
             ->make(true);
     }
 
-    public function index(Request $request)
+    public function index(Request $request): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {
@@ -73,19 +70,19 @@ class OrdersController extends AppBaseController
         }
     }
 
-    public function create()
+    public function create(): object
     {
         return view('orders.create');
     }
 
-    public function store(CreateOrdersRequest $request)
+    public function store(CreateOrdersRequest $request): object
     {
         $input = $request->all();
         $orders = $this->ordersRepository->create($input);
         return redirect(route('orders.index'));
     }
 
-    public function show($id)
+    public function show($id): object
     {
         $orders = $this->ordersRepository->find($id);
         if (empty($orders)) {
@@ -94,7 +91,7 @@ class OrdersController extends AppBaseController
         return view('orders.show')->with('orders', $orders);
     }
 
-    public function edit($id)
+    public function edit($id): object
     {
         $orders = $this->ordersRepository->find($id);
         if (empty($orders)) {
@@ -103,7 +100,7 @@ class OrdersController extends AppBaseController
         return view('orders.edit')->with('orders', $orders);
     }
 
-    public function update($id, UpdateOrdersRequest $request)
+    public function update($id, UpdateOrdersRequest $request): object
     {
         $orders = $this->ordersRepository->find($id);
         if (empty($orders)) {
@@ -113,7 +110,7 @@ class OrdersController extends AppBaseController
         return redirect(route('orders.index'));
     }
 
-    public function destroy($id)
+    public function destroy($id): object
     {
         $orders = $this->ordersRepository->find($id);
         if (empty($orders)) {
@@ -123,14 +120,13 @@ class OrdersController extends AppBaseController
         return redirect(route('orders.index'));
     }
 
-    public function print($id)
+    public function print($id): object
     {
         $this->order = Orders::find($id);
         $this->owner = Partners::where('partnertypes_id', 5)->first();
         $this->partner = Partners::find($this->order->partners_id);
-//        $this->details = Orderdetails::where('orders_id', $this->order->id)->get();
+        $this->details = Orderdetails::where('orders_id', $this->order->id)->get();
 
         return view('printing.orderPrint')->with(['order' => $this->order, 'owner' => $this->owner, 'partner' => $this->partner, 'details' => $this->details]);
     }
-
 }
