@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\ActiveEnum;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Enums\YesNoEnum;
 
 /**
  * Class Partners
@@ -24,7 +24,7 @@ use App\Enums\YesNoEnum;
  * @property string $email
  * @property string $phonenumber
  * @property string $description
- * @property integer $active
+ * @property string $active
  */
 class Partners extends Model
 {
@@ -72,7 +72,7 @@ class Partners extends Model
         'email' => 'string',
         'phonenumber' => 'string',
         'description' => 'string',
-        'active' => 'integer',
+        'active' => ActiveEnum::class,
     ];
 
     /**
@@ -91,7 +91,7 @@ class Partners extends Model
         'email' => 'nullable|string|max:50',
         'phonenumber' => 'nullable|string|max:20',
         'description' => 'nullable|string|max:500',
-        'active' => 'nullable|integer',
+        'active' =>  'required|string|max:25',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
@@ -100,7 +100,6 @@ class Partners extends Model
     protected $append = [
         'settlementName',
         'fullAddress',
-        'activeName',
     ];
 
     public function partnertypes(): string|BelongsTo
@@ -143,19 +142,14 @@ class Partners extends Model
         return (empty($this->postcode) ? '' : $this->postcode) . " " . (empty($this->settlement_id) ? '' : Settlements::find($this->settlement_id)->name) . ' ' . (empty($this->address) ? '' : $this->address);
     }
 
-    public function getActiveNameAttribute(): string
-    {
-        return YesNoEnum::values()[$this->active];
-    }
-
     public function scopeActivePartner($query): mixed
     {
-        return $query->where('active', 1);
+        return $query->where('active', ActiveEnum::ACTIVE->value);
     }
 
     public function scopeInActivePartner($query): mixed
     {
-        return $query->where('active', 0);
+        return $query->where('active', ActiveEnum::INACTIVE->value);
     }
 
     public function scopeActiveNumbers($query): mixed

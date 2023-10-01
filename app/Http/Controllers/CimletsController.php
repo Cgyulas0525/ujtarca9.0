@@ -49,8 +49,8 @@ class CimletsController extends AppBaseController
                 }
                 return $this->dwData(json_decode($data));
             }
-            return view('cimlets.index');
         }
+        return view('cimlets.index');
     }
 
     public function create()

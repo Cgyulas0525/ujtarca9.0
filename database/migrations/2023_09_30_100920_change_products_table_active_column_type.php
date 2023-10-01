@@ -11,7 +11,7 @@ return new class extends Migration
         if (Schema::hasColumn('products','active')) {
             if (Schema::getColumnType('products','active') == 'integer') {
                 Schema::table('products', function (Blueprint $table) {
-                    $table->string('active', 25)->default('Aktív')->change();
+                    $table->string('active', 25)->default('aktív')->change();
                 });
             }
         }

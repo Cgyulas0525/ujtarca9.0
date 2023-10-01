@@ -18,7 +18,7 @@
                                     <h4>Partnerek</h4>
                                 </div>
                                 <div class="col-sm-2">
-                                    {!! Form::select('active', App\Enums\ActiveEnum::values(), 1,
+                                    {!! Form::select('active', ActiveEnum::Options(), 'ACTIVE',
                                             ['class'=>'select2 form-control', 'id' => 'active']) !!}
                                 </div>
                                 <div class="col-sm-3">
@@ -55,8 +55,8 @@
                 scrollY:  550,
                 scrollX: true,
                 paging: false,
-                order: [[1, 'asc']],
-                ajax: "{{ route('partnersIndex', [1]) }}",
+                order: [[0, 'asc']],
+                ajax: "{{ route('partnersIndex', [ActiveEnum::ACTIVE->value]) }}",
                 columns: [
                     {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('partners.create') !!}"><i class="fa fa-plus-square"></i></a>',
                         data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
@@ -64,22 +64,22 @@
                     {title: 'Típus', data: 'partnerTypesName', name: 'partnerTypesName'},
                     {title: 'Email', data: 'email', name: 'email'},
                     {title: 'Telefon', data: 'phonenumber', name: 'phonenumber'},
+                    {title: 'Státusz', data: 'active', sClass: "text-center", width:'100px', name: 'active'},
                 ],
                 buttons: [],
                 fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if (aData.active == 0) {
+                    if (aData.active == 'inaktív') {
                         $('td', nRow).css('background-color', 'lightgray');
                     }
                     if (aData.partnertypes_id == 5) {
                         $('td', nRow).css('background-color', 'yellow');
                     }
                 }
-
             });
 
 			$('#active').change(function () {
 				let url = '{{ route('partnersIndex', [":active"]) }}';
-                url = url.replace(':active', $('#active').val());
+                url = url.replace(':active', ($('#active').val() == 'INACTIVE') ? 'inaktív' : 'aktív');
                 table.ajax.url(url).load();
             })
 
@@ -109,7 +109,6 @@
                     }
                 });
             });
-
         });
     </script>
 @endsection

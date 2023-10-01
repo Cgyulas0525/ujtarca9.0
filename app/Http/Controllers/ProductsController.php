@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ActiveEnum;
 use App\Http\Requests\CreateProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
 use App\Repositories\ProductsRepository;
@@ -42,7 +43,7 @@ class ProductsController extends AppBaseController
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('products.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                if ($row->active == 0) {
+                if ($row->active->value == ActiveEnum::INACTIVE->value) {
                     $btn = $btn . '<a href="' . route('beforeProductActivation', [$row->id, 'products']) . '"
                                          class="btn btn-warning btn-sm deleteProduct" title="Aktiválás"><i class="fas fa-user-check"></i></a>';
                 } else {
@@ -67,8 +68,8 @@ class ProductsController extends AppBaseController
                     return $this->dwData(Products::with('quantities')->where('active', $active)->get());
                 }
             }
-            return view('products.index');
         }
+        return view('products.index');
     }
 
     public function create(): object

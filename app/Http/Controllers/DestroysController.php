@@ -88,7 +88,7 @@ class DestroysController extends Controller
             return redirect(route($route));
         }
 
-        $partner->active = $partner->active == 0 ? 1 : 0;
+        $partner->active = ($partner->active == ActiveEnum::INACTIVE->value) ? ActiveEnum::ACTIVE->value : ActiveEnum::INACTIVE->value;
         $partner->save();
 
         return redirect(route($route));

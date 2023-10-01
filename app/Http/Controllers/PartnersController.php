@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\ToolsClass;
+use App\Enums\ActiveEnum;
 use App\Http\Requests\CreatePartnersRequest;
 use App\Http\Requests\UpdatePartnersRequest;
 use App\Repositories\PartnersRepository;
@@ -39,7 +40,7 @@ class PartnersController extends AppBaseController
                 $btn = '<a href="' . route('partners.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm  editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
                 if ($row->partnertypes_id != 5) {
-                    if ($row->active == 0) {
+                    if ($row->active == ActiveEnum::INACTIVE->value) {
                         if (ToolsClass::aviable($row->id)) {
                             $btn = $btn . '<a href="' . route('beforeDestroys', ['Partners', $row->id, 'partners']) . '"
                                              class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
@@ -59,7 +60,7 @@ class PartnersController extends AppBaseController
             ->make(true);
     }
 
-    public function index(Request $request, ?int $active = null): object
+    public function index(Request $request, ?string $active = null): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {
@@ -71,25 +72,25 @@ class PartnersController extends AppBaseController
                 }
                 return $this->dwData(json_decode($data));
             }
-            return view('partners.index');
         }
+        return view('partners.index');
     }
 
-    public function getRedis($redis, $active): mixed
+    public function getRedis($redis, ?string $active = null): mixed
     {
         if (is_null($active)) {
             return $redis->get('partners_all');
         } else {
-            return ($active == 0) ? $redis->get('partners_inactive') : $redis->get('partners_active');
+            return ($active == ActiveEnum::INACTIVE->value) ? $redis->get('partners_inactive') : $redis->get('partners_active');
         }
     }
 
-    public function setRedis($redis, $active): void
+    public function setRedis($redis, ?string $active = null): void
     {
         if (is_null($active)) {
             $redis->setex('partners_all', 3600, Partners::with('partnertypes')->get());
         } else {
-            if ($active == 0) {
+            if ($active == ActiveEnum::INACTIVE->value) {
                 $redis->setex('partners_inactive', 3600, Partners::with('partnertypes')->inActivePartner()->get());
             } else {
                 $redis->setex('partners_active', 3600, Partners::with('partnertypes')->activePartner()->get());

@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
+use App\Enums\ActiveEnum;
 use App\Models\Partners;
 
 class PartnerService
 {
     public function inactivation(): void
     {
-        Partners::lastMonthsInactiveNumbers()->get()
+        Partners::lastMonthsInactiveNumbers(12)->get()
             ->map(function ($partner) {
-                $partner->active = 0;
+                $partner->active = ActiveEnum::INACTIVE->value;
                 $partner->save();
                 return $partner;
             });

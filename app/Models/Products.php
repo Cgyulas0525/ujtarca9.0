@@ -89,11 +89,11 @@ class Products extends Model
 
     public function scopeActiveProducts($query): mixed
     {
-        return $query->where('active', ActiveEnum::ACTIVE);
+        return $query->where('active', ActiveEnum::ACTIVE->value);
     }
 
     public function scopeInActiveProducts($query): mixed
     {
-        return $query->where('active', ActiveEnum::INACTIVE);
+        return $query->where('active', ActiveEnum::INACTIVE->value);
     }
 }

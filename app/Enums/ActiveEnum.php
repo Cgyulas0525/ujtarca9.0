@@ -15,11 +15,4 @@ enum ActiveEnum: string
     case INACTIVE = 'inaktív';
     case ACTIVE = 'aktív';
 
-    public static function labels(): array
-    {
-        return [
-            'inaktív' => 0,
-            'aktív' => 1,
-        ];
-    }
 }

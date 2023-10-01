@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ActiveEnum;
 use App\Models\Partners;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\PartnerTypes;
@@ -33,7 +34,7 @@ class PartnersFactory extends Factory
             'email' => $this->faker->word,
             'phonenumber' => $this->faker->word,
             'description' => $this->faker->word,
-            'active' => 1,
+            'active' => ActiveEnum::ACTIVE->value,
         ];
     }
 }

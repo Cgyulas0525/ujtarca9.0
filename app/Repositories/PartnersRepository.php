@@ -26,7 +26,8 @@ class PartnersRepository extends BaseRepository
         'address',
         'email',
         'phonenumber',
-        'description'
+        'description',
+        'active',
     ];
 
     /**
