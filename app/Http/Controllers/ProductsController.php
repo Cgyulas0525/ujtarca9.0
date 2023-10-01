@@ -11,6 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\Products;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Response;
 use Auth;
 use DB;
@@ -37,13 +38,10 @@ class ProductsController extends AppBaseController
             ->addColumn('quantityName', function ($data) {
                 return ($data->quantities->name);
             })
-            ->addColumn('activeName', function ($data) {
-                return ($data->active->value);
-            })
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('products.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                if ($row->active->value == ActiveEnum::INACTIVE->value) {
+                if ($row->active == ActiveEnum::INACTIVE->value) {
                     $btn = $btn . '<a href="' . route('beforeProductActivation', [$row->id, 'products']) . '"
                                          class="btn btn-warning btn-sm deleteProduct" title="Aktiválás"><i class="fas fa-user-check"></i></a>';
                 } else {
@@ -62,15 +60,45 @@ class ProductsController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                if (is_null($active)) {
-                    return $this->dwData(Products::with('quantities')->get());
-                } else {
-                    return $this->dwData(Products::with('quantities')->where('active', $active)->get());
+//                if (is_null($active)) {
+//                    return $this->dwData(Products::with('quantities')->get());
+//                } else {
+//                    return $this->dwData(Products::with('quantities')->where('active', $active)->get());
+//                }
+                $redis = Redis::connection();
+                $data = $this->getRedis($redis, $active);
+                if (empty($data)) {
+                    $this->setRedis($redis, $active);
+                    $data = $this->getRedis($redis, $active);
                 }
+                return $this->dwData(json_decode($data));
             }
         }
         return view('products.index');
     }
+
+    public function getRedis($redis, ?string $active = null): mixed
+    {
+        if (is_null($active)) {
+            return $redis->get('products_all');
+        } else {
+            return ($active == ActiveEnum::INACTIVE->value) ? $redis->get('products_inactive') : $redis->get('products_active');
+        }
+    }
+
+    public function setRedis($redis, ?string $active = null): void
+    {
+        if (is_null($active)) {
+            $redis->setex('products_all', 3600, Products::with('quantities')->get());
+        } else {
+            if ($active == ActiveEnum::INACTIVE->value) {
+                $redis->setex('products_inactive', 3600, Products::with('quantities')->inActiveProducts()->get());
+            } else {
+                $redis->setex('products_active', 3600, Products::with('quantities')->activeProducts()->get());
+            }
+        }
+    }
+
 
     public function create(): object
     {

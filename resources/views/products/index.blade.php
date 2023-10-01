@@ -52,7 +52,7 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 390,
+                scrollY: 550,
                 scrollX: true,
                 paging: false,
                 order: [[1, 'asc']],
@@ -64,7 +64,7 @@
                     {title: 'Mennyiségi egység', data: 'quantityName', sClass: "text-center", name: 'quantityName'},
                     {title: 'Ár', data: 'price', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'price'},
                     {title: 'Besz.Ár', data: 'supplierprice', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'supplierprice'},
-                    {title: 'Státusz', data: 'activeName', sClass: "text-center", width:'100px', name: 'activeName'},
+                    {title: 'Státusz', data: 'active', sClass: "text-center", width:'100px', name: 'active'},
                 ],
                 buttons: [],
                 fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
