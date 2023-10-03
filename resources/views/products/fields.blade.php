@@ -28,6 +28,11 @@
     {!! Form::textarea('description', null, ['class' => 'form-control','maxlength' => 500, 'rows' => 4]) !!}
 </div>
 
+<div class="form-group col-sm-6">
+    {!! Form::hidden('active', 'Aktív:') !!}
+    {!! Form::hidden('active', isset($products) ? $products->active->value : 'aktív', ['class' => 'form-control']) !!}
+</div>
+
 @section('scripts')
 
     <script src="{{ asset('/public/js/sweetalert.js') }} " type="text/javascript"></script>

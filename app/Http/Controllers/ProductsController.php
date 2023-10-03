@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\RedisClass;
 use App\Enums\ActiveEnum;
 use App\Http\Requests\CreateProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
@@ -102,6 +103,9 @@ class ProductsController extends AppBaseController
     {
         $input = $request->all();
         $products = $this->productsRepository->create($input);
+
+        RedisClass::setexProducts();
+
         return redirect(route('products.index'));
     }
 
@@ -130,6 +134,8 @@ class ProductsController extends AppBaseController
             return redirect(route('products.index'));
         }
         $products = $this->productsRepository->update($request->all(), $id);
+        RedisClass::setexProducts();
+
         return redirect(route('products.index'));
     }
 
@@ -140,6 +146,8 @@ class ProductsController extends AppBaseController
             return redirect(route('products.index'));
         }
         $this->productsRepository->delete($id);
+        RedisClass::setexProducts();
+
         return redirect(route('products.index'));
     }
 
