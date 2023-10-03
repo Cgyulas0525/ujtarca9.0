@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Gate;
@@ -48,5 +49,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Closures::observe(ClosuresObserver::class);
         Invoices::observe(InvoicesObserver::class);
+        Config::set('LAYOUTS_SHOW', 'layouts.show');
+        Config::set('OFFER_PREV', 'VMEGR-');
+        Config::set('ORDER_PREV', 'SZMEGR-');
     }
 }

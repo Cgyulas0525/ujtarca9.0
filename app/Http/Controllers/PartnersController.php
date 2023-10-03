@@ -64,7 +64,7 @@ class PartnersController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $redis = Redis::connection();
+               $redis = Redis::connection();
                 $data = $this->getRedis($redis, $active);
                 if (empty($data)) {
                     $this->setRedis($redis, $active);

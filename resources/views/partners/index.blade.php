@@ -18,7 +18,7 @@
                                     <h4>Partnerek</h4>
                                 </div>
                                 <div class="col-sm-2">
-                                    {!! Form::select('active', ActiveEnum::Options(), 'ACTIVE',
+                                    {!! Form::select('active', ActiveEnum::Options(), (empty($_COOKIE['partnersActive']) ? 'ACTIVE' : $_COOKIE['partnersActive']),
                                             ['class'=>'select2 form-control', 'id' => 'active']) !!}
                                 </div>
                                 <div class="col-sm-3">
@@ -44,6 +44,7 @@
 
 @section('scripts')
     <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
+    @include('functions.cookiesFunctions_js')
 
     <script type="text/javascript">
         $(function () {
@@ -56,7 +57,7 @@
                 scrollX: true,
                 paging: false,
                 order: [[0, 'asc']],
-                ajax: "{{ route('partnersIndex', [ActiveEnum::ACTIVE->value]) }}",
+                ajax: "{{ route('partnersIndex', [empty($_COOKIE['partnersActive']) ? 'aktív' : (($_COOKIE['partnersActive'] == 'ACTIVE') ? 'aktív' : 'inaktív')]) }}",
                 columns: [
                     {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('partners.create') !!}"><i class="fa fa-plus-square"></i></a>',
                         data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
@@ -79,6 +80,7 @@
 
 			$('#active').change(function () {
 				let url = '{{ route('partnersIndex', [":active"]) }}';
+                createCookie('partnersActive', $('#active').val(), '30');
                 url = url.replace(':active', ($('#active').val() == 'INACTIVE') ? 'inaktív' : 'aktív');
                 table.ajax.url(url).load();
             })

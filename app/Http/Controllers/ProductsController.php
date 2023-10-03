@@ -12,9 +12,7 @@ use App\Models\Products;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use Response;
 use Auth;
-use DB;
 use DataTables;
 
 use App\Traits\ProductPdfEmailTrait;
@@ -60,11 +58,6 @@ class ProductsController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-//                if (is_null($active)) {
-//                    return $this->dwData(Products::with('quantities')->get());
-//                } else {
-//                    return $this->dwData(Products::with('quantities')->where('active', $active)->get());
-//                }
                 $redis = Redis::connection();
                 $data = $this->getRedis($redis, $active);
                 if (empty($data)) {

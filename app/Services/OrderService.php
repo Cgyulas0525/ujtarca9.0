@@ -5,15 +5,15 @@ namespace App\Services;
 use App\Models\Orderdetails;
 use Illuminate\Http\Request;
 use App\Models\Orders;
-use App\Classes\ConstansClass;
 use DB;
+use Illuminate\Support\Facades\Config;
 
 class OrderService
 {
     public function nextOrderNumber($type): string
     {
         $maxOrder = ($type == 0) ? Orders::customerOrders()->get()->max('ordernumber') : Orders::supplierOrders()->get()->max('ordernumber');
-        return (($type == 0) ? ConstansClass::OFFER_PREV : ConstansClass::ORDER_PREV) .
+        return (($type == 0) ? Config::get('OFFER_PREV') : Config::get('ORDER_PREV')) .
             (empty($maxOrder) ? '0001' : str_pad((int)(substr($maxOrder, 7)) + 1, 4, '0', STR_PAD_LEFT));
     }
 
