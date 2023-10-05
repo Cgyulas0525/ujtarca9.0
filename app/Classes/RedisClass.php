@@ -2,7 +2,7 @@
 
 namespace App\Classes;
 
-use App\Enums\ActiveEnum;
+use App\Models\Orders;
 use App\Models\Partners;
 use App\Models\Products;
 use Illuminate\Support\Facades\Redis;
@@ -23,5 +23,13 @@ class RedisClass
         $redis->setex('partners_all', 3600, Partners::with('partnertypes')->get());
         $redis->setex('partners_inactive', 3600, Partners::with('partnertypes')->inActivePartner()->get());
         $redis->setex('partners_active', 3600, Partners::with('partnertypes')->activePartner()->get());
+    }
+
+    public static function setexOrders(): void
+    {
+        $redis = Redis::connection();
+        $redis->setex('orders_all', 3600, Orders::with('partners')->get());
+        $redis->setex('orders_customer', 3600, Orders::with('partners')->customerOrdes()->get());
+        $redis->setex('orders_active', 3600, Orders::with('partners')->supplierOrders()->get());
     }
 }

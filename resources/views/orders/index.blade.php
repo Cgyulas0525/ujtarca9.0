@@ -12,7 +12,17 @@
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
-                        <h4>Megrendelések</h4>
+                        <div class="form-group col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <h4>Megrendelések</h4>
+                                </div>
+                                <div class="col-sm-2">
+                                    {!! Form::select('orderType', OrderTypeEnum::Options(), (empty($_COOKIE['orderType']) ? 'ACTIVE' : $_COOKIE['orderType']),
+                                            ['class'=>'select2 form-control', 'id' => 'orderType']) !!}
+                                </div>
+                            </div>
+                        </div>
                     </section>
                     @include('flash::message')
                     <div class="clearfix"></div>
@@ -42,7 +52,7 @@
                 scrollY: 390,
                 scrollX: true,
                 order: [[1, 'desc'], [2, 'asc']],
-                ajax: "{{ route('orders.index') }}",
+                ajax: "{{ route('ordersIndex', [empty($_COOKIE['orderType']) ? 'vevői' : (($_COOKIE['orderType'] == 'CUSTOMER') ? 'vevői' : 'szállítói')]) }}",
                 columns: [
                     {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('orders.create') !!}"><i class="fa fa-plus-square"></i></a>',
                         data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},

@@ -83,7 +83,6 @@ Route::get('TurnoverIndex', [RiportsController::class, 'TurnoverIndex'])->name('
 
 Route::get('postcodeSettlementDDDW',[PartnersController::class, 'postcodeSettlementDDDW'])->name('postcodeSettlementDDDW');
 Route::get('partnersIndex/{active?}', [PartnersController::class, 'index'])->name('partnersIndex');
-//Route::get('partnersIndex/{active?}', [PartnersController::class, 'partnersIndex'])->name('partnersIndex');
 Route::get('partnerFactSheet/{partner}/{year}', [PartnersController::class, 'partnerFactSheet'])->name('partnerFactSheet');
 Route::get('partnerPeriodicAccounts/{partner}/{months}', [PartnersController::class, 'partnerPeriodicAccounts'])->name('partnerPeriodicAccounts');
 
@@ -119,6 +118,8 @@ Route::get('orderEmail/{id}',[OrdersController::class, 'orderEmail'])->name('ord
 Route::get('orderReplay/{id}',[OrderReplyController::class, 'orderReplay'])->name('orderReplay');
 
 Route::resource('orders', App\Http\Controllers\OrdersController::class);
+Route::get('orders.index/{orderType?}',[OrdersController::class, 'index'])->name('ordersIndex');
+
 Route::resource('orderdetails', App\Http\Controllers\OrderdetailsController::class);
 
 Route::get('orderdetailsIndex/{id}', [OrderdetailsController::class, 'orderdetailsIndex'])->name('orderdetailsIndex');

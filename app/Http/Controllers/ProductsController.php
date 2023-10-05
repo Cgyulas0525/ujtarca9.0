@@ -2,30 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\RedisClass;
 use App\Enums\ActiveEnum;
 use App\Http\Requests\CreateProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
 use App\Repositories\ProductsRepository;
 use App\Http\Controllers\AppBaseController;
-
 use App\Models\Products;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Auth;
 use DataTables;
-
 use App\Traits\ProductPdfEmailTrait;
 
 class ProductsController extends AppBaseController
 {
     /** @var ProductsRepository $productsRepository */
     private $productsRepository;
+    private $redis;
 
     public function __construct(ProductsRepository $productsRepo)
     {
         $this->productsRepository = $productsRepo;
+        $this->redis = Redis::connections();
     }
 
     use ProductPdfEmailTrait;
@@ -59,36 +57,52 @@ class ProductsController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $redis = Redis::connection();
-                $data = $this->getRedis($redis, $active);
-                if (empty($data)) {
-                    $this->setRedis($redis, $active);
-                    $data = $this->getRedis($redis, $active);
+//                $data = $this->getRedis($active);
+//                if (empty($data)) {
+//                    $this->setRedis($active);
+//                    $data = $this->getRedis($active);
+//                }
+//                return $this->dwData(json_decode($data));
+//            }
+
+                if (is_null($active)) {
+                    $data = Products::with('quantities')->get();
+                } else {
+                    if ($active == ActiveEnum::INACTIVE->value) {
+                        $data = Products::with('quantities')->inActiveProducts()->get();
+                    } else {
+                        $data = Products::with('quantities')->activeProducts()->get();
+                    }
                 }
-                return $this->dwData(json_decode($data));
+                return $this->dwData($data);
             }
+            return view('products.index');
         }
         return view('products.index');
     }
 
-    public function getRedis($redis, ?string $active = null): mixed
+    public function getRedis(?string $active = null): mixed
     {
         if (is_null($active)) {
-            return $redis->get('products_all');
+            return $this->redis->get('products_all');
         } else {
-            return ($active == ActiveEnum::INACTIVE->value) ? $redis->get('products_inactive') : $redis->get('products_active');
+            if ($active == ActiveEnum::INACTIVE->value) {
+                return $this->redis->get('products_inactive');
+            } else {
+                return $this->redis->get('products_active');
+            }
         }
     }
 
-    public function setRedis($redis, ?string $active = null): void
+    public function setRedis(?string $active = null): void
     {
         if (is_null($active)) {
-            $redis->setex('products_all', 3600, Products::with('quantities')->get());
+            $this->redis->setex('products_all', 3600, Products::with('quantities')->get());
         } else {
             if ($active == ActiveEnum::INACTIVE->value) {
-                $redis->setex('products_inactive', 3600, Products::with('quantities')->inActiveProducts()->get());
+                $this->redis->setex('products_inactive', 3600, Products::with('quantities')->inActiveProducts()->get());
             } else {
-                $redis->setex('products_active', 3600, Products::with('quantities')->activeProducts()->get());
+                $this->redis->setex('products_active', 3600, Products::with('quantities')->activeProducts()->get());
             }
         }
     }
@@ -103,9 +117,6 @@ class ProductsController extends AppBaseController
     {
         $input = $request->all();
         $products = $this->productsRepository->create($input);
-
-        RedisClass::setexProducts();
-
         return redirect(route('products.index'));
     }
 
@@ -134,8 +145,6 @@ class ProductsController extends AppBaseController
             return redirect(route('products.index'));
         }
         $products = $this->productsRepository->update($request->all(), $id);
-        RedisClass::setexProducts();
-
         return redirect(route('products.index'));
     }
 
@@ -146,8 +155,6 @@ class ProductsController extends AppBaseController
             return redirect(route('products.index'));
         }
         $this->productsRepository->delete($id);
-        RedisClass::setexProducts();
-
         return redirect(route('products.index'));
     }
 

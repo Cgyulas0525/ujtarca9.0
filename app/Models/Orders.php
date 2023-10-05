@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderTypeEnum;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $orderdate
  * @property integer $partners_id
  * @property string $description
- * @property integer $ordertype
+ * @property string $ordertype
  */
 class Orders extends Model
 {
@@ -53,7 +54,7 @@ class Orders extends Model
         'orderdate' => 'date',
         'partners_id' => 'integer',
         'description' => 'string',
-        'ordertype' => 'integer',
+        'ordertype' => OrderTypeEnum::class,
     ];
 
     /**
@@ -66,7 +67,7 @@ class Orders extends Model
         'orderdate' => 'required',
         'partners_id' => 'required|integer',
         'description' => 'nullable|string|max:500',
-        'ordertype' => 'required|integer',
+        'ordertype' => 'required|string|max:25',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
@@ -84,11 +85,11 @@ class Orders extends Model
 
     public function scopeCustomerOrders($query): mixed
     {
-        return $query->where('ordertype', 0);
+        return $query->where('ordertype', OrderTypeEnum::CUSTOMER->value);
     }
 
     public function scopeSupplierOrders($query): mixed
     {
-        return $query->where('ordertype', 1);
+        return $query->where('ordertype', OrderTypeEnum::SUPPLIER->value);
     }
 }

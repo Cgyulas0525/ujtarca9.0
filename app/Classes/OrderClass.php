@@ -2,16 +2,12 @@
 
 namespace App\Classes;
 
-use DB;
+use App\Models\Orderdetails;
 
 class OrderClass
 {
-    public static function sumOrderSupplierPrice($id) {
-        return DB::table('orderdetails')
-            ->join('products', 'products.id', '=', 'orderdetails.products_id')
-            ->selectRaw('sum(orderdetails.value * if(products.supplierprice is null, 0, products.supplierprice) ) as sp')
-            ->where('orderdetails.orders_id', $id)
-            ->whereNull('orderdetails.deleted_at')
-            ->get()->first()->sp;
+    public static function sumOrderSupplierPrice($id)
+    {
+        return Orderdetails::where('orders_id', $id)->get()->sum('supplierPrice');
     }
 }

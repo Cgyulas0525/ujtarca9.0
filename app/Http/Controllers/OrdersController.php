@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\OrderClass;
+use App\Enums\OrderTypeEnum;
 use App\Http\Requests\CreateOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
 use App\Http\Controllers\AppBaseController;
@@ -20,10 +21,6 @@ class OrdersController extends AppBaseController
 {
     /** @var OrdersRepository $ordersRepository */
     private $ordersRepository;
-    private $order;
-    private $owner;
-    private $partner;
-    private $details;
 
     public function __construct(OrdersRepository $ordersRepo)
     {
@@ -59,15 +56,23 @@ class OrdersController extends AppBaseController
             ->make(true);
     }
 
-    public function index(Request $request): object
+    public function index(Request $request, ?string $orderType = null): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                Orders::with('partners')->get();
-                return $this->dwData(Orders::with('partners')->get());
+                if (is_null($orderType)) {
+                    $data = Orders::with('partners')->get();
+                } else {
+                    if ($orderType == OrderTypeEnum::CUSTOMER->value) {
+                        $data = Orders::with('partners')->customerOrders()->get();
+                    } else {
+                        $data = Orders::with('partners')->supplierOrders()->get();
+                    }
+                }
+                return $this->dwData($data);
             }
-            return view('orders.index');
         }
+        return view('orders.index');
     }
 
     public function create(): object

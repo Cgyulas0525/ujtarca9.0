@@ -24,6 +24,7 @@ use App\Observers\ClosuresObserver;
 use App\Models\Invoices;
 use App\Observers\InvoicesObserver;
 use App\Enums\ActiveEnum;
+use App\Enums\OrderTypeEnum;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
             $loader->alias('MyApiController', MyApiController::class);
             $loader->alias('SelectService', SelectService::class);
             $loader->alias('ActiveEnum', ActiveEnum::class);
+            $loader->alias('OrderTypeEnum', OrderTypeEnum::class);
         });
     }
 

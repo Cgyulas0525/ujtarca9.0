@@ -14,12 +14,4 @@ enum OrderTypeEnum: string
 
     case CUSTOMER = 'vevői';
     case SUPPLIER = 'szállítói';
-
-    public static function labels(): array
-    {
-        return [
-            'vevői' => 'Vevői',
-            'szállítói' => 'Szállítói',
-        ];
-    }
 }

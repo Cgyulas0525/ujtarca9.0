@@ -46,7 +46,6 @@
     <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
     @include('functions.cookiesFunctions_js')
 
-
     <script type="text/javascript">
         $(function () {
 

@@ -67,7 +67,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('orders.index') }}"
+    <a href="{{ route('ordersIndex') }}"
        class="nav-link {{ Request::is('orders*') ? 'active' : '' }}">
         <i class="fas fa-money-bill"></i>
         <p>Megrendelés</p>
