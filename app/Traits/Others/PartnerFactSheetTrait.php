@@ -9,7 +9,7 @@ use DataTables;
 
 trait PartnerFactSheetTrait
 {
-    public function partnerFactSheet(Request $request, $partner, $year)
+    public function partnerFactSheet(Request $request, $partner, $year): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {

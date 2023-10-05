@@ -98,7 +98,7 @@ class PartnersController extends AppBaseController
             $this->redis->setex('partners_all', 3600, Partners::with('partnertypes')->get());
         } else {
             if ($active == ActiveEnum::INACTIVE->value) {
-                $this->redis->setex('partners_inactive', 3600, Partners::with('partnertypes')->inActivePartner()->get());
+                $this->redis->setex('partners_inactive', 3600, Partners::with('partnertypes')->inactivePartner()->get());
             } else {
                 $this->redis->setex('partners_active', 3600, Partners::with('partnertypes')->activePartner()->get());
             }

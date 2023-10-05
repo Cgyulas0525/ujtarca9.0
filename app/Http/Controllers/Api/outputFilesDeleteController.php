@@ -7,6 +7,9 @@ use App\Classes\Api\fileDeleteClass;
 
 class outputFilesDeleteController extends Controller
 {
+    /**
+     *
+     */
     public function deleteOutputFiles(): void
     {
         (new fileDeleteClass())->deleteOutputFiles();

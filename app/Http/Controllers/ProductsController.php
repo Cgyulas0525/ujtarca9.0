@@ -69,7 +69,7 @@ class ProductsController extends AppBaseController
                     $data = Products::with('quantities')->get();
                 } else {
                     if ($active == ActiveEnum::INACTIVE->value) {
-                        $data = Products::with('quantities')->inActiveProducts()->get();
+                        $data = Products::with('quantities')->inactiveProducts()->get();
                     } else {
                         $data = Products::with('quantities')->activeProducts()->get();
                     }
@@ -100,7 +100,7 @@ class ProductsController extends AppBaseController
             $this->redis->setex('products_all', 3600, Products::with('quantities')->get());
         } else {
             if ($active == ActiveEnum::INACTIVE->value) {
-                $this->redis->setex('products_inactive', 3600, Products::with('quantities')->inActiveProducts()->get());
+                $this->redis->setex('products_inactive', 3600, Products::with('quantities')->inactiveProducts()->get());
             } else {
                 $this->redis->setex('products_active', 3600, Products::with('quantities')->activeProducts()->get());
             }

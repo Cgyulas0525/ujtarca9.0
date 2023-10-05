@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Products;
 
 /**
- * Class Offerdetails
+ * Class Orderdetails
  * @package App\Models
  * @version February 3, 2023, 11:21 am UTC
  *

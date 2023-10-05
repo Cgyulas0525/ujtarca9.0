@@ -8,7 +8,7 @@ use App\Models\Offers;
 use App\Models\Partners;
 use PDF;
 
-class OfferPdfAction
+class OrderPdfAction
 {
 
     public $order;

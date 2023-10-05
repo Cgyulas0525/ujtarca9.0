@@ -64,8 +64,8 @@ class Quantities extends Model
         return $this->hasMany(Products::class, 'quantities_id');
     }
 
-    public function offerdetails(): string|HasMany
+    public function orderdetails(): string|HasMany
     {
-        return $this->hasMany(Offerdetails::class, 'quantities_id');
+        return $this->hasMany(Orderdetails::class, 'quantities_id');
     }
 }

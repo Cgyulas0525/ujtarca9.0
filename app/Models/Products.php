@@ -82,9 +82,9 @@ class Products extends Model
         return $this->belongsTo(Quantities::class, 'quantities_id');
     }
 
-    public function offerdetails(): string|HasMany
+    public function orderdetails(): string|HasMany
     {
-        return $this->hasMany(Offerdetails::class, 'products_id');
+        return $this->hasMany(Orderdetails::class, 'products_id');
     }
 
     public function scopeActiveProducts($query): mixed
@@ -92,7 +92,7 @@ class Products extends Model
         return $query->where('active', ActiveEnum::ACTIVE->value);
     }
 
-    public function scopeInActiveProducts($query): mixed
+    public function scopeInactiveProducts($query): mixed
     {
         return $query->where('active', ActiveEnum::INACTIVE->value);
     }

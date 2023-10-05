@@ -12,8 +12,6 @@ use App\Http\Controllers\RiportsController;
 use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\PartnerTrafficController;
 use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\OfferdetailsController;
-use App\Http\Controllers\OffersController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\OrderdetailsController;
 use App\Http\Controllers\OrderReplyController;
@@ -101,27 +99,13 @@ Route::get('products.print',[ProductsController::class, 'print'])->name('product
 Route::get('products.pdfEmail',[ProductsController::class, 'pdfEmail'])->name('pdfEmail');
 Route::get('products.index/{active?}',[ProductsController::class, 'index'])->name('productsIndex');
 
-Route::resource('offers', App\Http\Controllers\OffersController::class);
-Route::get('offersEdit/{id}', [OffersController::class, 'offersEdit'])->name('offersEdit');
-
-Route::resource('offerdetails', App\Http\Controllers\OfferdetailsController::class);
-Route::get('offerdetailsIndex/{id}', [OfferdetailsController::class, 'offerdetailsIndex'])->name('offerdetailsIndex');
-Route::get('offerdetailsCreate/{id}', [OfferdetailsController::class, 'offerdetailsCreate'])->name('offerdetailsCreate');
-Route::get('offerdetailsUpdate', [OfferdetailsController::class, 'offerdetailsUpdate'])->name('offerdetailsUpdate');
-
-Route::get('offers.print/{id}',[OffersController::class, 'print'])->name('offerPrint');
-Route::get('offerEmail/{id}',[OffersController::class, 'offerEmail'])->name('offerEmail');
-//Route::get('offerReplay/{id}',[OrderReplyController::class, 'offerReplay'])->name('offerReplay');
-
+Route::resource('orders', App\Http\Controllers\OrdersController::class);
+Route::get('orders.index/{orderType?}',[OrdersController::class, 'index'])->name('ordersIndex');
 Route::get('orders.print/{id}',[OrdersController::class, 'print'])->name('orderPrint');
 Route::get('orderEmail/{id}',[OrdersController::class, 'orderEmail'])->name('orderEmail');
 Route::get('orderReplay/{id}',[OrderReplyController::class, 'orderReplay'])->name('orderReplay');
 
-Route::resource('orders', App\Http\Controllers\OrdersController::class);
-Route::get('orders.index/{orderType?}',[OrdersController::class, 'index'])->name('ordersIndex');
-
 Route::resource('orderdetails', App\Http\Controllers\OrderdetailsController::class);
-
 Route::get('orderdetailsIndex/{id}', [OrderdetailsController::class, 'orderdetailsIndex'])->name('orderdetailsIndex');
 Route::get('orderdetailsCreate/{id}', [OrderdetailsController::class, 'orderdetailsCreate'])->name('orderdetailsCreate');
 Route::get('orderdetailsUpdate', [OrderdetailsController::class, 'orderdetailsUpdate'])->name('orderdetailsUpdate');

@@ -147,7 +147,7 @@ class Partners extends Model
         return $query->where('active', ActiveEnum::ACTIVE->value);
     }
 
-    public function scopeInActivePartner($query): mixed
+    public function scopeInactivePartner($query): mixed
     {
         return $query->where('active', ActiveEnum::INACTIVE->value);
     }
