@@ -39,8 +39,8 @@
 @endsection
 
 @section('scripts')
-
     <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
+    @include('functions.cookiesFunctions_js')
 
     <script type="text/javascript">
         $(function () {
@@ -49,7 +49,7 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 390,
+                scrollY: 550,
                 scrollX: true,
                 order: [[1, 'desc'], [2, 'asc']],
                 ajax: "{{ route('ordersIndex', [empty($_COOKIE['orderType']) ? 'vevői' : (($_COOKIE['orderType'] == 'CUSTOMER') ? 'vevői' : 'szállítói')]) }}",
@@ -64,6 +64,12 @@
                 buttons: [],
             });
 
+            $('#orderType').change(function () {
+                let url = '{{ route('ordersIndex', [":orderType"]) }}';
+                createCookie('orderType', $('#orderType').val(), '30');
+                url = url.replace(':orderType', ($('#orderType').val() == 'CUSTOMER') ? 'vevői' : 'szállítói');
+                table.ajax.url(url).load();
+            })
         });
     </script>
 @endsection

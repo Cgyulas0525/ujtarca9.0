@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Orderdetails;
 
 /**
  * Class Orders
@@ -73,6 +74,10 @@ class Orders extends Model
         'deleted_at' => 'nullable'
     ];
 
+    protected $append = [
+        'detailsSum',
+    ];
+
     public function partners(): string|BelongsTo
     {
         return $this->belongsTo(Partners::class, 'partners_id');
@@ -91,5 +96,10 @@ class Orders extends Model
     public function scopeSupplierOrders($query): mixed
     {
         return $query->where('ordertype', OrderTypeEnum::SUPPLIER->value);
+    }
+
+    public function getDetailsSumAttribute(): int
+    {
+        return Orderdetails::where('orders_id', $this->id)->get()->sum('supplierPrice');
     }
 }

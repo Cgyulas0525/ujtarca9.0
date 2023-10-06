@@ -27,7 +27,7 @@
                                         {!! Form::label('partner', 'Partner:') !!}
                                     </div>
                                     <div class="col-sm-6">
-                                        {!! Form::select('partner', SelectService::selectSuplier(), null,
+                                        {!! Form::select('partner', SelectService::selectSupplier(), null,
                                                 ['class'=>'select2 form-control', 'id' => 'partner']) !!}
                                         </div>
                                     <div class="col-sm-1">

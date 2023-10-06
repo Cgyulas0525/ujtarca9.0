@@ -18,7 +18,7 @@ class SelectService
                 })->orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    public static function selectSuplier(): array
+    public static function selectSupplier(): array
     {
         return [" "] + Partners::activePartner()->whereIn('partnertypes_id', [1, 2, 4, 6, 7, 8])
                 ->orderBy('name')->pluck('name', 'id')->toArray();

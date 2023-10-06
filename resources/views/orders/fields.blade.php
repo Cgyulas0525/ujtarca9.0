@@ -12,7 +12,7 @@
 <!-- Partners Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('partners_id', 'Partner:') !!}
-    {!! Form::select('partners_id', SelectService::selectSuplier(), null,
+    {!! Form::select('partners_id', SelectService::selectSupplier(), null,
                 ['class'=>'select2 form-control', 'id' => 'partners_id', 'required' => true]) !!}
 </div>
 

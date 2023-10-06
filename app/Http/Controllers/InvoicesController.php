@@ -163,7 +163,7 @@ class InvoicesController extends AppBaseController
     {
         $formGroupArray = [];
         $item = ["label" => Form::label('partner_id', 'Partner:'),
-            "field" => Form::select('partner_id', SelectService::selectSuplier(), null,
+            "field" => Form::select('partner_id', SelectService::selectSupplier(), null,
                 ['class' => 'select2 form-control', 'id' => 'partner_id', 'required' => true]),
             "width" => 12,
             "file" => false];

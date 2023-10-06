@@ -94,7 +94,6 @@ class ProductsController extends AppBaseController
         }
     }
 
-
     public function create(): object
     {
         return view('products.create');

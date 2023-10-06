@@ -30,6 +30,6 @@ class RedisClass
         $redis = Redis::connection();
         $redis->setex('orders_all', 3600, Orders::with('partners')->get());
         $redis->setex('orders_customer', 3600, Orders::with('partners')->customerOrdes()->get());
-        $redis->setex('orders_active', 3600, Orders::with('partners')->supplierOrders()->get());
+        $redis->setex('orders_supplier', 3600, Orders::with('partners')->supplierOrders()->get());
     }
 }

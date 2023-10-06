@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Config;
 
 class OrderService
 {
-    public function nextOrderNumber($type): string
+    public static function nextOrderNumber(): string
     {
-        $maxOrder = ($type == 0) ? Orders::customerOrders()->get()->max('ordernumber') : Orders::supplierOrders()->get()->max('ordernumber');
-        return (($type == 0) ? Config::get('OFFER_PREV') : Config::get('ORDER_PREV')) .
+        $maxOrder = ($_COOKIE['orderType'] == 'CUSTOMER') ? Orders::customerOrders()->get()->max('ordernumber') : Orders::supplierOrders()->get()->max('ordernumber');
+        return (($_COOKIE['orderType'] == 'CUSTOMER') ? Config::get('OFFER_PREV') : Config::get('ORDER_PREV')) .
             (empty($maxOrder) ? '0001' : str_pad((int)(substr($maxOrder, 7)) + 1, 4, '0', STR_PAD_LEFT));
     }
 
