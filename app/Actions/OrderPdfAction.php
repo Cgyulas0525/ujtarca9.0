@@ -3,8 +3,8 @@
 namespace App\Actions;
 
 use App\Events\SendMail;
-use App\Models\Offerdetails;
-use App\Models\Offers;
+use App\Models\Orderdetails;
+use App\Models\Orders;
 use App\Models\Partners;
 use PDF;
 
@@ -28,7 +28,7 @@ class OrderPdfAction
     {
 
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-            ->loadView('printing.offerPrintingEmail', ['offer' => $this->order, 'owner' => $this->owner, 'partner' => $this->partner, 'details' => $this->details]);
+            ->loadView('printing.orderPrintingEmail', ['order' => $this->order, 'owner' => $this->owner, 'partner' => $this->partner, 'details' => $this->details]);
 
         $fileName = $this->partner->name . '-' . $this->order->ordernumber . '-' . now()->toDateString() . '-megrendelés.pdf';
         $path = public_path('print/' . $fileName);

@@ -117,11 +117,6 @@ class Partners extends Model
         return $this->hasMany(Invoices::class, 'partner_id');
     }
 
-    public function offers(): string|HasMany
-    {
-        return $this->hasMany(Offers::class, 'partners_id');
-    }
-
     public function orders(): string|HasMany
     {
         return $this->hasMany(Orders::class, 'partners_id');
@@ -129,7 +124,7 @@ class Partners extends Model
 
     public function aviable(): bool
     {
-        return (empty(Invoices::where('partner_id', $this->id)->first()) && empty(Offers::where('partners_id', $this->id)->first())) ? true : false;
+        return (empty(Invoices::where('partner_id', $this->id)->first()) && empty(Orders::where('partners_id', $this->id)->first())) ? true : false;
     }
 
     public function getSettlementNameAttribute(): string

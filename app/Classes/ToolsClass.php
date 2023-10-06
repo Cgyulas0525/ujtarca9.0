@@ -3,7 +3,7 @@
 namespace App\Classes;
 
 use App\Models\Invoices;
-use App\Models\Offers;
+use App\Models\Orders;
 use App\Models\Partners;
 use App\Enums\YesNoEnum;
 
@@ -22,7 +22,7 @@ class ToolsClass
     public static function aviable($partner): bool
     {
         return (empty(Invoices::where('partner_id', $partner)->first()) &&
-                empty(Offers::where('partners_id', $partner)->first()) && (Partners::find($partner)->active == 0)) ? true : false;
+                empty(Orders::where('partners_id', $partner)->first()) && (Partners::find($partner)->active == 0)) ? true : false;
     }
 
     public static function monthsPeriodDDDW(): array

@@ -22,11 +22,6 @@
     {!! Form::hidden('orders_id', 'Orders Id:') !!}
     {!! Form::hidden('orders_id', $orders->id, ['class' => 'form-control']) !!}
 </div>
-<!-- Offers Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::hidden('quantities_id', 'Offers Id:') !!}
-    {!! Form::hidden('quantities_id', null, ['class' => 'form-control', 'id' => 'quantities_id']) !!}
-</div>
 
 @section('scripts')
 

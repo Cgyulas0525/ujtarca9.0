@@ -1,7 +1,7 @@
 <div class="row w-100">
     <div class="row text-center w-100">
         <p class="h2 text-center w-100">
-            {{ $order->ordernumber }} {{ date('Y.m.d', strtotime($order->offerdate)) }} megrendelés
+            {{ $order->ordernumber }} {{ date('Y.m.d', strtotime($order->orderdate)) }} megrendelés
         </p>
     </div>
     <!-- /.col -->
@@ -57,7 +57,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <p class="h4">Összesen: {{ number_format(OfferClass::sumOfferSupplierPrice($order->id),0,",",".") }} Ft.</p>
+        <p class="h4">Összesen: {{ number_format(OrderClass::sumOrderSupplierPrice($order->id),0,",",".") }} Ft.</p>
     </div>
 </div>
 

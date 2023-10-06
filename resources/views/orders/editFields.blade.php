@@ -1,7 +1,7 @@
 <!-- Offernumber Field -->
 <div class="form-group col-sm-6">
     {!! Form::hidden('ordernumber', 'Megrendelés szám:') !!}
-    {!! Form::hidden('ordernumber', isset($orders) ? $orders->ordernumber : OrderService::nextOfferNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
+    {!! Form::hidden('ordernumber', isset($orders) ? $orders->ordernumber : OrderService::nextOrderNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
 </div>
 
 <!-- Offerdate Field -->

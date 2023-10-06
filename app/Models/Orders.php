@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Offers
+ * Class Orders
  * @package App\Models
  * @version February 3, 2023, 11:19 am UTC
  *

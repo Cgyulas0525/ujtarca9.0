@@ -14,7 +14,7 @@ class SelectService
     {
         return [" "] + Products::activeProducts()
                 ->whereNotIn('id', function ($query) use ($id) {
-                    return $query->from('orderdetails')->select('orderdetails.products_id')->where('orderdetails.offers_id', $id)->get();
+                    return $query->from('orderdetails')->select('orderdetails.products_id')->where('orderdetails.orders_id', $id)->get();
                 })->orderBy('name')->pluck('name', 'id')->toArray();
     }
 

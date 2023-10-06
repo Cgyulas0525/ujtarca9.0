@@ -7,7 +7,7 @@ use App\Models\Products;
 use App\Models\Quantities;
 use Illuminate\Http\Request;
 use Response;
-use App\Models\Offerdetails;
+use App\Models\Orderdetails;
 
 class MyApiController extends Controller
 {
@@ -31,9 +31,9 @@ class MyApiController extends Controller
         return Response::json(Quantities::find($request->get('id')));
     }
 
-    public function getOfferDetailQuantityName(Request $request): string
+    public function getOrderDetailQuantityName(Request $request): string
     {
-        return Response::json(Offerdetails::find($request->get('id'))->quantities->name);
+        return Response::json(Orderdetails::find($request->get('id'))->quantities->name);
     }
 
 }
