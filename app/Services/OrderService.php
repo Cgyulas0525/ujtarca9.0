@@ -38,3 +38,4 @@ class OrderService
         return (($_COOKIE['orderType'] == 'CUSTOMER') ? Config::get('OFFER_PREV') : Config::get('ORDER_PREV')) .
             (empty($maxOrder) ? '0001' : str_pad((int)(substr($maxOrder, 7)) + 1, 4, '0', STR_PAD_LEFT));
     }
+}
