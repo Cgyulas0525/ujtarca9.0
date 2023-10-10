@@ -20,6 +20,7 @@ use App\Models\Orderdetails;
  * @property integer $partners_id
  * @property string $description
  * @property string $ordertype
+ * @property integer $detailsum
  */
 class Orders extends Model
 {
@@ -42,6 +43,7 @@ class Orders extends Model
         'partners_id',
         'description',
         'ordertype',
+        'detailsum',
     ];
 
     /**
@@ -56,6 +58,7 @@ class Orders extends Model
         'partners_id' => 'integer',
         'description' => 'string',
         'ordertype' => OrderTypeEnum::class,
+        'detailsum' => 'integer',
     ];
 
     /**

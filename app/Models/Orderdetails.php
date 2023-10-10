@@ -6,7 +6,6 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Products;
 
 /**
  * Class Orderdetails
@@ -17,6 +16,7 @@ use App\Models\Products;
  * @property integer $products_id
  * @property integer $quantities_id
  * @property integer $value
+ * @property integer $detailvalue
  */
 class Orderdetails extends Model
 {
@@ -37,7 +37,8 @@ class Orderdetails extends Model
         'orders_id',
         'products_id',
         'quantities_id',
-        'value'
+        'value',
+        'detailvalue'
     ];
 
     /**
@@ -50,7 +51,8 @@ class Orderdetails extends Model
         'orders_id' => 'integer',
         'products_id' => 'integer',
         'quantities_id' => 'integer',
-        'value' => 'integer'
+        'value' => 'integer',
+        'detailvalue' => 'integer',
     ];
 
     /**
@@ -68,10 +70,6 @@ class Orderdetails extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
-        'supplierPrice',
-    ];
-
     public function quantities(): string|BelongsTo
     {
         return $this->belongsTo(Quantities::class, 'quantities_id');
@@ -85,10 +83,5 @@ class Orderdetails extends Model
     public function orders(): string|BelongsTo
     {
         return $this->belongsTo(Orders::class, 'orders_id');
-    }
-
-    public function getSupplierPriceAttribute(): int
-    {
-        return $this->value * Products::find($this->products_id)->supplierprice;
     }
 }

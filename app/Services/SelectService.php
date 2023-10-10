@@ -24,7 +24,7 @@ class SelectService
                 ->orderBy('name')->pluck('name', 'id')->toArray();
     }
 
-    public static function invoicesYearsSelect()
+    public static function invoicesYearsSelect(): array
     {
         return [" "] + Invoices::selectRaw('year(invoices.dated) as year')->groupBy('year')
                 ->orderBy('year', 'desc')

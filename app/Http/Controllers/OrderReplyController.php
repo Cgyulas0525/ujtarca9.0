@@ -1,12 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Services\OrderService;
+use App\Services\OrderReplayService;
 
 class OrderReplyController extends Controller
 {
     public function orderReplay($id)
     {
-        (new OrderService())->orderReplay($id);
+        OrderReplayService::orderReplay($id);
     }
 }

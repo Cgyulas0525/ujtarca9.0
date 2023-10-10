@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\OrderTypeEnum;
 use App\Models\Orders;
 use App\Models\Partners;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -17,6 +18,8 @@ class OrdersFactory extends Factory
             'orderdate' => $this->faker->word,
             'partners_id' => Partners::factory()->create(),
             'description' => $this->faker->word,
+            'ordertype' => OrderTypeEnum::CUSTOMER->name,
+            'detailsum' => $this->faker->randomDigitNotNull,
         ];
     }
 }

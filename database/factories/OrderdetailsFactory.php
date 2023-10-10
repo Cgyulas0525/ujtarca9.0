@@ -19,6 +19,7 @@ class OrderdetailsFactory extends Factory
             'products_id' => Products::factory()->create(),
             'quantities_id' => 1,
             'value' => $this->faker->randomDigitNotNull,
+            'detailvalue' => $this->faker->randomDigitNotNull,
         ];
     }
 }

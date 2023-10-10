@@ -46,26 +46,4 @@ class ClosuresObserver
     {
         $this->yad->handle();
     }
-
-    /**
-     * Handle the Closures "restored" event.
-     *
-     * @param  \App\Models\Closures  $closures
-     * @return void
-     */
-    public function restored(Closures $closures)
-    {
-        //
-    }
-
-    /**
-     * Handle the Closures "force deleted" event.
-     *
-     * @param  \App\Models\Closures  $closures
-     * @return void
-     */
-    public function forceDeleted(Closures $closures)
-    {
-        //
-    }
 }

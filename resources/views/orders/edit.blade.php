@@ -11,8 +11,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <section class="content-header">
-                        <h4>{{ $orders->ordernumber }} {{ date('Y.m.d', strtotime($orders->orderdate)) }}
-                            Összesen: {{ number_format(App\Classes\OrderClass::sumOrderSupplierPrice($orders->id),0,",",".") }} Ft.
+                        <h4>{{ $orders->ordernumber }} {{ $orders->orderdate->format('Y-m-d') }}
                             <a href="{{ route('orderPrint', ['id' => $orders->id]) }}" class="btn btn-success alapgomb printBtn" title="Nyomtatás"><i class="fas fa-print"></i></a>
                             <a href="{{ route('orderEmail', ['id' => $orders->id]) }}" class="btn btn-success alapgomb printBtn" title="Email"><i class="fas fa-envelope-open"></i></a>
                         </h4>
@@ -50,7 +49,9 @@
                     <div class="box box-primary">
                         <div class="box-body">
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered detailstable w-100"></table>
+                                <table class="table table-hover table-bordered detailstable w-100">
+                                    @include('orderdetails.table')
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -72,6 +73,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('/public/js/currencyFormatDE.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
@@ -97,11 +99,12 @@
                     {title: 'Termék', data: 'productName', name: 'productName', id: 'productName'},
                     {title: 'Me.', data: 'quantityName', name: 'quantityName', id: 'quantityName'},
                     {title: 'Mennyiség', data: 'value', name: 'value', id: 'value'},
+                    {title: 'Érték', data: 'detailvalue', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'detailvalue', id: 'detailvalue'},
                     {title: 'Id', data: 'id', name: 'id', id: 'id'},
                 ],
                 columnDefs: [
                     {
-                        targets: [4],
+                        targets: [5],
                         visible: false
                     },
                     {
@@ -114,6 +117,35 @@
                     }
                 ],
                 buttons: [],
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(4)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(4, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(4).footer()).html(currencyFormatDE(total));
+                },
+
+
             });
         });
 

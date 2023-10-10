@@ -59,7 +59,7 @@
                     {title: 'Dátum', data: 'orderdate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'orderdate'},
                     {title: 'Megrendelés', data: 'ordernumber', name: 'ordernumber'},
                     {title: 'Partner', data: 'partnerName', name: 'partnerName'},
-                    {title: 'Összesen', data: 'sumPrice', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'sumPrice'},
+                    {title: 'Összesen', data: 'detailsum', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'detailsum'},
                 ],
                 buttons: [],
             });

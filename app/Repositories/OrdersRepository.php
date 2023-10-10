@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Orders;
-use App\Repositories\BaseRepository;
 
 class OrdersRepository extends BaseRepository
 {
@@ -11,8 +10,9 @@ class OrdersRepository extends BaseRepository
         'ordernumber',
         'orderdate',
         'partners_id',
-        'description'
-
+        'description',
+        'ordertype',
+        'detailsum',
     ];
 
     public function getFieldsSearchable(): array

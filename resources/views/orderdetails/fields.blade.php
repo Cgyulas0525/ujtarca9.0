@@ -23,6 +23,12 @@
     {!! Form::hidden('orders_id', $orders->id, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Ordertype Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::hidden('ordertype', 'OrderType:') !!}
+    {!! Form::hidden('ordertype', (($_COOKIE['orderType'] == 'CUSTOMER') ? 'vevői' : 'szállítói'), ['class' => 'form-control']) !!}
+</div>
+
 @section('scripts')
 
     <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>

@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Models\invoices;
 use App\Actions\Observer\Invoices\CumulativeValuesDatabase;
 
-
 class InvoicesObserver
 {
     private $yad;
@@ -45,27 +44,5 @@ class InvoicesObserver
     public function deleted(invoices $invoices)
     {
         $this->yad->handle();
-    }
-
-    /**
-     * Handle the invoices "restored" event.
-     *
-     * @param  \App\Models\invoices  $invoices
-     * @return void
-     */
-    public function restored(invoices $invoices)
-    {
-        //
-    }
-
-    /**
-     * Handle the invoices "force deleted" event.
-     *
-     * @param  \App\Models\invoices  $invoices
-     * @return void
-     */
-    public function forceDeleted(invoices $invoices)
-    {
-        //
     }
 }

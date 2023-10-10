@@ -35,9 +35,6 @@ class OrdersController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('sumPrice', function ($data) {
-                return OrderClass::sumOrderSupplierPrice($data->id);
-            })
             ->addColumn('partnerName', function ($data) {
                 return $data->partners->name;
             })

@@ -10,42 +10,31 @@ use Illuminate\Support\Facades\Config;
 
 class OrderService
 {
+    /**
+     * @param $id
+     * @return int
+     */
+    public static function orderDetailsSum($id): int
+    {
+        return Orderdetails::where('orders_id', $id)->get()->sum('detailvalue');
+    }
+
+    /**
+     * @param Orderdetails $orderdetails
+     */
+    public static function setOrderDetailsum(Orderdetails $orderdetails): void
+    {
+        $order = Orders::find($orderdetails->orders_id);
+        $order->detailsum = self::orderDetailsSum($order->id);
+        $order->save();
+    }
+
+    /**
+     * @return string
+     */
     public static function nextOrderNumber(): string
     {
         $maxOrder = ($_COOKIE['orderType'] == 'CUSTOMER') ? Orders::customerOrders()->get()->max('ordernumber') : Orders::supplierOrders()->get()->max('ordernumber');
         return (($_COOKIE['orderType'] == 'CUSTOMER') ? Config::get('OFFER_PREV') : Config::get('ORDER_PREV')) .
             (empty($maxOrder) ? '0001' : str_pad((int)(substr($maxOrder, 7)) + 1, 4, '0', STR_PAD_LEFT));
     }
-
-    public function orderReplay($id)
-    {
-        $order = Orders::find($id);
-
-        DB::beginTransaction();
-        try {
-            $newOrder = new Orders();
-
-            $newOrder->ordernumber = $this->nextOrderNumber($order->ordertype);
-            $newOrder->orderdate = now()->toDateString();
-            $newOrder->partners_id = $order->partners_id;
-            $newOrder->ordertype = $order->ordertype;
-            $newOrder->created_at = now();
-
-            $newOrder->save();
-
-            foreach (Orderdetails::where('orders_id', $newOrder->id)->get() as $orderDetail) {
-                $newOrderDetail = new OrderDetails();
-                $newOrderDetail->orders_id = $newOrder->id;
-                $newOrderDetail->products_id = $orderDetail->products_id;
-                $newOrderDetail->quantities_id = $orderDetail->quantities_id;
-                $newOrderDetail->value = $orderDetail->value;
-                $newOrderDetail->save();
-            }
-
-            return view('orders.edit')->with('orders', $newOrder);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back();
-        }
-    }
-}
