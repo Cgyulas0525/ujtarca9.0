@@ -5,10 +5,15 @@ namespace App\Services;
 use App\Models\Orderdetails;
 use App\Models\Orders;
 use DB;
-use App\Services\OrderService;
 
 class OrderReplayService
 {
+    /**
+     * Create new orders record
+     *
+     * @param Orders $order
+     * @return Orders
+     */
     public static function newOrder(Orders $order): Orders
     {
         $newOrder = new Orders();
@@ -23,19 +28,28 @@ class OrderReplayService
         return $newOrder;
     }
 
-    public static function newOrderDetails($newOrder): void
+    /**
+     * Create new orderdetails records
+     *
+     * @param $id
+     * @param $newOrder
+     */
+    public static function newOrderDetails($order, $newOrder): void
     {
-        foreach (Orderdetails::where('orders_id', $newOrder->id)->get() as $orderDetail) {
+        foreach (Orderdetails::whereBelongsTo($order)->get() as $orderDetail) {
             $newOrderDetail = new OrderDetails();
             $newOrderDetail->orders_id = $newOrder->id;
             $newOrderDetail->products_id = $orderDetail->products_id;
             $newOrderDetail->quantities_id = $orderDetail->quantities_id;
             $newOrderDetail->value = $orderDetail->value;
+            $newOrderDetail->created_at = now();
             $newOrderDetail->save();
         }
     }
 
     /**
+     * Replay orders record
+     *
      * @param $id
      * @return object
      * @throws \Throwable
@@ -47,7 +61,7 @@ class OrderReplayService
             DB::beginTransaction();
             try {
                 $newOrder = self::newOrder($order);
-                self::newOrderDetails($newOrder);
+                self::newOrderDetails($order, $newOrder);
                 return view('orders.edit')->with('orders', $newOrder);
             } catch (\Exception $e) {
                 DB::rollBack();

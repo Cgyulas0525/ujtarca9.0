@@ -12,7 +12,7 @@
 <!-- Partners Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('partners_id', 'Partner:') !!}
-    {!! Form::select('partners_id', SelectService::selectSupplier(), null,
+    {!! Form::select('partners_id', SelectService::selectPartnersByCookie(), null,
                 ['class'=>'select2 form-control', 'id' => 'partners_id', 'required' => true]) !!}
 </div>
 
@@ -20,4 +20,10 @@
 <div class="form-group col-sm-6">
     {!! Form::label('description', 'Megjegyzés:') !!}
     {!! Form::textarea('description', null, ['class' => 'form-control','maxlength' => 500, 'rows' => 4]) !!}
+</div>
+
+<!-- Description Field -->
+<div class="form-group col-sm-6">
+    {!! Form::hidden('ordertype', 'OrderType:') !!}
+    {!! Form::hidden('ordertype', isset($orders) ? $orders->ordertype->value : Str::lower(App\Services\OrderService::orderTypeByCookie()), ['class' => 'form-control']) !!}
 </div>

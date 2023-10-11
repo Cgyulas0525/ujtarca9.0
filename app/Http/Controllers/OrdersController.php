@@ -97,7 +97,6 @@ class OrdersController extends AppBaseController
         }
     }
 
-
     public function create(): object
     {
         return view('orders.create');
@@ -109,7 +108,7 @@ class OrdersController extends AppBaseController
         $orders = $this->ordersRepository->create($input);
         RedisClass::setexOrders();
 
-        return redirect(route('orders.index'));
+        return view('orders.edit')->with('orders', $orders);
     }
 
     public function show($id): object

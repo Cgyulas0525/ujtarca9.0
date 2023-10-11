@@ -24,10 +24,21 @@ class SelectService
                 ->orderBy('name')->pluck('name', 'id')->toArray();
     }
 
+    public static function selectCustomer(): array
+    {
+        return [" "] + Partners::activePartner()->whereIn('partnertypes_id', [3])
+                ->orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
     public static function invoicesYearsSelect(): array
     {
         return [" "] + Invoices::selectRaw('year(invoices.dated) as year')->groupBy('year')
                 ->orderBy('year', 'desc')
                 ->pluck('year', 'year')->toArray();
+    }
+
+    public static function selectPartnersByCookie(): array
+    {
+        return ($_COOKIE['orderType'] == 'CUSTOMER') ? self::selectCustomer() : self::selectSupplier();
     }
 }

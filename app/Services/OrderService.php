@@ -3,9 +3,7 @@
 namespace App\Services;
 
 use App\Models\Orderdetails;
-use Illuminate\Http\Request;
 use App\Models\Orders;
-use DB;
 use Illuminate\Support\Facades\Config;
 
 class OrderService
@@ -37,5 +35,13 @@ class OrderService
         $maxOrder = ($_COOKIE['orderType'] == 'CUSTOMER') ? Orders::customerOrders()->get()->max('ordernumber') : Orders::supplierOrders()->get()->max('ordernumber');
         return (($_COOKIE['orderType'] == 'CUSTOMER') ? Config::get('OFFER_PREV') : Config::get('ORDER_PREV')) .
             (empty($maxOrder) ? '0001' : str_pad((int)(substr($maxOrder, 7)) + 1, 4, '0', STR_PAD_LEFT));
+    }
+
+    /**
+     * @return string
+     */
+    public static function orderTypeByCookie(): string
+    {
+        return ($_COOKIE['orderType'] == 'CUSTOMER') ? 'Vevői' : 'Szállítói';
     }
 }
