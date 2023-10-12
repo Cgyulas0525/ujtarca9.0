@@ -144,8 +144,6 @@
                     // Update footer
                     $(api.column(4).footer()).html(currencyFormatDE(total));
                 },
-
-
             });
         });
 
@@ -158,13 +156,16 @@
                     url:"{{url('orderdetailsUpdate')}}",
                     data: { id: d.id, value: value },
                     success: function (response) {
-                        // console.log('Response:', response);
+                        table.cell(Row, 3).data(d.value).draw();
+                        table.cell(Row, 4).data(response.detailvalue).draw();
+                        $('#detailSum').text(response.detailvalue);
                     },
                     error: function (response) {
                         // console.log('Error:', response);
                         alert('nem ok');
                     }
                 });
+                // table.draw();
                 table.row(Row).invalidate();
             }
         }
