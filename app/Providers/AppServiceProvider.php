@@ -24,6 +24,8 @@ use App\Models\Invoices;
 use App\Observers\InvoicesObserver;
 use App\Models\Orderdetails;
 use App\Observers\OrderdetailsObserver;
+use App\Models\Orders;
+use App\Observers\OrdersObserver;
 use App\Enums\ActiveEnum;
 use App\Enums\OrderTypeEnum;
 
@@ -52,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
         Closures::observe(ClosuresObserver::class);
         Invoices::observe(InvoicesObserver::class);
         Orderdetails::observe(OrderdetailsObserver::class);
+        Orders::observe(OrdersObserver::class);
         Config::set('LAYOUTS_SHOW', 'layouts.show');
         Config::set('OFFER_PREV', 'VMEGR-');
         Config::set('ORDER_PREV', 'SZMEGR-');

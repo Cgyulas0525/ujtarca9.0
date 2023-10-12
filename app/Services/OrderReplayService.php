@@ -36,6 +36,7 @@ class OrderReplayService
      */
     public static function newOrderDetails($order, $newOrder): void
     {
+
         foreach (Orderdetails::whereBelongsTo($order)->get() as $orderDetail) {
             $newOrderDetail = new OrderDetails();
             $newOrderDetail->orders_id = $newOrder->id;
@@ -62,7 +63,7 @@ class OrderReplayService
             try {
                 $newOrder = self::newOrder($order);
                 self::newOrderDetails($order, $newOrder);
-                return view('orders.edit')->with('orders', $newOrder);
+                DB::commit();
             } catch (\Exception $e) {
                 DB::rollBack();
                 return back();
@@ -70,6 +71,7 @@ class OrderReplayService
         } else {
             return back();
         }
+        return back();
     }
 
 }
