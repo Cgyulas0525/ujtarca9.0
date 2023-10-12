@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\OrderTypeEnum;
 use App\Models\Orderdetails;
 use App\Models\Orders;
 use Illuminate\Support\Facades\Config;
@@ -42,6 +43,6 @@ class OrderService
      */
     public static function orderTypeByCookie(): string
     {
-        return ($_COOKIE['orderType'] == 'CUSTOMER') ? 'Vevői' : 'Szállítói';
+        return ($_COOKIE['orderType'] == 'CUSTOMER') ? OrderTypeEnum::CUSTOMER->description() : OrderTypeEnum::SUPPLIER->description();
     }
 }
