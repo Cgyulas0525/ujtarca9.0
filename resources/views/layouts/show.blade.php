@@ -5,7 +5,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ $table->name }}</h1>
+                    @if ($table->getTable() == 'orders')
+                        <h1>{{ $table->ordernumber }}</h1>
+                    @else
+                        <h1>{{ $table->name }}</h1>
+                    @endif
                 </div>
             </div>
         </div>

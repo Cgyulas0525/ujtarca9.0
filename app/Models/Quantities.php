@@ -17,18 +17,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Quantities extends Model
 {
-    use SoftDeletes;
-
-    use HasFactory;
+    use SoftDeletes, HasFactory;
 
     public $table = 'quantities';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'name',
@@ -64,7 +60,7 @@ class Quantities extends Model
         return $this->hasMany(Products::class, 'quantities_id');
     }
 
-    public function orderdetails(): string|HasMany
+    public function orderDetails(): string|HasMany
     {
         return $this->hasMany(Orderdetails::class, 'quantities_id');
     }

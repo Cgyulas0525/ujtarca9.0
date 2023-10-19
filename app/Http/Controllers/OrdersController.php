@@ -48,7 +48,7 @@ class OrdersController extends AppBaseController
                 $btn = $btn . '<a href="' . route('orderEmail', [$row->id]) . '"
                                  class="btn btn-warning btn-sm deleteProduct" title="Email"><i class="fas fa-envelope-open"></i></a>';
                 $btn = $btn . '<a href="' . route('orderReplay', [$row->id]) . '"
-                                 class="btn btn-primary btn-sm deleteProduct" title="Ismétlés"><i class="fas fa-copy"></i></a>';
+                                 class="btn btn-primary btn-sm replayOrder" title="Ismétlés"><i class="fas fa-copy"></i></a>';
                 return $btn;
             })
             ->rawColumns(['action'])
