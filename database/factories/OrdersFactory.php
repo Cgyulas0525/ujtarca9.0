@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\OrderStatusEnum;
 use App\Enums\OrderTypeEnum;
 use App\Models\Orders;
 use App\Models\Partners;
@@ -15,10 +16,12 @@ class OrdersFactory extends Factory
     {
         return [
             'ordernumber' => $this->faker->word,
-            'orderdate' => $this->faker->word,
+            'orderdate' => $this->faker->date,
             'partners_id' => Partners::factory()->create(),
             'description' => $this->faker->word,
-            'ordertype' => OrderTypeEnum::CUSTOMER->name,
+            'order_status' => OrderStatusEnum::ORDERED->value,
+            'delivered_date' => $this->faker->date,
+            'ordertype' => OrderTypeEnum::CUSTOMER->value,
             'detailsum' => $this->faker->randomDigitNotNull,
         ];
     }

@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatusEnum;
 use App\Enums\OrderTypeEnum;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $partners_id
  * @property string $description
  * @property string $ordertype
+ * @property string $order_status
+ * @property string $delivered_date
  * @property integer $detailsum
  */
 class Orders extends Model
@@ -42,6 +44,8 @@ class Orders extends Model
         'orderdate',
         'partners_id',
         'description',
+        'order_status',
+        'delivered_date',
         'ordertype',
         'detailsum',
     ];
@@ -57,6 +61,8 @@ class Orders extends Model
         'orderdate' => 'date',
         'partners_id' => 'integer',
         'description' => 'string',
+        'order_status' => OrderStatusEnum::class,
+        'delivered_date' => 'date',
         'ordertype' => OrderTypeEnum::class,
         'detailsum' => 'integer',
     ];
@@ -71,6 +77,8 @@ class Orders extends Model
         'orderdate' => 'required',
         'partners_id' => 'required|integer',
         'description' => 'nullable|string|max:500',
+        'order_status' => 'nullable|string|max:25',
+        'delivered_date' => 'nullable',
         'ordertype' => 'required|string|max:25',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
@@ -99,6 +107,17 @@ class Orders extends Model
     public function scopeSupplierOrders($query): mixed
     {
         return $query->where('ordertype', OrderTypeEnum::SUPPLIER->value);
+    }
+
+    public function scopeOrderByStatus($query, $type, ?string $status = NULL): mixed
+    {
+        return $query->where('ordertype', $type)->where(function ($q) use ($status) {
+            if (is_null($status)) {
+                $q->whereNotNull('order_status');
+            } else {
+                $q->where('order_status', $status);
+            }
+        });
     }
 
     public function getDetailsSumAttribute(): int

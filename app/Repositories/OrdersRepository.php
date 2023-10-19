@@ -11,6 +11,8 @@ class OrdersRepository extends BaseRepository
         'orderdate',
         'partners_id',
         'description',
+        'order_status',
+        'delivered_date',
         'ordertype',
         'detailsum',
     ];
