@@ -115,7 +115,7 @@ class Orders extends Model
         $query->where('ordertype', $type);
     }
 
-    public function scopeOrderByTypeAndStatus(Builder $query, ?string $type = NULL, ?string $status = NULL): void
+    public function scopeOrdersByTypeAndStatus(Builder $query, ?string $type = NULL, ?string $status = NULL): void
     {
         $query->where('ordertype', $type)
             ->where(function ($q) use ($type) {

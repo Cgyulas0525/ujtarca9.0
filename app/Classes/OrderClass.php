@@ -15,6 +15,6 @@ class OrderClass
 
     public static function setOrdersRedisFile($name, ?string $type = null, ?string $status = null): void
     {
-        Redis::setex($name, 3600, Orders::with('partners')->orderByTypeAndStatus($type, $status)->get());
+        Redis::setex($name, 3600, Orders::with('partners')->ordersByTypeAndStatus($type, $status)->get());
     }
 }
