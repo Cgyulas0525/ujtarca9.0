@@ -100,7 +100,7 @@ Route::get('products.pdfEmail',[ProductsController::class, 'pdfEmail'])->name('p
 Route::get('products.index/{active?}',[ProductsController::class, 'index'])->name('productsIndex');
 
 Route::resource('orders', App\Http\Controllers\OrdersController::class);
-Route::get('orders.index/{orderType?}',[OrdersController::class, 'index'])->name('ordersIndex');
+Route::get('orders.index/{orderType?}/{orderStatus?}',[OrdersController::class, 'index'])->name('ordersIndex');
 Route::get('orders.print/{id}',[OrdersController::class, 'print'])->name('orderPrint');
 Route::get('orderEmail/{id}',[OrdersController::class, 'orderEmail'])->name('orderEmail');
 Route::get('orderReplay/{id}',[OrderReplyController::class, 'orderReplay'])->name('orderReplay');

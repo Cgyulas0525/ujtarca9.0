@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\OrderStatusEnum;
 use App\Enums\OrderTypeEnum;
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -99,25 +100,38 @@ class Orders extends Model
         return $this->hasMany(Orderdetails::class, 'orders_id');
     }
 
-    public function scopeCustomerOrders($query): mixed
+    public function scopeCustomerOrders(Builder $query): void
     {
-        return $query->where('ordertype', OrderTypeEnum::CUSTOMER->value);
+        $query->where('ordertype', OrderTypeEnum::CUSTOMER->value);
     }
 
-    public function scopeSupplierOrders($query): mixed
+    public function scopeSupplierOrders(Builder $query): void
     {
-        return $query->where('ordertype', OrderTypeEnum::SUPPLIER->value);
+        $query->where('ordertype', OrderTypeEnum::SUPPLIER->value);
     }
 
-    public function scopeOrderByStatus($query, $type, ?string $status = NULL): mixed
+    public function scopeOrdersByType(Builder $query, $type): void
     {
-        return $query->where('ordertype', $type)->where(function ($q) use ($status) {
-            if (is_null($status)) {
-                $q->whereNotNull('order_status');
-            } else {
-                $q->where('order_status', $status);
-            }
-        });
+        $query->where('ordertype', $type);
+    }
+
+    public function scopeOrderByTypeAndStatus(Builder $query, ?string $type = NULL, ?string $status = NULL): void
+    {
+        $query->where('ordertype', $type)
+            ->where(function ($q) use ($type) {
+                if (is_null($type)) {
+                    $q->whereNotNull('ordertype');
+                } else {
+                    $q->where('ordertype', $type);
+                }
+            })
+            ->where(function ($q) use ($status) {
+                if (is_null($status)) {
+                    $q->whereNotNull('order_status');
+                } else {
+                    $q->where('order_status', $status);
+                }
+            });
     }
 
     public function getDetailsSumAttribute(): int

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\OrderClass;
 use App\Classes\RedisClass;
 use App\Enums\OrderTypeEnum;
+use App\Enums\OrderStatusEnum;
 use App\Http\Requests\CreateOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
 use App\Http\Controllers\AppBaseController;
@@ -55,14 +56,14 @@ class OrdersController extends AppBaseController
             ->make(true);
     }
 
-    public function index(Request $request, ?string $orderType = null): object
+    public function index(Request $request, ?string $orderType = null, ?string $orderStatus = null): object
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $data = $this->getRedis($orderType);
+                $data = $this->getRedis($orderType,$orderStatus);
                 if (empty($data)) {
-                    $this->setRedis($orderType);
-                    $data = $this->getRedis($orderType);
+                    $this->setRedis($orderType, $orderStatus);
+                    $data = $this->getRedis($orderType, $orderStatus);
                 }
                 return $this->dwData(json_decode($data));
             }
@@ -71,28 +72,54 @@ class OrdersController extends AppBaseController
         return view('orders.index');
     }
 
-    public function getRedis(?string $orderType = null): mixed
+    public function getRedis(?string $orderType = null, ?string $orderStatus = null): mixed
     {
-        if (is_null($orderType)) {
-            return Redis::get('orders_all');
-        } else {
-            if ($orderType == OrderTypeEnum::CUSTOMER->value) {
-                return Redis::get('orders_customer');
-            } else {
-                return Redis::get('orders_supplier');
+        if ($orderType == OrderTypeEnum::CUSTOMER->value) {
+            if ($orderStatus == OrderStatusEnum::ORDERED->value) {
+                return Redis::get('orders_customer_ordered');
+            }
+            if ($orderStatus == OrderStatusEnum::PACKAGED->value) {
+                return Redis::get('orders_customer_packaged');
+            }
+            if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
+                return Redis::get('orders_customer_delivered');
+            }
+        }
+        if ($orderType == OrderTypeEnum::SUPPLIER->value) {
+            if ($orderStatus == OrderStatusEnum::ORDERED->value) {
+                return Redis::get('orders_supplier_ordered');
+            }
+            if ($orderStatus == OrderStatusEnum::PACKAGED->value) {
+                return Redis::get('orders_supplier_packaged');
+            }
+            if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
+                return Redis::get('orders_supplier_delivered');
             }
         }
     }
 
-    public function setRedis(?string $orderType = null): void
+    public function setRedis(?string $orderType = null, ?string $orderStatus = null): void
     {
-        if (is_null($orderType)) {
-            Redis::setex('orders_all', 3600,  $data = Orders::with('partners')->get());
-        } else {
-            if ($orderType == OrderTypeEnum::CUSTOMER->value) {
-                Redis::setex('orders_customer', 3600, Orders::with('partners')->customerOrders()->get());
-            } else {
-                Redis::setex('orders_supplier', 3600, Orders::with('partners')->supplierOrders()->get());
+        if ($orderType == OrderTypeEnum::CUSTOMER->value) {
+            if ($orderStatus == OrderStatusEnum::ORDERED->value) {
+                OrderClass::setOrdersRedisFile('orders_customer_ordered', OrderTypeEnum::CUSTOMER->value, OrderStatusEnum::ORDERED->value);
+            }
+            if ($orderStatus == OrderStatusEnum::PACKAGED->value) {
+                OrderClass::setOrdersRedisFile('orders_customer_packaged', OrderTypeEnum::CUSTOMER->value, OrderStatusEnum::PACKAGED->value);
+            }
+            if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
+                OrderClass::setOrdersRedisFile('orders_customer_delivered', OrderTypeEnum::CUSTOMER->value, OrderStatusEnum::DELIVERED->value);
+            }
+        }
+        if ($orderType == OrderTypeEnum::SUPPLIER->value) {
+            if ($orderStatus == OrderStatusEnum::ORDERED->value) {
+                OrderClass::setOrdersRedisFile('orders_supplier_ordered', OrderTypeEnum::SUPPLIER->value, OrderStatusEnum::ORDERED->value);
+            }
+            if ($orderStatus == OrderStatusEnum::PACKAGED->value) {
+                OrderClass::setOrdersRedisFile('orders_supplier_packaged', OrderTypeEnum::SUPPLIER->value, OrderStatusEnum::PACKAGED->value);
+            }
+            if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
+                OrderClass::setOrdersRedisFile('orders_supplier_delivered', OrderTypeEnum::SUPPLIER->value, OrderStatusEnum::DELIVERED->value);
             }
         }
     }

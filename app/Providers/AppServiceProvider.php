@@ -28,6 +28,7 @@ use App\Models\Orders;
 use App\Observers\OrdersObserver;
 use App\Enums\ActiveEnum;
 use App\Enums\OrderTypeEnum;
+use App\Enums\OrderStatusEnum;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
             $loader->alias('SelectService', SelectService::class);
             $loader->alias('ActiveEnum', ActiveEnum::class);
             $loader->alias('OrderTypeEnum', OrderTypeEnum::class);
+            $loader->alias('OrderStatusEnum', OrderStatusEnum::class);
         });
     }
 
