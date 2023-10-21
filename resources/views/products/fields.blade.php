@@ -35,7 +35,7 @@
 
 @section('scripts')
 
-    <script src="{{ asset('/public/js/sweetalert.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/js/sweetalert.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {

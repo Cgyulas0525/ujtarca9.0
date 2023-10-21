@@ -1,7 +1,7 @@
-<script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
-<script src="{{ asset('/public/js/addDate.js') }} " type="text/javascript"></script>
-<script src="{{ asset('/public/js/required.js') }} " type="text/javascript"></script>
-<script src="{{ asset('/public/js/sweetalert.js') }} " type="text/javascript"></script>
+<script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
+<script src="{{ asset('/js/addDate.js') }} " type="text/javascript"></script>
+<script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
+<script src="{{ asset('/js/sweetalert.js') }} " type="text/javascript"></script>
 
 <script type="text/javascript">
     $(function () {

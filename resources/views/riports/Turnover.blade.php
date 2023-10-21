@@ -79,10 +79,10 @@
 
 @section('scripts')
 
-    <script src="{{ asset('/public/js/highchart/highchartLine.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/public/js/highchart/categoryUpload.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/public/js/highchart/chartDataUpload.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/public/js/highchart/highchartsTheme.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/js/highchart/highchartLine.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/js/highchart/categoryUpload.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/js/highchart/chartDataUpload.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/js/highchart/highchartsTheme.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {

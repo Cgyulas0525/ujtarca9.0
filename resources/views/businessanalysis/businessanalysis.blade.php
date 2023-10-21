@@ -17,7 +17,7 @@
 
 @section('scripts')
     @include('layouts.RowCallBack_js')
-    <script src="{{ asset('/public/js/ajaxsetup.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {
