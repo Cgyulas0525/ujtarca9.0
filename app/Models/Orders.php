@@ -115,6 +115,16 @@ class Orders extends Model
         $query->where('ordertype', $type);
     }
 
+    public function scopePartnerOrders(Builder $query, $partner): void
+    {
+        $query->where('partners_id', $partner);
+    }
+
+    public function scopeOrdersInTheLastMonths(Builder $query, $months): void
+    {
+        $query->whereBetween('orderdate', [now()->subMonth($months)->toDateString(), now()->toDateString()]);
+    }
+
     public function scopeOrdersByTypeAndStatus(Builder $query, ?string $type = NULL, ?string $status = NULL): void
     {
         $query->where('ordertype', $type)

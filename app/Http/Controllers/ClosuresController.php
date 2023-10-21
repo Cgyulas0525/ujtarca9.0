@@ -21,16 +21,16 @@ use Illuminate\Support\Facades\Redis;
 class ClosuresController extends AppBaseController
 {
     private $closuresRepository;
-    private $maxId;
+    private $maxId = 0;
 
     public function __construct(ClosuresRepository $closuresRepo)
     {
         $this->closuresRepository = $closuresRepo;
-        $this->maxId = Closures::all()->max('id');
     }
 
     public function dwData($data)
     {
+        $this->maxId = Closures::all()->max('id');
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('closureValue', function ($data) {

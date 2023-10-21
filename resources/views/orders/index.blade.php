@@ -18,11 +18,11 @@
                                     <h4>Megrendelések</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    {!! Form::select('orderType', OrderTypeEnum::Options(), (empty($_COOKIE['orderType']) ? 'ACTIVE' : $_COOKIE['orderType']),
+                                    {!! Form::select('orderType', OrderTypeEnum::Options(), (empty($_COOKIE['orderType']) ? 'CUSTOMER' : $_COOKIE['orderType']),
                                             ['class'=>'select2 form-control', 'id' => 'orderType']) !!}
                                 </div>
-                                <div class="col-sm-1">
-                                    {!! Form::select('orderType', OrderStatusEnum::Options(), (empty($_COOKIE['orderStatus']) ? 'ORDERED' : $_COOKIE['orderStatus']),
+                                <div class="col-sm-2">
+                                    {!! Form::select('orderStatus', OrderStatusEnum::Options(), (empty($_COOKIE['orderStatus']) ? 'ORDERED' : $_COOKIE['orderStatus']),
                                             ['class'=>'select2 form-control', 'id' => 'orderStatus']) !!}
                                 </div>
                             </div>
@@ -32,7 +32,7 @@
                     <div class="clearfix"></div>
                     <div class="box box-primary">
                         <div class="box-body"  >
-                            <table class="table table-hover table-bordered partners-table" style="width: 100%;"></table>
+                            <table class="table table-hover table-bordered partners-table w-100"></table>
                         </div>
                     </div>
                     <div class="text-center"></div>
@@ -70,19 +70,22 @@
                 buttons: [],
             });
 
-            $('#orderType').change(function () {
-                let url = '{{ route('ordersIndex', [":orderType"]) }}';
-                createCookie('orderType', $('#orderType').val(), '30');
+            function loadUrl(url) {
                 url = url.replace(':orderType', ($('#orderType').val() == 'CUSTOMER') ? 'vevői' : 'szállítói');
+                url = url.replace(':orderStatus', ($('#orderStatus').val() == 'ORDERED') ? 'megrendelt' : ($('#orderStatus').val() == 'PACKAGED') ? 'csomagolt' : 'kiszállított');
                 table.ajax.url(url).load();
+            }
+
+            $('#orderType').change(function () {
+                let url = '{{ route('ordersIndex', [":orderType", ":orderStatus"]) }}';
+                createCookie('orderType', $('#orderType').val(), '30');
+                loadUrl(url);
             })
 
             $('#orderStatus').change(function () {
                 let url = '{{ route('ordersIndex', [":orderType", ":orderStatus"]) }}';
                 createCookie('orderStatus', $('#orderStatus').val(), '30');
-                url = url.replace(':orderType', ($('#orderType').val() == 'CUSTOMER') ? 'vevői' : 'szállítói');
-                url = url.replace(':orderStatus', ($('#orderStatus').val() == 'ORDERED') ? 'megrendelt' : ($('#orderStatus').val() == 'PACKAGED') ? 'csomagolt' : 'kiszállított');
-                table.ajax.url(url).load();
+                loadUrl(url);
             })
         });
     </script>

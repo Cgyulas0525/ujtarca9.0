@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateInvoicesRequest;
-use App\Http\Requests\UpdateInvoicesRequest;
 use App\Repositories\InvoicesRepository;
 use App\Http\Controllers\AppBaseController;
 
 use App\Models\Invoices;
 
 use Illuminate\Http\Request;
-use Flash;
-use Response;
 use Auth;
-use DB;
 use DataTables;
 use Form;
 
@@ -57,6 +52,7 @@ class InvoicesController extends AppBaseController
             }
             return view('invoices.index');
         }
+        return view('invoices.index');
     }
 
     public function create(): object
