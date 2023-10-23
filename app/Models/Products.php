@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Enums\ActiveEnum;
-use Barryvdh\DomPDF\Tests\TestCase;
 use Eloquent as Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Products
@@ -85,6 +85,17 @@ class Products extends Model
     public function orderdetails(): string|HasMany
     {
         return $this->hasMany(Orderdetails::class, 'products_id');
+    }
+
+    public function components(): array|BelongsToMany
+    {
+        return $this->belongsToMany(Component::class, 'component_product');
+    }
+
+    public function features(): array|BelongsToMany
+    {
+        return $this->belongsToMany(Feature::class, 'feature_product')
+            ->withPivot('value');
     }
 
     public function scopeActiveProducts($query): mixed

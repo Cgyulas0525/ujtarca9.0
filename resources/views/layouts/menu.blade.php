@@ -17,6 +17,8 @@
     <a href="#" class="nav-link {{ Request::is('cimlets*') ||
                                    Request::is('paymentMethods*') ||
                                    Request::is('quantities*') ||
+                                   Request::is('features*') ||
+                                   Request::is('components*') ||
                                    Request::is('partnerTypes*') ? 'active' : '' }}">
         <i class="fas fa-university"></i>
         <p>Szótár<i class="right fas fa-angle-left"></i></p>
@@ -50,6 +52,22 @@
                 <p>Mennyiségi egység</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('features.index') }}"
+               class="nav-link {{ Request::is('features*') ? 'active' : '' }}">
+                <i class="fas fa-comment"></i>
+                <p>Jellemzők</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('components.index') }}"
+               class="nav-link {{ Request::is('components*') ? 'active' : '' }}">
+                <i class="fas fa-comments"></i>
+                <p>Összetevők</p>
+            </a>
+        </li>
+
     </ul>
 </li>
 <li class="nav-item">
@@ -127,3 +145,4 @@
 {{--        <p>Orderdetails</p>--}}
 {{--    </a>--}}
 {{--</li>--}}
+

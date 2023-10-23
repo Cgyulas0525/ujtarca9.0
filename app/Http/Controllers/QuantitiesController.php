@@ -10,10 +10,8 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\Quantities;
 
 use Illuminate\Http\Request;
-use Flash;
 use Response;
 use Auth;
-use DB;
 use DataTables;
 
 class QuantitiesController extends AppBaseController

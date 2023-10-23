@@ -109,3 +109,6 @@ Route::resource('orderdetails', App\Http\Controllers\OrderdetailsController::cla
 Route::get('orderdetailsIndex/{id}', [OrderdetailsController::class, 'orderdetailsIndex'])->name('orderdetailsIndex');
 Route::get('orderdetailsCreate/{id}', [OrderdetailsController::class, 'orderdetailsCreate'])->name('orderdetailsCreate');
 Route::get('orderdetailsUpdate', [OrderdetailsController::class, 'orderdetailsUpdate'])->name('orderdetailsUpdate');
+
+Route::resource('features', App\Http\Controllers\FeatureController::class);
+Route::resource('components', App\Http\Controllers\ComponentController::class);
