@@ -19,8 +19,11 @@ return new class extends Migration
 
         Schema::create('component_product', function (Blueprint $table) {
             $table->bigInteger('component_id');
-            $table->bigIncrements('product_id');
+            $table->bigInteger('product_id');
             $table->string('value', 100)->nullable();
+
+            $table->unique(['component_id', 'product_id']);
+            $table->unique(['product_id', 'component_id']);
         });
     }
 

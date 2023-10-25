@@ -89,13 +89,13 @@ class Products extends Model
 
     public function components(): array|BelongsToMany
     {
-        return $this->belongsToMany(Component::class, 'component_product');
+        return $this->belongsToMany(Component::class, 'component_product')
+            ->withPivot('value');
     }
 
     public function features(): array|BelongsToMany
     {
-        return $this->belongsToMany(Feature::class, 'feature_product')
-            ->withPivot('value');
+        return $this->belongsToMany(Feature::class, 'feature_product');
     }
 
     public function scopeActiveProducts($query): mixed
