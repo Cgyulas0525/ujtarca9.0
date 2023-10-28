@@ -13,7 +13,7 @@ class ClosuresClass
         return !empty($data) ? ($data->dailysum - 20000) : 0;
     }
 
-    public static function getPeriodDailySum($day, $begin = NULL, $end = NULL): mixed
+    public static function getPeriodDailySum($day, $begin = NULL, $end = NULL): object
     {
         return Closures::whereBetween('closuredate', [is_null($begin) ? Closures::min('closuredate') : $begin, is_null($end) ? Closures::max('closuredate') : $end])
             ->selectRaw('sum(1) as db, sum(dailysum) as ossz')

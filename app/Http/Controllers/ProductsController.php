@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Redis;
 use Auth;
 use DataTables;
 use App\Traits\ProductPdfEmailTrait;
+use App\Models\Component;
+use App\Models\Feature;
 
 class ProductsController extends AppBaseController
 {
@@ -104,8 +106,7 @@ class ProductsController extends AppBaseController
         $input = $request->all();
         $products = $this->productsRepository->create($input);
         RedisClass::setexProducts();
-
-        return redirect(route('products.index'));
+        return view('products.edit')->with('products', $products);
     }
 
     public function show($id): object
@@ -117,12 +118,23 @@ class ProductsController extends AppBaseController
         return view('products.show')->with('products', $products);
     }
 
+    public function createPivotTables($product): void
+    {
+        if ($product->components->count() == 0) {
+            $product->components()->attach(Component::all(['id']));
+        }
+        if ($product->features->count() == 0) {
+            $product->features()->attach(Feature::all(['id']));
+        }
+    }
+
     public function edit($id): object
     {
         $products = $this->productsRepository->find($id);
         if (empty($products)) {
             return redirect(route('products.index'));
         }
+        $this->createPivotTables($products);
         return view('products.edit')->with('products', $products);
     }
 

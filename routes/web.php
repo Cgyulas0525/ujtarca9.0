@@ -16,6 +16,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\OrderdetailsController;
 use App\Http\Controllers\OrderReplyController;
 use \App\Http\Controllers\BusinessAnalysisController;
+use \App\Http\Controllers\ComponentProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,3 +113,5 @@ Route::get('orderdetailsUpdate', [OrderdetailsController::class, 'orderdetailsUp
 
 Route::resource('features', App\Http\Controllers\FeatureController::class);
 Route::resource('components', App\Http\Controllers\ComponentController::class);
+
+Route::get('componentProductIndex/{product}', [ComponentProductController::class, 'index'])->name('componentProductIndex');
