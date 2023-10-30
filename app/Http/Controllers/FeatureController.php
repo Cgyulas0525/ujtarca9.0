@@ -28,6 +28,10 @@ class FeatureController extends AppBaseController
     {
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('media', function ($data) {
+                return !Empty($data->getFirstMediaUrl($data->getTable() . $data->id)) ? $data->getFirstMediaUrl($data->getTable() . $data->id) : 'img/noAviableImage.jpg';
+            })
+
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('features.edit', $row->id) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
@@ -69,11 +73,12 @@ class FeatureController extends AppBaseController
     public function store(CreateFeatureRequest $request)
     {
         $input = $request->all();
-
         $feature = $this->featureRepository->create($input);
-
-        Flash::success('Feature saved successfully.');
-
+        $file = $request->file('file');
+        if (!empty($file)){
+            $feature->addMedia($file)->toMediaCollection($feature->getTable() . $feature->id);
+        }
+        Flash::success('Jellemző mentés sikeres megtörtént.');
         return redirect(route('features.index'));
     }
 
@@ -123,8 +128,13 @@ class FeatureController extends AppBaseController
         }
 
         $feature = $this->featureRepository->update($request->all(), $id);
+        $file = $request->file('file');
+        if (!empty($file)){
+            $feature->clearMediaCollection($feature->getTable() . $feature->id);
+            $feature->addMedia($file)->toMediaCollection($feature->getTable() . $feature->id);
+        }
 
-        Flash::success('Feature updated successfully.');
+        Flash::success('Jellemző módosítás sikeres megtörtént.');
 
         return redirect(route('features.index'));
     }

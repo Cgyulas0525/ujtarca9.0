@@ -123,9 +123,6 @@ class ProductsController extends AppBaseController
         if ($product->components->count() == 0) {
             $product->components()->attach(Component::all(['id']));
         }
-        if ($product->features->count() == 0) {
-            $product->features()->attach(Feature::all(['id']));
-        }
     }
 
     public function edit($id): object
