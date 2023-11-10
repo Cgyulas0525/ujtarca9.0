@@ -31,7 +31,6 @@ class FeatureController extends AppBaseController
             ->addColumn('media', function ($data) {
                 return !Empty($data->getFirstMediaUrl($data->getTable() . $data->id)) ? $data->getFirstMediaUrl($data->getTable() . $data->id) : 'img/noAviableImage.jpg';
             })
-
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('features.edit', $row->id) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
@@ -42,7 +41,6 @@ class FeatureController extends AppBaseController
             ->rawColumns(['action'])
             ->make(true);
     }
-
 
     /**
      * Display a listing of the Feature.
