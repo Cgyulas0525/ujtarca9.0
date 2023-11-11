@@ -6,6 +6,7 @@ use App\Classes\OrderClass;
 use App\Classes\RedisClass;
 use App\Enums\OrderTypeEnum;
 use App\Enums\OrderStatusEnum;
+use App\Enums\PartnerTypeEnum;
 use App\Http\Requests\CreateOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
 use App\Http\Controllers\AppBaseController;
@@ -96,6 +97,7 @@ class OrdersController extends AppBaseController
                 return Redis::get('orders_supplier_delivered');
             }
         }
+        return Redis::get('orders_all');
     }
 
     public function setRedis(?string $orderType = null, ?string $orderStatus = null): void
@@ -121,6 +123,9 @@ class OrdersController extends AppBaseController
             if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
                 OrderClass::setOrdersRedisFile('orders_supplier_delivered', OrderTypeEnum::SUPPLIER->value, OrderStatusEnum::DELIVERED->value);
             }
+        }
+        if (is_null($orderType)) {
+            OrderClass::setOrdersRedisFile('orders_all');
         }
     }
 
@@ -183,7 +188,7 @@ class OrdersController extends AppBaseController
     public function print($id): object
     {
         $this->order = Orders::find($id);
-        $this->owner = Partners::where('partnertypes_id', 5)->first();
+        $this->owner = Partners::where('partnertypes_id', PartnerTypeEnum::getPartnerTypesId(PartnerTypeEnum::OWNER->value))->first();
         $this->partner = Partners::find($this->order->partners_id);
         $this->details = Orderdetails::where('orders_id', $this->order->id)->get();
 
