@@ -40,51 +40,13 @@
 </div>
 
 <div class="form-group col-sm-6">
-    <div class="box box-primary" >
-        <div class="box-body">
-            <div class="col-lg-12 col-md-12 col-xs-12">
-                <section class="content-header">
-                    <div class="form-group col-sm-12">
-                        <div class="row">
-                            <h4>Összetevők</h4>
-                        </div>
-                    </div>
-                </section>
-                @include('flash::message')
-                <div class="clearfix"></div>
-                <div class="box box-primary">
-                    <table class="table table-hover table-bordered table w-100"></table>
-                    <div class="box-body"  >
-                    </div>
-                </div>
-                <div class="text-center"></div>
-            </div>
-        </div>
-    </div>
+    @include('layouts.table', ['title' => 'Összetevők',
+                               'class' => 'table table-hover table-bordered partners-table w-100'])
 </div>
 
 <div class="form-group col-sm-6">
-    <div class="box box-primary" >
-        <div class="box-body">
-            <div class="col-lg-12 col-md-12 col-xs-12">
-                <section class="content-header">
-                    <div class="form-group col-sm-12">
-                        <div class="row">
-                            <h4>Jellemzők</h4>
-                        </div>
-                    </div>
-                </section>
-                @include('flash::message')
-                <div class="clearfix"></div>
-                <div class="box box-primary">
-                    <table class="table table-hover table-bordered table w-100"></table>
-                    <div class="box-body"  >
-                    </div>
-                </div>
-                <div class="text-center"></div>
-            </div>
-        </div>
-    </div>
+    @include('layouts.table', ['title' => 'Jellemzők',
+                               'class' => 'table table-hover table-bordered f_table w-100'])
 </div>
 
 
@@ -120,7 +82,7 @@
                 priceControll();
             });
 
-            table = $('.table').DataTable({
+            table = $('.partners-table').DataTable({
                 serverSide: true,
                 scrollY: 300,
                 scrollX: true,
@@ -149,6 +111,37 @@
                 ],
                 buttons: [],
             });
+
+            var ftable = $('.f_table').DataTable({
+                serverSide: true,
+                scrollY: 300,
+                scrollX: true,
+                paging: false,
+                order: [[0, 'asc']],
+                ajax: "{{ route('componentProductIndex', ['product' => $products]) }}",
+                columns: [
+                    {title: 'Név', data: 'name', name: 'name'},
+                    {title: 'Mennyiség', data: 'value', name: 'value', id: 'value'},
+                    {title: 'componentId', data: 'componentId', name: 'componentId', id: 'componentId'},
+                    {title: 'productId', data: 'productId', name: 'productId', id: 'productId'},
+                ],
+                columnDefs: [
+                    {
+                        targets: [1],
+                        sClass: 'text-right',
+                        width:'150px',
+                        render: function ( data, type, full, meta ) {
+                            return '<input class="form-control text-right" type="number" value="'+ data +'" onfocusout="QuantityChange('+meta["row"]+', this.value)" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" style="width:250px;height:20px;font-size: 15px;"/>';
+                        },
+                    },
+                    {
+                        targets: [2,3],
+                        visible: false
+                    },
+                ],
+                buttons: [],
+            });
+
         });
 
         function QuantityChange(Row, value) {

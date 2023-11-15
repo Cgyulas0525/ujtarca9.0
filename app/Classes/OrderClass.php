@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redis;
 
 class OrderClass
 {
-    public static function sumOrderSupplierPrice($id)
+    public static function sumOrderSupplierPrice($id): object
     {
         return Orderdetails::where('orders_id', $id)->get()->sum('supplierPrice');
     }

@@ -29,7 +29,7 @@
                     <div class="clearfix"></div>
                     <div class="box box-primary">
                         <div class="box-body"  >
-                            <table class="table table-hover table-bordered partners-table" style="width: 100%;">
+                            <table class="table table-hover table-bordered partners-table w-100">
                                 @include('closures.table')
                             </table>
                         </div>
