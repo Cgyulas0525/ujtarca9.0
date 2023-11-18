@@ -17,6 +17,7 @@ use App\Http\Controllers\OrderdetailsController;
 use App\Http\Controllers\OrderReplyController;
 use \App\Http\Controllers\BusinessAnalysisController;
 use \App\Http\Controllers\ComponentProductController;
+use \App\Http\Controllers\FeatureProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,3 +116,4 @@ Route::resource('features', App\Http\Controllers\FeatureController::class);
 Route::resource('components', App\Http\Controllers\ComponentController::class);
 
 Route::get('componentProductIndex/{product}', [ComponentProductController::class, 'index'])->name('componentProductIndex');
+Route::get('featureProductIndex/{product}', [FeatureProductController::class, 'index'])->name('featureProductIndex');

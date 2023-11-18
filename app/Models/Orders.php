@@ -90,6 +90,29 @@ class Orders extends Model
         'detailsSum',
     ];
 
+    protected static $relations_to_cascade = ['orderdetails'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($resource) {
+            foreach (static::$relations_to_cascade as $relation) {
+                foreach ($resource->{$relation}()->get() as $item) {
+                    $item->delete();
+                }
+            }
+        });
+
+        static::restoring(function($resource) {
+            foreach (static::$relations_to_cascade as $relation) {
+                foreach ($resource->{$relation}()->get() as $item) {
+                    $item->withTrashed()->restore();
+                }
+            }
+        });
+    }
+
     public function partners(): string|BelongsTo
     {
         return $this->belongsTo(Partners::class, 'partners_id');
@@ -128,19 +151,11 @@ class Orders extends Model
     public function scopeOrdersByTypeAndStatus(Builder $query, ?string $type = NULL, ?string $status = NULL): void
     {
         $query->where('ordertype', $type)
-            ->where(function ($q) use ($type) {
-                if (is_null($type)) {
-                    $q->whereNotNull('ordertype');
-                } else {
-                    $q->where('ordertype', $type);
-                }
+            ->where(function ($query) use ($type) {
+                is_null($type) ? $query->whereNotNull('ordertype') : $query->whereRaw('year(ordertype) =' . $type);
             })
-            ->where(function ($q) use ($status) {
-                if (is_null($status)) {
-                    $q->whereNotNull('order_status');
-                } else {
-                    $q->where('order_status', $status);
-                }
+            ->where(function ($query) use ($status) {
+                is_null($status) ? $query->whereNotNull('order_status') : $query->whereRaw('year(order_status) =' . $status);
             });
     }
 

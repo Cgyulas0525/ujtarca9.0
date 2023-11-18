@@ -95,7 +95,8 @@ class Products extends Model
 
     public function features(): array|BelongsToMany
     {
-        return $this->belongsToMany(Feature::class, 'feature_product');
+        return $this->belongsToMany(Feature::class, 'feature_product')
+            ->withPivot('value');
     }
 
     public function scopeActiveProducts($query): mixed
