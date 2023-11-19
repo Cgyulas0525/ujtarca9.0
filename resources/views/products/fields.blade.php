@@ -74,11 +74,11 @@
                 }
             }
 
-            $('#price').change(function() {
+            $('#price').change(function () {
                 priceControll();
             });
 
-            $('#supplierprice').change(function() {
+            $('#supplierprice').change(function () {
                 priceControll();
             });
 
@@ -99,13 +99,13 @@
                     {
                         targets: [1],
                         sClass: 'text-right',
-                        width:'150px',
-                        render: function ( data, type, full, meta ) {
-                            return '<input class="form-control text-right" type="number" value="'+ data +'" onfocusout="QuantityChange('+meta["row"]+', this.value)" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" style="width:250px;height:20px;font-size: 15px;"/>';
+                        width: '150px',
+                        render: function (data, type, full, meta) {
+                            return '<input class="form-control text-right" type="number" value="' + data + '" onfocusout="QuantityChange(' + meta["row"] + ', this.value)" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" style="width:250px;height:20px;font-size: 15px;"/>';
                         },
                     },
                     {
-                        targets: [2,3],
+                        targets: [2, 3],
                         visible: false
                     },
                 ],
@@ -121,7 +121,8 @@
                 ajax: "{{ route('featureProductIndex', ['product' => $products]) }}",
                 columns: [
                     {title: 'Név', data: 'name', name: 'name'},
-                    {title: 'Ikon', data: "media", sClass: "text-center", "render": function (data) {
+                    {
+                        title: 'Ikon', data: "media", sClass: "text-center", "render": function (data) {
                             return '<img src="' + data + '" style="height:20px;width:20px;object-fit:cover;"/>';
                         }
                     },
@@ -133,10 +134,10 @@
                     {
                         targets: [2],
                         sClass: 'text-right',
-                        width:'150px',
-                        render: function ( data, type, full, meta ) {
+                        width: '150px',
+                        render: function (data, type, full, meta) {
                             var isChecked = data === 1 ? 'checked' : '';
-                            return '<input class="form-control text-right" type="checkbox" value="'+ data +'" onfocusout="QuantityChange('+meta["row"]+', this.value)" style="height:20px;font-size: 15px;" ' + isChecked + ' />';
+                            return '<input class="form-control text-right" type="checkbox" value="' + data + '" onfocusout="QuantityChange(' + meta["row"] + ', this.value)" style="height:20px;font-size: 15px;" ' + isChecked + ' />';
                         },
                     },
                     {
@@ -151,12 +152,12 @@
 
         function QuantityChange(Row, value) {
             var d = table.row(Row).data();
-            if ( d.value != value ) {
+            if (d.value != value) {
                 d.value = value;
                 $.ajax({
-                    type:"GET",
-                    url:"{{url('api/componentProductUpdate')}}",
-                    data: { productId: d.productId, componentId: d.componentId, value: value },
+                    type: "GET",
+                    url: "{{url('api/componentProductUpdate')}}",
+                    data: {productId: d.productId, componentId: d.componentId, value: value},
                     success: function (response) {
                         table.cell(Row, 1).data(d.value).draw();
                     },

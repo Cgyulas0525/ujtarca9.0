@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <h1>DASHBOARD</h1>
-        @include('dashboard.dashboard')
-
+    <div class="container">
+        <div class="row">
+            <h1>DASHBOARD</h1>
+            @include('dashboard.dashboard')
+        </div>
     </div>
-</div>
 @endsection

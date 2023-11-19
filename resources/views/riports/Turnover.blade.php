@@ -9,7 +9,7 @@
 @section('content')
     <div class="content">
         <div class="clearfix"></div>
-        <div class="box box-primary" >
+        <div class="box box-primary">
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
@@ -18,19 +18,26 @@
                     @include('flash::message')
                     <div class="clearfix"></div>
                     <div class="box box-primary">
-                        <div class="box-body"  >
+                        <div class="box-body">
                             <div class="col-lg-12 col-md-12 col-xs-12">
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header p-2">
                                             <ul class="nav nav-pills">
-                                                <li class="nav-item"><a class="nav-link active" href="#napi" data-toggle="tab">Napi</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="#heti" data-toggle="tab">Heti</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="#havi" data-toggle="tab">Havi</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="#fizetesi" data-toggle="tab">Fizetési mód</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="#twoyear" data-toggle="tab">Elmúlt 2 év</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="#bevki" data-toggle="tab">Bevétel/Kiadás</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="#bevkiheti" data-toggle="tab">Heti Bevétel/Kiadás</a></li>
+                                                <li class="nav-item"><a class="nav-link active" href="#napi"
+                                                                        data-toggle="tab">Napi</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#heti" data-toggle="tab">Heti</a>
+                                                </li>
+                                                <li class="nav-item"><a class="nav-link" href="#havi" data-toggle="tab">Havi</a>
+                                                </li>
+                                                <li class="nav-item"><a class="nav-link" href="#fizetesi"
+                                                                        data-toggle="tab">Fizetési mód</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#twoyear"
+                                                                        data-toggle="tab">Elmúlt 2 év</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#bevki"
+                                                                        data-toggle="tab">Bevétel/Kiadás</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#bevkiheti"
+                                                                        data-toggle="tab">Heti Bevétel/Kiadás</a></li>
                                             </ul>
                                         </div>
                                         <div class="card-body">
@@ -89,24 +96,24 @@
 
             hightchartsTheme();
 
-            var chart_napi = highchartLine( 'haviNapiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, 'nap'),
+            var chart_napi = highchartLine('haviNapiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, ['osszeg'], ['Bevétel']), 'Aktuális havi árbevétel', 'napi bontás', 'forint');
 
-            var chart_heti = highchartLine( 'hetiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>, 'nap'),
+            var chart_heti = highchartLine('hetiArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLast26Weeks(); ?>, ['osszeg'], ['Bevétel']), 'Havi árbevétel', 'havi bontás', 'forint');
 
-            var chart_havi = highchartLine( 'haviArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, 'nap'),
+            var chart_havi = highchartLine('haviArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, ['osszeg'], ['Bevétel']), 'Heti árbevétel', 'heti bontás', 'forint');
-            var chart_fizm = highchartLine( 'fizetesimod', 'line', 450, categoryUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, 'nap'),
+            var chart_fizm = highchartLine('fizetesimod', 'line', 450, categoryUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, ['cash', 'card', 'szcard'], ['Készpénz', 'Kártya', 'SZÉP kártya']), 'Fizetési mód', 'napi bontás', 'forint');
-            var chart_twoy = highchartLine( 'twoyears', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, 'nap'),
+            var chart_twoy = highchartLine('twoyears', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, ['elso', 'masodik'], ['-1 év', '-2 év']), 'Fizetési mód', 'napi bontás', 'forint');
-            var chart_bevk = highchartLine( 'bevkiad', 'line', 450, categoryUpload(<?php echo RiportsClass::monthInvoicesResult(); ?>, 'nap'),
+            var chart_bevk = highchartLine('bevkiad', 'line', 450, categoryUpload(<?php echo RiportsClass::monthInvoicesResult(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::monthInvoicesResult(); ?>, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
-            var chart_bevkheti = highchartLine( 'bevkiadheti', 'line', 450, categoryUpload(<?php echo RiportsClass::weekInvoicesResult(); ?>, 'nap'),
+            var chart_bevkheti = highchartLine('bevkiadheti', 'line', 450, categoryUpload(<?php echo RiportsClass::weekInvoicesResult(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::weekInvoicesResult(); ?>, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
 
-            $('#period').change(function() {
+            $('#period').change(function () {
                 let period = parseInt($(this).val());
                 let data = [];
                 switch (period) {
@@ -125,8 +132,9 @@
                     default:
                         alert('Ilyen nincs!');
                 }
-                chart_bevkheti = highchartLine( 'bevkiadheti', 'line', 450, categoryUpload(data, 'nap'),
-                    chartDataUpload(data, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');;
+                chart_bevkheti = highchartLine('bevkiadheti', 'line', 450, categoryUpload(data, 'nap'),
+                    chartDataUpload(data, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
+                ;
             });
 
         });

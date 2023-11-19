@@ -2,14 +2,14 @@
 
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-{{--    @include('layouts.datatables_css')--}}
+    {{--    @include('layouts.datatables_css')--}}
     @include('layouts.costumcss')
 @endsection
 
 @section('content')
     <div class="content">
         <div class="clearfix"></div>
-        <div class="box box-primary" >
+        <div class="box box-primary">
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
@@ -17,8 +17,10 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h4>Termékek
-                                        <a href="{{ route('productsPrint') }}" class="btn btn-success alapgomb printBtn" title="Nyomtatás"><i class="fas fa-print"></i></a>
-                                        <a href="{{ route('pdfEmail') }}" class="btn btn-success alapgomb printBtn" title="Email"><i class="fas fa-envelope-open"></i></a>
+                                        <a href="{{ route('productsPrint') }}" class="btn btn-success alapgomb printBtn"
+                                           title="Nyomtatás"><i class="fas fa-print"></i></a>
+                                        <a href="{{ route('pdfEmail') }}" class="btn btn-success alapgomb printBtn"
+                                           title="Email"><i class="fas fa-envelope-open"></i></a>
                                     </h4>
                                 </div>
                                 <div class="col-sm-2">
@@ -32,7 +34,7 @@
                     <div class="clearfix"></div>
                     <div class="box box-primary">
                         <table class="table table-hover table-bordered partners-table w-100"></table>
-                        <div class="box-body"  >
+                        <div class="box-body">
                         </div>
                     </div>
                     <div class="text-center"></div>
@@ -59,16 +61,37 @@
                 order: [[1, 'asc']],
                 ajax: "{{ route('productsIndex', [empty($_COOKIE['productsActive']) ? 'aktív' : (($_COOKIE['productsActive'] == 'ACTIVE') ? 'aktív' : 'inaktív')]) }}",
                 columns: [
-                    {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('products.create') !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
+                    {
+                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('products.create') !!}"><i class="fa fa-plus-square"></i></a>',
+                        data: 'action',
+                        sClass: "text-center",
+                        width: '200px',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                     {title: 'Név', data: 'name', name: 'name'},
                     {title: 'Mennyiségi egység', data: 'quantityName', sClass: "text-center", name: 'quantityName'},
-                    {title: 'Ár', data: 'price', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'price'},
-                    {title: 'Besz.Ár', data: 'supplierprice', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'supplierprice'},
-                    {title: 'Státusz', data: 'active', sClass: "text-center", width:'100px', name: 'active'},
+                    {
+                        title: 'Ár',
+                        data: 'price',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '100px',
+                        name: 'price'
+                    },
+                    {
+                        title: 'Besz.Ár',
+                        data: 'supplierprice',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '100px',
+                        name: 'supplierprice'
+                    },
+                    {title: 'Státusz', data: 'active', sClass: "text-center", width: '100px', name: 'active'},
                 ],
                 buttons: [],
-                fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     if (aData.active == 'inaktív') {
                         $('td', nRow).css('background-color', 'lightgray');
                     }

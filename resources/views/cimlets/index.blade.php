@@ -8,7 +8,7 @@
 @section('content')
     <div class="content">
         <div class="clearfix"></div>
-        <div class="box box-primary" >
+        <div class="box box-primary">
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
@@ -17,7 +17,7 @@
                     @include('flash::message')
                     <div class="clearfix"></div>
                     <div class="box box-primary">
-                        <div class="box-body"  >
+                        <div class="box-body">
                             <table class="table table-hover table-bordered partners-table w-100"></table>
                         </div>
                     </div>
@@ -45,10 +45,24 @@
                 paging: false,
                 ajax: "{{ route('cimlets.index') }}",
                 columns: [
-                    {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('cimlets.create') !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
+                    {
+                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('cimlets.create') !!}"><i class="fa fa-plus-square"></i></a>',
+                        data: 'action',
+                        sClass: "text-center",
+                        width: '200px',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                     {title: 'Név', data: 'name', name: 'name'},
-                    {title: 'Érték', data: 'value', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'50px', name: 'value'},
+                    {
+                        title: 'Érték',
+                        data: 'value',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '50px',
+                        name: 'value'
+                    },
                 ]
             });
 

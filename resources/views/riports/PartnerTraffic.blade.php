@@ -8,7 +8,7 @@
 @section('content')
     <div class="content">
         <div class="clearfix"></div>
-        <div class="box box-primary" >
+        <div class="box box-primary">
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
@@ -47,7 +47,7 @@
                     @include('flash::message')
                     <div class="clearfix"></div>
                     <div class="box box-primary" style="margin-top: 10px;">
-                        <div class="box-body"  >
+                        <div class="box-body">
                             <table class="table table-hover table-bordered partners-table" style="width: 100%;">
                                 @include('invoices.table')
                             </table>
@@ -78,14 +78,41 @@
                 order: [[3, 'desc'], [1, 'asc'], [2, 'asc']],
                 ajax: "{{ route('pTIndex') }}",
                 columns: [
-                    {title: 'Id', data: 'id', sClass: "text-center", width: '1px', name: 'id', orderable: false, searchable: false},
-                    {title: 'Partner', data: 'partnerName', width:'350px', name: 'partnerName'},
+                    {
+                        title: 'Id',
+                        data: 'id',
+                        sClass: "text-center",
+                        width: '1px',
+                        name: 'id',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {title: 'Partner', data: 'partnerName', width: '350px', name: 'partnerName'},
                     {title: 'Számlaszám', data: 'invoicenumber', name: 'invoicenumber'},
-                    {title: 'Kelt', data: 'dated', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'dated'},
-                    {title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'performancedate'},
-                    {title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'deadline'},
+                    {
+                        title: 'Kelt', data: 'dated', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'dated'
+                    },
+                    {
+                        title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'performancedate'
+                    },
+                    {
+                        title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'deadline'
+                    },
                     {title: 'Fizetési mód', data: 'paymentMethodName', name: 'paymentMethodName'},
-                    {title: 'Összeg', data: 'amount', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'amount'},
+                    {
+                        title: 'Összeg',
+                        data: 'amount',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '100px',
+                        name: 'amount'
+                    },
                 ],
                 columnDefs: [
                     {
@@ -113,7 +140,7 @@
 
                     // Total over this page
                     pageTotal = api
-                        .column(7, { page: 'current' })
+                        .column(7, {page: 'current'})
                         .data()
                         .reduce(function (a, b) {
                             return intVal(a) + intVal(b);

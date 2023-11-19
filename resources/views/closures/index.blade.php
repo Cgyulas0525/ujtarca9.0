@@ -8,7 +8,7 @@
 @section('content')
     <div class="content">
         <div class="clearfix"></div>
-        <div class="box box-primary" >
+        <div class="box box-primary">
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
@@ -28,7 +28,7 @@
                     @include('flash::message')
                     <div class="clearfix"></div>
                     <div class="box box-primary">
-                        <div class="box-body"  >
+                        <div class="box-body">
                             <table class="table table-hover table-bordered partners-table w-100">
                                 @include('closures.table')
                             </table>
@@ -60,13 +60,52 @@
                 select: false,
 
                 columns: [
-                    {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('closures.create') !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
-                    {title: 'Kelt', data: 'closuredate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'closuredate'},
-                    {title: 'Kártya', data: 'card', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'card'},
-                    {title: 'Szép kártya', data: 'szcard', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'szcard'},
-                    {title: 'Napközben', data: 'dayduring', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'dayduring'},
-                    {title: 'Összesen', data: 'closureValue', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'closureValue',},
+                    {
+                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('closures.create') !!}"><i class="fa fa-plus-square"></i></a>',
+                        data: 'action',
+                        sClass: "text-center",
+                        width: '200px',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        title: 'Kelt', data: 'closuredate', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'closuredate'
+                    },
+                    {
+                        title: 'Kártya',
+                        data: 'card',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '150px',
+                        name: 'card'
+                    },
+                    {
+                        title: 'Szép kártya',
+                        data: 'szcard',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '150px',
+                        name: 'szcard'
+                    },
+                    {
+                        title: 'Napközben',
+                        data: 'dayduring',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '150px',
+                        name: 'dayduring'
+                    },
+                    {
+                        title: 'Összesen',
+                        data: 'closureValue',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '150px',
+                        name: 'closureValue',
+                    },
                 ],
                 buttons: [],
                 footerCallback: function (row, data, start, end, display) {
@@ -87,7 +126,7 @@
 
                     // Total over this page
                     pageTotal = api
-                        .column(5, { page: 'current' })
+                        .column(5, {page: 'current'})
                         .data()
                         .reduce(function (a, b) {
                             return intVal(a) + intVal(b);

@@ -3,15 +3,15 @@
         <table class="table" id="orders-table">
             <thead>
             <tr>
-                
+
                 <th colspan="3">Action</th>
             </tr>
             </thead>
             <tbody>
             @foreach($orders as $orders)
                 <tr>
-                    
-                    <td  style="width: 120px">
+
+                    <td style="width: 120px">
                         {!! Form::open(['route' => ['orders.destroy', $orders->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
                             <a href="{{ route('orders.show', [$orders->id]) }}"

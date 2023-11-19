@@ -8,7 +8,7 @@
 @section('content')
     <div class="content">
         <div class="clearfix"></div>
-        <div class="box box-primary" >
+        <div class="box box-primary">
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
@@ -22,7 +22,8 @@
                                             ['class'=>'select2 form-control', 'id' => 'active']) !!}
                                 </div>
                                 <div class="col-sm-3">
-                                    <a href="#" class="btn btn-danger deaktivBtn">1 éve nem aktív partnerek inaktíválása</a>
+                                    <a href="#" class="btn btn-danger deaktivBtn">1 éve nem aktív partnerek
+                                        inaktíválása</a>
                                 </div>
 
                             </div>
@@ -31,7 +32,7 @@
                     @include('flash::message')
                     <div class="clearfix"></div>
                     <div class="box box-primary">
-                        <div class="box-body"  >
+                        <div class="box-body">
                             <table class="table table-hover table-bordered partners-table w-100"></table>
                         </div>
                     </div>
@@ -53,22 +54,29 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY:  550,
+                scrollY: 550,
                 scrollX: true,
                 paging: false,
                 order: [[0, 'asc']],
                 ajax: "{{ route('partnersIndex', [empty($_COOKIE['partnersActive']) ? 'aktív' : (($_COOKIE['partnersActive'] == 'ACTIVE') ? 'aktív' : 'inaktív')]) }}",
                 columns: [
-                    {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('partners.create') !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
+                    {
+                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('partners.create') !!}"><i class="fa fa-plus-square"></i></a>',
+                        data: 'action',
+                        sClass: "text-center",
+                        width: '200px',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                     {title: 'Név', data: 'name', name: 'name'},
                     {title: 'Típus', data: 'partnerTypesName', name: 'partnerTypesName'},
                     {title: 'Email', data: 'email', name: 'email'},
                     {title: 'Telefon', data: 'phonenumber', name: 'phonenumber'},
-                    {title: 'Státusz', data: 'active', sClass: "text-center", width:'100px', name: 'active'},
+                    {title: 'Státusz', data: 'active', sClass: "text-center", width: '100px', name: 'active'},
                 ],
                 buttons: [],
-                fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     if (aData.active == 'inaktív') {
                         $('td', nRow).css('background-color', 'lightgray');
                     }
@@ -78,8 +86,8 @@
                 }
             });
 
-			$('#active').change(function () {
-				let url = '{{ route('partnersIndex', [":active"]) }}';
+            $('#active').change(function () {
+                let url = '{{ route('partnersIndex', [":active"]) }}';
                 createCookie('partnersActive', $('#active').val(), '30');
                 url = url.replace(':active', ($('#active').val() == 'INACTIVE') ? 'inaktív' : 'aktív');
                 table.ajax.url(url).load();
@@ -97,8 +105,8 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            type:"GET",
-                            url:"{{url('api/partnerInactivation')}}",
+                            type: "GET",
+                            url: "{{url('api/partnerInactivation')}}",
                             success: function (response) {
                                 console.log('ok:', response);
                                 window.location.reload(true);

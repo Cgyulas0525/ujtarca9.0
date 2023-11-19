@@ -13,32 +13,32 @@
 
         RequiredBackgroundModify('.form-control')
 
-        $('#postcode').change(function() {
+        $('#postcode').change(function () {
             let postcode = $('#postcode').val() != 0 ? $('#postcode').val() : -99999;
             let settlement_id = $('#settlement_id').val() != 0 ? $('#settlement_id').val() : -99999;
-            if( postcode != -99999 ){
+            if (postcode != -99999) {
                 $.ajax({
-                    type:"GET",
-                    url:"{{url('postcodeSettlementDDDW')}}?postcode="+postcode,
-                    success:function(res){
-                        if(res){
+                    type: "GET",
+                    url: "{{url('postcodeSettlementDDDW')}}?postcode=" + postcode,
+                    success: function (res) {
+                        if (res) {
                             console.log(res)
                             $("#settlement_id").empty();
                             // $("#settlement_id").append('<option></option>');
-                            $.each(res,function(key,value){
-                                $("#settlement_id").append('<option value="'+value.id+'">'+value.name+'</option>');
+                            $.each(res, function (key, value) {
+                                $("#settlement_id").append('<option value="' + value.id + '">' + value.name + '</option>');
                             });
 
-                            if ( settlement_id != -99999 ) {
+                            if (settlement_id != -99999) {
                                 $('#settlement_id').val(settlement_id);
                             }
 
-                        }else{
+                        } else {
                             $("#settlement_id").empty();
                         }
                     }
                 });
-            }else{
+            } else {
                 $("#settlement_id").empty();
             }
         });
@@ -54,12 +54,12 @@
                 cancelButtonText: "Kilép",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var rows = table.rows({ selected: true } ).data();
-                    for ( i = 0; i < rows.length; i++) {
+                    var rows = table.rows({selected: true}).data();
+                    for (i = 0; i < rows.length; i++) {
                         $.ajax({
-                            type:"GET",
-                            url:"{{url('api/copyCustomerOrderDetailToShoppingCart')}}",
-                            data: { Id: rows[i].Id, Product: rows[i].Product},
+                            type: "GET",
+                            url: "{{url('api/copyCustomerOrderDetailToShoppingCart')}}",
+                            data: {Id: rows[i].Id, Product: rows[i].Product},
                             success: function (response) {
                                 console.log('Error:', response);
                             },

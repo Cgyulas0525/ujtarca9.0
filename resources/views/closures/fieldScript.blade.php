@@ -18,9 +18,9 @@
 
         function dailyAmount() {
             $.ajax({
-                type:"GET",
-                url:"{{url('closureCimletsSum')}}",
-                data: { id: closuresId },
+                type: "GET",
+                url: "{{url('closureCimletsSum')}}",
+                data: {id: closuresId},
                 success: function (response) {
                     $('#dailysum').val(parseInt($('#card').val()) + parseInt($('#szcard').val()) + parseInt($('#dayduring').val()) + parseInt(response));
                 },
@@ -53,10 +53,18 @@
             select: false,
             ajax: "{{ route('closureCimletsIndex', ['id' => (isset($closures) ? $closures->id : -9999)]) }}",
             columns: [
-                {title: 'Cimlet', data: 'cimletName', name: 'cimletName', id: 'cimletName' },
+                {title: 'Cimlet', data: 'cimletName', name: 'cimletName', id: 'cimletName'},
                 {title: 'Darab', data: 'value', name: 'value', id: 'value'},
                 {title: 'cimletValue', data: 'cimletValue', name: 'cimletValue', id: 'cimletValue'},
-                {title: 'Érték', data: 'sumValue', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'150px', name: 'sumValue', id: 'sumValue'},
+                {
+                    title: 'Érték',
+                    data: 'sumValue',
+                    render: $.fn.dataTable.render.number('.', ',', 0),
+                    sClass: "text-right",
+                    width: '150px',
+                    name: 'sumValue',
+                    id: 'sumValue'
+                },
                 {title: 'Id', data: 'id', name: 'id', id: 'id'},
             ],
             columnDefs: [
@@ -67,9 +75,9 @@
                 {
                     targets: [1],
                     sClass: 'text-right',
-                    width:'150px',
-                    render: function ( data, type, full, meta ) {
-                        return '<input class="form-control text-right" type="number" value="'+ data +'" onfocusout="QuantityChange('+meta["row"]+', this.value)" pattern="[0-9]+([\.,][0-9]+)?" step="1" style="width:250px;height:20px;font-size: 15px;"/>';
+                    width: '150px',
+                    render: function (data, type, full, meta) {
+                        return '<input class="form-control text-right" type="number" value="' + data + '" onfocusout="QuantityChange(' + meta["row"] + ', this.value)" pattern="[0-9]+([\.,][0-9]+)?" step="1" style="width:250px;height:20px;font-size: 15px;"/>';
                     },
                 }
             ],
@@ -83,7 +91,7 @@
         var out = parseInt($('#out').val());
         var dailysum = parseInt($('#dailysum').val());
 
-        if ( d.value != value ) {
+        if (d.value != value) {
 
             out = out - (parseInt(d.value) * parseInt(d.cimletValue));
             dailysum = dailysum - (parseInt(d.value) * parseInt(d.cimletValue));
@@ -95,9 +103,9 @@
             $('#out').val(out + parseInt(d.sumValue));
             $('#dailysum').val(dailysum + parseInt(d.sumValue))
             $.ajax({
-                type:"GET",
-                url:"{{url('closureCimletsUpdate')}}",
-                data: { id: d.id, value: value },
+                type: "GET",
+                url: "{{url('closureCimletsUpdate')}}",
+                data: {id: d.id, value: value},
                 success: function (response) {
                     // console.log('Response:', response);
                 },

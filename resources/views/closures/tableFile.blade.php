@@ -12,7 +12,7 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered cimletstable" style="width: 100%;"></table>
+                    <table class="table table-hover table-bordered cimletstable w-100"></table>
                 </div>
             </div>
         </div>
