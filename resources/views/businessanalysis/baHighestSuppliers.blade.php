@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="row">
-    @foreach(( new App\Services\InvoiceService)->bs(new App\Classes\BestSupplierClass(date('Y'), 6)) as $data)
+    @foreach(( new App\Services\InvoiceService)->bestSupplier(new App\Classes\BestSupplierClass(date('Y'), 6)) as $data)
         <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="description-block border-right">
                 <span class="description-text">{{ substr($data->partner->name, 0, 30) }}</span>

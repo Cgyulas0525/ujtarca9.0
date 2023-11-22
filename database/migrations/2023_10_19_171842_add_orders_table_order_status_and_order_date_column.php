@@ -13,7 +13,7 @@ return new class extends Migration
         }
 
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('order_status', 25)->nullable()->after('description');
+            $table->string('order_status', 25)->nullable()->default('megrendelt')->after('description');
             $table->date('delivered_date')->nullable()->after('order_status');
         });
     }

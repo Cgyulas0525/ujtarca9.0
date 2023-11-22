@@ -152,10 +152,10 @@ class Orders extends Model
     {
         $query->where('ordertype', $type)
             ->where(function ($query) use ($type) {
-                is_null($type) ? $query->whereNotNull('ordertype') : $query->whereRaw('year(ordertype) =' . $type);
+                is_null($type) ? $query->whereNotNull('ordertype') : $query->where('ordertype',  $type);
             })
             ->where(function ($query) use ($status) {
-                is_null($status) ? $query->whereNotNull('order_status') : $query->whereRaw('year(order_status) =' . $status);
+                is_null($status) ? $query->whereNotNull('order_status') : $query->where('order_status', $status);
             });
     }
 
