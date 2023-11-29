@@ -15,6 +15,7 @@ class OrdersRepository extends BaseRepository
         'delivered_date',
         'ordertype',
         'detailsum',
+        'delivery_id',
     ];
 
     public function getFieldsSearchable(): array

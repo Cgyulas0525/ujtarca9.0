@@ -82,6 +82,8 @@ Route::get('RevenueExpenditureMonthIndex', [RiportsController::class, 'RevenueEx
 Route::get('TurnoverIndex', [RiportsController::class, 'TurnoverIndex'])->name('TurnoverIndex');
 
 Route::get('postcodeSettlementDDDW',[PartnersController::class, 'postcodeSettlementDDDW'])->name('postcodeSettlementDDDW');
+Route::get('settlementPostcodeByDDDW',[PartnersController::class, 'settlementPostcodeByDDDW'])->name('settlementPostcodeByDDDW');
+
 Route::get('partnersIndex/{active?}', [PartnersController::class, 'index'])->name('partnersIndex');
 Route::get('partnerFactSheet/{partner}/{year}', [PartnersController::class, 'partnerFactSheet'])->name('partnerFactSheet');
 Route::get('partnerPeriodicAccounts/{partner}/{months}', [PartnersController::class, 'partnerPeriodicAccounts'])->name('partnerPeriodicAccounts');
@@ -117,3 +119,9 @@ Route::resource('components', App\Http\Controllers\ComponentController::class);
 
 Route::get('componentProductIndex/{product}', [ComponentProductController::class, 'index'])->name('componentProductIndex');
 Route::get('featureProductIndex/{product}', [FeatureProductController::class, 'index'])->name('featureProductIndex');
+
+Route::resource('locations', App\Http\Controllers\LocationController::class);
+Route::resource('deliveries', App\Http\Controllers\DeliveryController::class);
+
+Route::post('addLocation', [App\Http\Controllers\LocationController::class, 'addLocation'])->name('addLocation');
+Route::get('getLocationByName', [App\Http\Controllers\LocationController::class, 'getLocationByName'])->name('getLocationByName');

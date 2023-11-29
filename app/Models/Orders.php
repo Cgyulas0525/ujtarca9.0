@@ -46,6 +46,7 @@ class Orders extends Model
         'delivered_date',
         'ordertype',
         'detailsum',
+        'delivery_id',
     ];
 
     /**
@@ -63,6 +64,7 @@ class Orders extends Model
         'delivered_date' => 'date',
         'ordertype' => OrderTypeEnum::class,
         'detailsum' => 'integer',
+        'delivery_id' => 'integer',
     ];
 
     /**
@@ -77,6 +79,7 @@ class Orders extends Model
         'description' => 'nullable|string|max:500',
         'order_status' => 'nullable|string|max:25',
         'delivered_date' => 'nullable',
+        'delivery_id' => 'nullable',
         'ordertype' => 'required|string|max:25',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
@@ -113,6 +116,11 @@ class Orders extends Model
     public function partners(): string|BelongsTo
     {
         return $this->belongsTo(Partners::class, 'partners_id');
+    }
+
+    public function delivery(): string|BelongsTo
+    {
+        return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 
     public function orderdetails(): string|HasMany

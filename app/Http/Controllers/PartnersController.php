@@ -161,13 +161,8 @@ class PartnersController extends AppBaseController
     public static function DDDW($partnertypes = null): array
     {
         return [" "] + Partners::where(function ($query) use ($partnertypes) {
-                if (is_null($partnertypes)) {
-                    $query->whereNotNull('partnertypes_id');
-                } else {
-                    $query->where('partnertypes_id', '=', $partnertypes);
-                }
-            })
-                ->where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
+                is_null($partnertypes) ? $query->whereNotNull('partnertypes_id') : $query->where('partnertypes_id', '=', $partnertypes);
+            })->where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
     }
 
     public static function fields($partners): array
@@ -252,8 +247,13 @@ class PartnersController extends AppBaseController
         return $formGroupArray;
     }
 
-    public function postcodeSettlementDDDW(Request $request): array
+    public function postcodeSettlementDDDW(Request $request): object
     {
         return SettlementsClass::postcodeSettlementDDDW($request->get('postcode'));
+    }
+
+    public function settlementPostcodeByDDDW(Request $request): object
+    {
+        return SettlementsClass::settlementPostcodeByDDDW($request->get('id'));
     }
 }

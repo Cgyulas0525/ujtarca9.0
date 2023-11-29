@@ -207,7 +207,7 @@
 <script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.print.min.js"></script>
 
-<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+{{--<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>--}}
 
 <script src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/searchpanes/2.0.0/js/dataTables.searchPanes.min.js"></script>

@@ -19,6 +19,7 @@
                                    Request::is('quantities*') ||
                                    Request::is('features*') ||
                                    Request::is('components*') ||
+                                   Request::is('locations*') ||
                                    Request::is('partnerTypes*') ? 'active' : '' }}">
         <i class="fas fa-university"></i>
         <p>Szótár<i class="right fas fa-angle-left"></i></p>
@@ -59,7 +60,6 @@
                 <p>Jellemzők</p>
             </a>
         </li>
-
         <li class="nav-item">
             <a href="{{ route('components.index') }}"
                class="nav-link {{ Request::is('components*') ? 'active' : '' }}">
@@ -67,7 +67,13 @@
                 <p>Összetevők</p>
             </a>
         </li>
-
+        <li class="nav-item">
+            <a href="{{ route('locations.index') }}"
+               class="nav-link {{ Request::is('locations*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-home"></i>
+                <p>Kiszállítás cím</p>
+            </a>
+        </li>
     </ul>
 </li>
 <li class="nav-item">
@@ -82,6 +88,13 @@
        class="nav-link {{ Request::is('products*') ? 'active' : '' }}">
         <i class="fab fa-product-hunt"></i>
         <p>Termékek</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('deliveries.index') }}"
+       class="nav-link {{ Request::is('deliveries*') ? 'active' : '' }}">
+        <i class="fas fa-truck"></i>
+        <p>Kiszállítás</p>
     </a>
 </li>
 <li class="nav-item">
@@ -145,4 +158,6 @@
 {{--        <p>Orderdetails</p>--}}
 {{--    </a>--}}
 {{--</li>--}}
+
+
 

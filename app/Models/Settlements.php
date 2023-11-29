@@ -65,4 +65,9 @@ class Settlements extends Model
     {
         return $this->hasMany(Partners::class, 'settlement_id');
     }
+
+    public function locations(): string|HasMany
+    {
+        return $this->hasMany(Location::class, 'settlement_id');
+    }
 }

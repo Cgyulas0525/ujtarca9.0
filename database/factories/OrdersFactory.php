@@ -6,6 +6,7 @@ use App\Enums\OrderStatusEnum;
 use App\Enums\OrderTypeEnum;
 use App\Models\Orders;
 use App\Models\Partners;
+use App\Models\Delivery;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrdersFactory extends Factory
@@ -23,6 +24,7 @@ class OrdersFactory extends Factory
             'delivered_date' => $this->faker->date,
             'ordertype' => OrderTypeEnum::CUSTOMER->value,
             'detailsum' => $this->faker->randomDigitNotNull,
+            'delivery_id' => Delivery::factory()->create(),
         ];
     }
 }

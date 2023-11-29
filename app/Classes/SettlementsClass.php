@@ -18,8 +18,13 @@ class SettlementsClass
         return [" "] + $settlement->pluck('postcode', 'postcode')->toArray();
     }
 
-    public static function postcodeSettlementDDDW($postcode): array
+    public static function postcodeSettlementDDDW($postcode): object
     {
         return Settlements::where('postcode', $postcode)->select('name', 'id')->orderBy('name')->get();
+    }
+
+    public static function settlementPostcodeByDDDW($id): object
+    {
+        return Settlements::where('id', $id)->select('postcode', 'id')->orderBy('postcode')->get();
     }
 }

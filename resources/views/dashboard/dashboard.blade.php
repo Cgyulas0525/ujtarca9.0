@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="public/css/app.css">
-    <link rel="stylesheet" href="public/css/Highcharts.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/Highcharts.css">
     @include('layouts.costumcss')
 @endsection
 

@@ -25,12 +25,11 @@
         margin-bottom: 2px;
     }
 
-    .szuresgomb {
+    .filterBtn {
         border: 2px solid gray;
         box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
         font-size: 15px;
-        margin-left: 20px;
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
 
