@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class DeliveryController extends AppBaseController
 {
-    /** @var DeliveryRepository $deliveryRepository*/
+    /** @var DeliveryRepository $deliveryRepository */
     private $deliveryRepository;
 
     public function __construct(DeliveryRepository $deliveryRepo)
@@ -67,11 +67,14 @@ class DeliveryController extends AppBaseController
     public function store(CreateDeliveryRequest $request)
     {
         $input = $request->all();
-
         $delivery = $this->deliveryRepository->create($input);
+        return redirect(route('deliveries.index'));
+    }
 
-        Flash::success('Delivery saved successfully.');
 
+    public function storeModal(Request $request)
+    {
+        $delivery = $this->deliveryRepository->create($request->all());
         return redirect(route('deliveries.index'));
     }
 
@@ -81,13 +84,9 @@ class DeliveryController extends AppBaseController
     public function show($id)
     {
         $delivery = $this->deliveryRepository->find($id);
-
         if (empty($delivery)) {
-            Flash::error('Delivery not found');
-
             return redirect(route('deliveries.index'));
         }
-
         return view('deliveries.show')->with('delivery', $delivery);
     }
 
@@ -97,13 +96,9 @@ class DeliveryController extends AppBaseController
     public function edit($id)
     {
         $delivery = $this->deliveryRepository->find($id);
-
         if (empty($delivery)) {
-            Flash::error('Delivery not found');
-
             return redirect(route('deliveries.index'));
         }
-
         return view('deliveries.edit')->with('delivery', $delivery);
     }
 
@@ -113,17 +108,20 @@ class DeliveryController extends AppBaseController
     public function update($id, UpdateDeliveryRequest $request)
     {
         $delivery = $this->deliveryRepository->find($id);
-
         if (empty($delivery)) {
-            Flash::error('Delivery not found');
-
             return redirect(route('deliveries.index'));
         }
-
         $delivery = $this->deliveryRepository->update($request->all(), $id);
+        return redirect(route('deliveries.index'));
+    }
 
-        Flash::success('Delivery updated successfully.');
-
+    public function updateModal(Request $request)
+    {
+        $delivery = Delivery::find($request->get('id'));
+        if (empty($delivery)) {
+            return redirect(route('deliveries.index'));
+        }
+        $delivery = $this->deliveryRepository->update($request->all(), $request->get('id'));
         return redirect(route('deliveries.index'));
     }
 
@@ -135,17 +133,10 @@ class DeliveryController extends AppBaseController
     public function destroy($id)
     {
         $delivery = $this->deliveryRepository->find($id);
-
         if (empty($delivery)) {
-            Flash::error('Delivery not found');
-
             return redirect(route('deliveries.index'));
         }
-
         $this->deliveryRepository->delete($id);
-
-        Flash::success('Delivery deleted successfully.');
-
         return redirect(route('deliveries.index'));
     }
 }

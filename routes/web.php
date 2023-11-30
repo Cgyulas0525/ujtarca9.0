@@ -125,3 +125,6 @@ Route::resource('deliveries', App\Http\Controllers\DeliveryController::class);
 
 Route::post('addLocation', [App\Http\Controllers\LocationController::class, 'addLocation'])->name('addLocation');
 Route::get('getLocationByName', [App\Http\Controllers\LocationController::class, 'getLocationByName'])->name('getLocationByName');
+
+Route::post('updateModal', [App\Http\Controllers\DeliveryController::class, 'updateModal'])->name('updateModal');
+Route::get('storeModal', [App\Http\Controllers\DeliveryController::class, 'storeModal'])->name('storeModal');

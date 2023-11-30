@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\BeforeActionClass;
 use App\Classes\RedisClass;
 use App\Enums\ActiveEnum;
 use App\Models\Partners;
@@ -12,13 +11,18 @@ use Illuminate\Support\Facades\Config;
 
 class DestroysController extends Controller
 {
+
     public function setex($table): void
     {
-        match ($table) {
-            'Orders' => RedisClass::setexOrders(),
-            'Products' => RedisClass::setexProducts(),
-            'Partners' => RedisClass::setexPartners(),
-        };
+        $tablesArray = ['Orders', 'Products', 'Partners'];
+
+        if (collect($tablesArray)->contains($table)) {
+            match ($table) {
+                'Orders' => RedisClass::setexOrders(),
+                'Products' => RedisClass::setexProducts(),
+                'Partners' => RedisClass::setexPartners(),
+            };
+        }
     }
 
     public function beforeDestroys($table, $id, $route): object

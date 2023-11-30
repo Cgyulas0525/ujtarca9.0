@@ -1,7 +1,9 @@
 @section('css')
-    @include('layouts.datatables_css')
+{{--    @include('layouts.datatables_css')--}}
     @include('layouts.costumcss')
 @endsection
+
+@include('deliveries.modal')
 <!-- Delivery Number Field -->
 <div class="form-group col-sm-2">
     {!! Form::label('delivery_number', 'Sorszám:') !!}
@@ -31,67 +33,7 @@
 <div class="form-group col-sm-12">
     {!! Form::label('description', 'Megjegyzés:') !!}
     {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 4]) !!}
+    {!! Form::hidden('id', isset($delivery) ? $delivery->id : null, ['class' => 'form-control', 'id' => 'id']) !!}
 </div>
 
-@include('deliveries.modal')
 
-@section('scripts')
-    <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
-    @include('functions.settlement.settlementPostcode_js')
-
-    <script type="text/javascript">
-        $(function () {
-            ajaxSetup();
-            RequiredBackgroundModify('.form-control')
-        });
-
-        $('#addPartnerBtn').click(function() {
-            $.ajax({
-                method: 'POST',
-                url: "{{url('addLocation')}}",
-                data: {
-                    name: $('#name').val(),
-                    postcode: $('#postcode').val(),
-                    settlement_id: $('#settlement_id').val(),
-                    address: $('#address').val(),
-                },
-                // data: $('#addPartnerForm').serialize(), // Az űrlap adatainak elküldése
-
-
-                success: function(response) {
-                    console.log(response.message);
-                    // Frissítsd a select opcióit a frissített partnerlistával
-                    var locationSelect = $('#location_id');
-                    locationSelect.empty(); // Törölje az összes előző opciót
-
-                    $.each(response.locations, function(index, location) {
-                        // Hozzáfűz minden új partnert a select-hez
-                        locationSelect.append('<option value="' + location.id + '">' + location.name + '</option>');
-                    });
-
-                    $('#addPartnerModal').modal('hide');
-
-                    $.ajax({
-                        method: 'GET',
-                        url: "{{url('getLocationByName')}}",
-                        data: {
-                            name: $('#name').val(),
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            $('#location_id').val(response)
-                        },
-                        error: function(error) {
-                            console.error('Hiba történt:', error);
-                        }
-                    });
-                },
-                error: function(error) {
-                    console.error('Hiba történt:', error);
-                }
-            });
-        });
-
-    </script>
-@endsection

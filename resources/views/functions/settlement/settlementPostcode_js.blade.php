@@ -30,9 +30,9 @@
     });
 
     $('#settlement_id').change(function () {
-        let postcode = $('#postcode').val() != 0 ? $('#postcode').val() : -99999;
-        let settlement_id = $('#settlement_id').val() != 0 ? $('#settlement_id').val() : -99999;
-        if (settlement_id != -99999) {
+        let postcode = $('#postcode').val() != 0 ? $('#postcode').val() : null;
+        let settlement_id = $('#settlement_id').val() != 0 ? $('#settlement_id').val() : null;
+        if ($('#settlement_id').val() != 0) {
             $.ajax({
                 type: "GET",
                 url: "{{url('settlementPostcodeByDDDW')}}?id=" + settlement_id,
@@ -42,10 +42,10 @@
                         $("#postcode").empty();
                         // $("#settlement_id").append('<option></option>');
                         $.each(res, function (key, value) {
-                            $("#postcode").append('<option value="' + value.id + '">' + value.postcode + '</option>');
+                            $("#postcode").append('<option value="' + value.postcode + '">' + value.postcode + '</option>');
                         });
 
-                        if (postcode != -99999) {
+                        if (postcode != null) {
                             $('#postcode').val(postcode);
                         }
 
