@@ -32,7 +32,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    @include('orders.editFields')
+                    @include('orders.fields')
                 </div>
             </div>
 

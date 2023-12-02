@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1>
-                        Edit Orderdetails
+                        {{ $orderdetails->orders->ordernumer }} {{ $orderdetails->product->name }}Edit Orderdetails
                     </h1>
                 </div>
             </div>
@@ -28,8 +28,8 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('orderdetails.index') }}" class="btn btn-default"> Cancel </a>
+                {!! Form::submit('Ment', ['class' => 'btn btn-primary']) !!}
+                <a href="{{ route('orderdetails.index') }}" class="btn btn-default"> Kilép </a>
             </div>
 
             {!! Form::close() !!}

@@ -73,7 +73,7 @@
                     {title: 'Név', data: 'name', name: 'name'},
                     {title: 'Mennyiségi egység', data: 'quantityName', sClass: "text-center", name: 'quantityName'},
                     {
-                        title: 'Ár',
+                        title: 'Eladási ár',
                         data: 'price',
                         render: $.fn.dataTable.render.number('.', ',', 0),
                         sClass: "text-right",
@@ -81,7 +81,7 @@
                         name: 'price'
                     },
                     {
-                        title: 'Besz.Ár',
+                        title: 'Beszerzési ár',
                         data: 'supplierprice',
                         render: $.fn.dataTable.render.number('.', ',', 0),
                         sClass: "text-right",
@@ -89,6 +89,12 @@
                         name: 'supplierprice'
                     },
                     {title: 'Státusz', data: 'active', sClass: "text-center", width: '100px', name: 'active'},
+                ],
+                columnDefs: [
+                    {
+                        targets: [5],
+                        visible: false
+                    },
                 ],
                 buttons: [],
                 fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {

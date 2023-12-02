@@ -1,9 +1,14 @@
+@section('css')
+    @include('layouts.costumcss')
+@endsection
 <!-- Products Id Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-5">
     {!! Form::label('products_id', 'Termék:') !!}
     {!! Form::select('products_id', SelectService::orderDetailsProductsSelect($orders->id), null,
                 ['class'=>'select2 form-control', 'id' => 'products_id', 'required' => true]) !!}
 </div>
+
+@include('layouts.modalBtn', [ 'title' => 'Új termék'])
 
 <!-- Quantities Id Field -->
 <div class="form-group col-sm-3">
@@ -28,6 +33,12 @@
     {!! Form::hidden('ordertype', 'OrderType:') !!}
     {!! Form::hidden('ordertype', (($_COOKIE['orderType'] == 'CUSTOMER') ? 'vevői' : 'szállítói'), ['class' => 'form-control']) !!}
 </div>
+
+@include('layouts.modal', [
+        'title' => 'Új termék hozzáadása',
+        'fields' => 'orderdetails.modalFields',
+    ])
+
 
 @section('scripts')
 

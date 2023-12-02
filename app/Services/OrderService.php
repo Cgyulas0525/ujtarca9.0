@@ -43,6 +43,7 @@ class OrderService
      */
     public static function orderTypeByCookie(): string
     {
+
         return ($_COOKIE['orderType'] == 'CUSTOMER') ? OrderTypeEnum::CUSTOMER->description() : OrderTypeEnum::SUPPLIER->description();
     }
 }

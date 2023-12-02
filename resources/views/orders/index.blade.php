@@ -102,13 +102,13 @@
 
             $('#orderType').change(function () {
                 let url = '{{ route('ordersIndex', [":orderType", ":orderStatus"]) }}';
-                createCookie('orderType', $('#orderType').val(), '30');
+                createCookie('orderType', $('#orderType').val(), '90');
                 loadUrl(url);
             })
 
             $('#orderStatus').change(function () {
                 let url = '{{ route('ordersIndex', [":orderType", ":orderStatus"]) }}';
-                createCookie('orderStatus', $('#orderStatus').val(), '30');
+                createCookie('orderStatus', $('#orderStatus').val(), '90');
                 loadUrl(url);
             })
         });

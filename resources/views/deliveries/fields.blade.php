@@ -3,7 +3,10 @@
     @include('layouts.costumcss')
 @endsection
 
-@include('deliveries.modal')
+@include('layouts.modal', [
+        'title' => 'Új cím hozzáadása',
+        'fields' => 'deliveries.modalFields',
+    ])
 <!-- Delivery Number Field -->
 <div class="form-group col-sm-2">
     {!! Form::label('delivery_number', 'Sorszám:') !!}
@@ -24,11 +27,8 @@
     {!! Form::select('location_id', App\Http\Controllers\LocationController::DDDW(), null,
         ['class' => 'select2 form-control', 'id' => 'location_id', 'required' => true]) !!}
 </div>
-<div class="form-group col-sm-2">
-    <button type="button" class="btn btn-primary filterBtn" data-toggle="modal" data-target="#addPartnerModal">
-        Új Cím
-    </button>
-</div>
+
+@include('layouts.modalBtn', [ 'title' => 'Új cím'])
 
 <div class="form-group col-sm-12">
     {!! Form::label('description', 'Megjegyzés:') !!}

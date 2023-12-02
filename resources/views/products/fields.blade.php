@@ -1,6 +1,5 @@
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    {{--    @include('layouts.datatables_css')--}}
     @include('layouts.costumcss')
 @endsection
 
@@ -19,7 +18,7 @@
 
 <!-- Price Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('price', 'Ára:') !!}
+    {!! Form::label('price', 'Eladási ár:') !!}
     {!! Form::number('price', isset($products) ? $products->price : 0, ['class' => 'form-control  text-right', 'id' => 'price']) !!}
 </div>
 
