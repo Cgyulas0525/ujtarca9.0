@@ -16,7 +16,7 @@
 
     <div class="card">
 
-        {!! Form::open(['route' => 'deliveries.store']) !!}
+        {!! Form::open(['route' => $model . '.store']) !!}
 
         <div class="card-body">
 

@@ -19,7 +19,7 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'deliveries.store', 'id' => 'basicForm']) !!}
+            {!! Form::open(['route' => 'deliveries.store']) !!}
 
             <div class="card-body">
 
@@ -44,37 +44,15 @@
     <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
     @include('functions.settlement.settlementPostcode_js')
     @include('deliveries.addModalBtn_js')
+    @include('deliveries.otherBtn_js')
+    @include('functions.sweetalert_js')
 
     <script type="text/javascript">
 
         $(function () {
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-        });
-
-        $('#otherBtn').click(function (e) {
-            $.ajax({
-                type:"GET",
-                url:"{{url('storeModal')}}",
-                data: {
-                    delivery_number: $('#delivery_number').val(),
-                    date: $('#date').val(),
-                    location_id: $('#location_id').val(),
-                    description: $('#description').val(),
-                },
-                success: function (response) {
-                    console.log('Ok:', response);
-                    var url = "{{ route('deliveries.index') }}";
-                    window.location.href = url;
-                },
-                error: function (response) {
-                    console.log('Error:', response);
-                    alert('nem ok');
                 }
             });
         });
@@ -82,7 +60,11 @@
         RequiredBackgroundModify('.form-control')
 
         $('#addModalBtn').click(function() {
-            addMoldalBtn();
+            addModalBtnEvent();
+        });
+
+        $('#otherBtn').click(function (e) {
+            otherBtnEvent('store');
         });
     </script>
 @endsection

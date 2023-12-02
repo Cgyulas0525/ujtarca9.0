@@ -7,14 +7,14 @@
 <div class="form-group col-sm-12">
     {!! Form::label('postcode', 'Ir.szám:') !!}
     {!! Form::select('postcode', App\Classes\SettlementsClass::settlementsPostcodeDDDW(), null,
-        ['class' => 'select2 form-control', 'id' => 'postcode']) !!}
+        ['class' => 'select2 form-control', 'id' => 'postcode', 'required']) !!}
 </div>
 
 <!-- Settlement Id Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('settlement_id', 'Település:') !!}
     {!! Form::select('settlement_id', App\Classes\SettlementsClass::settlementsDDDW(), null,
-        ['class' => 'select2 form-control', 'id' => 'settlement_id']) !!}
+        ['class' => 'select2 form-control', 'id' => 'settlement_id', 'required']) !!}
 </div>
 
 <!-- Address Field -->

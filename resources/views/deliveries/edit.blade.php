@@ -43,11 +43,13 @@
     <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
     @include('functions.settlement.settlementPostcode_js')
     @include('deliveries.addModalBtn_js')
+    @include('deliveries.otherBtn_js')
+    @include('functions.ajax_js')
+    @include('functions.sweetalert_js')
 
     <script type="text/javascript">
 
         $(function () {
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -57,32 +59,15 @@
         });
 
         $('#otherBtn').click(function (e) {
-            $.ajax({
-                type:"POST",
-                url:"{{url('updateModal')}}",
-                data: {
-                    id: $('#id').val(),
-                    delivery_number: $('#delivery_number').val(),
-                    date: $('#date').val(),
-                    location_id: $('#location_id').val(),
-                    description: $('#description').val(),
-                },
-                success: function (response) {
-                    console.log('Ok:', response);
-                    var url = "{{ route('deliveries.index') }}";
-                    window.location.href = url;
-                },
-                error: function (response) {
-                    console.log('Error:', response);
-                    alert('nem ok');
-                }
-            });
+            otherBtnEvent('modify');
         });
 
         RequiredBackgroundModify('.form-control')
 
         $('#addModalBtn').click(function() {
-            addModalBtn();
+            addModalBtnEvent();
         });
+
+
     </script>
 @endsection

@@ -10,6 +10,8 @@ use Auth;
 use DataTables;
 use Illuminate\Http\Request;
 use Response;
+use Illuminate\Support\Facades\Validator;
+use Flash;
 
 class LocationController extends AppBaseController
 {
@@ -70,6 +72,15 @@ class LocationController extends AppBaseController
      */
     public function store(CreateLocationRequest $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:locations,name',
+        ]);
+
+        if ($validator->fails()) {
+            Flash::error('Van már ilyen nevű tétel!')->important();
+            return view('locations.create');
+        }
+
         $input = $request->all();
         $location = $this->locationRepository->create($input);
         return redirect(route('locations.index'));
@@ -110,6 +121,15 @@ class LocationController extends AppBaseController
     {
         $location = $this->locationRepository->find($id);
 
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:locations,name,'.$id,
+        ]);
+
+        if ($validator->fails()) {
+            Flash::error('Van már ilyen nevű tétel!')->important();
+            return view('locations.edit')->with('location', $location);
+        }
+
         if (empty($location)) {
             return redirect(route('locations.index'));
         }
@@ -149,11 +169,15 @@ class LocationController extends AppBaseController
         $location->address = $request->input('address');
         $location->save();
         $locations = Location::all();
-        return response()->json(['message' => 'Cím hozzáadva', 'locations' => $locations]);
+        return response()->json(['message' => 'Cím hozzáadva', 'locations' => $locations, 'location' => $location]);
     }
 
     public function getLocationByName(Request $request)
     {
-        return Response::json(Location::where('name', $request->get('name'))->first()->id);
+        $location = Location::where('name', $request->get('name'))->first();
+        if (!empty($location)) {
+            return Response::json($location->id);
+        }
+        return Response::json(null);
     }
 }

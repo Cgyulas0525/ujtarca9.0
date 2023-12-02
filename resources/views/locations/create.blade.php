@@ -3,3 +3,4 @@
 @section('content')
     @include('layouts.create', ['title' => 'Kiszállítási cím', 'model' => 'locations'])
 @endsection
+

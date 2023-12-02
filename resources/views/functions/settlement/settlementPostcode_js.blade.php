@@ -1,8 +1,8 @@
 <script type="text/javascript">
     $('#postcode').change(function () {
-        let postcode = $('#postcode').val() != 0 ? $('#postcode').val() : -99999;
-        let settlement_id = $('#settlement_id').val() != 0 ? $('#settlement_id').val() : -99999;
-        if (postcode != -99999) {
+        let postcode = $('#postcode').val() != 0 ? $('#postcode').val() : null;
+        let settlement_id = $('#settlement_id').val() != 0 ? $('#settlement_id').val() : null;
+        if ($('#postcode').val() != 0) {
             $.ajax({
                 type: "GET",
                 url: "{{url('postcodeSettlementDDDW')}}?postcode=" + postcode,
@@ -15,7 +15,7 @@
                             $("#settlement_id").append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
 
-                        if (settlement_id != -99999) {
+                        if (settlement_id != null) {
                             $('#settlement_id').val(settlement_id);
                         }
 
