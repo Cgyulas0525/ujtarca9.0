@@ -35,7 +35,7 @@ class RiportsClass
 
     public static function PaymentMethodLast30days(): object
     {
-        return Closures::selectRaw('closuredate as nap, card, szcard, (dailysum  - ( card + szcard + 20000)) as cash')
+        return Closures::selectRaw('closuredate as nap, card, szcard, (dailysum  - (card + szcard + 20000)) as dayCash')
             ->whereBetween('closuredate', [now()->subDays(30)->toDateString(), now()->toDateString()])
             ->get();
     }

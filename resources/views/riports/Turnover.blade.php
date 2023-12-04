@@ -104,8 +104,10 @@
 
             var chart_havi = highchartLine('haviArbevetel', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLast12Month(); ?>, ['osszeg'], ['Bevétel']), 'Heti árbevétel', 'heti bontás', 'forint');
+
             var chart_fizm = highchartLine('fizetesimod', 'line', 450, categoryUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, 'nap'),
-                chartDataUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, ['cash', 'card', 'szcard'], ['Készpénz', 'Kártya', 'SZÉP kártya']), 'Fizetési mód', 'napi bontás', 'forint');
+                chartDataUpload(<?php echo RiportsClass::PaymentMethodLast30days(); ?>, ['card', 'szcard', 'dayCash'], ['Kártya', 'SZÉP kártya', 'Készpénz']), 'Fizetési mód', 'napi bontás', 'forint');
+
             var chart_twoy = highchartLine('twoyears', 'line', 450, categoryUpload(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, 'nap'),
                 chartDataUpload(<?php echo RiportsClass::TurnoverLastTwoYears(); ?>, ['elso', 'masodik'], ['-1 év', '-2 év']), 'Fizetési mód', 'napi bontás', 'forint');
             var chart_bevk = highchartLine('bevkiad', 'line', 450, categoryUpload(<?php echo RiportsClass::monthInvoicesResult(); ?>, 'nap'),
