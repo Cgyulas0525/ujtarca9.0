@@ -39,6 +39,7 @@ class Feature extends Model implements HasMedia
 
     public function products(): array|belongsToMany
     {
-        return $this->belongsToMany(Products::class, 'feature_product');
+        return $this->belongsToMany(Products::class, 'feature_product')
+            ->withPivot('value');
     }
 }

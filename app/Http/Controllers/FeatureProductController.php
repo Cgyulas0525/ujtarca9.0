@@ -32,17 +32,14 @@ class FeatureProductController extends Controller
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $product = Products::find($product);
-                return $this->dwData($product->features()->get());
+                return $this->dwData(Products::find($product)->features()->get());
             }
             return view('products.index');
         }
         return view('products.index');
     }
-    public function componentProductUpdate(Request $request): void
+    public function featureProductUpdate(Request $request): void
     {
-        $product = Products::find($request->get('productId'));
-        $product->features()->updateExistingPivot($request->get('componentId'), ['value' => $request->get('value')]);
+        Products::find($request->productId)->features()->updateExistingPivot($request->featuretId, ['value' => $request->value]);
     }
-    //
 }

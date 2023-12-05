@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\truncateTablesController;
 use App\Http\Controllers\Api\outputFilesDeleteController;
 use App\Http\Controllers\Api\PartnerInactivationController;
 use App\Http\Controllers\ComponentProductController;
+use App\Http\Controllers\FeatureProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +27,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('truncateAllTables', [truncateTablesController::class, 'truncateAllTables']);
 Route::get('deleteOutputFiles', [outputFilesDeleteController::class, 'deleteOutputFiles']);
 Route::get('partnerInactivation', [PartnerInactivationController::class, 'partnerInactivation']);
-Route::get('componentProductUpdate', [ComponentProductController::class, 'componentProductUpdate']);
+Route::post('componentProductUpdate', [ComponentProductController::class, 'componentProductUpdate']);
+Route::post('featureProductUpdate', [FeatureProductController::class, 'featureProductUpdate']);
 

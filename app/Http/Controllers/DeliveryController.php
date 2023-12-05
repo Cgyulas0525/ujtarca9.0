@@ -9,6 +9,7 @@ use App\Repositories\DeliveryRepository;
 use Auth;
 use DataTables;
 use Illuminate\Http\Request;
+use Rule;
 
 class DeliveryController extends AppBaseController
 {
@@ -66,6 +67,22 @@ class DeliveryController extends AppBaseController
      */
     public function store(CreateDeliveryRequest $request)
     {
+        $validator = Validator::make($request->all(), [
+            'date' => 'required', // Ha az első mező lehet null
+            'location_id' => [
+                'required',
+                Rule::unique('delioveries')->where(function ($query) use ($request) {
+                    return $query->where('date', $request->date);
+                }),
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            Flash::error('Van már ezzel a dátummal és címmel tétel!')->important();
+            return view('deliveries.create');
+        }
+
+
         $input = $request->all();
         $delivery = $this->deliveryRepository->create($input);
         return redirect(route('deliveries.index'));

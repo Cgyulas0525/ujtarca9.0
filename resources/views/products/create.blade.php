@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Products</h1>
+                    <h1>Termék</h1>
                 </div>
             </div>
         </div>
