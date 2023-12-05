@@ -40,6 +40,9 @@ class OrdersController extends AppBaseController
             ->addColumn('partnerName', function ($data) {
                 return $data->partners->name;
             })
+            ->addColumn('deliveryNumber', function ($data) {
+                return $data->ordertype == OrderTypeEnum::CUSTOMER->value ? $data->delivery->delivery_number : '';
+            })
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('orders.edit', [$row->id]) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';

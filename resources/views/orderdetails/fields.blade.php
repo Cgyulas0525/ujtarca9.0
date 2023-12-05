@@ -35,6 +35,7 @@
 </div>
 
 @include('layouts.modal', [
+        'addModal' => 'addModal',
         'title' => 'Új termék hozzáadása',
         'fields' => 'orderdetails.modalFields',
     ])

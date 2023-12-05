@@ -47,11 +47,12 @@
     @include('functions.cookiesFunctions_js')
 
     <script type="text/javascript">
+
+        var table;
+
         $(function () {
-
             ajaxSetup();
-
-            var table = $('.partners-table').DataTable({
+            table = $('.partners-table').DataTable({
                 serverSide: true,
                 scrollY: 550,
                 scrollX: true,
@@ -74,6 +75,7 @@
                         }, sClass: "text-center", width: '150px', name: 'orderdate'
                     },
                     {title: 'Megrendelés', data: 'ordernumber', name: 'ordernumber'},
+                    {title: 'Kiszállítás', data: 'deliveryNumber', name: 'deliveryNumber'},
                     {title: 'Partner', data: 'partnerName', name: 'partnerName'},
                     {
                         title: 'Státusz',
@@ -91,6 +93,12 @@
                         name: 'detailsum'
                     },
                 ],
+                columnDefs: [
+                    {
+                        targets: [3],
+                        visible: $('#orderType').val() == 'CUSTOMER',
+                    },
+                ],
                 buttons: [],
             });
 
@@ -102,6 +110,7 @@
 
             $('#orderType').change(function () {
                 let url = '{{ route('ordersIndex', [":orderType", ":orderStatus"]) }}';
+                table.column(3).visible($('#orderType').val() == 'CUSTOMER');
                 createCookie('orderType', $('#orderType').val(), '90');
                 loadUrl(url);
             })
