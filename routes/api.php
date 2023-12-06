@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\outputFilesDeleteController;
 use App\Http\Controllers\Api\PartnerInactivationController;
 use App\Http\Controllers\ComponentProductController;
 use App\Http\Controllers\FeatureProductController;
+use App\Http\Controllers\DeliveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,5 @@ Route::get('deleteOutputFiles', [outputFilesDeleteController::class, 'deleteOutp
 Route::get('partnerInactivation', [PartnerInactivationController::class, 'partnerInactivation']);
 Route::post('componentProductUpdate', [ComponentProductController::class, 'componentProductUpdate']);
 Route::post('featureProductUpdate', [FeatureProductController::class, 'featureProductUpdate']);
+Route::post('getDeliveryByDateAndLocation', [DeliveryController::class, 'getDeliveryByDateAndLocation']);
 

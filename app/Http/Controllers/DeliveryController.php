@@ -10,6 +10,7 @@ use Auth;
 use DataTables;
 use Illuminate\Http\Request;
 use Rule;
+use Response;
 
 class DeliveryController extends AppBaseController
 {
@@ -155,5 +156,13 @@ class DeliveryController extends AppBaseController
         }
         $this->deliveryRepository->delete($id);
         return redirect(route('deliveries.index'));
+    }
+
+    public function getDeliveryByDateAndLocation(Request $request)
+    {
+        return Response::json(Delivery::where(['date' => $request->date, 'location_id' => $request->location_id])
+            ->where('delivery_number', '!=', $request->delivery_number)
+            ->get()
+            ->count());
     }
 }
