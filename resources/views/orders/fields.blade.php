@@ -73,11 +73,13 @@
         'addModal' => 'addModal',
         'title' => 'Új partner hozzáadása',
         'fields' => 'orders.modalFields',
+        'saveBtn' => 'saveBtn',
     ])
 
 @include('layouts.modal', [
         'addModal' => 'addDeliveryModal',
         'title' => 'Új kiszállítás hozzáadása',
         'fields' => 'orders.orderDeliveryModalFields',
+        'saveBtn' => 'saveBtn',
     ])
 

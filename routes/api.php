@@ -32,3 +32,4 @@ Route::post('componentProductUpdate', [ComponentProductController::class, 'compo
 Route::post('featureProductUpdate', [FeatureProductController::class, 'featureProductUpdate']);
 Route::post('getDeliveryByDateAndLocation', [DeliveryController::class, 'getDeliveryByDateAndLocation']);
 
+

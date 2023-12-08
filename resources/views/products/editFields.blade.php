@@ -138,7 +138,6 @@
                         render: function (data, type, full, meta) {
                             var isChecked = data === 1 ? 'checked' : '';
                             return '<input class="form-control text-right" type="checkbox" value="' + data + '" onchange="featureProductUpdate(' + meta["row"] + ', this.value)" style="height:20px;font-size: 15px;" ' + isChecked + ' />';
-                            // return '<input class="form-control text-right" type="checkbox" value="' + data + '" onfocusout="featureProductUpdate(' + meta["row"] + ', this.value)" style="height:20px;font-size: 15px;" ' + isChecked + ' />';
                         },
                     },
                     {

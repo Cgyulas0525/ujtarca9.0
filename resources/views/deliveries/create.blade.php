@@ -44,7 +44,6 @@
     <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
     @include('functions.settlement.settlementPostcode_js')
     @include('deliveries.addModalBtn_js')
-    @include('deliveries.otherBtn_js')
     @include('functions.sweetalert_js')
 
     <script type="text/javascript">
@@ -61,10 +60,6 @@
 
         $('#addModalBtn').click(function() {
             addModalBtnEvent();
-        });
-
-        $('#otherBtn').click(function (e) {
-            otherBtnEvent('store');
         });
     </script>
 @endsection

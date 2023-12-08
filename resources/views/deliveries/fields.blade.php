@@ -3,11 +3,7 @@
     @include('layouts.costumcss')
 @endsection
 
-@include('layouts.modal', [
-        'addModal' => 'addModal',
-        'title' => 'Új cím hozzáadása',
-        'fields' => 'deliveries.modalFields',
-    ])
+
 <!-- Delivery Number Field -->
 <div class="form-group col-sm-2">
     {!! Form::label('delivery_number', 'Sorszám:') !!}
@@ -37,11 +33,44 @@
     {!! Form::hidden('id', isset($delivery) ? $delivery->id : null, ['class' => 'form-control', 'id' => 'id']) !!}
 </div>
 
+{{--<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">--}}
+{{--    <div class="modal-dialog" role="document">--}}
+{{--        <div class="modal-content">--}}
+{{--            <div class="modal-header">--}}
+{{--                <h5 class="modal-title" id="addModalLabel">Új cím hozzáadása</h5>--}}
+{{--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                    <span aria-hidden="true">&times;</span>--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body">--}}
+{{--                <form id="addForm">--}}
+{{--                    @include('deliveries.modalFields')--}}
+{{--                </form>--}}
+{{--            </div>--}}
+{{--            <div class="modal-footer">--}}
+{{--                <button type="button" class="btn btn-danger" data-dismiss="modal">Kilép</button>--}}
+{{--                <button type="button" class="btn btn-primary" id="addModalBtn">Ment</button>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+@include('layouts.modal', [
+        'addModal' => 'addModal',
+        'title' => 'Új cím hozzáadása',
+        'fields' => 'deliveries.modalFields',
+        'saveBtn' => 'addModalBtn',
+    ])
+
 @section('scripts')
 
     <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/js/sweetalert.js') }} " type="text/javascript"></script>
+    @include('functions.settlement.settlementPostcode_js')
+    @include('deliveries.addModalBtn_js')
+    @include('functions.dateFormat_js')
+    @include('deliveries.otherBtn_js')
 
     <script type="text/javascript">
         $(function () {
@@ -54,12 +83,13 @@
                 if ($('#date').val() != 0 && $('#location_id').val() != 0) {
                     $.ajax({
                         type: "POST",
-                        url: "{{url('getDeliveryByDateAndLocation')}}",
-                        data: {date: $('#date').val(), location: $('#location_id').val(), delivery_number: $('#delivery_number').val()},
-                        success: function (res) {
-                            if (res > 0) {
+                        url: "{{url('api/getDeliveryByDateAndLocation')}}",
+                        data: {date: $('#date').val(), location_id: $('#location_id').val(), delivery_number: $('#delivery_number').val()},
+                        success: function (response) {
+                            console.log(response);
+                            if (response > 0) {
                                 sw('Van már erre a dátumra és címre kiszállítás!');
-                                $("#date").val(null);
+                                $("#date").val(dateFormat(new Date()));
                                 $("#location_id").val(null);
                             }
                         },
@@ -70,20 +100,17 @@
                 }
             }
 
-            function dateControll() {
-                var selectedDate = $("#date").val();
-                var currentDate = new Date();
-                currentDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + (currentDate.getDate() < 10 ? '0' +  currentDate.getDate() : currentDate.getDate());
+            $('#addModalBtn').click(function() {
+                addModalBtnEvent();
+            });
 
-                if (selectedDate < currentDate) {
+            function dateControll() {
+                var currentDate = dateFormat(new Date());
+                if ($("#date").val() < currentDate) {
                     sw('A kiválasztott dátum nem lehet korábbi, mint a mai dátum.');
-                    var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-                    $('#date').val(formattedDate);
-                    //
-                    // $('#date').val(null);
+                    $('#date').val(currentDate);
                     return false;
                 }
-
                 return true;
             }
 
@@ -96,6 +123,16 @@
             $('#location_id').change(function () {
                 isRecord();
             });
+
+            $('#otherBtn').click(function (e) {
+                var id = $('#id').val();
+                if (id == null || id === 0 || id.length === 0) {
+                    otherBtnEvent('store');
+                } else {
+                    otherBtnEvent('modify');
+                }
+            });
+
         });
     </script>
 @endsection

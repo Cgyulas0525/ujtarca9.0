@@ -45,7 +45,6 @@
     @include('deliveries.addModalBtn_js')
     @include('deliveries.otherBtn_js')
     @include('functions.ajax_js')
-    @include('functions.sweetalert_js')
 
     <script type="text/javascript">
 
@@ -56,10 +55,6 @@
                 }
             });
 
-        });
-
-        $('#otherBtn').click(function (e) {
-            otherBtnEvent('modify');
         });
 
         RequiredBackgroundModify('.form-control')

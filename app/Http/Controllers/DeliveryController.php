@@ -160,6 +160,9 @@ class DeliveryController extends AppBaseController
 
     public function getDeliveryByDateAndLocation(Request $request)
     {
+
+        ray($request->date, $request->location_id, $request->delivery_number);
+
         return Response::json(Delivery::where(['date' => $request->date, 'location_id' => $request->location_id])
             ->where('delivery_number', '!=', $request->delivery_number)
             ->get()
