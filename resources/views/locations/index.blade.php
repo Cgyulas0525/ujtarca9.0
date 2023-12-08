@@ -39,6 +39,7 @@
                     {title: 'Ir.szám', data: 'pc', sClass: "text-right", width: '50px', name: 'pc'},
                     {title: 'Település', data: 'settlement', name: 'settlement'},
                     {title: 'Cím', data: 'address', name: 'address'},
+                    {title: 'Partner', data: 'partnersCount', name: 'partnersCount'},
                 ],
                 buttons: [],
             });

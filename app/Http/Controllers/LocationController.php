@@ -33,6 +33,9 @@ class LocationController extends AppBaseController
             ->addColumn('settlement', function ($data) {
                 return $data->settlement->name;
             })
+            ->addColumn('partnersCount', function ($data) {
+                return $data->partnersCount();
+            })
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('locations.edit', $row->id) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';

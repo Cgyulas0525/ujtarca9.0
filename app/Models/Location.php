@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,6 +53,16 @@ class Location extends Model
     public function settlement(): string|BelongsTo
     {
         return $this->belongsTo(Settlements::class, 'settlement_id');
+    }
+
+    public function partners(): array|belongsToMany
+    {
+        return $this->belongsToMany(Partners::class, 'location_partner');
+    }
+
+    public function partnersCount(): int
+    {
+        return $this->partners()->count();
     }
 
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\OrderReplyController;
 use \App\Http\Controllers\BusinessAnalysisController;
 use \App\Http\Controllers\ComponentProductController;
 use \App\Http\Controllers\FeatureProductController;
+use App\Http\Controllers\LocationPartnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,6 +120,8 @@ Route::resource('components', App\Http\Controllers\ComponentController::class);
 
 Route::get('componentProductIndex/{product}', [ComponentProductController::class, 'index'])->name('componentProductIndex');
 Route::get('featureProductIndex/{product}', [FeatureProductController::class, 'index'])->name('featureProductIndex');
+Route::get('locationPartnersIndex/{location}', [LocationPartnerController::class, 'index'])->name('locationPartnersIndex');
+Route::get('locationPartnersCreate/{location}', [LocationPartnerController::class, 'create'])->name('locationPartnersCreate');
 
 Route::resource('locations', App\Http\Controllers\LocationController::class);
 Route::resource('deliveries', App\Http\Controllers\DeliveryController::class);

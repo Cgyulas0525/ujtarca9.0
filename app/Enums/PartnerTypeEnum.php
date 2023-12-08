@@ -25,6 +25,7 @@ enum PartnerTypeEnum: string
     case DISTRIBUTOR = 'Forgalmazó';
     case BAKERY = 'Pékség';
     case WEBBUYER = 'WEB vevő';
+    case DELIVERY_CUSTOMER = 'Kiszállítás vevő';
 
     public static function getPartnerTypesId($name)
     {

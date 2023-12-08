@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ActiveEnum;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -121,6 +122,12 @@ class Partners extends Model
     {
         return $this->hasMany(Orders::class, 'partners_id');
     }
+
+    public function locations(): array|belongsToMany
+    {
+        return $this->belongsToMany(Location::class, 'location_partner');
+    }
+
 
     public function aviable(): bool
     {
