@@ -19,7 +19,7 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'orders.store']) !!}
+            {!! Form::open(['route' => 'locationPartnersStore', 'method' => 'POST']) !!}
 
             <div class="card-body">
                 <div class="row">

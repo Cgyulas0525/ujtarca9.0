@@ -122,6 +122,9 @@ Route::get('componentProductIndex/{product}', [ComponentProductController::class
 Route::get('featureProductIndex/{product}', [FeatureProductController::class, 'index'])->name('featureProductIndex');
 Route::get('locationPartnersIndex/{location}', [LocationPartnerController::class, 'index'])->name('locationPartnersIndex');
 Route::get('locationPartnersCreate/{location}', [LocationPartnerController::class, 'create'])->name('locationPartnersCreate');
+Route::post('locationPartnersStore', [LocationPartnerController::class, 'store'])->name('locationPartnersStore');
+Route::get('locationPartnersDestroy/{location}/{partner}', [LocationPartnerController::class, 'destroy'])->name('locationPartnersDestroy');
+Route::get('locationPartnersDestroyRecord/{location}/{partner}', [LocationPartnerController::class, 'destroyRecord'])->name('locationPartnersDestroyRecord');
 
 Route::resource('locations', App\Http\Controllers\LocationController::class);
 Route::resource('deliveries', App\Http\Controllers\DeliveryController::class);

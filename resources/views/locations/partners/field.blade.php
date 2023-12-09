@@ -16,7 +16,6 @@
         <div class="form-group col-sm-6">
             {!! Form::label('partnertypes_id', 'Típus:') !!}
             {!! Form::text('partnertypes_name', $partnertype->name, ['class' => 'form-control', 'id' => 'partnertypes_name', 'readonly' => true]) !!}
-            {!! Form::hidden('partnertypes_id', $partnertype->id, ['class' => 'form-control', 'id' => 'partnertypes_id']) !!}
         </div>
     </div>
 </div>
@@ -43,6 +42,8 @@
         <div class="form-group col-sm-6">
             {!! Form::label('email', 'Email:') !!}
             {!! Form::email('email', null, ['class' => 'form-control', 'maxlength' => 50]) !!}
+
+            {!! Form::hidden('partnertypes_id', $partnertype->id, ['class' => 'form-control', 'id' => 'partnertypes_id']) !!}
             {!! Form::hidden('active', App\Enums\ActiveEnum::ACTIVE->value, ['class' => 'form-control', 'id' => 'active']) !!}
             {!! Form::hidden('location_id', $location->id, ['class' => 'form-control', 'id' => 'active']) !!}
         </div>
