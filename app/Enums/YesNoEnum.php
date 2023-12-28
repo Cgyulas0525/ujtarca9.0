@@ -18,4 +18,5 @@ enum YesNoEnum: string
 
     case NO = 'Nem';
     case YES = 'Igen';
+
 }

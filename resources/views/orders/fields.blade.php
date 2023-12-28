@@ -1,3 +1,9 @@
+@section('css')
+    <link rel="stylesheet" href="pubic/css/app.css">
+    @include('layouts.costumcss')
+@endsection
+
+
 @if (isset($orders))
     <div class="form-group col-sm-6">
         {!! Form::hidden('ordernumber', 'Megrendelés szám:') !!}
@@ -31,7 +37,7 @@
                         ['class'=>'select2 form-control', 'id' => 'partners_id', 'required' => true]) !!}
         </div>
         <div class="form-group col-sm-2">
-            <button type="button" class="btn btn-primary filterBtn" data-toggle="modal" data-target="#addModal">
+            <button type="button" class="btn btn-primary filterBtn" data-toggle="modal" data-target="#addPartnerModal">
                 Új Partner
             </button>
         </div>
@@ -68,18 +74,21 @@
     {!! Form::hidden('ordertype', isset($orders) ? $orders->ordertype->value : Str::lower(App\Services\OrderService::orderTypeByCookie()), ['class' => 'form-control']) !!}
 </div>
 
+@include('orders.partner_modal.partner_modal')
 
-@include('layouts.modal', [
-        'addModal' => 'addModal',
-        'title' => 'Új partner hozzáadása',
-        'fields' => 'orders.modalFields',
-        'saveBtn' => 'saveBtn',
-    ])
 
-@include('layouts.modal', [
-        'addModal' => 'addDeliveryModal',
-        'title' => 'Új kiszállítás hozzáadása',
-        'fields' => 'orders.orderDeliveryModalFields',
-        'saveBtn' => 'saveBtn',
-    ])
+
+{{--@include('layouts.modal', [--}}
+{{--        'addModal' => 'addModal',--}}
+{{--        'title' => 'Új partner hozzáadása',--}}
+{{--        'fields' => 'orders.modalFields',--}}
+{{--        'saveBtn' => 'saveBtn',--}}
+{{--    ])--}}
+
+{{--@include('layouts.modal', [--}}
+{{--        'addModal' => 'addDeliveryModal',--}}
+{{--        'title' => 'Új kiszállítás hozzáadása',--}}
+{{--        'fields' => 'orders.orderDeliveryModalFields',--}}
+{{--        'saveBtn' => 'saveBtn',--}}
+{{--    ])--}}
 

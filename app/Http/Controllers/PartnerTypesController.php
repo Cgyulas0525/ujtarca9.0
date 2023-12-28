@@ -177,7 +177,7 @@ class PartnerTypesController extends AppBaseController
      */
     public static function DDDW() : array
     {
-        return [" "] + partnerTypes::orderBy('name')->pluck('name', 'id')->toArray();
+        return [" "] + PartnerTypes::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
     public static function fields() {

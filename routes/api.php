@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\PartnerInactivationController;
 use App\Http\Controllers\ComponentProductController;
 use App\Http\Controllers\FeatureProductController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\Api\ModalPartnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +32,9 @@ Route::get('partnerInactivation', [PartnerInactivationController::class, 'partne
 Route::post('componentProductUpdate', [ComponentProductController::class, 'componentProductUpdate']);
 Route::post('featureProductUpdate', [FeatureProductController::class, 'featureProductUpdate']);
 Route::post('getDeliveryByDateAndLocation', [DeliveryController::class, 'getDeliveryByDateAndLocation']);
+
+Route::post('api\newPartnerByModal', [ModalPartnerController::class, 'newPartnerByModal'])->name('newPartnerByModal');
+Route::get('api\getPartnerByName', [ModalPartnerController::class, 'getPartnerByName'])->name('getPartnerByName');
+
 
 

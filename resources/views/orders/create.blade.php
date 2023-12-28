@@ -39,3 +39,30 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
+    @include('functions.settlement.settlementPostcode_js')
+    @include('deliveries.addModalBtn_js')
+    @include('functions.sweetalert_js')
+    @include('functions.requiredField')
+
+    @include('orders.partner_modal.modalScript')
+
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+
+        RequiredBackgroundModify('.form-control')
+
+        $('#addModalBtn').click(function() {
+            addModalBtnEvent();
+        });
+    </script>
+@endsection

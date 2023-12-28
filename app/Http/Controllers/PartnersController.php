@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Classes\ToolsClass;
 use App\Enums\ActiveEnum;
+use App\Enums\PartnerTypeEnum;
 use App\Http\Requests\CreatePartnersRequest;
 use App\Http\Requests\UpdatePartnersRequest;
+use App\Models\PartnerTypes;
 use App\Repositories\PartnersRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Partners;
@@ -23,11 +25,13 @@ class PartnersController extends AppBaseController
 {
     private $partnersRepository;
     private $redis;
+    private $delivery_customer;
 
     public function __construct(PartnersRepository $partnersRepo)
     {
         $this->partnersRepository = $partnersRepo;
         $this->redis = Redis::connection();
+        $this->delivery_customer = PartnerTypes::where('name', PartnerTypeEnum::DELIVERY_CUSTOMER->value)->first()->id;
     }
 
     use PartnerFactSheetTrait, PartnerPeriodicAccountsTrait;
@@ -95,12 +99,12 @@ class PartnersController extends AppBaseController
     public function setRedis(?string $active = null): void
     {
         if (is_null($active)) {
-            $this->redis->setex('partners_all', 3600, Partners::with('partnertypes')->get());
+            $this->redis->setex('partners_all', 3600, Partners::with('partnertypes')->where('partnertypes_id', '!=', $this->delivery_customer)->get());
         } else {
             if ($active == ActiveEnum::INACTIVE->value) {
-                $this->redis->setex('partners_inactive', 3600, Partners::with('partnertypes')->inactivePartner()->get());
+                $this->redis->setex('partners_inactive', 3600, Partners::with('partnertypes')->inactivePartner()->where('partnertypes_id', '!=', $this->delivery_customer)->get());
             } else {
-                $this->redis->setex('partners_active', 3600, Partners::with('partnertypes')->activePartner()->get());
+                $this->redis->setex('partners_active', 3600, Partners::with('partnertypes')->activePartner()->where('partnertypes_id', '!=', $this->delivery_customer)->get());
             }
         }
     }
@@ -158,11 +162,20 @@ class PartnersController extends AppBaseController
         return redirect(route('partners.index'));
     }
 
-    public static function DDDW($partnertypes = null): array
+    public static function DDDW(?int $partnertypes = null): array
     {
         return [" "] + Partners::where(function ($query) use ($partnertypes) {
                 is_null($partnertypes) ? $query->whereNotNull('partnertypes_id') : $query->where('partnertypes_id', '=', $partnertypes);
-            })->where('active', 1)->orderBy('name')->pluck('name', 'id')->toArray();
+            })->where('active', 'aktív')->orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+    public static function withoutDeleiveryDDDW(?int $partnertypes = null): array
+    {
+        return [" "] + Partners::where('partnertypes_id', '!=', 10)
+                ->where('active', 'aktív')
+                ->orderBy('name')
+                ->pluck('name', 'id')
+                ->toArray();
     }
 
     public static function fields($partners): array

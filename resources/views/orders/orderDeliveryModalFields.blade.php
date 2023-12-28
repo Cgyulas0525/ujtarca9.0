@@ -1,13 +1,9 @@
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
     @include('layouts.costumcss')
+
 @endsection
 
-@include('layouts.modal', [
-        'addModal' => 'addModal',
-        'title' => 'Új cím hozzáadása',
-        'fields' => 'deliveries.modalFields',
-    ])
 <!-- Delivery Number Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('delivery_number', 'Sorszám:') !!}
@@ -32,7 +28,7 @@
         </div>
 
         <div class="form-group col-sm-3">
-            <button type="button" class="btn btn-primary filterBtn" data-toggle="modal" data-target="#addModal">
+            <button type="button" class="btn btn-primary filterBtn" data-toggle="modal" data-target="#addLocationModal">
                 Új Cím
             </button>
         </div>
@@ -45,3 +41,33 @@
     {!! Form::hidden('id', isset($delivery) ? $delivery->id : null, ['class' => 'form-control', 'id' => 'id']) !!}
 </div>
 
+@include('layouts.modal', [
+        'addModal' => 'addLocationModal',
+        'title' => 'Új cím hozzáadása',
+        'fields' => 'deliveries.modalFields',
+        'saveBtn' => 'saveLocationBtn',
+    ])
+
+@section('scripts')
+    <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
+    @include('functions.settlement.settlementPostcode_js')
+    @include('deliveries.addModalBtn_js')
+    @include('functions.sweetalert_js')
+
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+
+        RequiredBackgroundModify('.form-control')
+
+        $('#addModalBtn').click(function() {
+            addModalBtnEvent();
+        });
+    </script>
+@endsection
