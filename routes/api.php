@@ -33,8 +33,12 @@ Route::post('componentProductUpdate', [ComponentProductController::class, 'compo
 Route::post('featureProductUpdate', [FeatureProductController::class, 'featureProductUpdate']);
 Route::post('getDeliveryByDateAndLocation', [DeliveryController::class, 'getDeliveryByDateAndLocation']);
 
-Route::post('api\newPartnerByModal', [ModalPartnerController::class, 'newPartnerByModal'])->name('newPartnerByModal');
-Route::get('api\getPartnerByName', [ModalPartnerController::class, 'getPartnerByName'])->name('getPartnerByName');
+Route::post('newPartnerByModal', [ModalPartnerController::class, 'newPartnerByModal']);
+Route::post('getPartnerByEmail', [ModalPartnerController::class, 'getPartnerByEmail']);
+Route::post('getPartnerByName', [ModalPartnerController::class, 'getPartnerByName']);
+
+
+
 
 
 

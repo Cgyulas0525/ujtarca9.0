@@ -17,7 +17,7 @@
 <!-- Quantities Id Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('partnertypes_id', 'Típus:') !!}
-    {!! Form::select('partnertypes_id', App\Http\Controllers\PartnerTypesController::DDDW(), null,
+    {!! Form::select('partnertypes_id', SelectService::selectPartnerTypesByCookie(), null,
         ['class' => 'select2 form-control', 'id' => 'partnertypes_id', 'required' => true]) !!}
 </div>
 

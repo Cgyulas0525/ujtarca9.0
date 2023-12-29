@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Invoices;
 use App\Models\Partners;
+use App\Models\PartnerTypes;
 use App\Models\Products;
 use App\Models\Delivery;
 
@@ -25,7 +26,7 @@ class SelectService
 
     public static function selectCustomer(): array
     {
-        return [" "] + Partners::activePartner()->whereIn('partnertypes_id', [3])
+        return [" "] + Partners::activePartner()->whereIn('partnertypes_id', [3, 9, 10])
                 ->orderBy('name')->pluck('name', 'id')->toArray();
     }
 
@@ -46,4 +47,22 @@ class SelectService
         return [" "] + Delivery::activeDeliveries()->orderBy('delivery_number')->pluck('delivery_number', 'id')->toArray();
 
     }
+
+    public static function selectSupplierTypes(): array
+    {
+        return [" "] + PartnerTypes::whereIn('id', [1, 2, 4, 6, 7, 8])
+                ->orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+    public static function selectCustomerTypes(): array
+    {
+        return [" "] + PartnerTypes::whereIn('id', [3, 9, 10])
+                ->orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+    public static function selectPartnerTypesByCookie(): array
+    {
+        return ($_COOKIE['orderType'] == 'CUSTOMER') ? self::selectCustomerTypes() : self::selectSupplierTypes();
+    }
+
 }

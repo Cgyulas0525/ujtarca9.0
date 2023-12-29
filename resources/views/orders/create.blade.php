@@ -48,6 +48,9 @@
     @include('functions.requiredField')
 
     @include('orders.partner_modal.modalScript')
+    @include('functions.partnerScripts.emailChange')
+    @include('functions.partnerScripts.nameChange')
+    @include('functions.partnerScripts.newPartnerByModal')
 
     <script type="text/javascript">
 
@@ -61,8 +64,8 @@
 
         RequiredBackgroundModify('.form-control')
 
-        $('#addModalBtn').click(function() {
-            addModalBtnEvent();
-        });
+        // $('#addModalBtn').click(function() {
+        //     addModalBtnEvent();
+        // });
     </script>
 @endsection

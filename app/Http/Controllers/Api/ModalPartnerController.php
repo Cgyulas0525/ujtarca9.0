@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Partners;
+use App\Services\SelectService;
 use Illuminate\Http\Request;
+use Response;
 
 class ModalPartnerController extends Controller
 {
@@ -18,8 +20,17 @@ class ModalPartnerController extends Controller
         $partner->email = $request->input('email');
         $partner->partnertypes_id = $request->input('partner_types_id');
         $partner->save();
-        $partners = Partners::all();
+        $partners = SelectService::selectPartnersByCookie();
         return response()->json(['message' => 'Partner hozzáadva', 'partners' => $partners, 'partner' => $partner]);
+    }
+
+    public function getPartnerByEmail(Request $request)
+    {
+        $partner = Partners::where('email', $request->get('email'))->first();
+        if (!empty($partner)) {
+            return Response::json($partner->id);
+        }
+        return Response::json(null);
     }
 
     public function getPartnerByName(Request $request)
