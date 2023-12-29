@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\ActiveEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Partners;
 use App\Services\SelectService;
@@ -18,17 +19,17 @@ class ModalPartnerController extends Controller
         $partner->settlement_id = $request->input('settlement_id');
         $partner->address = $request->input('address');
         $partner->email = $request->input('email');
-        $partner->partnertypes_id = $request->input('partner_types_id');
+        $partner->partnertypes_id = $request->input('partnertypes_id');
         $partner->save();
-        $partners = SelectService::selectPartnersByCookie();
-        return response()->json(['message' => 'Partner hozzáadva', 'partners' => $partners, 'partner' => $partner]);
+        $partners = SelectService::partnersByCookie();
+        return Response::json(['message' => 'Partner hozzáadva', 'partners' => $partners, 'partner' => $partner]);
     }
 
     public function getPartnerByEmail(Request $request)
     {
         $partner = Partners::where('email', $request->get('email'))->first();
         if (!empty($partner)) {
-            return Response::json($partner->id);
+            return Response::json($partner);
         }
         return Response::json(null);
     }
@@ -37,7 +38,7 @@ class ModalPartnerController extends Controller
     {
         $partner = Partners::where('name', $request->get('name'))->first();
         if (!empty($partner)) {
-            return Response::json($partner->id);
+            return Response::json($partner);
         }
         return Response::json(null);
     }

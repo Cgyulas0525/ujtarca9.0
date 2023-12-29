@@ -65,4 +65,19 @@ class SelectService
         return ($_COOKIE['orderType'] == 'CUSTOMER') ? self::selectCustomerTypes() : self::selectSupplierTypes();
     }
 
+    public static function partnerSupplier()
+    {
+        return Partners::activePartner()->whereIn('partnertypes_id', [1, 2, 4, 6, 7, 8])->get();
+    }
+
+    public static function partnerCustomer()
+    {
+        return Partners::activePartner()->whereIn('partnertypes_id', [3, 9, 10])->get();
+    }
+
+    public static function partnersByCookie()
+    {
+        return ($_COOKIE['orderType'] == 'CUSTOMER') ? self::partnerCustomer() : self::partnerSupplier();
+    }
+
 }

@@ -11,18 +11,13 @@
                },
                success: function(response) {
                    console.log(response);
-                   try {
-                       var responseObject = JSON.parse(response);
-                       if (responseObject === null) {
-                           console.log('A JSON válasz objektum null.');
-                       } else {
-                           $('#name').focus();
-                           $('#name').val(null);
-                           sw('Van már ilyen nevű partner!');
-                       }
-                   } catch (error) {
+                   if (Object.keys(response).length === 0) {
                        let nextField = '#' + field;
                        $(nextField).focus();
+                   } else {
+                       $('#name').focus();
+                       $('#name').val(null);
+                       sw('Van már ezzen a néven partner!');
                    }
                },
                error: function(error) {

@@ -13,12 +13,16 @@
                 address:  $('#address').val()
             },
             success: function(response) {
-                console.log(response.message);
                 var partnerSelect = $('#partners_id');
                 partnerSelect.empty();
+                console.log(partnerSelect);
                 $.each(response.partners, function(index, partner) {
                     partnerSelect.append('<option value="' + partner.id + '">' + partner.name + '</option>');
+                    console.log(partner.id, partner.name);
                 });
+                console.log(partnerSelect);
+
+
                 $('#addPartnerModal').modal('hide');
                 $('#partners_id').val(response.partner.id)
             },

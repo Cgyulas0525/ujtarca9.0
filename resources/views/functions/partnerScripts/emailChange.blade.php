@@ -11,18 +11,13 @@
                 },
                 success: function(response) {
                     console.log(response);
-                    try {
-                        var responseObject = JSON.parse(response);
-                        if (responseObject === null) {
-                            console.log('A JSON válasz objektum null.');
-                        } else {
-                            $('#email').focus();
-                            $('#email').val(null);
-                            sw('Van már ilyen email címmel partner!');
-                        }
-                    } catch (error) {
+                    if (Object.keys(response).length === 0) {
                         let nextField = '#' + field;
                         $(nextField).focus();
+                    } else {
+                        $('#email').focus();
+                        $('#email').val(null);
+                        sw('Van már ilyen email címmel partner!');
                     }
                 },
                 error: function(error) {
