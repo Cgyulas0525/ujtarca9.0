@@ -44,6 +44,11 @@ class Delivery extends Model
         'deleted_at' => 'nullable'
     ];
 
+    protected $append = [
+        'deliveryFullName',
+    ];
+
+
     public function location(): string|BelongsTo
     {
         return $this->belongsTo(Location::class, 'location_id');
@@ -57,5 +62,10 @@ class Delivery extends Model
     public function scopeActiveDeliveries(Builder $query)
     {
         $query->where('date', '>=', Carbon::now());
+    }
+
+    public function getDeliveryFullNameAttribute(): string
+    {
+        return $this->delivery_number . ' ' . $this->location->name . ' - ' . $this->date->toDateString();
     }
 }

@@ -28,19 +28,13 @@ class ModalPartnerController extends Controller
     public function getPartnerByEmail(Request $request)
     {
         $partner = Partners::where('email', $request->get('email'))->first();
-        if (!empty($partner)) {
-            return Response::json($partner);
-        }
-        return Response::json(null);
+        return !empty($partner) ? Response::json($partner) : Response::json(null);
     }
 
     public function getPartnerByName(Request $request)
     {
         $partner = Partners::where('name', $request->get('name'))->first();
-        if (!empty($partner)) {
-            return Response::json($partner);
-        }
-        return Response::json(null);
+        return !empty($partner) ? Response::json($partner) : Response::json(null);
     }
 
 }

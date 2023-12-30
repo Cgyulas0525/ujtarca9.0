@@ -4,30 +4,30 @@
        let date =  $('#date').val();
        let location_id = $('#location_id').val();
 
-       console.log(date, location_id);
-       {{--if (email.length != 0) {--}}
-       {{--    $.ajax({--}}
-       {{--        method: 'POST',--}}
-       {{--        url: "{{url('api/getPartnerByEmail')}}",--}}
-       {{--        data: {--}}
-       {{--            email: email,--}}
-       {{--        },--}}
-       {{--        success: function(response) {--}}
-       {{--            console.log(response);--}}
-       {{--            if (Object.keys(response).length === 0) {--}}
-       {{--                let nextField = '#' + field;--}}
-       {{--                $(nextField).focus();--}}
-       {{--            } else {--}}
-       {{--                $('#email').focus();--}}
-       {{--                $('#email').val(null);--}}
-       {{--                sw('Van már ilyen email címmel partner!');--}}
-       {{--            }--}}
-       {{--        },--}}
-       {{--        error: function(error) {--}}
-       {{--            console.error('Hiba történt:', error);--}}
-       {{--        }--}}
-       {{--    });--}}
-       {{--}--}}
+       if (date.length > 0 && location_id !== 0) {
+           alert('Ellenőrzés');
+           $.ajax({
+               method: 'POST',
+               url: "{{url('api/getDeliveryByDateAndLocation')}}",
+               data: {
+                   date: date,
+                   location_id: location_id,
+               },
+               success: function(response) {
+                   console.log(response);
+                   if (Object.keys(response).length === 0) {
+                       $('#description').focus();
+                   } else {
+                       $('#location_id').focus();
+                       $('#loaction_id').val(null);
+                       sw('Van már ezzel a címmel és dátummal kiszállítás!');
+                   }
+               },
+               error: function(error) {
+                   console.error('Hiba történt:', error);
+               }
+           });
+       }
     }
 
 </script>

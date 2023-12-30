@@ -44,8 +44,7 @@ class SelectService
 
     public static function selectDelivery()
     {
-        return [" "] + Delivery::activeDeliveries()->orderBy('delivery_number')->pluck('delivery_number', 'id')->toArray();
-
+        return [" "] + (Delivery::activeDeliveries()->orderBy('delivery_number')->get())->pluck('deliveryFullName', 'id')->toArray();
     }
 
     public static function selectSupplierTypes(): array
