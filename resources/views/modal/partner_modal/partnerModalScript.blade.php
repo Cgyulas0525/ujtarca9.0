@@ -38,29 +38,6 @@
             modalRequiredFields();
         } else {
             newPartnerByModal();
-            {{--$.ajax({--}}
-            {{--    method: 'POST',--}}
-            {{--    url: "{{url('addLocation')}}",--}}
-            {{--    data: {--}}
-            {{--        name: name,--}}
-            {{--        postcode: postcode,--}}
-            {{--        settlement_id: settlement_id,--}}
-            {{--        address: address,--}}
-            {{--    },--}}
-            {{--    success: function(response) {--}}
-            {{--        console.log(response.message);--}}
-            {{--        var locationSelect = $('#location_id');--}}
-            {{--        locationSelect.empty();--}}
-            {{--        $.each(response.locations, function(index, location) {--}}
-            {{--            locationSelect.append('<option value="' + location.id + '">' + location.name + '</option>');--}}
-            {{--        });--}}
-            {{--        $('#addModal').modal('hide');--}}
-            {{--        $('#location_id').val(response.location.id)--}}
-            {{--    },--}}
-            {{--    error: function(error) {--}}
-            {{--        console.error('Hiba történt:', error);--}}
-            {{--    }--}}
-            {{--});--}}
         }
     }
 

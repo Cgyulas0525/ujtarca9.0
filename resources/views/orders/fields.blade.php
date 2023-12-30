@@ -74,21 +74,6 @@
     {!! Form::hidden('ordertype', isset($orders) ? $orders->ordertype->value : Str::lower(App\Services\OrderService::orderTypeByCookie()), ['class' => 'form-control']) !!}
 </div>
 
-@include('orders.partner_modal.partner_modal')
-
-
-
-{{--@include('layouts.modal', [--}}
-{{--        'addModal' => 'addModal',--}}
-{{--        'title' => 'Új partner hozzáadása',--}}
-{{--        'fields' => 'orders.modalFields',--}}
-{{--        'saveBtn' => 'saveBtn',--}}
-{{--    ])--}}
-
-{{--@include('layouts.modal', [--}}
-{{--        'addModal' => 'addDeliveryModal',--}}
-{{--        'title' => 'Új kiszállítás hozzáadása',--}}
-{{--        'fields' => 'orders.orderDeliveryModalFields',--}}
-{{--        'saveBtn' => 'saveBtn',--}}
-{{--    ])--}}
+@include('modal.partner_modal.partner_modal')
+@include('modal.delivery_modal.delivery_modal')
 

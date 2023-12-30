@@ -43,14 +43,8 @@
 @section('scripts')
     <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
     @include('functions.settlement.settlementPostcode_js')
-    @include('deliveries.addModalBtn_js')
     @include('functions.sweetalert_js')
     @include('functions.requiredField')
-
-    @include('orders.partner_modal.modalScript')
-    @include('functions.partnerScripts.emailChange')
-    @include('functions.partnerScripts.nameChange')
-    @include('functions.partnerScripts.newPartnerByModal')
 
     <script type="text/javascript">
 
