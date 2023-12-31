@@ -9,13 +9,10 @@
                sw('A mai napnál nem lehet korábbi dátum!');
                $('#date').val(formattedDate);
                $('#date').focus();
-           } else {
-               dateLocationChange();
+               return false;
            }
-       } else {
-           $('#date').val(formattedDate);
-           $('#date').focus();
        }
+       return true;
     }
 
 </script>

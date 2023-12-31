@@ -14,7 +14,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Kilép</button>
-                <button type="button" class="btn btn-primary" id="addPartnerBtn">Ment</button>
+                <button type="button" class="btn btn-primary" id="addPartnerBtn">Ellenőrzés</button>
             </div>
         </div>
     </div>
@@ -38,6 +38,12 @@
     @include('functions.deliveryScripts.locationChange')
     @include('functions.deliveryScripts.dateLocationChange')
     @include('functions.deliveryScripts.newDeliveryByModal')
+
+    @include('modal.location_modal.locationModalScript')
+    @include('functions.locationScript.postcodeChange')
+    @include('functions.locationScript.settlementChange')
+    @include('functions.locationScript.locationName')
+    @include('functions.locationScript.newLocationByModal')
 
 
     <script type="text/javascript">

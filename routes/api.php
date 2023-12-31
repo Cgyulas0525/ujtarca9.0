@@ -11,6 +11,7 @@ use App\Http\Controllers\FeatureProductController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\Api\ModalPartnerController;
 use App\Http\Controllers\Api\ModalDeliveryController;
+use App\Http\Controllers\Api\ModalLocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,10 @@ Route::post('getPartnerByEmail', [ModalPartnerController::class, 'getPartnerByEm
 Route::post('getPartnerByName', [ModalPartnerController::class, 'getPartnerByName']);
 
 Route::post('getDeliveryByDateAndLocation', [ModalDeliveryController::class, 'getDeliveryByDateAndLocation']);
+Route::post('newDeliveryByModal', [ModalDeliveryController::class, 'newDeliveryByModal']);
+
+Route::post('getLocationByName', [ModalLocationController::class, 'getLocationByName']);
+Route::post('newLocationByModal', [ModalLocationController::class, 'newLocationByModal']);
 
 
 

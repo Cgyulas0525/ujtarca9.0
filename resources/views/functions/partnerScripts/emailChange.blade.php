@@ -1,7 +1,8 @@
 <script type="text/javascript">
 
-   function emailChange(field) {
+   function emailChange() {
         let email =  $('#email').val();
+        let ret = true;
         if (email.length != 0) {
             $.ajax({
                 method: 'POST',
@@ -10,14 +11,11 @@
                     email: email,
                 },
                 success: function(response) {
-                    console.log(response);
-                    if (Object.keys(response).length === 0) {
-                        let nextField = '#' + field;
-                        $(nextField).focus();
-                    } else {
+                    if (Object.keys(response).length !== 0) {
                         $('#email').focus();
                         $('#email').val(null);
                         sw('Van már ilyen email címmel partner!');
+                        ret = false;
                     }
                 },
                 error: function(error) {
@@ -25,6 +23,7 @@
                 }
             });
         }
+        return ret;
     }
 
 </script>

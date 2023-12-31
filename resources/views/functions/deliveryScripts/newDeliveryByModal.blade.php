@@ -1,30 +1,24 @@
 <script type="text/javascript">
 
-    function newPartnerByModal() {
+    function newDeliveryByModal() {
         $.ajax({
             method: 'POST',
-            url: "{{url('api/newPartnerByModal')}}",
+            url: "{{url('api/newDeliveryByModal')}}",
             data: {
-                name: $('#name').val(),
-                postcode: $('#postcode').val(),
-                settlement_id: $('#settlement_id').val(),
-                partnertypes_id:  $('#partnertypes_id').val(),
-                email:  $('#email').val(),
-                address:  $('#address').val()
+                date: $('#date').val(),
+                location_id: $('#location_id').val(),
+                description: $('#description').val(),
+                delivery_number:  $('#delivery_number').val(),
             },
             success: function(response) {
-                var partnerSelect = $('#partners_id');
-                partnerSelect.empty();
-                console.log(partnerSelect);
-                $.each(response.partners, function(index, partner) {
-                    partnerSelect.append('<option value="' + partner.id + '">' + partner.name + '</option>');
-                    console.log(partner.id, partner.name);
+                var deliveriesSelect = $('#delivery_id');
+                deliveriesSelect.empty();
+                $.each(response.deliveries, function(index, delivery) {
+                    console.log(delivery);
+                    deliveriesSelect.append('<option value="' + delivery.id + '">' + delivery.deliveryFullName + '</option>');
                 });
-                console.log(partnerSelect);
-
-
-                $('#addPartnerModal').modal('hide');
-                $('#partners_id').val(response.partner.id)
+                $('#addDeliveryModal').modal('hide');
+                $('#delivery_id').val(response.delivery.id)
             },
             error: function(error) {
                 console.error('Hiba történt:', error);

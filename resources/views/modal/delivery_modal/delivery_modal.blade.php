@@ -14,36 +14,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Kilép</button>
-                <button type="button" class="btn btn-primary" id="addDeliveryBtn">Ment</button>
+                <button type="button" class="btn btn-primary" id="addDeliveryBtn">Ellenőrzés</button>
             </div>
         </div>
     </div>
 </div>
-
-{{--@section('scripts')--}}
-{{--    <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>--}}
-{{--    @include('functions.settlement.settlementPostcode_js')--}}
-{{--    @include('functions.sweetalert_js')--}}
-{{--    @include('functions.requiredField')--}}
-
-{{--    @include('modal.delivery_modal.deliveryModalScript')--}}
-
-{{--    @include('functions.deliveryScripts.dateChange')--}}
-{{--    @include('functions.deliveryScripts.locationChange')--}}
-{{--    @include('functions.deliveryScripts.dateLocationChange')--}}
-{{--    @include('functions.deliveryScripts.newDeliveryByModal')--}}
-
-{{--    <script type="text/javascript">--}}
-
-{{--        $(function () {--}}
-{{--            $.ajaxSetup({--}}
-{{--                headers: {--}}
-{{--                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-
-{{--        RequiredBackgroundModify('.form-control')--}}
-
-{{--    </script>--}}
-{{--@endsection--}}

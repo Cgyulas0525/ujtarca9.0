@@ -5,7 +5,6 @@
        let location_id = $('#location_id').val();
 
        if (date.length > 0 && location_id !== 0) {
-           alert('Ellenőrzés');
            $.ajax({
                method: 'POST',
                url: "{{url('api/getDeliveryByDateAndLocation')}}",
@@ -14,9 +13,8 @@
                    location_id: location_id,
                },
                success: function(response) {
-                   console.log(response);
                    if (Object.keys(response).length === 0) {
-                       $('#description').focus();
+                       $('#addDeliveryBtn').text('Ment');
                    } else {
                        $('#location_id').focus();
                        $('#loaction_id').val(null);

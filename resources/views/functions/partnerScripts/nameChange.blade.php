@@ -1,7 +1,8 @@
 <script type="text/javascript">
 
-   function nameChange(field) {
+   function nameChange() {
        let name =  $('#name').val();
+       let ret = true;
        if (name.length != 0) {
            $.ajax({
                method: 'POST',
@@ -10,14 +11,11 @@
                    name: name,
                },
                success: function(response) {
-                   console.log(response);
-                   if (Object.keys(response).length === 0) {
-                       let nextField = '#' + field;
-                       $(nextField).focus();
-                   } else {
+                   if (Object.keys(response).length !== 0) {
                        $('#name').focus();
                        $('#name').val(null);
                        sw('Van már ezzen a néven partner!');
+                       ret = false;
                    }
                },
                error: function(error) {
@@ -25,6 +23,7 @@
                }
            });
        }
+       return ret;
     }
 
 </script>

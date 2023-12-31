@@ -4,13 +4,7 @@
         addPartnerBtnEvent();
     });
 
-    $('#email').change(function () {
-        emailChange('name');
-    })
 
-    $('#name').change(function () {
-        nameChange('partnertypes_id');
-    })
 
     function modalRequiredFields() {
         if (requiredField('email', 'Email')) {
@@ -24,6 +18,7 @@
                 }
             }
         }
+        return true;
     }
 
     function addPartnerBtnEvent() {
@@ -34,8 +29,16 @@
         let email =  $('#email').val();
         let address =  $('#address').val();
 
-        if (name.length === 0 || postcode === '0' || settlement_id === '0' || email.length === 0 || partnertypes_id === '0' || address.length === 0) {
-            modalRequiredFields();
+        if ($('#addPartnerBtn').text() === 'Ellenőrzés') {
+            if (name.length === 0 || postcode === '0' || settlement_id === '0' || email.length === 0 || partnertypes_id === '0' || address.length === 0) {
+                modalRequiredFields()
+            } else {
+                if (emailChange()) {
+                    if (nameChange()) {
+                        $('#addPartnerBtn').text('Ment');
+                    }
+                }
+            }
         } else {
             newPartnerByModal();
         }

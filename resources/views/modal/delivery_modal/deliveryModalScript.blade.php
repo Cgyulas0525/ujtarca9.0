@@ -4,18 +4,11 @@
         addDeliveryBtnEvent();
     });
 
-    $('#date').change(function () {
-        dateChange();
-    })
-
-    $('#location_id').change(function () {
-        locationChange();
-    })
-
     function modalRequiredFields() {
         if (requiredField('date', 'Dátum')) {
-            requiredField('location_id', 'Cím')
+            return requiredField('location_id', 'Cím')
         }
+        return true;
     }
 
     function addDeliveryBtnEvent() {
@@ -25,13 +18,19 @@
         let description = $('#description').val();
         let delivery_number =  $('#delivery_number').val();
 
-        console.log(date, location_id, description, delivery_number);
-
-        // if (name.length === 0 || postcode === '0' || settlement_id === '0' || email.length === 0 || partnertypes_id === '0' || address.length === 0) {
-        //     modalRequiredFields();
-        // } else {
-        //     newDeliveryByModal();
-        // }
+        if ($('#addDeliveryBtn').text() === 'Ellenőrzés') {
+            if (date.length === 0 || location_id === '0') {
+                modalRequiredFields()
+            } else {
+                if (dateChange()) {
+                    if (locationChange()) {
+                        dateLocationChange();
+                    }
+                }
+            }
+        } else {
+            newDeliveryByModal();
+        }
     }
 
 </script>

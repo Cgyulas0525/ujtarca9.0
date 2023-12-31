@@ -61,7 +61,7 @@ class Delivery extends Model
 
     public function scopeActiveDeliveries(Builder $query)
     {
-        $query->where('date', '>=', Carbon::now());
+        $query->where('date', '>=', Carbon::now()->toDateString());
     }
 
     public function getDeliveryFullNameAttribute(): string
