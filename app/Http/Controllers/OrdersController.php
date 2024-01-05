@@ -137,10 +137,18 @@ class OrdersController extends AppBaseController
         return view('orders.create');
     }
 
-    public function store(CreateOrdersRequest $request): object
+    public function store(Request $request): object
     {
-        $input = $request->all();
-        $orders = $this->ordersRepository->create($input);
+        $orders = new Orders();
+        $orders->ordernumber = $request->ordernumber;
+        $orders->orderdate = $request->orderdate;
+        $orders->partners_id = $request->partners_id;
+        $orders->description = $request->description;
+        $orders->order_status = OrderStatusEnum::ORDERED->value;
+        $orders->ordertype = $request->ordertype;
+        $orders->delivery_id = $request->delivery_id;
+        $orders->detailsum = 0;
+        $orders->save();
         RedisClass::setexOrders();
 
         return view('orders.edit')->with('orders', $orders);
@@ -164,13 +172,21 @@ class OrdersController extends AppBaseController
         return view('orders.edit')->with('orders', $orders);
     }
 
-    public function update($id, UpdateOrdersRequest $request): object
+    public function update(Request $request): object
     {
-        $orders = $this->ordersRepository->find($id);
+
+        $orders = $this->ordersRepository->find($request->id);
+        $orders->ordernumber = $request->ordernumber;
+        $orders->orderdate = $request->orderdate;
+        $orders->partners_id = $request->partners_id;
+        $orders->description = $request->description;
+        $orders->delivery_id = $request->delivery_id;
+        $orders->ordertype = $request->ordertype;
+        $orders->save();
+
         if (empty($orders)) {
             return redirect(route('orders.index'));
         }
-        $orders = $this->ordersRepository->update($request->all(), $id);
         RedisClass::setexOrders();
 
         return redirect(route('orders.index'));

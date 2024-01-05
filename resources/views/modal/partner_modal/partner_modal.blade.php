@@ -25,6 +25,7 @@
     @include('functions.settlement.settlementPostcode_js')
     @include('functions.sweetalert_js')
     @include('functions.requiredField')
+    @include('functions.dateFormat_js')
 
     @include('modal.partner_modal.partnerModalScript')
 
@@ -45,6 +46,7 @@
     @include('functions.locationScript.locationName')
     @include('functions.locationScript.newLocationByModal')
 
+    @include('orders.js.otherBtn_js')
 
     <script type="text/javascript">
 
@@ -58,8 +60,22 @@
 
         RequiredBackgroundModify('.form-control')
 
-        // $('#addModalBtn').click(function() {
-        //     addModalBtnEvent();
-        // });
+        $('#otherBtn').click(function (e) {
+            var id = $('#id').val();
+            if (id == null || id === 0 || id.length === 0) {
+                otherBtnEvent('store');
+            } else {
+                otherBtnEvent('modify');
+            }
+        });
+
+        $('#orderdate').change(function () {
+            var currentDate = dateFormat(new Date());
+            if ($("#orderdate").val() < currentDate) {
+                sw('A kiválasztott dátum nem lehet korábbi, mint a mai dátum.');
+                $('#orderdate').val(currentDate);
+                $('#orderdate').focus();
+            }
+        });
     </script>
 @endsection

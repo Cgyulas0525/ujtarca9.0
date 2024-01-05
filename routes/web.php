@@ -106,6 +106,8 @@ Route::get('products.index/{active?}',[ProductsController::class, 'index'])->nam
 
 Route::resource('orders', App\Http\Controllers\OrdersController::class);
 Route::get('orders.index/{orderType?}/{orderStatus?}',[OrdersController::class, 'index'])->name('ordersIndex');
+Route::get('ordersStore',[OrdersController::class, 'store'])->name('ordersStore');
+Route::post('ordersUpdate',[OrdersController::class, 'update'])->name('ordersUpdate');
 Route::get('orders.print/{id}',[OrdersController::class, 'print'])->name('orderPrint');
 Route::get('orderEmail/{id}',[OrdersController::class, 'orderEmail'])->name('orderEmail');
 Route::get('orderReplay/{id}',[OrderReplyController::class, 'orderReplay'])->name('orderReplay');

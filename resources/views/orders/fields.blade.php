@@ -4,29 +4,15 @@
 @endsection
 
 
-@if (isset($orders))
-    <div class="form-group col-sm-6">
-        {!! Form::hidden('ordernumber', 'Megrendelés szám:') !!}
-        {!! Form::hidden('ordernumber', isset($orders) ? $orders->ordernumber : OrderService::nextOrderNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
-    </div>
+<div class="form-group col-sm-6">
+    {!! Form::label('ordernumber', 'Megrendelés szám:') !!}
+    {!! Form::text('ordernumber', isset($orders) ? $orders->ordernumber : OrderService::nextOrderNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true', 'id' => 'ordernumber']) !!}
+</div>
 
-    <!-- Offerdate Field -->
-    <div class="form-group col-sm-6">
-        {!! Form::hidden('orderdate', 'Dátum:') !!}
-        {!! Form::hidden('orderdate', isset($orders) ? $orders->orderdate : Carbon\Carbon::now(), ['class' => 'form-control','id'=>'orderdate']) !!}
-    </div>
-@else
-    <div class="form-group col-sm-6">
-        {!! Form::label('ordernumber', 'Megrendelés szám:') !!}
-        {!! Form::text('ordernumber', isset($orders) ? $orders->ordernumber : OrderService::nextOrderNumber(), ['class' => 'form-control','maxlength' => 25, 'readonly' => 'true']) !!}
-    </div>
-
-    <!-- Offerdate Field -->
-    <div class="form-group col-sm-6">
-        {!! Form::label('orderdate', 'Dátum:') !!}
-        {!! Form::date('orderdate', isset($orders) ? $orders->orderdate : Carbon\Carbon::now(), ['class' => 'form-control','id'=>'orderdate']) !!}
-    </div>
-@endif
+<div class="form-group col-sm-6">
+    {!! Form::label('orderdate', 'Dátum:') !!}
+    {!! Form::date('orderdate', isset($orders) ? $orders->orderdate : Carbon\Carbon::now(), ['class' => 'form-control','id'=>'orderdate']) !!}
+</div>
 
 <!-- Partners Id Field -->
 <div class="form-group col-sm-6">
@@ -57,21 +43,18 @@
             </div>
         </div>
     @endif
-
-{{--    @include('layouts.modalBtn', [ 'title' => 'Új partner'])--}}
-
 </div>
 
-<!-- Description Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('description', 'Megjegyzés:') !!}
     {!! Form::textarea('description', null, ['class' => 'form-control','maxlength' => 500, 'rows' => 4]) !!}
 </div>
 
-<!-- Description Field -->
 <div class="form-group col-sm-6">
     {!! Form::hidden('ordertype', 'OrderType:') !!}
-    {!! Form::hidden('ordertype', isset($orders) ? $orders->ordertype->value : Str::lower(App\Services\OrderService::orderTypeByCookie()), ['class' => 'form-control']) !!}
+    {!! Form::hidden('ordertype', isset($orders) ? $orders->ordertype->value : Str::lower(App\Services\OrderService::orderTypeByCookie()), ['class' => 'form-control', 'id' => 'ordertype']) !!}
+    {!! Form::hidden('orderid', 'Id:') !!}
+    {!! Form::hidden('orderid', isset($orders) ? $orders->id : null, ['class' => 'form-control', 'id' => 'orderid']) !!}
 </div>
 
 @include('modal.partner_modal.partner_modal')

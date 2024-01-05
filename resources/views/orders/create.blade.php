@@ -30,7 +30,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Ment', ['class' => 'btn btn-primary']) !!}
+                <a href="#" class="btn btn-primary" id="otherBtn">Ment</a>
                 <a href="{{ route('orders.index') }}" class="btn btn-default"> Kilép </a>
             </div>
 
@@ -58,8 +58,5 @@
 
         RequiredBackgroundModify('.form-control')
 
-        // $('#addModalBtn').click(function() {
-        //     addModalBtnEvent();
-        // });
     </script>
 @endsection

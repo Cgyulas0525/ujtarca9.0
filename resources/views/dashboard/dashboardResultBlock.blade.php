@@ -2,7 +2,7 @@
     <!-- Add the bg color to the header using any of the bg-* classes -->
     <div class="widget-user-header bg-warning">
         <div class=" finance-button-container">
-            @if ( $values->year == date('Y') )
+            @if ( !is_null($values) && $values->year == date('Y') )
                 <a href="#" class="btn btn-default finance-button yearBtn">Éves</a>
                 <a href="#" class="btn btn-default finance-button mountBtn">Havi</a>
                 <a href="#" class="btn btn-default finance-button weekBtn">Heti</a>
