@@ -54,6 +54,8 @@ class OrdersController extends AppBaseController
                                  class="btn btn-warning btn-sm deleteProduct" title="Email"><i class="fas fa-envelope-open"></i></a>';
                 $btn = $btn . '<a href="' . route('orderReplay', [$row->id]) . '"
                                  class="btn btn-primary btn-sm replayOrder" title="Ismétlés"><i class="fas fa-copy"></i></a>';
+                $btn = $btn . '<a href="' . route('editDetails', [$row->id]) . '"
+                                 class="btn btn-secondary btn-sm editDetailsí" title="Tételek"><i class="fas fa-bars"></i></a>';
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -170,6 +172,15 @@ class OrdersController extends AppBaseController
             return redirect(route('orders.index'));
         }
         return view('orders.edit')->with('orders', $orders);
+    }
+
+    public function editDetails($id): object
+    {
+        $orders = Orders::with('partners')->findOrFail($id);
+        if (empty($orders)) {
+            return redirect(route('orders.index'));
+        }
+        return view('orders.edit-with-detail')->with(['orders' => $orders, 'detail' => true]);
     }
 
     public function update(Request $request): object

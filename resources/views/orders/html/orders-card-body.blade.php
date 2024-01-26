@@ -1,6 +1,8 @@
 <div class="card-body">
     <div class="row">
         @include('orders.html.fields')
-        @include('orders.html.include-modals')
+        @if (!isset($detail))
+            @include('orders.html.include-modals')
+        @endif
     </div>
 </div>

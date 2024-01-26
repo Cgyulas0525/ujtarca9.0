@@ -111,6 +111,7 @@ Route::post('ordersUpdate',[OrdersController::class, 'update'])->name('ordersUpd
 Route::get('orders.print/{id}',[OrdersController::class, 'print'])->name('orderPrint');
 Route::get('orderEmail/{id}',[OrdersController::class, 'orderEmail'])->name('orderEmail');
 Route::get('orderReplay/{id}',[OrderReplyController::class, 'orderReplay'])->name('orderReplay');
+Route::get('editDetails/{id}',[OrdersController::class, 'editDetails'])->name('editDetails');
 
 Route::resource('orderdetails', App\Http\Controllers\OrderdetailsController::class);
 Route::get('orderdetailsIndex/{id}', [OrderdetailsController::class, 'orderdetailsIndex'])->name('orderdetailsIndex');

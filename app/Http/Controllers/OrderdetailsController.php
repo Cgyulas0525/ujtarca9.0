@@ -51,7 +51,7 @@ class OrderdetailsController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $data = Orderdetails::with('products')->with('quantities')->where('orders_id', $id)->get();
+                $data = Orderdetails::with('orders')->with('products')->with('quantities')->where('orders_id', $id)->get();
                 return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('productName', function($data) { return $data->products->name; })
@@ -64,7 +64,7 @@ class OrderdetailsController extends AppBaseController
                     ->rawColumns(['action'])
                     ->make(true);
             }
-            return view('orderdetails.index');
+            return view('orders.edit-with-detail');
         }
     }
 
