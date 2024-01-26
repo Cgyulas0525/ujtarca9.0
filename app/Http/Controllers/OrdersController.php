@@ -41,7 +41,7 @@ class OrdersController extends AppBaseController
                 return $data->partners->name;
             })
             ->addColumn('deliveryNumber', function ($data) {
-                return $data->ordertype == OrderTypeEnum::CUSTOMER->value ? $data->delivery->delivery_number : '';
+                return ($data->ordertype == OrderTypeEnum::CUSTOMER->value) ? (is_null($data->delivery_id) ? '' : $data->delivery->delivery_number) : '';
             })
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('orders.edit', [$row->id]) . '"

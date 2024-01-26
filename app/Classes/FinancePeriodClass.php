@@ -85,7 +85,7 @@ class FinancePeriodClass
 
     public function weekInviocesPeriod(): object
     {
-        return Invoices::selectRaw('concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as yearweek, sum(amount) as amount')
+        return Invoices::selectRaw('concat(year(dated), if(CAST(week(dated, 1) AS UNSIGNED) < 10, concat("0", week(dated, 1)), week(dated, 1))) as yearweek, sum(amount) as amount')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('yearweek')
             ->orderBy('yearweek')
@@ -94,7 +94,7 @@ class FinancePeriodClass
 
     public function weekClosuresPeriod(): object
     {
-        return Closures::selectRaw('concat(year(closuredate), if(CAST(week(closuredate) AS UNSIGNED) < 10, concat("0", week(closuredate)), week(closuredate))) as yearweek,
+        return Closures::selectRaw('concat(year(closuredate), if(CAST(week(closuredate, 1) AS UNSIGNED) < 10, concat("0", week(closuredate, 1)), week(closuredate, 1))) as yearweek,
                     sum(dailysum - 20000) as dailysum,
                     sum(1) as days,
                     sum(card) as card,
@@ -155,13 +155,13 @@ class FinancePeriodClass
     {
 
         $invoices = DB::table('invoices')
-            ->select(DB::raw('concat(year(dated), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as year, sum(amount) as amount, 0 as dailysum'))
+            ->select(DB::raw('concat(year(dated), if(CAST(week(dated, 1) AS UNSIGNED) < 10, concat("0", week(dated, 1)), week(dated, 1))) as year, sum(amount) as amount, 0 as dailysum'))
             ->whereNull('deleted_at')
             ->whereBetween('dated', [$this->begin, $this->end])
             ->groupBy('year');
 
         $closures = DB::table('closures')
-            ->select(DB::raw('concat(year(closuredate), if(CAST(week(closuredate) AS UNSIGNED) < 10, concat("0", week(closuredate)), week(closuredate))) as year, 0 as amount, sum(dailysum - 20000) as dailysum'))
+            ->select(DB::raw('concat(year(closuredate), if(CAST(week(closuredate, 1) AS UNSIGNED) < 10, concat("0", week(closuredate, 1)), week(closuredate, 1))) as year, 0 as amount, sum(dailysum - 20000) as dailysum'))
             ->whereNull('deleted_at')
             ->whereBetween('closuredate', [$this->begin, $this->end])
             ->groupBy('year')

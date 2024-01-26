@@ -22,10 +22,13 @@
 
 @section('scripts')
     <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('/js/currencyFormatDE.js') }} " type="text/javascript"></script>
+
     @include('functions.settlement.settlementPostcode_js')
     @include('functions.sweetalert_js')
     @include('functions.requiredField')
     @include('functions.dateFormat_js')
+    @include('functions.ajax_js')
 
     @include('modal.partner_modal.partnerModalScript')
 
@@ -50,14 +53,7 @@
 
     <script type="text/javascript">
 
-        $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-        });
-
+        ajaxSetup();
         RequiredBackgroundModify('.form-control')
 
         $('#otherBtn').click(function (e) {
@@ -79,3 +75,4 @@
         });
     </script>
 @endsection
+

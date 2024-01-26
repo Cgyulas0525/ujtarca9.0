@@ -17,7 +17,7 @@ class RiportsClass
 
     public static function TurnoverLast26Weeks(): object
     {
-        return Closures::selectRaw('concat(CONCAT(year(closuredate),"."), if(CAST(week(closuredate) AS UNSIGNED) < 10, concat("0", week(closuredate)), week(closuredate))) as nap, sum(dailysum - 20000) as osszeg')
+        return Closures::selectRaw('concat(CONCAT(year(closuredate),"."), if(CAST(week(closuredate, 1) AS UNSIGNED) < 10, concat("0", week(closuredate, 1)), week(closuredate, 1))) as nap, sum(dailysum - 20000) as osszeg')
             ->whereBetween('closuredate', [now()->subWeeks(26)->toDateString(), now()->toDateString()])
             ->groupBy('nap')
             ->orderBy('nap')
@@ -91,13 +91,13 @@ class RiportsClass
         $end = now()->toDateString();
 
         $invoices = DB::table('invoices')
-            ->select(DB::raw('concat(CONCAT(year(dated),"."), if(CAST(week(dated) AS UNSIGNED) < 10, concat("0", week(dated)), week(dated))) as nap, sum(amount) as amount, 0 as dailysum'))
+            ->select(DB::raw('concat(CONCAT(year(dated),"."), if(CAST(week(dated, 1) AS UNSIGNED) < 10, concat("0", week(dated, 1)), week(dated, 1))) as nap, sum(amount) as amount, 0 as dailysum'))
             ->whereNull('deleted_at')
             ->whereBetween('dated', [$begin, $end])
             ->groupBy('nap');
 
         $closures = DB::table('closures as t1')
-            ->select(DB::raw('concat(CONCAT(year(t1.closuredate),"."), if(CAST(week(t1.closuredate) AS UNSIGNED) < 10, concat("0", week(t1.closuredate)), week(t1.closuredate))) as nap, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
+            ->select(DB::raw('concat(CONCAT(year(t1.closuredate),"."), if(CAST(week(t1.closuredate, 1) AS UNSIGNED) < 10, concat("0", week(t1.closuredate, 1)), week(t1.closuredate, 1))) as nap, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
             ->whereNull('t1.deleted_at')
             ->whereBetween('t1.closuredate', [$begin, $end])
             ->groupBy('nap')
