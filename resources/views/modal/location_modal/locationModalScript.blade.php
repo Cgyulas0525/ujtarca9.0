@@ -14,7 +14,7 @@
     });
 
 
-    function modalRequiredFields() {
+    function locationModalRequiredFields() {
         if (requiredField('location_name', 'Név')) {
             if (requiredField('location_postcode', 'Irányító szám')) {
                 if (requiredField('location_settlement_id', 'Település')) {
@@ -35,7 +35,7 @@
         if ($('#addLocationBtn').text() === 'Ellenőrzés') {
             console.log(name, postcode, settlement_id, address)
             if (name.length === 0 || postcode === '0' || settlement_id === '0' || address.length === 0) {
-                modalRequiredFields()
+                locationModalRequiredFields()
             } else {
                 locationName();
             }

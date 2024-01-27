@@ -114,7 +114,7 @@ Route::get('orderReplay/{id}',[OrderReplyController::class, 'orderReplay'])->nam
 Route::get('editDetails/{id}',[OrdersController::class, 'editDetails'])->name('editDetails');
 
 Route::resource('orderdetails', App\Http\Controllers\OrderdetailsController::class);
-Route::get('orderdetailsIndex/{id}', [OrderdetailsController::class, 'orderdetailsIndex'])->name('orderdetailsIndex');
+Route::get('orderDetailsIndex/{id}', [OrderdetailsController::class, 'orderDetailsIndex'])->name('orderDetailsIndex');
 Route::get('orderdetailsCreate/{id}', [OrderdetailsController::class, 'orderdetailsCreate'])->name('orderdetailsCreate');
 Route::get('orderdetailsUpdate', [OrderdetailsController::class, 'orderdetailsUpdate'])->name('orderdetailsUpdate');
 

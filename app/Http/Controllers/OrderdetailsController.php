@@ -47,7 +47,7 @@ class OrderdetailsController extends AppBaseController
         }
     }
 
-    public function orderdetailsIndex(Request $request, $id)
+    public function orderDetailsIndex(Request $request, $id)
     {
         if (Auth::check()) {
             if ($request->ajax()) {
@@ -57,7 +57,7 @@ class OrderdetailsController extends AppBaseController
                     ->addColumn('productName', function($data) { return $data->products->name; })
                     ->addColumn('quantityName', function($data) { return $data->quantities->name; })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="' . route('beforeDestroysWithParam', ['Orderdetails', $row->id, 'ordersEdit', $row->orders_id]) . '"
+                        $btn = '<a href="' . route('beforeDestroysWithParam', ['Orderdetails', $row->id, 'editDetails', $row->orders_id]) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
                         return $btn;
                     })
@@ -122,7 +122,7 @@ class OrderdetailsController extends AppBaseController
             return redirect(route('orderdetails.index'));
         }
         $this->orderdetailsRepository->delete($id);
-        return redirect(route('orderdetails.index'));
+        return redirect(route('editDetails', ['id' => $orderdetails->orders->id]));
     }
 
     public static function DDDW(): array

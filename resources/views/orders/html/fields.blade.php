@@ -74,4 +74,8 @@
     {!! Form::hidden('orderid', isset($orders) ? $orders->id : null, ['class' => 'form-control', 'id' => 'orderid']) !!}
 </div>
 
-
+@if (!isset($detail))
+    @include('orders.html.include-modals')
+@else
+    @include('orders.html.edit-details.order-details-table')
+@endif

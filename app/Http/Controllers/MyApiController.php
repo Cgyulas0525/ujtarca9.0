@@ -21,12 +21,12 @@ class MyApiController extends Controller
         return back();
     }
 
-    public function getProduct(Request $request): string
+    public function getProduct(Request $request)
     {
         return Response::json(Products::find($request->get('id')));
     }
 
-    public function getQuantity(Request $request): string
+    public function getQuantity(Request $request)
     {
         return Response::json(Quantities::find($request->get('id')));
     }

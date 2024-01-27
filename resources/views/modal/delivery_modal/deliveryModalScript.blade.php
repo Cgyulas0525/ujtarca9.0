@@ -4,7 +4,7 @@
         addDeliveryBtnEvent();
     });
 
-    function modalRequiredFields() {
+    function deliveryModalRequiredFields() {
         if (requiredField('date', 'Dátum')) {
             return requiredField('location_id', 'Cím')
         }
@@ -20,7 +20,7 @@
 
         if ($('#addDeliveryBtn').text() === 'Ellenőrzés') {
             if (date.length === 0 || location_id === '0') {
-                modalRequiredFields()
+                deliveryModalRequiredFields()
             } else {
                 if (dateChange()) {
                     if (locationChange()) {

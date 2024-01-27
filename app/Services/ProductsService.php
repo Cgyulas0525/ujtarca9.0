@@ -10,6 +10,6 @@ class ProductsService
 {
     public function getProductPriceByOrderType(Orderdetails $orderdetails): int
     {
-        return ($orderdetails->orders->ordertype = OrderTypeEnum::SUPPLIER) ? Products::find($orderdetails->products_id)->supplierprice : Products::find($orderdetails->products_id)->price;
+        return ($orderdetails->orders->ordertype == OrderTypeEnum::SUPPLIER) ? Products::find($orderdetails->products_id)->supplierprice : Products::find($orderdetails->products_id)->price;
     }
 }

@@ -28,7 +28,7 @@
         addPartnerBtnEvent();
     });
 
-    function modalRequiredFields() {
+    function partnerModalRequiredFields() {
         if (requiredField('email', 'Email')) {
             if (requiredField('name', 'Név')) {
                 if (requiredField('partnertypes_id', 'Típus')) {
@@ -53,7 +53,7 @@
 
         if ($('#addPartnerBtn').text() === 'Ellenőrzés') {
             if (name.length === 0 || postcode === '0' || settlement_id === '0' || email.length === 0 || partnertypes_id === '0' || address.length === 0) {
-                modalRequiredFields()
+                partnerModalRequiredFields()
             } else {
                 if (emailChange()) {
                     if (nameChange()) {
