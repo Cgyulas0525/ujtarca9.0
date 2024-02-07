@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Auth;
 use DataTables;
 use Form;
-use Illuminate\Support\Facades\Redis;
 
 class CimletsController extends AppBaseController
 {
@@ -20,7 +19,6 @@ class CimletsController extends AppBaseController
     public function __construct(CimletsRepository $cimletsRepo)
     {
         $this->cimletsRepository = $cimletsRepo;
-        $this->redis = Redis::connection();
     }
 
     public function dwData($data)
@@ -42,12 +40,7 @@ class CimletsController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $data = $this->redis->get('cimlets_all');
-                if (empty($data)) {
-                    $this->redis->setex('cimlets_all', 3600, Cimlets::all());
-                    $data = $this->redis->get('cimlets_all');
-                }
-                return $this->dwData(json_decode($data));
+                return $this->dwData(Cimlets::all());
             }
         }
         return view('cimlets.index');
@@ -62,7 +55,6 @@ class CimletsController extends AppBaseController
     {
         $input = $request->all();
         $cimlets = $this->cimletsRepository->create($input);
-        $this->redis->setex('cimlets_all', 3600, Cimlets::all());
 
         return redirect(route('cimlets.index'));
     }
@@ -92,7 +84,6 @@ class CimletsController extends AppBaseController
             return redirect(route('cimlets.index'));
         }
         $cimlets = $this->cimletsRepository->update($request->all(), $id);
-        $this->redis->setex('cimlets_all', 3600, Cimlets::all());
 
         return redirect(route('cimlets.index'));
     }
@@ -104,7 +95,6 @@ class CimletsController extends AppBaseController
             return redirect(route('cimlets.index'));
         }
         $this->cimletsRepository->delete($id);
-        $this->redis->setex('cimlets_all', 3600, Cimlets::all());
 
         return redirect(route('cimlets.index'));
     }

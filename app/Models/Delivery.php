@@ -46,6 +46,7 @@ class Delivery extends Model
 
     protected $append = [
         'deliveryFullName',
+        'orderNumber'
     ];
 
 
@@ -68,4 +69,10 @@ class Delivery extends Model
     {
         return $this->delivery_number . ' ' . $this->location->name . ' - ' . $this->date->toDateString();
     }
+    public function getOrderNumberAttribute(): string
+    {
+        return Orders::where('delivery_id', $this->id)->count();
+    }
+
+
 }

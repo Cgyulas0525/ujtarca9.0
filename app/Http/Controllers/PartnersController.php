@@ -18,19 +18,15 @@ use DataTables;
 use Form;
 use App\Traits\Others\PartnerFactSheetTrait;
 use App\Traits\Others\PartnerPeriodicAccountsTrait;
-use Illuminate\Support\Facades\Redis;
-use App\Classes\RedisClass;
 
 class PartnersController extends AppBaseController
 {
     private $partnersRepository;
-    private $redis;
     private $delivery_customer;
 
     public function __construct(PartnersRepository $partnersRepo)
     {
         $this->partnersRepository = $partnersRepo;
-        $this->redis = Redis::connection();
         $this->delivery_customer = PartnerTypes::where('name', PartnerTypeEnum::DELIVERY_CUSTOMER->value)->first()->id;
     }
 
@@ -71,40 +67,22 @@ class PartnersController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $data = $this->getRedis($active);
-                if (empty($data)) {
-                    $this->setRedis($active);
-                    $data = $this->getRedis($active);
-                }
-                return $this->dwData(json_decode($data));
+                return $this->dwData($this->getData($active));
             }
             return view('partners.index');
         }
         return view('partners.index');
     }
 
-    public function getRedis(?string $active = null): mixed
+    public function getData(?string $active = null): object
     {
         if (is_null($active)) {
-            return $this->redis->get('partners_all');
+            return Partners::with('partnertypes')->where('partnertypes_id', '!=', $this->delivery_customer)->get();
         } else {
             if ($active == ActiveEnum::INACTIVE->value) {
-                return $this->redis->get('partners_inactive');
+                return Partners::with('partnertypes')->inactivePartner()->where('partnertypes_id', '!=', $this->delivery_customer)->get();
             } else {
-                return $this->redis->get('partners_active');
-            }
-        }
-    }
-
-    public function setRedis(?string $active = null): void
-    {
-        if (is_null($active)) {
-            $this->redis->setex('partners_all', 3600, Partners::with('partnertypes')->where('partnertypes_id', '!=', $this->delivery_customer)->get());
-        } else {
-            if ($active == ActiveEnum::INACTIVE->value) {
-                $this->redis->setex('partners_inactive', 3600, Partners::with('partnertypes')->inactivePartner()->where('partnertypes_id', '!=', $this->delivery_customer)->get());
-            } else {
-                $this->redis->setex('partners_active', 3600, Partners::with('partnertypes')->activePartner()->where('partnertypes_id', '!=', $this->delivery_customer)->get());
+                return Partners::with('partnertypes')->activePartner()->where('partnertypes_id', '!=', $this->delivery_customer)->get();
             }
         }
     }
@@ -118,7 +96,6 @@ class PartnersController extends AppBaseController
     {
         $input = $request->all();
         $partners = $this->partnersRepository->create($input);
-        RedisClass::setexPartners();
         return redirect(route('partners.index'));
     }
 
@@ -147,7 +124,7 @@ class PartnersController extends AppBaseController
             return redirect(route('partners.index'));
         }
         $partners = $this->partnersRepository->update($request->all(), $id);
-        RedisClass::setexPartners();
+
         return redirect(route('partners.index'));
     }
 
@@ -158,7 +135,7 @@ class PartnersController extends AppBaseController
             return redirect(route('partners.index'));
         }
         $this->partnersRepository->delete($id);
-        RedisClass::setexPartners();
+
         return redirect(route('partners.index'));
     }
 

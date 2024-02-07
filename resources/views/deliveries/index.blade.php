@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="css/app.css">
     @include('layouts.costumcss')
 @endsection
 
@@ -38,6 +37,9 @@
                     {title: 'Sorszám', data: 'delivery_number', name: 'delivery_number'},
                     {title: 'Dátum', data: 'date', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'date'},
                     {title: 'Partner', data: 'location', name: 'location'},
+                    {title: 'Megrendelés db', data: 'orderNumber', width: '150px', render: $.fn.dataTable.render.number('.', ',', 0), name: 'orderNumber',                       render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                    },
                 ],
                 buttons: [],
             });

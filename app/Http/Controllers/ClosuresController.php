@@ -16,7 +16,6 @@ use Auth;
 use DataTables;
 use Form;
 use App\Services\ClosureCimletInsert;
-use Illuminate\Support\Facades\Redis;
 
 class ClosuresController extends AppBaseController
 {
@@ -50,21 +49,12 @@ class ClosuresController extends AppBaseController
             ->make(true);
     }
 
-    public function getRedis($redis, $year)
+    public function getData($year): object
     {
         if ($year == 0) {
-            return $redis->get('closures_all');
+            return Closures::all();
         } else {
-            return $redis->get('closures_' . $year);
-        }
-    }
-
-    public function setRedis($redis, $year)
-    {
-        if ($year == 0) {
-            $redis->setex('closures_all', 3600, Closures::all());
-        } else {
-            $redis->setex('closures_' . $year, 3600, Closures::whereYear('closuredate', $year)->get());
+            return Closures::whereYear('closuredate', $year)->get();
         }
     }
 
@@ -72,13 +62,7 @@ class ClosuresController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $redis = Redis::connection();
-                $data = $this->getRedis($redis, $year);
-                if (empty($data)) {
-                    $this->setRedis($redis, $year);
-                    $data = $this->getRedis($redis, $year);
-                }
-                return $this->dwData(json_decode($data));
+                return $this->dwData($this->getData($year));
             }
             return view('closures.index');
         }

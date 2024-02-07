@@ -19,7 +19,6 @@ use Auth;
 use DataTables;
 
 use App\Traits\OrderEmailTrait;
-use Illuminate\Support\Facades\Redis;
 
 class OrdersController extends AppBaseController
 {
@@ -41,7 +40,7 @@ class OrdersController extends AppBaseController
                 return $data->partners->name;
             })
             ->addColumn('deliveryNumber', function ($data) {
-                return ($data->ordertype == OrderTypeEnum::CUSTOMER->value) ? (is_null($data->delivery_id) ? '' : $data->delivery->delivery_number) : '';
+                return isset($data->delivery->delivery_number) ? $data->delivery->delivery_number : '';
             })
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('orders.edit', [$row->id]) . '"
@@ -66,72 +65,11 @@ class OrdersController extends AppBaseController
     {
         if (Auth::check()) {
             if ($request->ajax()) {
-                $data = $this->getRedis($orderType,$orderStatus);
-                if (empty($data)) {
-                    $this->setRedis($orderType, $orderStatus);
-                    $data = $this->getRedis($orderType, $orderStatus);
-                }
-                return $this->dwData(json_decode($data));
+                return $this->dwData(Orders::with('partners', 'delivery')->ordersByTypeAndStatus($orderType, $orderStatus)->get());
             }
             return view('orders.index');
         }
         return view('orders.index');
-    }
-
-    public function getRedis(?string $orderType = null, ?string $orderStatus = null): mixed
-    {
-        if ($orderType == OrderTypeEnum::CUSTOMER->value) {
-            if ($orderStatus == OrderStatusEnum::ORDERED->value) {
-                return Redis::get('orders_customer_ordered');
-            }
-            if ($orderStatus == OrderStatusEnum::PACKAGED->value) {
-                return Redis::get('orders_customer_packaged');
-            }
-            if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
-                return Redis::get('orders_customer_delivered');
-            }
-        }
-        if ($orderType == OrderTypeEnum::SUPPLIER->value) {
-            if ($orderStatus == OrderStatusEnum::ORDERED->value) {
-                return Redis::get('orders_supplier_ordered');
-            }
-            if ($orderStatus == OrderStatusEnum::PACKAGED->value) {
-                return Redis::get('orders_supplier_packaged');
-            }
-            if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
-                return Redis::get('orders_supplier_delivered');
-            }
-        }
-        return Redis::get('orders_all');
-    }
-
-    public function setRedis(?string $orderType = null, ?string $orderStatus = null): void
-    {
-        if ($orderType == OrderTypeEnum::CUSTOMER->value) {
-            if ($orderStatus == OrderStatusEnum::ORDERED->value) {
-                OrderClass::setOrdersRedisFile('orders_customer_ordered', OrderTypeEnum::CUSTOMER->value, OrderStatusEnum::ORDERED->value);
-            }
-            if ($orderStatus == OrderStatusEnum::PACKAGED->value) {
-                OrderClass::setOrdersRedisFile('orders_customer_packaged', OrderTypeEnum::CUSTOMER->value, OrderStatusEnum::PACKAGED->value);
-            }
-            if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
-                OrderClass::setOrdersRedisFile('orders_customer_delivered', OrderTypeEnum::CUSTOMER->value, OrderStatusEnum::DELIVERED->value);
-            }
-        }
-        if ($orderType == OrderTypeEnum::SUPPLIER->value) {
-            if ($orderStatus == OrderStatusEnum::ORDERED->value) {
-                OrderClass::setOrdersRedisFile('orders_supplier_ordered', OrderTypeEnum::SUPPLIER->value, OrderStatusEnum::ORDERED->value);
-            }
-            if ($orderStatus == OrderStatusEnum::PACKAGED->value) {
-                OrderClass::setOrdersRedisFile('orders_supplier_packaged', OrderTypeEnum::SUPPLIER->value, OrderStatusEnum::PACKAGED->value);
-            }
-            if ($orderStatus == OrderStatusEnum::DELIVERED->value) {
-                OrderClass::setOrdersRedisFile('orders_supplier_delivered', OrderTypeEnum::SUPPLIER->value, OrderStatusEnum::DELIVERED->value);
-            }
-        }
-        if (is_null($orderType)) {
-            OrderClass::setOrdersRedisFile('orders_all');
-        }
     }
 
     public function create(): object
@@ -151,7 +89,6 @@ class OrdersController extends AppBaseController
         $orders->delivery_id = $request->delivery_id;
         $orders->detailsum = 0;
         $orders->save();
-        RedisClass::setexOrders();
 
         return view('orders.edit')->with('orders', $orders);
     }
@@ -198,7 +135,6 @@ class OrdersController extends AppBaseController
         if (empty($orders)) {
             return redirect(route('orders.index'));
         }
-        RedisClass::setexOrders();
 
         return redirect(route('orders.index'));
     }
@@ -210,7 +146,6 @@ class OrdersController extends AppBaseController
             return redirect(route('orders.index'));
         }
         $this->ordersRepository->delete($id);
-        RedisClass::setexOrders();
 
         return redirect(route('orders.index'));
     }

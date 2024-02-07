@@ -29,6 +29,9 @@ class DeliveryController extends AppBaseController
             ->addColumn('location', function ($data) {
                 return $data->location->name;
             })
+            ->addColumn('orderNumber', function ($data) {
+                return $data->orderNumber;
+            })
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('deliveries.edit', $row->id) . '"
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';

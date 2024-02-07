@@ -8,12 +8,17 @@
                 ['class'=>'select2 form-control', 'id' => 'products_id', 'required' => true]) !!}
 </div>
 
-@include('layouts.modalBtn', [ 'title' => 'Új termék'])
+<div class="form-group col-sm-1">
+    <button type="button" class="btn btn-primary filterBtn" data-toggle="modal" data-target="#addProductModal">
+        Új Termék
+    </button>
+</div>
 
 <!-- Quantities Id Field -->
 <div class="form-group col-sm-3">
     {!! Form::label('quantities_text', 'Mennyiségi egység:') !!}
     {!! Form::text('quantities_text', null, ['class' => 'form-control', 'id' => 'quantities_text', 'readonly' => true ]) !!}
+    {!! Form::hidden('quantities_id', null, ['class' => 'form-control', 'id' => 'quantities_id' ]) !!}
 </div>
 
 <!-- Value Field -->
@@ -39,7 +44,7 @@
 {{--        'title' => 'Új termék hozzáadása',--}}
 {{--        'fields' => 'orderdetails.modalFields',--}}
 {{--    ])--}}
-
+@include('modal.product_modal.product_modal')
 
 @section('scripts')
 

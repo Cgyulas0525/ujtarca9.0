@@ -52,6 +52,7 @@
 @section('scripts')
     <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
     <script src="{{ asset('/js/sweetalert.js') }} " type="text/javascript"></script>
+    @include('functions.productScript.priceControll')
 
     <script type="text/javascript">
         var table;
@@ -60,19 +61,6 @@
         $(function () {
 
             ajaxSetup();
-
-            function priceControll() {
-                let price = $("#price").val();
-                let supplierprice = $("#supplierprice").val();
-                console.log(price, supplierprice);
-                if (price != null && supplierprice != null) {
-                    if (parseInt(price) < parseInt(supplierprice)) {
-                        sw('A beszerzési ár nem lehet nagyobb mint az ár!');
-                        $("#supplierprice").val(0)
-                        $('#supplierprice').focus();
-                    }
-                }
-            }
 
             $('#price').change(function () {
                 priceControll();

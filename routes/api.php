@@ -12,6 +12,8 @@ use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\Api\ModalPartnerController;
 use App\Http\Controllers\Api\ModalDeliveryController;
 use App\Http\Controllers\Api\ModalLocationController;
+use App\Http\Controllers\Api\ModalProductController;
+use App\Http\Controllers\Api\QuantityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,9 @@ Route::post('newDeliveryByModal', [ModalDeliveryController::class, 'newDeliveryB
 
 Route::post('getLocationByName', [ModalLocationController::class, 'getLocationByName']);
 Route::post('newLocationByModal', [ModalLocationController::class, 'newLocationByModal']);
+
+Route::post('newProductByModal', [ModalProductController::class, 'newProductByModal']);
+Route::post('getQuantity', [QuantityController::class, 'getQuantity']);
 
 
 
