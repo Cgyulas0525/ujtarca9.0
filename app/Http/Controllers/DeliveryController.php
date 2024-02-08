@@ -11,6 +11,8 @@ use DataTables;
 use Illuminate\Http\Request;
 use Rule;
 use Response;
+use App\Classes\Delivery\DeliveryReportClass;
+use \App\Models\Orders;
 
 class DeliveryController extends AppBaseController
 {
@@ -37,6 +39,10 @@ class DeliveryController extends AppBaseController
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
                 $btn = $btn . '<a href="' . route('beforeDestroys', ['Delivery', $row->id, 'deliveries']) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
+                $btn = $btn . '<a href="' . route('itemisedList', [$row->id]) . '"
+                                 class="btn btn-secondary btn-sm deleteProduct" title="Tételes"><i class="fas fa-print"></i></a>';
+                $btn = $btn . '<a href="' . route('aggregatedList', [$row->id]) . '"
+                                 class="btn btn-warning btn-sm deleteProduct" title="Termék összesítő"><i class="fas fa-print"></i></a>';
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -171,4 +177,26 @@ class DeliveryController extends AppBaseController
             ->get()
             ->count());
     }
+
+    public function itemisedList($id): object
+    {
+
+        $delivery = Delivery::findOrFail($id);
+        $orders = Orders::with(['partners' => function($query) {
+                    $query->orderBy('name', 'asc');
+                }])
+            ->with('orderdetails')
+            ->where('delivery_id', $id)
+            ->get();
+
+        return view('printing.delivery_list.itemised-list')
+            ->with(['delivery' => $delivery, 'orders' => $orders]);
+    }
+
+    public function aggregatedList($id): object
+    {
+        return view('printing.delivery_list.aggregated-list')
+            ->with(['products' => (new DeliveryReportClass)->batchDeliveryReport($id)]);
+    }
+
 }

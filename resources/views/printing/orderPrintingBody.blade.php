@@ -57,7 +57,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <p class="h4">Összesen: {{ number_format(OrderClass::sumOrderSupplierPrice($order->id),0,",",".") }} Ft.</p>
+        <p class="h4">Összesen: {{ number_format(App\Classes\OrderClass::sumOrderSupplierPrice($order->id),0,",",".") }} Ft.</p>
     </div>
 </div>
 

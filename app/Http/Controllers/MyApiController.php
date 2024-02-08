@@ -23,7 +23,7 @@ class MyApiController extends Controller
 
     public function getProduct(Request $request)
     {
-        return Response::json(Products::find($request->get('id')));
+        return Response::json(Products::with('quantities')->find($request->get('id')));
     }
 
     public function getQuantity(Request $request)

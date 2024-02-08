@@ -11,7 +11,6 @@
     @include('functions.sweetalert_js')
     @include('functions.requiredField')
     @include('functions.ajax_js')
-
     <script type="text/javascript">
 
         $(function () {

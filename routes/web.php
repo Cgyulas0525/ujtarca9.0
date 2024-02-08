@@ -137,3 +137,6 @@ Route::get('getLocationByName', [App\Http\Controllers\LocationController::class,
 
 Route::post('updateModal', [App\Http\Controllers\DeliveryController::class, 'updateModal'])->name('updateModal');
 Route::get('storeModal', [App\Http\Controllers\DeliveryController::class, 'storeModal'])->name('storeModal');
+
+Route::get('deliveries.itemisedList/{id}',[App\Http\Controllers\DeliveryController::class, 'itemisedList'])->name('itemisedList');
+Route::get('deliveries.aggregatedList/{id}',[App\Http\Controllers\DeliveryController::class, 'aggregatedList'])->name('aggregatedList');

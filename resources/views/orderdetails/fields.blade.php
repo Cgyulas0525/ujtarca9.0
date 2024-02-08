@@ -39,29 +39,5 @@
     {!! Form::hidden('ordertype', (($_COOKIE['orderType'] == 'CUSTOMER') ? 'vevői' : 'szállítói'), ['class' => 'form-control']) !!}
 </div>
 
-{{--@include('layouts.modal', [--}}
-{{--        'addModal' => 'addModal',--}}
-{{--        'title' => 'Új termék hozzáadása',--}}
-{{--        'fields' => 'orderdetails.modalFields',--}}
-{{--    ])--}}
-@include('modal.product_modal.product_modal')
 
-@section('scripts')
 
-    <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/sweetalert.js') }} " type="text/javascript"></script>
-
-    @include('orderdetails.js.order-detail-product-change')
-
-    <script type="text/javascript">
-        $(function () {
-            ajaxSetup();
-            RequiredBackgroundModify('.form-control')
-
-            $('#products_id').change(function() {
-                orderDetailProductChange();
-            });
-        });
-    </script>
-@endsection
