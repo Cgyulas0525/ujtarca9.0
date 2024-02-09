@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="pubic/css/app.css">
     @include('layouts.costumcss')
 @endsection
 
@@ -44,8 +43,8 @@
 @endsection
 
 @section('scripts')
+
     <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
-    @include('functions.cookiesFunctions_js')
 
     <script type="text/javascript">
         $(function () {
@@ -54,73 +53,114 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 550,
+                scrollY: 500,
                 scrollX: true,
+                order: [[2, 'asc']],
                 paging: false,
-                order: [[0, 'asc']],
-                ajax: "{{ route('partnersIndex', [empty($_COOKIE['partnersActive']) ? 'aktív' : (($_COOKIE['partnersActive'] == 'ACTIVE') ? 'aktív' : 'inaktív')]) }}",
-                columns: [
-                    {
-                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('partners.create') !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action',
-                        sClass: "text-center",
-                        width: '200px',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {title: 'Név', data: 'name', name: 'name'},
-                    {title: 'Típus', data: 'partnerTypesName', name: 'partnerTypesName'},
-                    {title: 'Email', data: 'email', name: 'email'},
-                    {title: 'Telefon', data: 'phonenumber', name: 'phonenumber'},
-                    {title: 'Státusz', data: 'active', sClass: "text-center", width: '100px', name: 'active'},
-                ],
-                buttons: [],
-                fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    if (aData.active == 'inaktív') {
-                        $('td', nRow).css('background-color', 'lightgray');
-                    }
-                    if (aData.partnertypes_id == 5) {
-                        $('td', nRow).css('background-color', 'yellow');
-                    }
-                }
+                                ajax: "{{ route('partnersIndex', [empty($_COOKIE['partnersActive']) ? 'aktív' : (($_COOKIE['partnersActive'] == 'ACTIVE') ? 'aktív' : 'inaktív')]) }}",
+                                columns: [
+                                    {
+                                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('partners.create') !!}"><i class="fa fa-plus-square"></i></a>',
+                                        data: 'action',
+                                        sClass: "text-center",
+                                        width: '200px',
+                                        name: 'action',
+                                        orderable: false,
+                                        searchable: false
+                                    },
+                                    {title: 'Név', data: 'name', name: 'name'},
+                                    {title: 'Típus', data: 'partnerTypesName', name: 'partnerTypesName'},
+                                    {title: 'Email', data: 'email', name: 'email'},
+                                    {title: 'Telefon', data: 'phonenumber', name: 'phonenumber'},
+                                    {title: 'Státusz', data: 'active', sClass: "text-center", width: '100px', name: 'active'},
+                                ],
             });
 
-            $('#active').change(function () {
-                let url = '{{ route('partnersIndex', [":active"]) }}';
-                createCookie('partnersActive', $('#active').val(), '30');
-                url = url.replace(':active', ($('#active').val() == 'INACTIVE') ? 'inaktív' : 'aktív');
-                table.ajax.url(url).load();
-            })
-
-            $('.deaktivBtn').click(function () {
-                swal.fire({
-                    title: "Partner inaktíválás!",
-                    text: "Biztosan inaktíválja a 12 hónapja nem számlázó patnereket?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Inaktíválás",
-                    cancelButtonText: "Kilép",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "GET",
-                            url: "{{url('api/partnerInactivation')}}",
-                            success: function (response) {
-                                console.log('ok:', response);
-                                window.location.reload(true);
-                            },
-                            error: function (response) {
-                                console.log('Error:', response);
-                                alert('nem ok');
-                            }
-                        });
-                    }
-                });
-            });
         });
     </script>
 @endsection
+
+{{--@section('scripts')--}}
+{{--    @include('functions.cookiesFunctions_js')--}}
+
+{{--    <script type="text/javascript">--}}
+{{--        $(function () {--}}
+
+{{--            $.ajaxSetup({--}}
+{{--                headers: {--}}
+{{--                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+{{--                }--}}
+{{--            });--}}
+
+{{--            var table = $('.partners-table').DataTable({--}}
+{{--                serverSide: true,--}}
+{{--                scrollY: 550,--}}
+{{--                scrollX: true,--}}
+{{--                paging: false,--}}
+{{--                order: [[0, 'asc']],--}}
+{{--                ajax: "{{ route('partnersIndex', [empty($_COOKIE['partnersActive']) ? 'aktív' : (($_COOKIE['partnersActive'] == 'ACTIVE') ? 'aktív' : 'inaktív')]) }}",--}}
+{{--                columns: [--}}
+{{--                    {--}}
+{{--                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('partners.create') !!}"><i class="fa fa-plus-square"></i></a>',--}}
+{{--                        data: 'action',--}}
+{{--                        sClass: "text-center",--}}
+{{--                        width: '200px',--}}
+{{--                        name: 'action',--}}
+{{--                        orderable: false,--}}
+{{--                        searchable: false--}}
+{{--                    },--}}
+{{--                    {title: 'Név', data: 'name', name: 'name'},--}}
+{{--                    {title: 'Típus', data: 'partnerTypesName', name: 'partnerTypesName'},--}}
+{{--                    {title: 'Email', data: 'email', name: 'email'},--}}
+{{--                    {title: 'Telefon', data: 'phonenumber', name: 'phonenumber'},--}}
+{{--                    {title: 'Státusz', data: 'active', sClass: "text-center", width: '100px', name: 'active'},--}}
+{{--                ],--}}
+{{--                buttons: [],--}}
+{{--                fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {--}}
+{{--                    if (aData.active == 'inaktív') {--}}
+{{--                        $('td', nRow).css('background-color', 'lightgray');--}}
+{{--                    }--}}
+{{--                    if (aData.partnertypes_id == 5) {--}}
+{{--                        $('td', nRow).css('background-color', 'yellow');--}}
+{{--                    }--}}
+{{--                }--}}
+{{--            });--}}
+
+{{--            $('#active').change(function () {--}}
+{{--                let url = '{{ route('partnersIndex', [":active"]) }}';--}}
+{{--                createCookie('partnersActive', $('#active').val(), '30');--}}
+{{--                url = url.replace(':active', ($('#active').val() == 'INACTIVE') ? 'inaktív' : 'aktív');--}}
+{{--                table.ajax.url(url).load();--}}
+{{--            })--}}
+
+{{--            $('.deaktivBtn').click(function () {--}}
+{{--                swal.fire({--}}
+{{--                    title: "Partner inaktíválás!",--}}
+{{--                    text: "Biztosan inaktíválja a 12 hónapja nem számlázó patnereket?",--}}
+{{--                    icon: "warning",--}}
+{{--                    showCancelButton: true,--}}
+{{--                    confirmButtonColor: "#DD6B55",--}}
+{{--                    confirmButtonText: "Inaktíválás",--}}
+{{--                    cancelButtonText: "Kilép",--}}
+{{--                }).then((result) => {--}}
+{{--                    if (result.isConfirmed) {--}}
+{{--                        $.ajax({--}}
+{{--                            type: "GET",--}}
+{{--                            url: "{{url('api/partnerInactivation')}}",--}}
+{{--                            success: function (response) {--}}
+{{--                                console.log('ok:', response);--}}
+{{--                                window.location.reload(true);--}}
+{{--                            },--}}
+{{--                            error: function (response) {--}}
+{{--                                console.log('Error:', response);--}}
+{{--                                alert('nem ok');--}}
+{{--                            }--}}
+{{--                        });--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+{{--@endsection--}}
 
 
