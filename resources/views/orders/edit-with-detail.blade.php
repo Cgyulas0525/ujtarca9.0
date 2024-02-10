@@ -1,9 +1,7 @@
 @extends('layouts.app')
-
 @section('css')
     @include('layouts.costumcss')
 @endsection
-
 @section('content')
     <div class="content px-3">
         @include('adminlte-templates::common.errors')

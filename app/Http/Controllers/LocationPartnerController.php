@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Auth;
-use DataTables;
+use Alert;
+use App\Enums\ActiveEnum;
 use App\Models\Location;
 use App\Models\Partners;
+use Auth;
+use DataTables;
 use DB;
-
-use App\Enums\ActiveEnum;
-use Alert;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
 class LocationPartnerController extends Controller
@@ -106,4 +105,33 @@ class LocationPartnerController extends Controller
         return redirect(route('locations.edit', ['location' => $location->id]));
     }
 
+    public function getLocationPartnersToArray(?int $id = null): array
+    {
+        if (is_null($id)) {
+            return [];
+        } else {
+            $pivot = $this->getLocationPartners($id);
+            if (is_null($pivot)) {
+                return [];
+            } else {
+                return $pivot->pluck('name', 'id')->toArray();
+            }
+        }
+    }
+
+    public function getLocationPartners(?int $id = null): mixed
+    {
+        $location = Location::find($id);
+        if ($location) {
+            $partners = $location->partners()->wherePivot('location_id', $id)->get();
+            if ($partners->isEmpty()) {
+                return null;
+            } else {
+                return Location::find($id)->partners()->wherePivot('location_id', 1)->orderBy('name')->get();
+            }
+        }
+        return null;
+    }
 }
+
+

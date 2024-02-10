@@ -1,5 +1,4 @@
 @section('css')
-    <link rel="stylesheet" href="pubic/css/app.css">
     @include('layouts.costumcss')
 @endsection
 
