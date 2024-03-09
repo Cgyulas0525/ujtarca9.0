@@ -1,2 +1,2 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 @include('components.html.edit.content')

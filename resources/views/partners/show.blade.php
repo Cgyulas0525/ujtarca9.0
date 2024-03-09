@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 
@@ -23,7 +23,7 @@
 
         <div class="card">
 
-             <div class="card-body">
+            <div class="card-body">
                 @include('partners.show_fields')
             </div>
 
@@ -31,7 +31,7 @@
                 <a href="{{ route('partners.index') }}" class="btn btn-default">Kilép</a>
             </div>
 
-           {!! Form::close() !!}
+            {!! Form::close() !!}
 
         </div>
     </div>

@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 @section('content')

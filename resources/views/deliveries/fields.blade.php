@@ -1,6 +1,6 @@
 @section('css')
-{{--    @include('layouts.datatables_css')--}}
-    @include('layouts.costumcss')
+    {{--    @include('layouts.datatables_css')--}}
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 
@@ -84,7 +84,11 @@
                     $.ajax({
                         type: "POST",
                         url: "{{url('api/getDeliveryByDateAndLocation')}}",
-                        data: {date: $('#date').val(), location_id: $('#location_id').val(), delivery_number: $('#delivery_number').val()},
+                        data: {
+                            date: $('#date').val(),
+                            location_id: $('#location_id').val(),
+                            delivery_number: $('#delivery_number').val()
+                        },
                         success: function (response) {
                             console.log(response);
                             if (response > 0) {
@@ -93,14 +97,14 @@
                                 $("#location_id").val(null);
                             }
                         },
-                        error: function(error) {
+                        error: function (error) {
                             console.error('Hiba történt:', error);
                         }
                     });
                 }
             }
 
-            $('#addModalBtn').click(function() {
+            $('#addModalBtn').click(function () {
                 addModalBtnEvent();
             });
 

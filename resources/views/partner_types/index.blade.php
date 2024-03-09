@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 @include('css.custom-css')
 @include('partner_types.html.index.content')
 @include('partner_types.js.index.index-js')

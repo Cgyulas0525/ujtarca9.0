@@ -1,5 +1,5 @@
 @section('css')
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 <div class="form-group col-sm-12">
@@ -43,12 +43,12 @@
         </div>
         <div class="form-group col-sm-6">
             <div class="form-group col-sm-12">
-                @include('layouts.table', ['title' => 'Kiszállítási partnerek',
+                @include('app-scaffold.html.table.table', ['title' => 'Kiszállítási partnerek',
                                            'class' => 'table table-hover table-bordered partners-table w-100'])
             </div>
         </div>
 
-   </div>
+    </div>
 </div>
 
 @section('scripts')
@@ -75,8 +75,15 @@
                 order: [[0, 'asc']],
                 ajax: "{{ route('locationPartnersIndex', ['location' => $location]) }}",
                 columns: [
-                    {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('locationPartnersCreate', ['location' => $location->id]) !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
+                    {
+                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('locationPartnersCreate', ['location' => $location->id]) !!}"><i class="fa fa-plus-square"></i></a>',
+                        data: 'action',
+                        sClass: "text-center",
+                        width: '200px',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                     {title: 'Név', data: 'name', name: 'name'},
                 ],
                 buttons: [],

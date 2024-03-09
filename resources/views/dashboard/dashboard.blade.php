@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 
 @section('css')
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/Highcharts.css">
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 @section('content')

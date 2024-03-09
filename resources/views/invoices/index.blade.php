@@ -1,14 +1,14 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 @section('content')
     <div class="content">
         <div class="clearfix"></div>
-        <div class="box box-primary" >
+        <div class="box box-primary">
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
@@ -30,7 +30,7 @@
                                         <div class="col-sm-6">
                                             {!! Form::select('partner', SelectService::selectSupplier(), null,
                                                     ['class'=>'select2 form-control', 'id' => 'partner']) !!}
-                                            </div>
+                                        </div>
                                         <div class="col-sm-1">
                                             <a href="#" class="btn btn-success filterBtn">Szűrés</a>
                                         </div>
@@ -42,7 +42,7 @@
                     @include('flash::message')
                     <div class="clearfix"></div>
                     <div class="box box-primary">
-                        <div class="box-body"  >
+                        <div class="box-body">
                             <table class="table table-hover table-bordered partners-table w-100">
                                 @include('invoices.table')
                             </table>
@@ -73,15 +73,41 @@
                 order: [[3, 'desc'], [1, 'asc'], [2, 'asc']],
                 ajax: "{{ route('invoicesIndex', ['ev' => date('Y')]) }}",
                 columns: [
-                    {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('invoices.create') !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action', sClass: "text-center", width: '100px', name: 'action', orderable: false, searchable: false},
-                    {title: 'Partner', data: 'partnerName', width:'350px', name: 'partnerName'},
+                    {
+                        title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('invoices.create') !!}"><i class="fa fa-plus-square"></i></a>',
+                        data: 'action',
+                        sClass: "text-center",
+                        width: '100px',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {title: 'Partner', data: 'partnerName', width: '350px', name: 'partnerName'},
                     {title: 'Számlaszám', data: 'invoicenumber', name: 'invoicenumber'},
-                    {title: 'Kelt', data: 'dated', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'dated'},
-                    {title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'performancedate'},
-                    {title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'deadline'},
+                    {
+                        title: 'Kelt', data: 'dated', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'dated'
+                    },
+                    {
+                        title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'performancedate'
+                    },
+                    {
+                        title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'deadline'
+                    },
                     {title: 'Fizetési mód', data: 'paymentMethodName', name: 'paymentMethodName'},
-                    {title: 'Összeg', data: 'amount', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'amount'},
+                    {
+                        title: 'Összeg',
+                        data: 'amount',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '100px',
+                        name: 'amount'
+                    },
                 ],
                 buttons: [],
                 footerCallback: function (row, data, start, end, display) {
@@ -102,7 +128,7 @@
 
                     // Total over this page
                     pageTotal = api
-                        .column(7, { page: 'current' })
+                        .column(7, {page: 'current'})
                         .data()
                         .reduce(function (a, b) {
                             return intVal(a) + intVal(b);

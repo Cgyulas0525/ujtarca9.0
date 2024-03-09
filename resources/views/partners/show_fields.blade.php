@@ -1,6 +1,6 @@
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 <div class="row">
@@ -75,13 +75,13 @@
                         </div>
                         <div class="col-sm-2" id="gifDiv">
                             <img src={{ URL::asset('/public/img/loading.gif') }}
-                                class="gifcenter" >
+                                class="gifcenter">
                         </div>
                     </div>
                 </div>
 
             </div>
-            <div class="box-body"  >
+            <div class="box-body">
                 <table class="table table-hover table-bordered invoicetable w-100">
                     @include('partners.table')
                 </table>
@@ -103,13 +103,13 @@
                         </div>
                         <div class="col-sm-3" id="gifDiv1">
                             <img src={{ URL::asset('/public/img/loading.gif') }}
-                                class="gifcenter" >
+                                class="gifcenter">
                         </div>
                     </div>
                 </div>
 
             </div>
-            <div class="box-body"  >
+            <div class="box-body">
                 <table class="table table-hover table-bordered weekstable w-100">
                     @include('partners.table')
                 </table>
@@ -147,11 +147,30 @@
                 ajax: "{{ route('partnerFactSheet', ['partner' => $partners->id, 'year' => date('Y')]) }}",
                 columns: [
                     {title: 'Számlaszám', data: 'invoicenumber', name: 'invoicenumber'},
-                    {title: 'Kelt', data: 'dated', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'dated'},
-                    {title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'performancedate'},
-                    {title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'deadline'},
+                    {
+                        title: 'Kelt', data: 'dated', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'dated'
+                    },
+                    {
+                        title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'performancedate'
+                    },
+                    {
+                        title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'deadline'
+                    },
                     {title: 'Fizetési mód', data: 'paymentMethodName', name: 'paymentMethodName'},
-                    {title: 'Összeg', data: 'amount', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'amount'},
+                    {
+                        title: 'Összeg',
+                        data: 'amount',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '100px',
+                        name: 'amount'
+                    },
                 ],
                 buttons: [],
                 footerCallback: function (row, data, start, end, display) {
@@ -172,7 +191,7 @@
 
                     // Total over this page
                     pageTotal = api
-                        .column(5, { page: 'current' })
+                        .column(5, {page: 'current'})
                         .data()
                         .reduce(function (a, b) {
                             return intVal(a) + intVal(b);
@@ -195,11 +214,30 @@
                 ajax: "{{ route('partnerPeriodicAccounts', ['partner' => $partners->id, 'months' => 6]) }}",
                 columns: [
                     {title: 'Számlaszám', data: 'invoicenumber', name: 'invoicenumber'},
-                    {title: 'Kelt', data: 'dated', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'dated'},
-                    {title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'performancedate'},
-                    {title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'deadline'},
+                    {
+                        title: 'Kelt', data: 'dated', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'dated'
+                    },
+                    {
+                        title: 'Teljesítés', data: 'performancedate', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'performancedate'
+                    },
+                    {
+                        title: 'Fiz.hat', data: 'deadline', render: function (data, type, row) {
+                            return data ? moment(data).format('YYYY.MM.DD') : '';
+                        }, sClass: "text-center", width: '150px', name: 'deadline'
+                    },
                     {title: 'Fizetési mód', data: 'paymentMethodName', name: 'paymentMethodName'},
-                    {title: 'Összeg', data: 'amount', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'amount'},
+                    {
+                        title: 'Összeg',
+                        data: 'amount',
+                        render: $.fn.dataTable.render.number('.', ',', 0),
+                        sClass: "text-right",
+                        width: '100px',
+                        name: 'amount'
+                    },
                 ],
                 buttons: [],
                 footerCallback: function (row, data, start, end, display) {
@@ -220,7 +258,7 @@
 
                     // Total over this page
                     pageTotal = api
-                        .column(5, { page: 'current' })
+                        .column(5, {page: 'current'})
                         .data()
                         .reduce(function (a, b) {
                             return intVal(a) + intVal(b);
@@ -232,7 +270,7 @@
 
             });
 
-            $('#year').change(function() {
+            $('#year').change(function () {
 
                 $('#gifDiv').show();
 
@@ -240,8 +278,9 @@
                 url = url.replace(':partner', <?php echo $partners->id; ?>).replace(':year', ($('#year').val() != 0) ? $('#year').val() : -9999)
                 table.ajax.url(url).load();
 
-                setTimeout(function() {
-                    $('#gifDiv').hide();}, 4000);
+                setTimeout(function () {
+                    $('#gifDiv').hide();
+                }, 4000);
 
             });
 
@@ -269,7 +308,7 @@
                 return months;
             }
 
-            $('#period').change(function() {
+            $('#period').change(function () {
 
                 $('#gifDiv1').show();
 
@@ -277,8 +316,9 @@
                 url = url.replace(':partner', <?php echo $partners->id; ?>).replace(':months', getMonths($('#period').val()))
                 weeksTable.ajax.url(url).load();
 
-                setTimeout(function() {
-                    $('#gifDiv1').hide();}, 4000);
+                setTimeout(function () {
+                    $('#gifDiv1').hide();
+                }, 4000);
 
             });
 

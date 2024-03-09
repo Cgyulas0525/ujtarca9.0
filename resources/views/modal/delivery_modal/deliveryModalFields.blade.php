@@ -1,6 +1,6 @@
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 
 @endsection
 

@@ -1,6 +1,6 @@
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 <!-- Name Field -->
@@ -81,71 +81,71 @@
                 priceControll();
             });
 
-        {{--    table = $('.partners-table').DataTable({--}}
-        {{--        serverSide: true,--}}
-        {{--        scrollY: 300,--}}
-        {{--        scrollX: true,--}}
-        {{--        paging: false,--}}
-        {{--        order: [[0, 'asc']],--}}
-        {{--        ajax: "{{ route('componentProductIndex', ['product' => $products]) }}",--}}
-        {{--        columns: [--}}
-        {{--            {title: 'Név', data: 'name', name: 'name'},--}}
-        {{--            {title: 'Mennyiség', data: 'value', name: 'value', id: 'value'},--}}
-        {{--            {title: 'componentId', data: 'componentId', name: 'componentId', id: 'componentId'},--}}
-        {{--            {title: 'productId', data: 'productId', name: 'productId', id: 'productId'},--}}
-        {{--        ],--}}
-        {{--        columnDefs: [--}}
-        {{--            {--}}
-        {{--                targets: [1],--}}
-        {{--                sClass: 'text-right',--}}
-        {{--                width: '150px',--}}
-        {{--                render: function (data, type, full, meta) {--}}
-        {{--                    return '<input class="form-control text-right" type="number" value="' + data + '" onfocusout="QuantityChange(' + meta["row"] + ', this.value)" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" style="width:250px;height:20px;font-size: 15px;"/>';--}}
-        {{--                },--}}
-        {{--            },--}}
-        {{--            {--}}
-        {{--                targets: [2, 3],--}}
-        {{--                visible: false--}}
-        {{--            },--}}
-        {{--        ],--}}
-        {{--        buttons: [],--}}
-        {{--    });--}}
+            {{--    table = $('.partners-table').DataTable({--}}
+            {{--        serverSide: true,--}}
+            {{--        scrollY: 300,--}}
+            {{--        scrollX: true,--}}
+            {{--        paging: false,--}}
+            {{--        order: [[0, 'asc']],--}}
+            {{--        ajax: "{{ route('componentProductIndex', ['product' => $products]) }}",--}}
+            {{--        columns: [--}}
+            {{--            {title: 'Név', data: 'name', name: 'name'},--}}
+            {{--            {title: 'Mennyiség', data: 'value', name: 'value', id: 'value'},--}}
+            {{--            {title: 'componentId', data: 'componentId', name: 'componentId', id: 'componentId'},--}}
+            {{--            {title: 'productId', data: 'productId', name: 'productId', id: 'productId'},--}}
+            {{--        ],--}}
+            {{--        columnDefs: [--}}
+            {{--            {--}}
+            {{--                targets: [1],--}}
+            {{--                sClass: 'text-right',--}}
+            {{--                width: '150px',--}}
+            {{--                render: function (data, type, full, meta) {--}}
+            {{--                    return '<input class="form-control text-right" type="number" value="' + data + '" onfocusout="QuantityChange(' + meta["row"] + ', this.value)" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" style="width:250px;height:20px;font-size: 15px;"/>';--}}
+            {{--                },--}}
+            {{--            },--}}
+            {{--            {--}}
+            {{--                targets: [2, 3],--}}
+            {{--                visible: false--}}
+            {{--            },--}}
+            {{--        ],--}}
+            {{--        buttons: [],--}}
+            {{--    });--}}
 
-        {{--    var ftable = $('.f_table').DataTable({--}}
-        {{--        serverSide: true,--}}
-        {{--        scrollY: 300,--}}
-        {{--        scrollX: true,--}}
-        {{--        paging: false,--}}
-        {{--        order: [[0, 'asc']],--}}
-        {{--        ajax: "{{ route('featureProductIndex', ['product' => $products]) }}",--}}
-        {{--        columns: [--}}
-        {{--            {title: 'Név', data: 'name', name: 'name'},--}}
-        {{--            {--}}
-        {{--                title: 'Ikon', data: "media", sClass: "text-center", "render": function (data) {--}}
-        {{--                    return '<img src="' + data + '" style="height:20px;width:20px;object-fit:cover;"/>';--}}
-        {{--                }--}}
-        {{--            },--}}
-        {{--            {title: 'Kiválasztva', data: 'value', name: 'value', id: 'value'},--}}
-        {{--            {title: 'featureId', data: 'featureId', name: 'featureId', id: 'featureId'},--}}
-        {{--            {title: 'productId', data: 'productId', name: 'productId', id: 'productId'},--}}
-        {{--        ],--}}
-        {{--        columnDefs: [--}}
-        {{--            {--}}
-        {{--                targets: [2],--}}
-        {{--                sClass: 'text-right',--}}
-        {{--                width: '150px',--}}
-        {{--                render: function (data, type, full, meta) {--}}
-        {{--                    var isChecked = data === 1 ? 'checked' : '';--}}
-        {{--                    return '<input class="form-control text-right" type="checkbox" value="' + data + '" onfocusout="QuantityChange(' + meta["row"] + ', this.value)" style="height:20px;font-size: 15px;" ' + isChecked + ' />';--}}
-        {{--                },--}}
-        {{--            },--}}
-        {{--            {--}}
-        {{--                targets: [3, 4],--}}
-        {{--                visible: false--}}
-        {{--            },--}}
-        {{--        ],--}}
-        {{--        buttons: [],--}}
-        {{--    });--}}
+            {{--    var ftable = $('.f_table').DataTable({--}}
+            {{--        serverSide: true,--}}
+            {{--        scrollY: 300,--}}
+            {{--        scrollX: true,--}}
+            {{--        paging: false,--}}
+            {{--        order: [[0, 'asc']],--}}
+            {{--        ajax: "{{ route('featureProductIndex', ['product' => $products]) }}",--}}
+            {{--        columns: [--}}
+            {{--            {title: 'Név', data: 'name', name: 'name'},--}}
+            {{--            {--}}
+            {{--                title: 'Ikon', data: "media", sClass: "text-center", "render": function (data) {--}}
+            {{--                    return '<img src="' + data + '" style="height:20px;width:20px;object-fit:cover;"/>';--}}
+            {{--                }--}}
+            {{--            },--}}
+            {{--            {title: 'Kiválasztva', data: 'value', name: 'value', id: 'value'},--}}
+            {{--            {title: 'featureId', data: 'featureId', name: 'featureId', id: 'featureId'},--}}
+            {{--            {title: 'productId', data: 'productId', name: 'productId', id: 'productId'},--}}
+            {{--        ],--}}
+            {{--        columnDefs: [--}}
+            {{--            {--}}
+            {{--                targets: [2],--}}
+            {{--                sClass: 'text-right',--}}
+            {{--                width: '150px',--}}
+            {{--                render: function (data, type, full, meta) {--}}
+            {{--                    var isChecked = data === 1 ? 'checked' : '';--}}
+            {{--                    return '<input class="form-control text-right" type="checkbox" value="' + data + '" onfocusout="QuantityChange(' + meta["row"] + ', this.value)" style="height:20px;font-size: 15px;" ' + isChecked + ' />';--}}
+            {{--                },--}}
+            {{--            },--}}
+            {{--            {--}}
+            {{--                targets: [3, 4],--}}
+            {{--                visible: false--}}
+            {{--            },--}}
+            {{--        ],--}}
+            {{--        buttons: [],--}}
+            {{--    });--}}
 
         });
 

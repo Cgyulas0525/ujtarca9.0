@@ -1,3 +1,3 @@
 @section('css')
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection

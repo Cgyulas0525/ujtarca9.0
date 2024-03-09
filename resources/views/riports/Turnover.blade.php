@@ -3,7 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
     <link rel="stylesheet" href="public/css/Highcharts.css">
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 @section('content')

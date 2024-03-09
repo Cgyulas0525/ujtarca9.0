@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\Feature;
 use Illuminate\Http\Request;
 use Auth;
 use DataTables;
@@ -40,6 +41,14 @@ class FeatureProductController extends Controller
     }
     public function featureProductUpdate(Request $request): void
     {
-        Products::find($request->productId)->features()->updateExistingPivot($request->featuretId, ['value' => $request->value]);
+        Products::find($request->productId)->features()->detach($request->featuretId);
+    }
+
+    public static function notInFeatureProductPivot($productId)
+    {
+        return Feature::whereNotIn('id', function($query) use($productId) {
+            return $query->from('feature_product')->select('feature_id')->where('products_id', $productId)->get();
+        })->pluck('name', 'id')->toArray();
+
     }
 }

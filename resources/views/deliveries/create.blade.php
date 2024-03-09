@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 
 @section('content')
     <section class="content-header">
@@ -58,7 +58,7 @@
 
         RequiredBackgroundModify('.form-control')
 
-        $('#addModalBtn').click(function() {
+        $('#addModalBtn').click(function () {
             addModalBtnEvent();
         });
     </script>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 @section('content')
     @include('orders.html.create.order-create-header')
     @include('orders.html.create.order-create-content')

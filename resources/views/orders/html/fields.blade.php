@@ -1,5 +1,5 @@
 @section('css')
-    @include('layouts.costumcss')
+    @include('app-scaffold.css.costumcss')
 @endsection
 
 <div class="form-group col-sm-6">

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 
 @section('content')
     <section class="content-header">
@@ -31,7 +31,7 @@
                 <a href="{{ route('partners.index') }}" class="btn btn-default">Kilép</a>
             </div>
 
-           {!! Form::close() !!}
+            {!! Form::close() !!}
 
         </div>
     </div>

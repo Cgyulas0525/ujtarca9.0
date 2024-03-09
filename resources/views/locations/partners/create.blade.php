@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app-scaffold.html.app')
 
 @section('content')
     <section class="content-header">
@@ -31,7 +31,8 @@
 
             <div class="card-footer">
                 {!! Form::submit('Ment', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('locations.edit', ['location' => $location->id]) }}" class="btn btn-default"> Kilép </a>
+                <a href="{{ route('locations.edit', ['location' => $location->id]) }}" class="btn btn-default">
+                    Kilép </a>
             </div>
 
             {!! Form::close() !!}
