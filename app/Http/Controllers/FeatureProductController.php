@@ -44,11 +44,18 @@ class FeatureProductController extends Controller
         Products::find($request->productId)->features()->detach($request->featuretId);
     }
 
+    public function addFeaturesToProduct(Request $request): void
+    {
+        $product = Products::find($request->product);
+        foreach ($request->features as $feature) {
+            $product->features()->attach($feature, ['value' => 1]);
+        }
+    }
+
     public static function notInFeatureProductPivot($productId)
     {
         return Feature::whereNotIn('id', function($query) use($productId) {
             return $query->from('feature_product')->select('feature_id')->where('products_id', $productId)->get();
         })->pluck('name', 'id')->toArray();
-
     }
 }

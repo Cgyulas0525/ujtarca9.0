@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Monthstacked
+ *
  * @package App\Models
  * @version April 14, 2023, 10:46 am CEST
- *
  * @property integer $year
  * @property integer $month
  * @property integer $revenue
@@ -19,6 +19,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property integer $card
  * @property integer $szcard
  * @property integer $cash
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read int $result
+ * @property-read string $year_month
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked getPreviousRecord()
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereAverage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereCard($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereCash($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereMonth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereRevenue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereSpend($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereSzcard($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked whereYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Monthstacked withoutTrashed()
+ * @mixin Model
  */
 class Monthstacked extends Model
 {

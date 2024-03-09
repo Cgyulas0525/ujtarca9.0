@@ -12,14 +12,46 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Products
+ *
  * @package App\Models
  * @version February 2, 2023, 8:58 am UTC
- *
  * @property string $name
  * @property integer $quantities_id
  * @property integer $price
  * @property string $description
  * @property integer $active
+ * @property int $id
+ * @property int|null $supplierprice
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Component> $components
+ * @property-read int|null $components_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Feature> $features
+ * @property-read int|null $features_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Orderdetails> $orderdetails
+ * @property-read int|null $orderdetails_count
+ * @property-read \App\Models\Quantities|null $quantities
+ * @method static \Illuminate\Database\Eloquent\Builder|Products activeProducts()
+ * @method static \Database\Factories\ProductsFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Products inactiveProducts()
+ * @method static \Illuminate\Database\Eloquent\Builder|Products newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Products newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Products onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Products query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereQuantitiesId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereSupplierprice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Products withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Products withoutTrashed()
+ * @mixin Model
  */
 class Products extends Model
 {

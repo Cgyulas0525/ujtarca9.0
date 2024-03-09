@@ -35,6 +35,9 @@ Route::get('deleteOutputFiles', [outputFilesDeleteController::class, 'deleteOutp
 Route::get('partnerInactivation', [PartnerInactivationController::class, 'partnerInactivation']);
 Route::post('componentProductUpdate', [ComponentProductController::class, 'componentProductUpdate']);
 Route::post('featureProductUpdate', [FeatureProductController::class, 'featureProductUpdate']);
+Route::post('addFeaturesToProduct', [FeatureProductController::class, 'addFeaturesToProduct']);
+
+
 Route::post('getDeliveryByDateAndLocation', [DeliveryController::class, 'getDeliveryByDateAndLocation']);
 
 Route::post('newPartnerByModal', [ModalPartnerController::class, 'newPartnerByModal']);

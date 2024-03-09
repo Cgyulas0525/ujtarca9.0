@@ -9,9 +9,9 @@ use Carbon\Carbon;
 
 /**
  * Class Weekstacked
+ *
  * @package App\Models
  * @version April 14, 2023, 10:46 am CEST
- *
  * @property integer $year
  * @property integer $week
  * @property integer $revenue
@@ -20,6 +20,33 @@ use Carbon\Carbon;
  * @property integer $card
  * @property integer $szcard
  * @property integer $cash
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read int $result
+ * @property-read string $week_of_m_onth
+ * @property-read string $year_week
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked getPreviousRecord()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereAverage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereCard($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereCash($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereRevenue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereSpend($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereSzcard($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereWeek($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked whereYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekstacked withoutTrashed()
+ * @mixin Model
  */
 class Weekstacked extends Model
 {

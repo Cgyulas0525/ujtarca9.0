@@ -9,11 +9,31 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class PartnerTypes
+ *
  * @package App\Models
  * @version January 2, 2023, 3:52 pm UTC
- *
  * @property string $name
  * @property string $description
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Partners> $partners
+ * @property-read int|null $partners_count
+ * @method static \Database\Factories\PartnerTypesFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes query()
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|PartnerTypes withoutTrashed()
+ * @mixin Model
  */
 class PartnerTypes extends Model
 {

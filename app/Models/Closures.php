@@ -12,13 +12,42 @@ use App\Models\Cimlets;
 
 /**
  * Class Closures
+ *
  * @package App\Models
  * @version January 2, 2023, 4:01 pm UTC
- *
  * @property string $closuredate
  * @property integer $card
  * @property integer $szcard
  * @property integer $dayduring
+ * @property int $id
+ * @property int|null $dailysum
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ClosureCimlets> $closurecimlets
+ * @property-read int|null $closurecimlets_count
+ * @property-read int $cash
+ * @property-read int $result
+ * @method static \Database\Factories\ClosuresFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures thisYear($year)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures thisYearMonth($year, $month)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures thisYearSumResult($year)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereCard($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereClosuredate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereDailysum($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereDayduring($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereSzcard($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Closures withoutTrashed()
+ * @mixin Model
  */
 class Closures extends Model
 {

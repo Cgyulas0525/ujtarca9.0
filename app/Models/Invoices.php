@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Invoices
+ *
  * @package App\Models
  * @version January 2, 2023, 4:01 pm UTC
- *
  * @property integer $partner_id
  * @property string $invoicenumber
  * @property integer $paymentmethod_id
@@ -20,6 +20,38 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $performancedate
  * @property string $deadline
  * @property string $description
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string $payment_method_name
+ * @property-read \App\Models\Partners|null $partner
+ * @property-read \App\Models\PaymentMethods|null $paymentmethod
+ * @method static \Database\Factories\InvoicesFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices partnerInvoices($partner)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices partnerYearInvoices($partner = null, $year = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices partnerYearInvoicesSumAmount($partner = null, $year = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices thisYear($year)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereDated($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereDeadline($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereInvoicenumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices wherePartnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices wherePaymentmethodId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices wherePerformancedate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoices yearInvoices($year)
+ * @mixin Model
  */
 class Invoices extends Model
 {

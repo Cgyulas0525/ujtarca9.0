@@ -9,12 +9,35 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class ClosureCimlets
+ *
  * @package App\Models
  * @version January 2, 2023, 4:01 pm UTC
- *
  * @property integer $closures_id
  * @property integer $cimlets_id
  * @property integer $value
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Cimlets|null $cimlets
+ * @property-read \App\Models\Closures|null $closures
+ * @property-read int $cash
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets closureClosureCimlets($id)
+ * @method static \Database\Factories\ClosureCimletsFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets whereCimletsId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets whereClosuresId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets whereValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClosureCimlets withoutTrashed()
+ * @mixin Model
  */
 class ClosureCimlets extends Model
 {

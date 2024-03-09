@@ -10,6 +10,39 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
 
+/**
+ * App\Models\Delivery
+ *
+ * @property int $id
+ * @property string $delivery_number
+ * @property \Illuminate\Support\Carbon $date
+ * @property int $location_id
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string $delivery_full_name
+ * @property-read string $order_number
+ * @property-read \App\Models\Location $location
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Orders> $orders
+ * @property-read int|null $orders_count
+ * @method static Builder|Delivery activeDeliveries()
+ * @method static Builder|Delivery newModelQuery()
+ * @method static Builder|Delivery newQuery()
+ * @method static Builder|Delivery onlyTrashed()
+ * @method static Builder|Delivery query()
+ * @method static Builder|Delivery whereCreatedAt($value)
+ * @method static Builder|Delivery whereDate($value)
+ * @method static Builder|Delivery whereDeletedAt($value)
+ * @method static Builder|Delivery whereDeliveryNumber($value)
+ * @method static Builder|Delivery whereDescription($value)
+ * @method static Builder|Delivery whereId($value)
+ * @method static Builder|Delivery whereLocationId($value)
+ * @method static Builder|Delivery whereUpdatedAt($value)
+ * @method static Builder|Delivery withTrashed()
+ * @method static Builder|Delivery withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Delivery extends Model
 {
     use SoftDeletes;

@@ -3,14 +3,14 @@
         $('#featuresSaving').click(function () {
             var features = $('#features').val();
             if (features.length > 0) {
-                callSwal();
+                callSwal(features);
             }
         });
     }
 
     function callSwal(features) {
         swal.fire({
-            title: "Jellemző mentés inaktíválás!",
+            title: "Jellemző mentés a termékhez!",
             text: "Biztosan menti a jellemzőket a termékhez?",
             icon: "warning",
             showCancelButton: true,
@@ -26,9 +26,12 @@
 
     function callResult(features) {
         var product = <?php echo $products->id; ?>;
+
+        console.log(product, features);
+
         $.ajax({
             type: "POST",
-            url: "{{url('api/partnerInactivation')}}",
+            url: "{{url('api/addFeaturesToProduct')}}",
             data: {product: product, features: features},
             success: function (response) {
                 console.log('ok:', response);

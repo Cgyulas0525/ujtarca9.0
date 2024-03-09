@@ -9,14 +9,38 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Orderdetails
+ *
  * @package App\Models
  * @version February 3, 2023, 11:21 am UTC
- *
  * @property integer $orders_id
  * @property integer $products_id
  * @property integer $quantities_id
  * @property integer $value
  * @property integer $detailvalue
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Orders|null $orders
+ * @property-read \App\Models\Products|null $products
+ * @property-read \App\Models\Quantities|null $quantities
+ * @method static \Database\Factories\OrderdetailsFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereDetailvalue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereOrdersId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereProductsId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereQuantitiesId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails whereValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Orderdetails withoutTrashed()
+ * @mixin Model
  */
 class Orderdetails extends Model
 {

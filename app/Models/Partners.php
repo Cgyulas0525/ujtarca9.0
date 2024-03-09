@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Partners
+ *
  * @package App\Models
  * @version January 2, 2023, 4:01 pm UTC
- *
  * @property string $name
  * @property integer $partnertypes_id
  * @property string $taxnumber
@@ -26,6 +26,47 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $phonenumber
  * @property string $description
  * @property string $active
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string $full_address
+ * @property-read string $settlement_name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Invoices> $invoices
+ * @property-read int|null $invoices_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Location> $locations
+ * @property-read int|null $locations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Orders> $orders
+ * @property-read int|null $orders_count
+ * @property-read \App\Models\PartnerTypes|null $partnertypes
+ * @property-read \App\Models\Settlements|null $settlement
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners activeNumbers()
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners activePartner()
+ * @method static \Database\Factories\PartnersFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners inactivePartner()
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners lastMonthsInactiveNumbers($months)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereBankaccount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners wherePartnertypesId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners wherePhonenumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners wherePostcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereSettlementId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereTaxnumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Partners withoutTrashed()
+ * @mixin Model
  */
 class Partners extends Model
 {

@@ -13,9 +13,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Orders
+ *
  * @package App\Models
  * @version February 3, 2023, 11:19 am UTC
- *
  * @property string $ordernumber
  * @property string $orderdate
  * @property integer $partners_id
@@ -24,6 +24,43 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $order_status
  * @property string $delivered_date
  * @property integer $detailsum
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $delivery_id
+ * @property-read \App\Models\Delivery|null $delivery
+ * @property-read int $details_sum
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Orderdetails> $orderdetails
+ * @property-read int|null $orderdetails_count
+ * @property-read \App\Models\Partners|null $partners
+ * @method static Builder|Orders customerOrders()
+ * @method static \Database\Factories\OrdersFactory factory($count = null, $state = [])
+ * @method static Builder|Orders newModelQuery()
+ * @method static Builder|Orders newQuery()
+ * @method static Builder|Orders onlyTrashed()
+ * @method static Builder|Orders ordersByType($type)
+ * @method static Builder|Orders ordersByTypeAndStatus(?string $type = null, ?string $status = null)
+ * @method static Builder|Orders ordersInTheLastMonths($months)
+ * @method static Builder|Orders partnerOrders($partner)
+ * @method static Builder|Orders query()
+ * @method static Builder|Orders supplierOrders()
+ * @method static Builder|Orders whereCreatedAt($value)
+ * @method static Builder|Orders whereDeletedAt($value)
+ * @method static Builder|Orders whereDeliveredDate($value)
+ * @method static Builder|Orders whereDeliveryId($value)
+ * @method static Builder|Orders whereDescription($value)
+ * @method static Builder|Orders whereDetailsum($value)
+ * @method static Builder|Orders whereId($value)
+ * @method static Builder|Orders whereOrderStatus($value)
+ * @method static Builder|Orders whereOrderdate($value)
+ * @method static Builder|Orders whereOrdernumber($value)
+ * @method static Builder|Orders whereOrdertype($value)
+ * @method static Builder|Orders wherePartnersId($value)
+ * @method static Builder|Orders whereUpdatedAt($value)
+ * @method static Builder|Orders withTrashed()
+ * @method static Builder|Orders withoutTrashed()
+ * @mixin Model
  */
 class Orders extends Model
 {
