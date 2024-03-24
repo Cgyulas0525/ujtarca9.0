@@ -32,6 +32,12 @@
         margin-top: 30px;
     }
 
+    .filterBtnTop {
+        border: 2px solid gray;
+        box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
+        font-size: 15px;
+    }
+
 
     tr.odd td:first-child,
     tr.even td:first-child {

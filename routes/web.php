@@ -64,6 +64,9 @@ Route::resource('partnerTypes', App\Http\Controllers\PartnerTypesController::cla
 Route::resource('partners', App\Http\Controllers\PartnersController::class);
 
 Route::resource('invoices', App\Http\Controllers\InvoicesController::class);
+Route::get('beforeInvoiceReferred/{id}/{route}', [App\Http\Controllers\InvoicesController::class, 'beforeInvoiceReferred'])->name('beforeInvoiceReferred');
+Route::get('changeReferredDate/{id}/{route}', [App\Http\Controllers\InvoicesController::class, 'changeReferredDate'])->name('changeReferredDate');
+
 
 //Route::get('invoicesIndex/{ev?}', [InvoicesController::class, 'invoicesIndex'])->name('invoicesIndex');
 Route::get('invoicesIndex/{ev?}/{partner?}', [InvoicesController::class, 'invoicesIndex'])->name('invoicesIndex');

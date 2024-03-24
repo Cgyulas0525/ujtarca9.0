@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\RedisClass;
 use App\Enums\ActiveEnum;
 use App\Models\Partners;
 use App\Models\Products;
@@ -92,7 +91,6 @@ class DestroysController extends Controller
         }
         $partner->active = ($partner->active == ActiveEnum::INACTIVE) ? ActiveEnum::ACTIVE->value : ActiveEnum::INACTIVE->value;
         $partner->save();
-        RedisClass::setexPartners();
         return redirect(route($route));
     }
 
@@ -113,7 +111,6 @@ class DestroysController extends Controller
         }
         $product->active = ($product->active == ActiveEnum::INACTIVE) ? ActiveEnum::ACTIVE->value : ActiveEnum::INACTIVE->value;
         $product->save();
-        RedisClass::setexProducts();
         return redirect(route($route));
     }
 }

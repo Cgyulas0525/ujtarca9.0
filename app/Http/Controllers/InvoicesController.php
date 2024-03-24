@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Auth;
 use DataTables;
 use Form;
+use App\Services\SWAlertService;
+use Illuminate\Support\Facades\Config;
+
 
 class InvoicesController extends AppBaseController
 {
@@ -38,6 +41,10 @@ class InvoicesController extends AppBaseController
                              class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
                 $btn = $btn . '<a href="' . route('beforeDestroys', ['Invoices', $row->id, 'invoices']) . '"
                                  class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
+                if ($row->paymentmethod_id == 2) {
+                    $btn = $btn . '<a href="' . route('beforeInvoiceReferred', [$row->id, 'invoices']) . '"
+                                         class="btn btn-warning btn-sm deleteProduct" title="Utalás"><i class="fab fa-cc-amazon-pay"></i></a>';
+                }
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -61,7 +68,7 @@ class InvoicesController extends AppBaseController
         return view('invoices.create');
     }
 
-    public function invoicesIndex(Request $request, ?int $year = null, ?int $partner = null): object
+    public function invoicesIndex(Request $request, ?int $year = null, ?int $partner = null): mixed
     {
         if (Auth::check()) {
             if ($request->ajax()) {
@@ -76,6 +83,7 @@ class InvoicesController extends AppBaseController
             }
             return view('invoices.index');
         }
+        return view('invoices.index');
     }
 
     public function validating($request)
@@ -204,6 +212,27 @@ class InvoicesController extends AppBaseController
         array_push($formGroupArray, $item);
         return $formGroupArray;
     }
+
+    public function beforeInvoiceReferred($id, $route): object
+    {
+        $data = Invoices::find($id);
+        SWAlertService::choice($id, is_null($data->referred_date) ? 'Biztosan utalta a tétel?' : 'Biztos törli az utalást?', '/' . $route, 'Kilép', '/changeReferredDate/' . $id . '/' . $route, 'Váltás');
+
+        return view(Config::get('LAYOUTS_SHOW'))->with('table', $data);
+    }
+
+    public function changeReferredDate($id, $route): object
+    {
+        $route .= '.index';
+        $invoice = Invoices::find($id);
+        if (empty($invoice)) {
+            return redirect(route($route));
+        }
+        $invoice->referred_date = is_null($invoice->referred_date) ? now()->toDateString() : null;
+        $invoice->save();
+        return redirect(route($route));
+    }
+
 }
 
 

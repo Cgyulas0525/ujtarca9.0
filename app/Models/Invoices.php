@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $performancedate
  * @property string $deadline
  * @property string $description
+ * @property string $referred_date
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -76,7 +77,8 @@ class Invoices extends Model
         'dated',
         'performancedate',
         'deadline',
-        'description'
+        'description',
+        'referred_date'
     ];
 
     /**
@@ -93,7 +95,8 @@ class Invoices extends Model
         'dated' => 'date',
         'performancedate' => 'date',
         'deadline' => 'date',
-        'description' => 'string'
+        'description' => 'string',
+        'referred_date' => 'date'
     ];
 
     /**
@@ -110,6 +113,7 @@ class Invoices extends Model
         'performancedate' => 'required|date',
         'deadline' => 'required|date|after_or_equal:dated',
         'description' => 'nullable|string|max:500',
+        'referred_date' => 'date',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
@@ -181,5 +185,15 @@ class Invoices extends Model
     public function scopePartnerYearInvoicesSumAmount($query, $partner = null, $year = null): mixed
     {
         return $query->PartnerYearInvoices($partner, $year)->sum('amount');
+    }
+
+    public function scopeReferred($query)
+    {
+        return $query->where('paymentmethod_id', 2)->whereNotNull('referred_date');
+    }
+
+    public function scopeNotReferred($query)
+    {
+        return $query->where('paymentmethod_id', 2)->whereNull('referred_date');
     }
 }

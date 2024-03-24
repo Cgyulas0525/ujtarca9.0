@@ -6,6 +6,7 @@ class TableUpdateOrInsert
 {
     public static function handle($table, $keyArray, $array): void
     {
-        'App\Models\\'.$table::updateOrInsert($keyArray, $array);
+        $model = 'App\Models\\'.$table;
+        $model::updateOrInsert($keyArray, $array);
     }
 }

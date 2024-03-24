@@ -9,7 +9,7 @@ class YearstackedUpdateOrInsert
 {
     public static function handle($spend): void
     {
-        TableUpdateOrInsert::handle('yearstackeds',
+        TableUpdateOrInsert::handle('yearstacked',
                 [
                     'year' => $spend->count() > 0 ? $spend->first()->year : (int)date('Y'),
                 ],

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cimlets;
 use App\Models\Products;
 use App\Models\Feature;
 use Illuminate\Http\Request;
@@ -50,6 +51,7 @@ class FeatureProductController extends Controller
         foreach ($request->features as $feature) {
             $product->features()->attach($feature, ['value' => 1]);
         }
+
     }
 
     public static function notInFeatureProductPivot($productId)
