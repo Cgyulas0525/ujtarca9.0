@@ -70,6 +70,7 @@ Route::get('changeReferredDate/{id}/{route}', [App\Http\Controllers\InvoicesCont
 
 //Route::get('invoicesIndex/{ev?}', [InvoicesController::class, 'invoicesIndex'])->name('invoicesIndex');
 Route::get('invoicesIndex/{ev?}/{partner?}', [InvoicesController::class, 'invoicesIndex'])->name('invoicesIndex');
+Route::get('referredIndex', [InvoicesController::class, 'referredIndex'])->name('referredIndex');
 
 Route::get('invoicesYearsSelect', [InvoicesController::class, 'invoicesYearsSelect'])->name('invoicesYearsSelect');
 

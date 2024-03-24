@@ -86,6 +86,22 @@ class InvoicesController extends AppBaseController
         return view('invoices.index');
     }
 
+    public function referredIndex(Request $request)
+    {
+        if (Auth::check()) {
+            if ($request->ajax()) {
+                return $this->dwData(Invoices::with('paymentmethod')
+                    ->with('partner')
+                    ->notReferred()->
+                    orderBy('dated', 'desc')
+                    ->get()
+                );
+            }
+            return view('invoices.index');
+        }
+        return view('invoices.index');
+    }
+
     public function validating($request)
     {
         return $request->validate([

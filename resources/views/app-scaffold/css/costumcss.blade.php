@@ -38,7 +38,6 @@
         font-size: 15px;
     }
 
-
     tr.odd td:first-child,
     tr.even td:first-child {
         padding-left: 4em;
