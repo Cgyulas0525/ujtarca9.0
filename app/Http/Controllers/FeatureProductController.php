@@ -40,6 +40,7 @@ class FeatureProductController extends Controller
         }
         return view('products.index');
     }
+
     public function featureProductUpdate(Request $request): void
     {
         Products::find($request->productId)->features()->detach($request->featuretId);
@@ -60,4 +61,6 @@ class FeatureProductController extends Controller
             return $query->from('feature_product')->select('feature_id')->where('products_id', $productId)->get();
         })->pluck('name', 'id')->toArray();
     }
+
+
 }

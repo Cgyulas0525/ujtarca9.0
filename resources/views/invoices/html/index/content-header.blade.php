@@ -17,14 +17,14 @@
                         {!! Form::label('year', 'Év:') !!}
                     </div>
                     <div class="col-sm-2">
-                        {!! Form::select('year', SelectService::invoicesYearsSelect(), date('Y'),
+                        {!! Form::select('year', SelectService::invoicesYearsSelect(), Illuminate\Support\Facades\Session::get('invoiceYear'),
                                 ['class'=>'select2 form-control', 'id' => 'year']) !!}
                     </div>
                     <div class="mylabel col-sm-2">
                         {!! Form::label('partner', 'Partner:') !!}
                     </div>
                     <div class="col-sm-5">
-                        {!! Form::select('partner', SelectService::selectSupplier(), null,
+                        {!! Form::select('partner', SelectService::selectSupplier(), Illuminate\Support\Facades\Session::get('invoicePartner'),
                                 ['class'=>'select2 form-control', 'id' => 'partner']) !!}
                     </div>
                     <div class="col-sm-2">

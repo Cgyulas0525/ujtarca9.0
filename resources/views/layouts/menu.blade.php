@@ -105,7 +105,8 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('invoices.index') }}"
+    <a href="{{ route('invoicesIndex', ['year' => Illuminate\Support\Facades\Session::get('invoiceYear'),
+                                        'partner' => Illuminate\Support\Facades\Session::get('invoicePartner')]) }}"
        class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
         <i class="fas fa-file-invoice"></i>
         <p>Számla</p>

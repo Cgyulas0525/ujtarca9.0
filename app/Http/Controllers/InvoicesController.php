@@ -14,6 +14,7 @@ use DataTables;
 use Form;
 use App\Services\SWAlertService;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 
 
 class InvoicesController extends AppBaseController
@@ -71,6 +72,10 @@ class InvoicesController extends AppBaseController
     public function invoicesIndex(Request $request, ?int $year = null, ?int $partner = null): mixed
     {
         if (Auth::check()) {
+
+            Session::put('invoiceYear', $year);
+            Session::put('invoicePartner', $partner);
+
             if ($request->ajax()) {
                 return $this->dwData(Invoices::with('paymentmethod')
                     ->with('partner')
@@ -239,14 +244,19 @@ class InvoicesController extends AppBaseController
 
     public function changeReferredDate($id, $route): object
     {
-        $route .= '.index';
         $invoice = Invoices::find($id);
         if (empty($invoice)) {
             return redirect(route($route));
         }
         $invoice->referred_date = is_null($invoice->referred_date) ? now()->toDateString() : null;
         $invoice->save();
-        return redirect(route($route));
+
+        if (Session::get('invoiceReferred') !== 'Yes') {
+            return redirect(route('referredIndex'));
+        } else {
+            return redirect(route('invoiceIndex', ['year' => Session::get('invoiceYear'),
+                                                         'partner' => Session::get('invoicePartner')]));
+        }
     }
 
 }

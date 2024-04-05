@@ -26,7 +26,7 @@
     }
 
     .filterBtn {
-        border: 2px solid gray;
+            border: 2px solid gray;
         box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
         font-size: 15px;
         margin-top: 30px;
@@ -202,6 +202,13 @@
     .sajatBox {
         background-color: lightseagreen !important;
         margin-top: 10px !important;
+    }
+
+    .filterBtnTop {
+            border: 2px solid gray;
+        box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
+        font-size: 15px;
+        /*margin-top: 30px;*/
     }
 
 

@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Gate;
 use Auth;
 
 use App\Classes\FinanceClass;
@@ -46,6 +46,9 @@ class AppServiceProvider extends ServiceProvider
             $loader->alias('ActiveEnum', ActiveEnum::class);
             $loader->alias('OrderTypeEnum', OrderTypeEnum::class);
             $loader->alias('OrderStatusEnum', OrderStatusEnum::class);
+            Session::put('invoiceYear', date('Y'));
+            Session::put('invoicePartner');
+            Session::put('invoiceReferred', 'No');
         });
     }
 
