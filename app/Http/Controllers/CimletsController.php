@@ -14,7 +14,6 @@ use Form;
 class CimletsController extends AppBaseController
 {
     private $cimletsRepository;
-    private $redis;
 
     public function __construct(CimletsRepository $cimletsRepo)
     {
