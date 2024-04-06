@@ -105,12 +105,20 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('invoicesIndex', ['year' => Illuminate\Support\Facades\Session::get('invoiceYear'),
-                                        'partner' => Illuminate\Support\Facades\Session::get('invoicePartner')]) }}"
-       class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
-        <i class="fas fa-file-invoice"></i>
-        <p>Számla</p>
-    </a>
+    @if (Illuminate\Support\Facades\Session::get('invoiceReferred') === 'No')
+        <a href="{{ route('invoicesIndex', ['year' => Illuminate\Support\Facades\Session::get('invoiceYear'),
+                                            'partner' => Illuminate\Support\Facades\Session::get('invoicePartner')]) }}"
+           class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
+            <i class="fas fa-file-invoice"></i>
+            <p>Számla</p>
+        </a>
+    @else
+        <a href="{{ route('referredIndex') }}"
+           class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
+            <i class="fas fa-file-invoice"></i>
+            <p>Számla</p>
+        </a>
+    @endif
 </li>
 <li class="nav-item">
     <a href="{{ route('closures.index') }}"

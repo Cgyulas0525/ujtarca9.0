@@ -7,7 +7,6 @@ use App\Http\Controllers\AppBaseController;
 
 use App\Models\Invoices;
 use App\Services\SelectService;
-use App\Http\Controllers\PaymentMethodsController;
 use Illuminate\Http\Request;
 use Auth;
 use DataTables;
@@ -251,10 +250,10 @@ class InvoicesController extends AppBaseController
         $invoice->referred_date = is_null($invoice->referred_date) ? now()->toDateString() : null;
         $invoice->save();
 
-        if (Session::get('invoiceReferred') !== 'Yes') {
+        if (Session::get('invoiceReferred') === "Yes") {
             return redirect(route('referredIndex'));
         } else {
-            return redirect(route('invoiceIndex', ['year' => Session::get('invoiceYear'),
+            return redirect(route('invoicesIndex', ['year' => Session::get('invoiceYear'),
                                                          'partner' => Session::get('invoicePartner')]));
         }
     }
