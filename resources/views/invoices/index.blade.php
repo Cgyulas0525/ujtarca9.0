@@ -8,3 +8,5 @@
 @include('invoices.js.index.referredBtnClick')
 @include('invoices.js.index.filterBtnTopClick')
 @include('invoices.js.index.index')
+@include('app-scaffold.js.putSession')
+@include('app-scaffold.js.getSession')

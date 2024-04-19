@@ -105,9 +105,9 @@
     </a>
 </li>
 <li class="nav-item">
-    @if (Illuminate\Support\Facades\Session::get('invoiceReferred') === 'No')
-        <a href="{{ route('invoicesIndex', ['year' => Illuminate\Support\Facades\Session::get('invoiceYear'),
-                                            'partner' => Illuminate\Support\Facades\Session::get('invoicePartner')]) }}"
+    @if (session("invoiceReferred") === "No")
+        <a href="{{ route('invoicesIndex', ['year' => session("invoiceYear"),
+                                            'partner' => session("invoicePartner")]) }}"
            class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
             <i class="fas fa-file-invoice"></i>
             <p>Számla</p>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\ModalDeliveryController;
 use App\Http\Controllers\Api\ModalLocationController;
 use App\Http\Controllers\Api\ModalProductController;
 use App\Http\Controllers\Api\QuantityController;
+use App\Http\Controllers\Api\SessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,8 @@ Route::post('newLocationByModal', [ModalLocationController::class, 'newLocationB
 Route::post('newProductByModal', [ModalProductController::class, 'newProductByModal']);
 Route::post('getQuantity', [QuantityController::class, 'getQuantity']);
 
+Route::post('getSession', [SessionController::class, 'getSession']);
+Route::post('putSession', [SessionController::class, 'putSession']);
 
 
 
