@@ -17,5 +17,5 @@ Route::resource('components', App\Http\Controllers\ComponentController::class);
 
 // Pivot
 
-Route::get('componentProductIndex/{product}', [ComponentProductController::class, 'index'])->name('componentProductIndex');
-Route::get('featureProductIndex/{product}', [FeatureProductController::class, 'index'])->name('featureProductIndex');
+Route::get('componentProductIndex/{product}', [App\Http\Controllers\ComponentProductController::class, 'index'])->name('componentProductIndex');
+Route::get('featureProductIndex/{product}', [App\Http\Controllers\FeatureProductController::class, 'index'])->name('featureProductIndex');
