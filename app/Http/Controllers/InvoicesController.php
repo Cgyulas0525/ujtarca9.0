@@ -70,22 +70,29 @@ class InvoicesController extends AppBaseController
 
     public function invoicesIndex(Request $request, ?int $year = null, ?int $partner = null): mixed
     {
-        if (Auth::check()) {
-
-            Session::put('invoiceYear', $year);
-            Session::put('invoicePartner', $partner);
-
-            if ($request->ajax()) {
-                return $this->dwData(Invoices::with('paymentmethod')
-                    ->with('partner')
-                    ->where(function ($query) use ($partner) {
-                        (is_null($partner) || $partner == 0) ? $query->whereNotNull('partner_id') : $query->where('partner_id', '=', $partner);
-                    })
-                    ->where(function ($query) use ($year) {
-                        (is_null($year) || $year == 0) ? $query->whereNotNull('dated') : $query->whereYear('dated', '=', $year);
-                    })->get());
-            }
+        if (!Auth::check()) {
             return view('invoices.index');
+        }
+
+        if (!is_null($year)) {
+            Session::put('invoiceYear', $year);
+        }
+        if (!is_null($partner)) {
+            Session::put('invoicePartner', $partner);
+        }
+
+        if ($request->ajax()) {
+            $invoicesQuery = Invoices::with(['paymentmethod', 'partner']);
+
+            if (!is_null($partner) && $partner != 0) {
+                $invoicesQuery->where('partner_id', '=', $partner);
+            }
+
+            if (!is_null($year) && $year != 0) {
+                $invoicesQuery->whereYear('dated', '=', $year);
+            }
+
+            return $this->dwData($invoicesQuery->get());
         }
         return view('invoices.index');
     }
@@ -96,8 +103,8 @@ class InvoicesController extends AppBaseController
             if ($request->ajax()) {
                 return $this->dwData(Invoices::with('paymentmethod')
                     ->with('partner')
-                    ->notReferred()->
-                    orderBy('dated', 'desc')
+                    ->notReferred()
+                    ->orderBy('dated', 'desc')
                     ->get()
                 );
             }

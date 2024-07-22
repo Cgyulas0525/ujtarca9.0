@@ -42,9 +42,8 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/currencyFormatDE.js') }} " type="text/javascript"></script>
-
+    @include('functions.ajax_js')
+    @include('functions.currencyFormatDE')
     <script type="text/javascript">
         $(function () {
 

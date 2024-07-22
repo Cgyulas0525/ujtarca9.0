@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $performancedate
  * @property string $deadline
  * @property string $description
- * @property string $referred_date
+ * @property \Illuminate\Support\Carbon|null $referred_date
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

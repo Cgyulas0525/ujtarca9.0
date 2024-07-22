@@ -18,7 +18,7 @@
 </li>
 
 @section('scripts')
-    <script src="{{ asset('/js/currencyFormatDE.js') }} " type="text/javascript"></script>
+    @include('functions.currencyFormatDE')
 
     <script type="text/javascript">
         $(function () {

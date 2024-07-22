@@ -40,7 +40,7 @@
 
 @section('scripts')
     @include('functions.sweetalert_js')
-    <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
+    @include('functions.required_js')
     @include('functions.settlement.settlementPostcode_js')
     @include('deliveries.addModalBtn_js')
     @include('deliveries.otherBtn_js')

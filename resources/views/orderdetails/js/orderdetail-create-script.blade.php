@@ -1,6 +1,6 @@
 @section('scripts')
 
-    <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
+    @include('functions.required_js')
     @include('functions.sweetalert_js')
     @include('functions.requiredField')
     @include('functions.ajax_js')

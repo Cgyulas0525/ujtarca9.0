@@ -25,7 +25,7 @@ class InvoicesRepository extends BaseRepository
         'performancedate',
         'deadline',
         'description',
-        'referred'
+        'referred_date'
     ];
 
     /**

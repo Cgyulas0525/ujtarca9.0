@@ -10,7 +10,7 @@
 
 @section('scripts')
 
-    <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
+    @include('functions.ajax_js')
 
     <script type="text/javascript">
         $(function () {
