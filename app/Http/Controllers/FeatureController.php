@@ -115,7 +115,7 @@ class FeatureController extends AppBaseController
     /**
      * Update the specified Feature in storage.
      */
-    public function update($id, UpdateFeatureRequest $request)
+    public function update(int $id, UpdateFeatureRequest $request)
     {
         $feature = $this->featureRepository->find($id);
 
