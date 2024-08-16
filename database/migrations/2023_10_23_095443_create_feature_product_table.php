@@ -22,7 +22,7 @@ return new class extends Migration
             $table->bigInteger('products_id');
             $table->boolean('value')->default(0);
 
-            $table->unique(['feature_id', 'product_id']);
+            $table->unique(['feature_id', 'products_id']);
             $table->unique(['products_id', 'feature_id']);
         });
     }

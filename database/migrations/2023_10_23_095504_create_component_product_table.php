@@ -22,7 +22,7 @@ return new class extends Migration
             $table->bigInteger('products_id');
             $table->string('value', 100)->nullable();
 
-            $table->unique(['component_id', 'product_id']);
+            $table->unique(['component_id', 'products_id']);
             $table->unique(['products_id', 'component_id']);
         });
     }
