@@ -4,6 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models;
+use Database\Seeders\QuantitiesSeeder;
+use Database\Seeders\FeatureSeeder;
+use Database\Seeders\ComponentSeeder;
 
 class DatabaseCorrection extends Command
 {
@@ -32,11 +35,11 @@ class DatabaseCorrection extends Command
     public function products()
     {
         Models\Products::where('active', 1)->each(function ($item) {
-            $item->active = 'aktív';
+            $item->active = 'inaktív';
             $item->save();
         });
         Models\Products::where('active', "!=",  1)->each(function ($item) {
-            $item->active = 'inaktív';
+            $item->active = 'aktív';
             $item->save();
         });
     }
@@ -44,13 +47,20 @@ class DatabaseCorrection extends Command
     public function partners()
     {
         Models\Partners::where('active', 1)->each(function ($item) {
-            $item->active = 'aktív';
-            $item->save();
-        });
-        Models\Partners::where('active', "!=",  1)->each(function ($item) {
             $item->active = 'inaktív';
             $item->save();
         });
+        Models\Partners::where('aktív', "!=",  1)->each(function ($item) {
+            $item->active = 'inaktív';
+            $item->save();
+        });
+    }
+
+    public function partnerTypes(string $type)
+    {
+        $partnerTypes = new Models\PartnerTypes();
+        $partnerTypes->name = $type;
+        $partnerTypes->save();
     }
 
     /**
@@ -74,6 +84,12 @@ class DatabaseCorrection extends Command
         $this->products();
         $this->info('Partners active!');
         $this->partners();
+        $this->partnerTypes('WEB vevő');
+        $this->partnerTypes('Kiszállítás vevő');
+        $this->info('Seeders!');
+        $this->call(QuantitiesSeeder::class);
+        $this->call(FeatureSeeder::class);
+        $this->call(ComponentSeeder::class);
         $this->info('Method has been executed successfully!');
 
         return Command::SUCCESS;
