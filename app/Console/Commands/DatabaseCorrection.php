@@ -24,7 +24,7 @@ class DatabaseCorrection extends Command
      */
     protected $description = 'Budget 2.0 database correction';
 
-    public function invoices()
+    public function invoices(): void
     {
         Models\Invoices::where('paymentmethod_id', 2)->each(function ($invoice) {
             $invoice->referred_date = $invoice->deadline;
@@ -32,7 +32,7 @@ class DatabaseCorrection extends Command
         });
     }
 
-    public function products()
+    public function products(): void
     {
         Models\Products::where('active', 1)->each(function ($item) {
             $item->active = 'inaktív';
@@ -44,7 +44,7 @@ class DatabaseCorrection extends Command
         });
     }
 
-    public function partners()
+    public function partners(): void
     {
         Models\Partners::where('active', 1)->each(function ($item) {
             $item->active = 'inaktív';
@@ -56,7 +56,7 @@ class DatabaseCorrection extends Command
         });
     }
 
-    public function partnerTypes(string $type)
+    public function partnerTypes(string $type): void
     {
         $partnerTypes = new Models\PartnerTypes();
         $partnerTypes->name = $type;

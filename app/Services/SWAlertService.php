@@ -8,7 +8,7 @@ use Alert;
 class SWAlertService
 {
 
-    public static function choice($id, $title, $cancelPath, $cancelText, $confirmPath, $confirmText)
+    public static function choice(int $id, string $title, string $cancelPath, string $cancelText, string $confirmPath, string $confirmText): void
     {
         Alert::question($title)
             ->showCancelButton('<a href="' . URL::asset($cancelPath) . '" style="color:white;">' . $cancelText . '</a>',
@@ -19,7 +19,7 @@ class SWAlertService
             )->autoClose(false);
     }
 
-    public static function error($title, $text)
+    public static function error(string $title, string $text): void
     {
         Alert::error($title, $text)->autoClose(false);
     }
