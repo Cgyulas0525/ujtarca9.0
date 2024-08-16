@@ -19,11 +19,11 @@ return new class extends Migration
 
         Schema::create('feature_product', function (Blueprint $table) {
             $table->bigInteger('feature_id');
-            $table->bigInteger('product_id');
+            $table->bigInteger('products_id');
             $table->boolean('value')->default(0);
 
             $table->unique(['feature_id', 'product_id']);
-            $table->unique(['product_id', 'feature_id']);
+            $table->unique(['products_id', 'feature_id']);
         });
     }
 
