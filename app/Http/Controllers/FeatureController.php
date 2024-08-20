@@ -74,7 +74,7 @@ class FeatureController extends AppBaseController
         $feature = $this->featureRepository->create($input);
         $file = $request->file('file');
         if (!empty($file)){
-            $feature->addMedia($file)->toMediaCollection($feature->getTable() . $feature->id);
+            $feature->addMedia($file)->toMediaCollection($feature->getTable() . $feature->id, 'media');
         }
         Flash::success('Jellemző mentés sikeres megtörtént.');
         return redirect(route('features.index'));
@@ -128,8 +128,8 @@ class FeatureController extends AppBaseController
         $feature = $this->featureRepository->update($request->all(), $id);
         $file = $request->file('file');
         if (!empty($file)){
-            $feature->clearMediaCollection($feature->getTable() . $feature->id);
-            $feature->addMedia($file)->toMediaCollection($feature->getTable() . $feature->id);
+            $feature->clearMediaCollection($feature->getTable() . $feature->id, 'media');
+            $feature->addMedia($file)->toMediaCollection($feature->getTable() . $feature->id, 'media');
         }
 
         Flash::success('Jellemző módosítás sikeres megtörtént.');

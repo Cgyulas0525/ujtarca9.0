@@ -9,7 +9,7 @@ class WeekstackedUpdateOrInsert
 {
     public static function handle($revenue, $spend): void
     {
-        TableUpdateOrInsert::handle('weekstackeds',
+        TableUpdateOrInsert::handle('weekstacked',
                         [
                             'year' => (int)substr($revenue->first()->yearweek, 0, 4),
                             'week' => (int)substr($revenue->first()->yearweek, 4, 2),
