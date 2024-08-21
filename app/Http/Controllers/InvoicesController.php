@@ -145,7 +145,7 @@ class InvoicesController extends AppBaseController
         $input = $request->all();
         $result = $this->validating($request);
         $invoices = $this->invoicesRepository->create($input);
-        return view('invoices.create');
+        return redirect('invoices.create');
     }
 
     public function show($id): object
@@ -184,7 +184,7 @@ class InvoicesController extends AppBaseController
             return redirect(route('invoices.index'));
         }
         $this->invoicesRepository->delete($id);
-        return redirect(route('invoices.index'));
+        return redirect('invoices.index');
     }
 
     public static function DDDW(): array
