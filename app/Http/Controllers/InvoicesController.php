@@ -44,6 +44,7 @@ class InvoicesController extends AppBaseController
                 if ($row->paymentmethod_id == 2) {
                     $btn = $btn . '<a href="' . route('beforeInvoiceReferred', [$row->id, 'invoices']) . '"
                                          class="btn btn-warning btn-sm deleteProduct" title="Utalás"><i class="fab fa-cc-amazon-pay"></i></a>';
+
                 }
                 return $btn;
             })
@@ -144,7 +145,7 @@ class InvoicesController extends AppBaseController
         $input = $request->all();
         $result = $this->validating($request);
         $invoices = $this->invoicesRepository->create($input);
-        return view('invoices.create');
+        return redirect('invoices.create');
     }
 
     public function show($id): object
@@ -183,7 +184,7 @@ class InvoicesController extends AppBaseController
             return redirect(route('invoices.index'));
         }
         $this->invoicesRepository->delete($id);
-        return redirect(route('invoices.index'));
+        return redirect('invoices.index');
     }
 
     public static function DDDW(): array
@@ -243,7 +244,7 @@ class InvoicesController extends AppBaseController
     public function beforeInvoiceReferred($id, $route): object
     {
         $data = Invoices::find($id);
-        SWAlertService::choice($id, is_null($data->referred_date) ? 'Biztosan utalta a tétel?' : 'Biztos törli az utalást?', '/' . $route, 'Kilép', '/changeReferredDate/' . $id . '/' . $route, 'Váltás');
+        SWAlertService::choice($id, is_null($data->referred_date) ? 'Biztosan utalta a tétel?' : 'Biztos visszavonja az utalást?', '/' . $route, 'Kilép', '/changeReferredDate/' . $id . '/' . $route, 'Váltás');
 
         return view(Config::get('LAYOUTS_SHOW'))->with('table', $data);
     }
@@ -254,8 +255,8 @@ class InvoicesController extends AppBaseController
         if (empty($invoice)) {
             return redirect(route($route));
         }
-        $invoice->referred_date = is_null($invoice->referred_date) ? now()->toDateString() : null;
-        $invoice->save();
+        $referredDate = is_null($invoice->referred_date) ? now()->toDateString() : null;
+        Invoices::where('id', $id)->update(['referred_date' => $referredDate]);
 
         if (Session::get('invoiceReferred') === "Yes") {
             return redirect(route('referredIndex'));

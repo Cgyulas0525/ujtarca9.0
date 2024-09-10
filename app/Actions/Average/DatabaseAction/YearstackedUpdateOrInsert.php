@@ -10,6 +10,6 @@ class YearstackedUpdateOrInsert
 {
     public static function handle($revenue, $spend): void
     {
-        TableUpdateOrInsert::handle('yearstackeds', ['year' => $revenue->first()->year], StackedArray::handle($revenue, $spend));
+        TableUpdateOrInsert::handle('Yearstacked', ['year' => $revenue->first()->year], StackedArray::handle($revenue, $spend));
     }
 }
