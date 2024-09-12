@@ -10,7 +10,7 @@ class ClosuresClass
     public static function getDailySum($date): int
     {
         $data = Closures::where('closuredate', $date)->first();
-        return !empty($data) ? ($data->dailysum - 20000) : 0;
+        return $data ? ($data->dailysum - 20000) : 0;
     }
 
     public static function getPeriodDailySum($day, $begin = NULL, $end = NULL): object

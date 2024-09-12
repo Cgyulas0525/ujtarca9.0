@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <h1>DASHBOARD</h1>
-            @include('dashboard.dashboard')
+{{--            @include('dashboard.dashboard')--}}
         </div>
     </div>
 @endsection

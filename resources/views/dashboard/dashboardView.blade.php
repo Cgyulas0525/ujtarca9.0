@@ -5,9 +5,9 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Árbevétel</span>
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Heti:', 'value' => App\Models\Weekstacked::all()->last()->revenue])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Havi:', 'value' => App\Models\Monthstacked::all()->last()->revenue])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Éves:', 'value' => App\Models\Yearstacked::all()->last()->revenue])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Heti:', 'value' => $params['stacked']['week']->revenue])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Havi:', 'value' => $params['stacked']['month']->revenue])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Éves:', 'value' => $params['stacked']['year']->revenue])
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -18,9 +18,9 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Költség</span>
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Heti:', 'value' => App\Models\Weekstacked::all()->last()->spend])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Havi:', 'value' => App\Models\Monthstacked::all()->last()->spend])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Éves:', 'value' => App\Models\Yearstacked::all()->last()->spend])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Heti:', 'value' => $params['stacked']['week']->spend])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Havi:', 'value' => $params['stacked']['month']->spend])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Éves:', 'value' => $params['stacked']['year']->spend])
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -31,9 +31,9 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Eredmény</span>
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Heti:', 'value' => App\Models\Weekstacked::all()->last()->revenue - App\Models\Weekstacked::all()->last()->spend])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Havi:', 'value' => App\Models\Monthstacked::all()->last()->revenue - App\Models\Monthstacked::all()->last()->spend])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Éves:', 'value' => App\Models\Yearstacked::all()->last()->revenue - App\Models\Yearstacked::all()->last()->spend])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Heti:', 'value' => $params['stacked']['week']->revenue - $params['stacked']['week']->spend])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Havi:', 'value' => $params['stacked']['month']->revenue -$params['stacked']['month']->spend])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Éves:', 'value' => $params['stacked']['year']->revenue - $params['stacked']['year']->spend])
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -44,9 +44,9 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Átlag</span>
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Heti:', 'value' => App\Models\Weekstacked::all()->last()->average])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Havi:', 'value' => App\Models\Monthstacked::all()->last()->average])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Éves:', 'value' => App\Models\Yearstacked::all()->last()->average])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Heti:', 'value' => $params['stacked']['week']->average])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Havi:', 'value' => $params['stacked']['month']->average])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Éves:', 'value' => $params['stacked']['year']->average])
             </div>
         </div>
     </div>
