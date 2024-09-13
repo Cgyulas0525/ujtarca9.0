@@ -14,6 +14,7 @@ use App\Models\Orderdetails;
 use App\Models\Orders;
 use App\Models\Partners;
 use App\Repositories\OrdersRepository;
+use App\Services\GetPartnerType;
 use Illuminate\Http\Request;
 use Auth;
 use DataTables;
@@ -153,7 +154,7 @@ class OrdersController extends AppBaseController
     public function print($id): object
     {
         $this->order = Orders::find($id);
-        $this->owner = Partners::where('partnertypes_id', PartnerTypeEnum::getPartnerTypesId(PartnerTypeEnum::OWNER->value))->first();
+        $this->owner = Partners::where('partnertypes_id', GetPartnerType::getPartnerTypesId(PartnerTypeEnum::OWNER->value))->first();
         $this->partner = Partners::find($this->order->partners_id);
         $this->details = Orderdetails::where('orders_id', $this->order->id)->get();
 

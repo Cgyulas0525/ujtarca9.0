@@ -27,8 +27,4 @@ enum PartnerTypeEnum: string
     case WEBBUYER = 'WEB vevő';
     case DELIVERY_CUSTOMER = 'Kiszállítás vevő';
 
-    public static function getPartnerTypesId($name)
-    {
-        return PartnerTypes::where('name', $name)->first()->id;
-    }
 }
