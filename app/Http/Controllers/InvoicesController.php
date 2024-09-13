@@ -64,7 +64,7 @@ class InvoicesController extends AppBaseController
         return view('invoices.index');
     }
 
-    public function create(): object
+    public function create()
     {
         return view('invoices.create');
     }
@@ -119,7 +119,7 @@ class InvoicesController extends AppBaseController
         return $request->validate([
             'partner_id' => 'required|integer',
             'invoicenumber' => 'required|string|max:25',
-            'paymentmethod_id' => 'required|integer',
+            'paymentmethod_id' => 'required|integer|min:1',
             'amount' => 'required|integer',
             'dated' => 'required|date',
             'performancedate' => 'required|date',
@@ -133,6 +133,7 @@ class InvoicesController extends AppBaseController
                 'partner_id' => 'A partner kötelező mező!',
                 'invoicenumber' => 'A számlaszám kötelező mező!',
                 'paymentmethod_id' => 'A fizetési mód kötelező mező!',
+                'paymentmethod_id|min' => 'A fizetési mód kötelező mező!',
                 'amount' => 'Az összeg kötelező mező!',
                 'dated' => 'A kelt kötelező mező!',
                 'performancedate' => 'A teljesítés kötelező mező!',
@@ -145,7 +146,7 @@ class InvoicesController extends AppBaseController
         $input = $request->all();
         $result = $this->validating($request);
         $invoices = $this->invoicesRepository->create($input);
-        return redirect('invoices.create');
+        return view('invoices.create');
     }
 
     public function show($id): object
