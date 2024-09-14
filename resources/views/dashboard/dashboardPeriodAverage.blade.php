@@ -5,9 +5,9 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Az elmúlt 3 hónap {{ Carbon\Carbon::now()->weekOfMonth }}. hétének átlaga:</span>
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Bevétel:', 'value' => ($arrayQ["number"] > 0 ? $arrayQ["revenue"] / $arrayQ["number"] : 0)])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Kiadás:', 'value' => ($arrayQ["number"] > 0 ? $arrayQ["spend"] / $arrayQ["number"] : 0)])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Eredmény:', 'value' => ($arrayQ["number"] > 0 ? $arrayQ["result"] / $arrayQ["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Bevétel:', 'value' => ($paramsQ["number"] > 0 ? $paramsQ["revenue"] / $paramsQ["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Kiadás:', 'value' => ($paramsQ["number"] > 0 ? $paramsQ["spend"] / $paramsQ["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Eredmény:', 'value' => ($paramsQ["number"] > 0 ? $paramsQ["result"] / $paramsQ["number"] : 0)])
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -18,9 +18,9 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Az elmúlt 6 hónap {{ Carbon\Carbon::now()->weekOfMonth }}. hétének átlaga:</span>
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Bevétel:', 'value' => ($arrayH["number"] > 0 ? $arrayH["revenue"] / $arrayH["number"] : 0)])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Kiadás:', 'value' => ($arrayH["number"] > 0 ? $arrayH["spend"] / $arrayH["number"] : 0)])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Eredmény:', 'value' => ($arrayH["number"] > 0 ? $arrayH["result"] / $arrayH["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Bevétel:', 'value' => ($paramsH["number"] > 0 ? $paramsH["revenue"] / $paramsH["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Kiadás:', 'value' => ($paramsH["number"] > 0 ? $paramsH["spend"] / $paramsH["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Eredmény:', 'value' => ($paramsH["number"] > 0 ? $paramsH["result"] / $paramsH["number"] : 0)])
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -31,9 +31,9 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Az elmúlt 9 hónap {{ Carbon\Carbon::now()->weekOfMonth }}. hétének átlaga:</span>
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Bevétel:', 'value' => ($array3Q["number"] > 0 ? $array3Q["revenue"] / $array3Q["number"] : 0)])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Kiadás:', 'value' => ($array3Q["number"] > 0 ? $array3Q["spend"] / $array3Q["number"] : 0)])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Eredmény:', 'value' => ($array3Q["number"] > 0 ? $array3Q["result"] / $array3Q["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Bevétel:', 'value' => ($params3Q["number"] > 0 ? $params3Q["revenue"] / $params3Q["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Kiadás:', 'value' => ($params3Q["number"] > 0 ? $params3Q["spend"] / $params3Q["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Eredmény:', 'value' => ($params3Q["number"] > 0 ? $params3Q["result"] / $params3Q["number"] : 0)])
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -44,9 +44,9 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Az elmúlt 12 hónap {{ Carbon\Carbon::now()->weekOfMonth }}. hétének átlaga:</span>
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Bevétel:',  'value' => ($arrayY["number"] > 0 ? $arrayY["revenue"] / $arrayY["number"] : 0)])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Kiadás:', 'value' => ($arrayY["number"] > 0 ? $arrayY["spend"] / $arrayY["number"] : 0)])
-                @include('dashboard.dashboardViewItem', [ 'title' => 'Eredmény:', 'value' => ($arrayY["number"] > 0 ? $arrayY["result"] / $arrayY["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Bevétel:',  'value' => ($paramsY["number"] > 0 ? $paramsY["revenue"] / $paramsY["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Kiadás:', 'value' => ($paramsY["number"] > 0 ? $paramsY["spend"] / $paramsY["number"] : 0)])
+                @include('dashboard.dashboardViewItem', [ 'title' => 'Eredmény:', 'value' => ($paramsY["number"] > 0 ? $paramsY["result"] / $paramsY["number"] : 0)])
             </div>
             <!-- /.info-box-content -->
         </div>

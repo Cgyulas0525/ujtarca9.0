@@ -19,7 +19,7 @@
 
         $('[data-widget="pushmenu"]').PushMenu('collapse');
 
-        var columnChartData = <?php echo (new App\Services\MonthstackedService)->getMonthsResults(12); ?>;
+        var columnChartData = <?php echo $monthStacked['last12Months']; ?>;
         var dataArr = $.map(columnChartData, function(value, key){
             return value
         })
@@ -35,9 +35,9 @@
 
                 var chartdata = [];
 
-                chartdata.push({name: 'Készpénz', y: <?php echo (new App\Services\YearstackedService)->getSumPercent('cash'); ?> });
-                chartdata.push({name: 'Kártya', y: <?php echo (new App\Services\YearstackedService)->getSumPercent('card'); ?> });
-                chartdata.push({name: 'Szépkártya', y: <?php echo (new App\Services\YearstackedService)->getSumPercent('szcard'); ?> });
+                chartdata.push({name: 'Készpénz', y: <?php echo $yearStacked['cash']; ?> });
+                chartdata.push({name: 'Kártya', y: <?php echo $yearStacked['card']; ?> });
+                chartdata.push({name: 'Szépkártya', y: <?php echo $yearStacked['szcard']; ?> });
 
                 return chartdata;
 
@@ -49,9 +49,9 @@
 
                 var chartdata = [];
 
-                chartdata.push({name: 'Készpénz', y: <?php echo (new App\Services\MonthstackedService)->getLastYear()->sum('cash'); ?> });
-                chartdata.push({name: 'Kártya', y: <?php echo (new App\Services\MonthstackedService)->getLastYear()->sum('card'); ?> });
-                chartdata.push({name: 'Szépkártya', y: <?php echo (new App\Services\MonthstackedService)->getLastYear()->sum('szcard'); ?> });
+                chartdata.push({name: 'Készpénz', y: <?php echo $monthStacked['cashOfLastYear']; ?> });
+                chartdata.push({name: 'Kártya', y: <?php echo $monthStacked['cardOfLastYear']; ?> });
+                chartdata.push({name: 'Szépkártya', y: <?php echo $monthStacked['szCardOfLastYear']; ?> });
 
                 return chartdata;
 
