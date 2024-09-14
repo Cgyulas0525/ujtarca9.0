@@ -34,7 +34,7 @@ class OrderReplayService
      * @param $id
      * @param $newOrder
      */
-    public static function newOrderDetails($order, $newOrder): void
+    public static function newOrderDetails(Orders $order, $newOrder): void
     {
 
         foreach (Orderdetails::whereBelongsTo($order)->get() as $orderDetail) {
@@ -55,7 +55,7 @@ class OrderReplayService
      * @return object
      * @throws \Throwable
      */
-    public static function orderReplay($id): object
+    public static function orderReplay(int $id): object
     {
         $order = Orders::find($id);
         if (!empty($order)) {

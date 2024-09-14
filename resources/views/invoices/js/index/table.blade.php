@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    function setTable() {
+    function indexTable() {
         var table = $('.partners-table').DataTable({
             processing: true,
             serverSide: true,
@@ -14,7 +14,7 @@
                     title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('invoices.create') !!}"><i class="fa fa-plus-square"></i></a>',
                     data: 'action',
                     sClass: "text-center",
-                    width: '100px',
+                    width: '120px',
                     name: 'action',
                     orderable: false,
                     searchable: false

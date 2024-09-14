@@ -44,6 +44,7 @@ class InvoicesController extends AppBaseController
                 if ($row->paymentmethod_id == 2) {
                     $btn = $btn . '<a href="' . route('beforeInvoiceReferred', [$row->id, 'invoices']) . '"
                                          class="btn btn-warning btn-sm deleteProduct" title="Utalás"><i class="fab fa-cc-amazon-pay"></i></a>';
+
                 }
                 return $btn;
             })
@@ -63,29 +64,36 @@ class InvoicesController extends AppBaseController
         return view('invoices.index');
     }
 
-    public function create(): object
+    public function create()
     {
         return view('invoices.create');
     }
 
     public function invoicesIndex(Request $request, ?int $year = null, ?int $partner = null): mixed
     {
-        if (Auth::check()) {
-
-            Session::put('invoiceYear', $year);
-            Session::put('invoicePartner', $partner);
-
-            if ($request->ajax()) {
-                return $this->dwData(Invoices::with('paymentmethod')
-                    ->with('partner')
-                    ->where(function ($query) use ($partner) {
-                        (is_null($partner) || $partner == 0) ? $query->whereNotNull('partner_id') : $query->where('partner_id', '=', $partner);
-                    })
-                    ->where(function ($query) use ($year) {
-                        (is_null($year) || $year == 0) ? $query->whereNotNull('dated') : $query->whereYear('dated', '=', $year);
-                    })->get());
-            }
+        if (!Auth::check()) {
             return view('invoices.index');
+        }
+
+        if (!is_null($year)) {
+            Session::put('invoiceYear', $year);
+        }
+        if (!is_null($partner)) {
+            Session::put('invoicePartner', $partner);
+        }
+
+        if ($request->ajax()) {
+            $invoicesQuery = Invoices::with(['paymentmethod', 'partner']);
+
+            if (!is_null($partner) && $partner != 0) {
+                $invoicesQuery->where('partner_id', '=', $partner);
+            }
+
+            if (!is_null($year) && $year != 0) {
+                $invoicesQuery->whereYear('dated', '=', $year);
+            }
+
+            return $this->dwData($invoicesQuery->get());
         }
         return view('invoices.index');
     }
@@ -96,8 +104,8 @@ class InvoicesController extends AppBaseController
             if ($request->ajax()) {
                 return $this->dwData(Invoices::with('paymentmethod')
                     ->with('partner')
-                    ->notReferred()->
-                    orderBy('dated', 'desc')
+                    ->notReferred()
+                    ->orderBy('dated', 'desc')
                     ->get()
                 );
             }
@@ -111,7 +119,7 @@ class InvoicesController extends AppBaseController
         return $request->validate([
             'partner_id' => 'required|integer',
             'invoicenumber' => 'required|string|max:25',
-            'paymentmethod_id' => 'required|integer',
+            'paymentmethod_id' => 'required|integer|min:1',
             'amount' => 'required|integer',
             'dated' => 'required|date',
             'performancedate' => 'required|date',
@@ -125,6 +133,7 @@ class InvoicesController extends AppBaseController
                 'partner_id' => 'A partner kötelező mező!',
                 'invoicenumber' => 'A számlaszám kötelező mező!',
                 'paymentmethod_id' => 'A fizetési mód kötelező mező!',
+                'paymentmethod_id|min' => 'A fizetési mód kötelező mező!',
                 'amount' => 'Az összeg kötelező mező!',
                 'dated' => 'A kelt kötelező mező!',
                 'performancedate' => 'A teljesítés kötelező mező!',
@@ -176,7 +185,7 @@ class InvoicesController extends AppBaseController
             return redirect(route('invoices.index'));
         }
         $this->invoicesRepository->delete($id);
-        return redirect(route('invoices.index'));
+        return redirect('invoices.index');
     }
 
     public static function DDDW(): array
@@ -236,7 +245,7 @@ class InvoicesController extends AppBaseController
     public function beforeInvoiceReferred($id, $route): object
     {
         $data = Invoices::find($id);
-        SWAlertService::choice($id, is_null($data->referred_date) ? 'Biztosan utalta a tétel?' : 'Biztos törli az utalást?', '/' . $route, 'Kilép', '/changeReferredDate/' . $id . '/' . $route, 'Váltás');
+        SWAlertService::choice($id, is_null($data->referred_date) ? 'Biztosan utalta a tétel?' : 'Biztos visszavonja az utalást?', '/' . $route, 'Kilép', '/changeReferredDate/' . $id . '/' . $route, 'Váltás');
 
         return view(Config::get('LAYOUTS_SHOW'))->with('table', $data);
     }
@@ -247,8 +256,8 @@ class InvoicesController extends AppBaseController
         if (empty($invoice)) {
             return redirect(route($route));
         }
-        $invoice->referred_date = is_null($invoice->referred_date) ? now()->toDateString() : null;
-        $invoice->save();
+        $referredDate = is_null($invoice->referred_date) ? now()->toDateString() : null;
+        Invoices::where('id', $id)->update(['referred_date' => $referredDate]);
 
         if (Session::get('invoiceReferred') === "Yes") {
             return redirect(route('referredIndex'));

@@ -4,7 +4,7 @@
     @include('orders.html.create.order-create-content')
 @endsection
 @section('scripts')
-    <script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
+    @include('functions.required_js')
     @include('functions.settlement.settlementPostcode_js')
     @include('functions.sweetalert_js')
     @include('functions.requiredField')

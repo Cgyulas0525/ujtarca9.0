@@ -1,4 +1,4 @@
-<script src="{{ asset('/js/required.js') }} " type="text/javascript"></script>
+@include('functions.required_js')
 
 <script type="text/javascript">
     $(function () {

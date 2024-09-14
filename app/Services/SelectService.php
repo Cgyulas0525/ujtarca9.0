@@ -10,7 +10,7 @@ use App\Models\Delivery;
 
 class SelectService
 {
-    public static function orderDetailsProductsSelect($id): array
+    public static function orderDetailsProductsSelect(int $id): array
     {
         return [" "] + Products::activeProducts()
                 ->whereNotIn('id', function ($query) use ($id) {

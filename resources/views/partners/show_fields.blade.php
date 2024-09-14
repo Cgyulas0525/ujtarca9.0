@@ -120,9 +120,9 @@
 
 
 @section('scripts')
-    <script src="{{ asset('/js/currencyFormatDE.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/sweetalert.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
+    @include('functions.currencyFormatDE')
+    @include('functions.sweetalert_js')
+    @include('functions.ajax_js')
 
     <script type="text/javascript">
 

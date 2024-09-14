@@ -27,3 +27,4 @@ fields_sample.json
 /storage/output/
 /trash/
 /storage/logs/
+/storage/logs/laravel.log

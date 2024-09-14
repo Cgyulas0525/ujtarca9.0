@@ -50,8 +50,8 @@
 
 
 @section('scripts')
-    <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/sweetalert.js') }} " type="text/javascript"></script>
+    @include('functions.ajax_js')
+    @include('functions.sweetalert_js')
 
     <script type="text/javascript">
         var table;

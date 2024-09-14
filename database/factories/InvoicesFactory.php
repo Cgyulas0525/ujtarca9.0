@@ -32,7 +32,7 @@ class InvoicesFactory extends Factory
             'performancedate' => $this->faker->date,
             'deadline' => $this->faker->date,
             'description' => $this->faker->word,
-            'referred' => 'utalatlan',
+            'referred_date' => now(),
         ];
     }
 }

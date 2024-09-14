@@ -43,7 +43,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ url('/home') }}"><img src={{ URL::asset('/img/budget.jpg') }} style="width: 50%; height: 50%;"
+        <a href="{{ url('/home') }}"><img src={{ URL::asset('img/budget.jpg') }} style="width: 50%; height: 50%;"
             class="img-circle" alt="Boldogház" ></a>
         </br>
         <a><h1>Budget</a>

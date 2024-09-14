@@ -44,7 +44,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('/js/ajaxsetup.js') }} " type="text/javascript"></script>
+    @include('functions.ajax_js')
     @include('functions.cookiesFunctions_js')
 
     <script type="text/javascript">

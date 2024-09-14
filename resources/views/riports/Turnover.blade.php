@@ -86,10 +86,10 @@
 
 @section('scripts')
 
-    <script src="{{ asset('/js/highchart/highchartLine.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/highchart/categoryUpload.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/highchart/chartDataUpload.js') }} " type="text/javascript"></script>
-    <script src="{{ asset('/js/highchart/highchartsTheme.js') }} " type="text/javascript"></script>
+    @include('functions.highchart.highchartLine_js')
+    @include('functions.highchart.categoryUpload_js')
+    @include('functions.highchart.chartDataUpload_js')
+    @include('functions.highchart.highchartsTheme_js')
 
     <script type="text/javascript">
         $(function () {

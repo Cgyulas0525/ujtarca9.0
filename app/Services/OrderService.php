@@ -13,7 +13,7 @@ class OrderService
      * @param $id
      * @return int
      */
-    public static function orderDetailsSum($id): int
+    public static function orderDetailsSum(int $id): int
     {
         return Orderdetails::where('orders_id', $id)->get()->sum('detailvalue');
     }

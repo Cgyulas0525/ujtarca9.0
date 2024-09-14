@@ -2,7 +2,7 @@
     <script type="text/javascript">
         $(function () {
             ajaxSetup();
-            var table = setTable();
+            var table = indexTable();
             filterBtnTopClick(table);
             referredBtnClick(table);
         });

@@ -46,9 +46,9 @@ class AppServiceProvider extends ServiceProvider
             $loader->alias('ActiveEnum', ActiveEnum::class);
             $loader->alias('OrderTypeEnum', OrderTypeEnum::class);
             $loader->alias('OrderStatusEnum', OrderStatusEnum::class);
-            Session::put('invoiceYear', date('Y'));
-            Session::put('invoicePartner');
-            Session::put('invoiceReferred', 'No');
+            session(['invoiceYear' => date('Y')]);
+            session(['invoicePartner' => null]);
+            session(['invoiceReferred' => 'Yes']);
         });
     }
 
