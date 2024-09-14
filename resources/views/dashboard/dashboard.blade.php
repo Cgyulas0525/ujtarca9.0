@@ -9,13 +9,15 @@
 @section('content')
     <div class="content">
         @include('dashboard.dashboardHeader')
-        @include('dashboard.dashboardInfo')
-        @include('dashboard.dashboardPeriodAverage', ['arrayQ' => App\Services\Stacked\PeriodAverageService::weekPeriodResultAverage(13, Carbon\Carbon::now()->weekOfMonth),
-                                                      'arrayH' => App\Services\Stacked\PeriodAverageService::weekPeriodResultAverage(26, Carbon\Carbon::now()->weekOfMonth),
-                                                      'array3Q' => App\Services\Stacked\PeriodAverageService::weekPeriodResultAverage(39, Carbon\Carbon::now()->weekOfMonth),
-                                                      'arrayY' => App\Services\Stacked\PeriodAverageService::weekPeriodResultAverage(52, Carbon\Carbon::now()->weekOfMonth)])
-        @include('dashboard.dashboardView')
-        @include('dashboard.dashboardFinance', ['yearctacked' => App\Models\Yearstacked::where('year', date('Y'))->first()])
+        @include('dashboard.dashboardInfo', ['params' => $params])
+        @include('dashboard.dashboardPeriodAverage', [
+            'paramsQ' => $params['weekPeriod']['13'],
+            'paramsH' => $params['weekPeriod']['26'],
+            'params3Q' => $params['weekPeriod']['39'],
+            'paramsY' => $params['weekPeriod']['52']
+        ])
+        @include('dashboard.dashboardView', ['params' => $params])
+        @include('dashboard.dashboardFinance', ['yearstacked' => $params['stacked']['first']])
         @include('dashboard.dashboardResult')
     </div>
 @endsection

@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-use App\Models\ClosureCimlets;
-use App\Models\Cimlets;
-
+use App\Classes\OwnClass\ClosuresClass;
 /**
  * Class Closures
  *
@@ -81,7 +79,7 @@ class Closures extends Model
         'card' => 'integer',
         'szcard' => 'integer',
         'dayduring' => 'integer',
-        'dailysum' => 'integer'
+        'dailysum' => 'integer',
     ];
 
     /**
@@ -134,5 +132,6 @@ class Closures extends Model
     {
         return $query->ThisYear($year)->get()->sum('result');
     }
+
 
 }

@@ -9,9 +9,13 @@
 @section('content')
     <div class="content">
         @include('businessanalysis.baHeader')
-        @include('businessanalysis.baRevenuePercent')
-        @include('businessanalysis.baHighestSuppliers')
-
+        @include('businessanalysis.baRevenuePercent', [
+            'monthStacked' => $dataArray['monthStacked'],
+            'yearStacked' => $dataArray['yearStacked']
+        ])
+        @include('businessanalysis.baHighestSuppliers', [
+            'bestSuppliers' => $dataArray['bestSuppliers']
+        ])
     </div>
 @endsection
 

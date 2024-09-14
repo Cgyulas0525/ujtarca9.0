@@ -18,6 +18,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [DashboardController::class, 'index'])->name('home');
 Route::get('index', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('business-analysis', [BusinessAnalysisController::class, 'index'])->name('business-analysis');
