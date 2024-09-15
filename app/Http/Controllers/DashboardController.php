@@ -7,7 +7,7 @@ use App\Models\Monthstacked;
 use App\Models\Weekstacked;
 use App\Services\Stacked\PeriodAverageService;
 use Carbon\Carbon;
-use App\Classes\OwnClass\ClosuresClass;
+use App\Classes\DailySum\ClosuresClass;
 
 class DashboardController extends Controller
 {

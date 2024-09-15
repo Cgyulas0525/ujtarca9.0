@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\OwnClass;
+namespace App\Classes\DailySum;
 
 use DB;
 use App\Models\Closures;
