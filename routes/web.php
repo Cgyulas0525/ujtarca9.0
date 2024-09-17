@@ -7,7 +7,7 @@ require 'app/dictionary.php';
 require 'app/invoice.php';
 require 'app/partner.php';
 require 'app/closure-cimlet.php';
-require 'app/riport.php';
+require 'app/report.php';
 require 'app/product.php';
 require 'app/order.php';
 

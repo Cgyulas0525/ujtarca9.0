@@ -19,7 +19,6 @@ use Auth;
 use App\Classes\FinanceClass;
 use App\Classes\FinancePeriodClass;
 use App\Http\Controllers\DashboardController;
-use App\Classes\DailySum\ClosuresClass;
 use App\Classes\ReportsClass;
 use App\Classes\ToolsClass;
 use App\Services\OrderService;
@@ -46,15 +45,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DailySumInterface::class, function ($app) {
             return new DailySum(
                 $app->make(GetDailySumInterface::class),
+                $app->make(GetPeriodAverageDailySumInterface::class),
                 $app->make(GetPeriodDailySumInterface::class),
-                $app->make(GetPeriodAverageDailySumInterface::class)
             );
         });
         $this->app->booting(function() {
             $loader = AliasLoader::getInstance();
             $loader->alias('FinanceClass', FinanceClass::class);
             $loader->alias('FinancePeriodClass', FinancePeriodClass::class);
-            $loader->alias('ClosuresClass', ClosuresClass::class);
             $loader->alias('ReportsClass', ReportsClass::class);
             $loader->alias('ToolsClass', ToolsClass::class);
             $loader->alias('DashboardController', DashboardController::class);
