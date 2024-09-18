@@ -7,7 +7,6 @@
 
 @section('scripts')
 
-
     @include('functions.highchart.highchartLine_js')
     @include('functions.highchart.categoryUpload_js')
     @include('functions.highchart.chartDataUpload_js')
@@ -20,7 +19,7 @@
         $('[data-widget="pushmenu"]').PushMenu('collapse');
 
         var columnChartData = <?php echo $monthStacked['last12Months']; ?>;
-        var dataArr = $.map(columnChartData, function(value, key){
+        var dataArr = $.map(columnChartData, function (value, key) {
             return value
         })
 
@@ -28,8 +27,8 @@
 
             hightchartsTheme();
 
-            var chart_napi = highchartLine( 'year2', 'line', 400, categoryUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, 'nap'),
-                chartDataUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, ['osszeg'], ['Bevétel']), 'Aktuális havi árbevétel', 'napi bontás', 'forint');
+            var chart_napi = highchartLine('year2', 'line', 400, categoryUpload(<?php echo ReportsClass::TurnoverLast30Days(); ?>, 'nap'),
+                chartDataUpload(<?php echo ReportsClass::TurnoverLast30Days(); ?>, ['osszeg'], ['Bevétel']), 'Aktuális havi árbevétel', 'napi bontás', 'forint');
 
             function pieAllData() {
 
@@ -43,7 +42,7 @@
 
             }
 
-            var chart_allpie = HighChartPie3D( 'year', 'pie', 45, 'Árbevétel típusok', 'Nyitás óta', pieAllData())
+            var chart_allpie = HighChartPie3D('year', 'pie', 45, 'Árbevétel típusok', 'Nyitás óta', pieAllData())
 
             function pieYearData() {
 
@@ -57,14 +56,14 @@
 
             }
 
-            var chart_yearpie = HighChartPie3D( 'year1', 'pie', 45, 'Árbevétel típusok', 'Utolsó 12 hónap', pieYearData())
+            var chart_yearpie = HighChartPie3D('year1', 'pie', 45, 'Árbevétel típusok', 'Utolsó 12 hónap', pieYearData())
 
 
             function lastYearAmountChartCategory() {
 
                 var categoryArray = [];
 
-                for(i = 0; i < dataArr.length; i++) {
+                for (i = 0; i < dataArr.length; i++) {
 
                     categoryArray.push(dataArr[i].ym);
 
@@ -82,7 +81,7 @@
 
                 var array = dataArr.reverse();
 
-                for(i = 0; i < array.length; i++) {
+                for (i = 0; i < array.length; i++) {
 
                     revenue.push(array[i].revenue);
                     spend.push(array[i].spend);
@@ -90,9 +89,9 @@
 
                 }
 
-                chartDataArray.push({name: 'Bevétel' , data: revenue});
-                chartDataArray.push({name: 'Kiadás' , data: spend});
-                chartDataArray.push({name: 'Eredmény' , data: amount});
+                chartDataArray.push({name: 'Bevétel', data: revenue});
+                chartDataArray.push({name: 'Kiadás', data: spend});
+                chartDataArray.push({name: 'Eredmény', data: amount});
 
                 return chartDataArray;
             }
