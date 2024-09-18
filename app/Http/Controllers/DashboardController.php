@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\DailySum\DailySumInterface;
 use App\Models\Yearstacked;
 use App\Models\Monthstacked;
 use App\Models\Weekstacked;
 use App\Services\Stacked\PeriodAverageService;
 use Carbon\Carbon;
-use App\Classes\OwnClass\ClosuresClass;
 
 class DashboardController extends Controller
 {
 
     public $periodAverageService;
+    protected $dailySum;
 
-    public function __construct()
+    public function __construct(DailySumInterface $dailySum, PeriodAverageService $periodAverageService)
     {
         $this->middleware('auth');
-        $this->periodAverageService = new PeriodAverageService();
+        $this->periodAverageService = $periodAverageService;
+        $this->dailySum = $dailySum;
     }
 
     public function index()
@@ -39,9 +41,9 @@ class DashboardController extends Controller
             'firstWeek' => Weekstacked::where('year', date('Y'))->where('week', date('W'))->first(),
         ];
         $array['closure'] = [
-            'dailySum' => ClosuresClass::getDailySum(now()->toDateString()),
-            'averageDailySumMonth' => ClosuresClass::getPeriodAverageDailySum(now(), now()->subMonths(3)),
-            'averageDailySum' => ClosuresClass::getPeriodAverageDailySum(now()),
+            'dailySum' => $this->dailySum->getDailySum(now()->toDateString()),
+            'averageDailySumMonth' => $this->dailySum->getPeriodAverageDailySum(now(), now()->subMonths(3)),
+            'averageDailySum' => $this->dailySum->getPeriodAverageDailySum(now()),
         ];
         return view('dashboard.dashboard', ['params' => $array]);
     }

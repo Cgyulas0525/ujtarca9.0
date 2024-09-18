@@ -6,7 +6,7 @@ use DB;
 use App\Models\Closures;
 use App\Models\Invoices;
 
-class RiportsClass
+class ReportsClass
 {
     public static function TurnoverLast30Days(): object
     {
