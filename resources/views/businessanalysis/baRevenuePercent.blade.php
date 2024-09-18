@@ -27,8 +27,8 @@
 
             hightchartsTheme();
 
-            var chart_napi = highchartLine('year2', 'line', 400, categoryUpload(<?php echo ReportsClass::TurnoverLast30Days(); ?>, 'nap'),
-                chartDataUpload(<?php echo ReportsClass::TurnoverLast30Days(); ?>, ['osszeg'], ['Bevétel']), 'Aktuális havi árbevétel', 'napi bontás', 'forint');
+            var chart_napi = highchartLine('year2', 'line', 400, categoryUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, 'nap'),
+                chartDataUpload(<?php echo RiportsClass::TurnoverLast30Days(); ?>, ['osszeg'], ['Bevétel']), 'Aktuális havi árbevétel', 'napi bontás', 'forint');
 
             function pieAllData() {
 

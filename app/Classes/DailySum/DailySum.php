@@ -19,7 +19,6 @@ class DailySum implements DailySumInterface
         $this->getPeriodDailySum = $getPeriodDailySum;
     }
 
-
     public function getDailySum(string $date): int
     {
         return $this->getDailySum->getDailySum($date);

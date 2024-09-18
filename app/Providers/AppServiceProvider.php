@@ -6,10 +6,13 @@ use App\Classes\DailySum\DailySum;
 use App\Classes\DailySum\GetDailySum;
 use App\Classes\DailySum\GetPeriodAverageDailySum;
 use App\Classes\DailySum\GetPeriodDailySum;
+use App\Classes\Reports\QueryTurnoverClass;
 use App\Interfaces\DailySum\DailySumInterface;
 use App\Interfaces\DailySum\GetDailySumInterface;
 use App\Interfaces\DailySum\GetPeriodAverageDailySumInterface;
 use App\Interfaces\DailySum\GetPeriodDailySumInterface;
+use App\Interfaces\Reports\QueryTurnoverInterface;
+use App\Interfaces\Reports\ReportsInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
@@ -19,7 +22,7 @@ use Auth;
 use App\Classes\FinanceClass;
 use App\Classes\FinancePeriodClass;
 use App\Http\Controllers\DashboardController;
-use App\Classes\ReportsClass;
+use App\Classes\RiportsClass;
 use App\Classes\ToolsClass;
 use App\Services\OrderService;
 use App\Services\SelectService;
@@ -34,11 +37,19 @@ use App\Observers\OrderdetailsObserver;
 use App\Enums\ActiveEnum;
 use App\Enums\OrderTypeEnum;
 use App\Enums\OrderStatusEnum;
+use App\Classes\Reports\ReportsClass;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->bind(QueryTurnoverInterface::class, QueryTurnoverClass::class);
+        $this->app->bind(ReportsInterface::class, function ($app) {
+            return new ReportsClass(
+                $app->make(QueryTurnoverInterface::class),
+            );
+        });
+
         $this->app->bind(GetDailySumInterface::class, GetDailySum::class);
         $this->app->bind(GetPeriodDailySumInterface::class, GetPeriodDailySum::class);
         $this->app->bind(GetPeriodAverageDailySumInterface::class, GetPeriodAverageDailySum::class);
@@ -53,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
             $loader = AliasLoader::getInstance();
             $loader->alias('FinanceClass', FinanceClass::class);
             $loader->alias('FinancePeriodClass', FinancePeriodClass::class);
-            $loader->alias('ReportsClass', ReportsClass::class);
+            $loader->alias('RiportsClass', RiportsClass::class);
             $loader->alias('ToolsClass', ToolsClass::class);
             $loader->alias('DashboardController', DashboardController::class);
             $loader->alias('OrderService', OrderService::class);
