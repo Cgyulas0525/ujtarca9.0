@@ -6,6 +6,7 @@ use App\Classes\DailySum\DailySum;
 use App\Classes\DailySum\GetDailySum;
 use App\Classes\DailySum\GetPeriodAverageDailySum;
 use App\Classes\DailySum\GetPeriodDailySum;
+use App\Classes\Reports\DaysInvoicesResultClass;
 use App\Classes\Reports\MonthInvoicesResultClass;
 use App\Classes\Reports\PaymentMethodLast30daysClass;
 use App\Classes\Reports\QueryTurnoverClass;
@@ -15,6 +16,7 @@ use App\Interfaces\DailySum\DailySumInterface;
 use App\Interfaces\DailySum\GetDailySumInterface;
 use App\Interfaces\DailySum\GetPeriodAverageDailySumInterface;
 use App\Interfaces\DailySum\GetPeriodDailySumInterface;
+use App\Interfaces\Reports\DaysInvoicesResultInterface;
 use App\Interfaces\Reports\MonthInvoicesResultInterface;
 use App\Interfaces\Reports\PaymentMethodLast30daysInterface;
 use App\Interfaces\Reports\QueryTurnoverInterface;
@@ -56,13 +58,15 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PaymentMethodLast30daysInterface::class, PaymentMethodLast30daysClass::class);
         $this->app->bind(TurnoverLastTwoYearsInterface::class, TurnoverLastTwoYearsClass::class);
         $this->app->bind(MonthInvoicesResultInterface::class, MonthInvoicesResultClass::class);
+        $this->app->bind(DaysInvoicesResultInterface::class, DaysInvoicesResultClass::class);
         $this->app->bind(ReportsInterface::class, function ($app) {
             return new ReportsClass(
                 $app->make(QueryTurnoverInterface::class),
                 $app->make(WeekInvoicesResultInterface::class),
                 $app->make(PaymentMethodLast30daysInterface::class),
                 $app->make(TurnoverLastTwoYearsInterface::class),
-                $app->make(MonthInvoicesResultInterface::class)
+                $app->make(MonthInvoicesResultInterface::class),
+                $app->make(DaysInvoicesResultInterface::class)
             );
         });
 

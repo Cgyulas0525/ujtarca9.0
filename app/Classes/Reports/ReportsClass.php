@@ -2,6 +2,7 @@
 
 namespace App\Classes\Reports;
 
+use App\Interfaces\Reports\DaysInvoicesResultInterface;
 use Illuminate\Support\Collection;
 use App\Interfaces\Reports\ReportsInterface;
 use App\Interfaces\Reports\QueryTurnoverInterface;
@@ -17,12 +18,14 @@ class ReportsClass implements ReportsInterface
     protected object $paymentMethodLast30days;
     protected object $turnoverLastTwoYears;
     protected object $monthInvoicesResult;
+    protected object $daysInvoicesResult;
 
-    public function __construct(QueryTurnoverInterface $queryTurnover,
-                                WeekInvoicesResultInterface $weekInvoicesResult,
+    public function __construct(QueryTurnoverInterface           $queryTurnover,
+                                WeekInvoicesResultInterface      $weekInvoicesResult,
                                 PaymentMethodLast30daysInterface $paymentMethodLast30days,
-                                TurnoverLastTwoYearsInterface $turnoverLastTwoYears,
-                                MonthInvoicesResultInterface $monthInvoicesResult
+                                TurnoverLastTwoYearsInterface    $turnoverLastTwoYears,
+                                MonthInvoicesResultInterface     $monthInvoicesResult,
+                                DaysInvoicesResultInterface      $daysInvoicesResult
     )
     {
         $this->queryTurnover = $queryTurnover;
@@ -30,6 +33,7 @@ class ReportsClass implements ReportsInterface
         $this->paymentMethodLast30days = $paymentMethodLast30days;
         $this->turnoverLastTwoYears = $turnoverLastTwoYears;
         $this->monthInvoicesResult = $monthInvoicesResult;
+        $this->daysInvoicesResult = $daysInvoicesResult;
     }
 
     public function queryTurnover(string $filter, string $fromDate, string $toDate): Collection
@@ -55,5 +59,10 @@ class ReportsClass implements ReportsInterface
     public function monthInvoicesResult(): object
     {
         return $this->monthInvoicesResult->monthInvoicesResult();
+    }
+
+    public function daysInvoicesResult(?string $begin = NULL, ?string $end = NULL): object
+    {
+        return $this->daysInvoicesResult->daysInvoicesResult($begin, $end);
     }
 }

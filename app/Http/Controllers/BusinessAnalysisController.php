@@ -39,6 +39,8 @@ class BusinessAnalysisController extends Controller
         ];
         $array['reports'] = [
             'turnoverLast30Days' => $this->reports->queryTurnover('closuredate as nap', now()->subDays(30)->toDateString(), now()->toDateString()),
+            'daysInvoicesResult' => $this->reports->daysInvoicesResult(now()->subYear()->toDateString()),
+            'daysInvoicesResult30' => $this->reports->daysInvoicesResult(now()->subDays(30)->toDateString()),
         ];
         return view('businessanalysis.businessanalysis', ['dataArray' => $array]);
     }
