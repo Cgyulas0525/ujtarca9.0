@@ -6,7 +6,7 @@ use DB;
 use App\Models\Closures;
 use App\Models\Invoices;
 
-class ReportsClass
+class RiportsClass
 {
     public static function TurnoverLast30Days(): object
     {
@@ -42,19 +42,17 @@ class ReportsClass
 
     public static function TurnoverLastTwoYears(): object
     {
-        $query1 = DB::table('closures as t')
-            ->select(DB::raw('month(t.closuredate) as honap, (dailysum - 20000) as elso, 0 as masodik'))
-            ->whereBetween('t.closuredate', [
-                    now()->subMonths(24)->firstOfMonth()->toDateString(),
-                    now()->subMonths(12)->lastOfMonth()->toDateString(),
-                ]);
+        $query1 = Closures::selectRaw('MONTH(closuredate) as honap, (dailysum - 20000) as elso, 0 as masodik')
+            ->whereBetween('closuredate', [
+                now()->subMonths(24)->firstOfMonth()->toDateString(),
+                now()->subMonths(12)->lastOfMonth()->toDateString(),
+            ]);
 
-        $query2 = DB::table('closures as t')
-            ->select(DB::raw('month(t.closuredate) as honap, 0 as elso,  (dailysum - 20000) as masodik'))
-            ->whereBetween('t.closuredate', [
-                    now()->subMonths(12)->firstOfMonth()->toDateString(),
-                    now()->toDateString(),
-                ])
+        $query2 = Closures::selectRaw('MONTH(closuredate) as honap, 0 as elso, (dailysum - 20000) as masodik')
+            ->whereBetween('closuredate', [
+                now()->subMonths(12)->firstOfMonth()->toDateString(),
+                now()->toDateString(),
+            ])
             ->union($query1);
 
         return DB::query()->fromSub($query2, 'p_pn')
@@ -70,10 +68,8 @@ class ReportsClass
             ->whereBetween('dated', [now()->subYear()->toDateString(), now()->toDateString()])
             ->groupBy('nap');
 
-        $closures = DB::table('closures as t1')
-            ->select(DB::raw('concat(CONCAT(year(t1.closuredate),"."), if(CAST(month(t1.closuredate) AS UNSIGNED) < 10, concat("0", month(t1.closuredate)), month(t1.closuredate))) as nap, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [now()->subYear()->toDateString(), now()->toDateString()])
+        $closures = Closures::selectRaw('concat(CONCAT(year(closuredate),"."), if(CAST(month(closuredate) AS UNSIGNED) < 10, concat("0", month(closuredate)), month(closuredate))) as nap, 0 as amount, sum(dailysum - 20000) as dailysum')
+            ->whereBetween('closuredate', [now()->subYear()->toDateString(), now()->toDateString()])
             ->groupBy('nap')
             ->union($invoices);
 
@@ -90,16 +86,12 @@ class ReportsClass
         $begin = now()->subMonths($months ?? 6)->toDateString();
         $end = now()->toDateString();
 
-        $invoices = DB::table('invoices')
-            ->select(DB::raw('concat(CONCAT(year(dated),"."), if(CAST(week(dated, 1) AS UNSIGNED) < 10, concat("0", week(dated, 1)), week(dated, 1))) as nap, sum(amount) as amount, 0 as dailysum'))
-            ->whereNull('deleted_at')
+        $invoices = Invoices::selectRaw('concat(CONCAT(year(dated),"."), if(CAST(week(dated, 1) AS UNSIGNED) < 10, concat("0", week(dated, 1)), week(dated, 1))) as nap, sum(amount) as amount, 0 as dailysum')
             ->whereBetween('dated', [$begin, $end])
             ->groupBy('nap');
 
-        $closures = DB::table('closures as t1')
-            ->select(DB::raw('concat(CONCAT(year(t1.closuredate),"."), if(CAST(week(t1.closuredate, 1) AS UNSIGNED) < 10, concat("0", week(t1.closuredate, 1)), week(t1.closuredate, 1))) as nap, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$begin, $end])
+        $closures = Closures::selectRaw('concat(CONCAT(year(closuredate),"."), if(CAST(week(closuredate, 1) AS UNSIGNED) < 10, concat("0", week(closuredate, 1)), week(closuredate, 1))) as nap, 0 as amount, sum(dailysum - 20000) as dailysum')
+            ->whereBetween('closuredate', [$begin, $end])
             ->groupBy('nap')
             ->union($invoices);
 
@@ -111,21 +103,17 @@ class ReportsClass
             ->get();
     }
 
-    public function daysInvoicesResult($begin = NULL, $end = NULL): object
+    public function daysInvoicesResult(?string $begin = NULL, ?string $end = NULL): object
     {
         $begin = $begin ?? Closures::orderBy('closuredate', 'asc')->first()->closuredate->toDateString();
         $end = $end ?? now()->toDateString();
 
-        $invoices = DB::table('invoices')
-            ->select(DB::raw('dated as nap, sum(amount) as amount, 0 as dailysum'))
-            ->whereNull('deleted_at')
+        $invoices = Invoices::selectRaw('dated as nap, sum(amount) as amount, 0 as dailysum')
             ->whereBetween('dated', [$begin, $end])
             ->groupBy('nap');
 
-        $closures = DB::table('closures as t1')
-            ->select(DB::raw('t1.closuredate as nap, 0 as amount, sum(t1.dailysum - 20000) as dailysum'))
-            ->whereNull('t1.deleted_at')
-            ->whereBetween('t1.closuredate', [$begin, $end])
+        $closures = Closures::selectRaw('closuredate as nap, 0 as amount, sum(dailysum - 20000) as dailysum')
+            ->whereBetween('closuredate', [$begin, $end])
             ->groupBy('nap')
             ->union($invoices);
 

@@ -11,7 +11,8 @@
         @include('businessanalysis.baHeader')
         @include('businessanalysis.baRevenuePercent', [
             'monthStacked' => $dataArray['monthStacked'],
-            'yearStacked' => $dataArray['yearStacked']
+            'yearStacked' => $dataArray['yearStacked'],
+            'reports' => $dataArray['reports'],
         ])
         @include('businessanalysis.baHighestSuppliers', [
             'bestSuppliers' => $dataArray['bestSuppliers']
