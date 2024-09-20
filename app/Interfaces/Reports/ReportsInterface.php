@@ -2,6 +2,8 @@
 
 namespace App\Interfaces\Reports;
 
-interface ReportsInterface extends QueryTurnoverInterface
+interface ReportsInterface extends QueryTurnoverInterface, WeekInvoicesResultInterface,
+                                   PaymentMethodLast30daysInterface, TurnoverLastTwoYearsInterface,
+                                   MonthInvoicesResultInterface
 {
 }

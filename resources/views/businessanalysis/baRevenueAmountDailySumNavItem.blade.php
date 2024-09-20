@@ -1,6 +1,6 @@
 <li class="nav-item">
     <a href="#" class="nav-link">
-        {{ $title }}
+        {{ $title }} AAAAAAAAAAAAAAAAAAAAAAAA
         <span class="{{ $c1 }}">
 {{--            <i class="{{ $icon }}"></i>--}}
             @if ($witch === 'month')

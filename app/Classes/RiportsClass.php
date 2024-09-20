@@ -42,13 +42,13 @@ class RiportsClass
 
     public static function TurnoverLastTwoYears(): object
     {
-        $query1 = Closure::selectRaw('MONTH(closuredate) as honap, (dailysum - 20000) as elso, 0 as masodik')
+        $query1 = Closures::selectRaw('MONTH(closuredate) as honap, (dailysum - 20000) as elso, 0 as masodik')
             ->whereBetween('closuredate', [
                 now()->subMonths(24)->firstOfMonth()->toDateString(),
                 now()->subMonths(12)->lastOfMonth()->toDateString(),
             ]);
 
-        $query2 = Closure::selectRaw('MONTH(closuredate) as honap, 0 as elso, (dailysum - 20000) as masodik')
+        $query2 = Closures::selectRaw('MONTH(closuredate) as honap, 0 as elso, (dailysum - 20000) as masodik')
             ->whereBetween('closuredate', [
                 now()->subMonths(12)->firstOfMonth()->toDateString(),
                 now()->toDateString(),
@@ -103,7 +103,7 @@ class RiportsClass
             ->get();
     }
 
-    public function daysInvoicesResult($begin = NULL, $end = NULL): object
+    public function daysInvoicesResult(?string $begin = NULL, ?string $end = NULL): object
     {
         $begin = $begin ?? Closures::orderBy('closuredate', 'asc')->first()->closuredate->toDateString();
         $end = $end ?? now()->toDateString();
