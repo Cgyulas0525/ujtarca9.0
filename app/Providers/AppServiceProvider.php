@@ -27,12 +27,10 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Auth;
 
 use App\Classes\FinanceClass;
 use App\Classes\FinancePeriodClass;
 use App\Http\Controllers\DashboardController;
-use App\Classes\RiportsClass;
 use App\Classes\ToolsClass;
 use App\Services\OrderService;
 use App\Services\SelectService;
@@ -53,13 +51,23 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->bind(QueryTurnoverInterface::class, QueryTurnoverClass::class);
-        $this->app->bind(WeekInvoicesResultInterface::class, WeekInvoicesResultClass::class);
-        $this->app->bind(PaymentMethodLast30daysInterface::class, PaymentMethodLast30daysClass::class);
-        $this->app->bind(TurnoverLastTwoYearsInterface::class, TurnoverLastTwoYearsClass::class);
-        $this->app->bind(MonthInvoicesResultInterface::class, MonthInvoicesResultClass::class);
-        $this->app->bind(DaysInvoicesResultInterface::class, DaysInvoicesResultClass::class);
-        $this->app->bind(ReportsInterface::class, function ($app) {
+        $singletons = [
+            QueryTurnoverInterface::class => QueryTurnoverClass::class,
+            WeekInvoicesResultInterface::class => WeekInvoicesResultClass::class,
+            PaymentMethodLast30daysInterface::class => PaymentMethodLast30daysClass::class,
+            TurnoverLastTwoYearsInterface::class => TurnoverLastTwoYearsClass::class,
+            MonthInvoicesResultInterface::class => MonthInvoicesResultClass::class,
+            DaysInvoicesResultInterface::class => DaysInvoicesResultClass::class,
+            GetDailySumInterface::class => GetDailySum::class,
+            GetPeriodDailySumInterface::class => GetPeriodDailySum::class,
+            GetPeriodAverageDailySumInterface::class => GetPeriodAverageDailySum::class,
+        ];
+
+        foreach ($singletons as $interface => $implementation) {
+            $this->app->singleton($interface, $implementation);
+        }
+
+        $this->app->singleton(ReportsInterface::class, function ($app) {
             return new ReportsClass(
                 $app->make(QueryTurnoverInterface::class),
                 $app->make(WeekInvoicesResultInterface::class),
@@ -70,10 +78,7 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(GetDailySumInterface::class, GetDailySum::class);
-        $this->app->bind(GetPeriodDailySumInterface::class, GetPeriodDailySum::class);
-        $this->app->bind(GetPeriodAverageDailySumInterface::class, GetPeriodAverageDailySum::class);
-        $this->app->bind(DailySumInterface::class, function ($app) {
+        $this->app->singleton(DailySumInterface::class, function ($app) {
             return new DailySum(
                 $app->make(GetDailySumInterface::class),
                 $app->make(GetPeriodAverageDailySumInterface::class),
@@ -84,7 +89,6 @@ class AppServiceProvider extends ServiceProvider
             $loader = AliasLoader::getInstance();
             $loader->alias('FinanceClass', FinanceClass::class);
             $loader->alias('FinancePeriodClass', FinancePeriodClass::class);
-            $loader->alias('RiportsClass', RiportsClass::class);
             $loader->alias('ToolsClass', ToolsClass::class);
             $loader->alias('DashboardController', DashboardController::class);
             $loader->alias('OrderService', OrderService::class);
