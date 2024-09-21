@@ -12,6 +12,11 @@ use App\Classes\Reports\PaymentMethodLast30daysClass;
 use App\Classes\Reports\QueryTurnoverClass;
 use App\Classes\Reports\TurnoverLastTwoYearsClass;
 use App\Classes\Reports\WeekInvoicesResultClass;
+use App\Classes\Stackeds\GetLastYearClass;
+use App\Classes\Stackeds\GetMonthResultClass;
+use App\Classes\Stackeds\GetWeekPeriodResultAverageClass;
+use App\Classes\Stackeds\StacksClass;
+use App\Classes\Stackeds\StackSumPercentClass;
 use App\Interfaces\DailySum\DailySumInterface;
 use App\Interfaces\DailySum\GetDailySumInterface;
 use App\Interfaces\DailySum\GetPeriodAverageDailySumInterface;
@@ -61,6 +66,11 @@ class AppServiceProvider extends ServiceProvider
             GetDailySumInterface::class => GetDailySum::class,
             GetPeriodDailySumInterface::class => GetPeriodDailySum::class,
             GetPeriodAverageDailySumInterface::class => GetPeriodAverageDailySum::class,
+            GetLastYearClass::class => GetLastYearClass::class,
+            GetMonthResultClass::class => GetMonthResultClass::class,
+            StackSumPercentClass::class => StackSumPercentClass::class,
+            GetWeekPeriodResultAverageClass::class => GetWeekPeriodResultAverageClass::class,
+            StacksClass::class => StacksClass::class,
         ];
 
         foreach ($singletons as $interface => $implementation) {

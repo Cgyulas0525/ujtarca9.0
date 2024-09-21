@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Stackeds\StacksClass;
 use App\Interfaces\DailySum\DailySumInterface;
 use App\Models\Yearstacked;
 use App\Models\Monthstacked;
@@ -12,23 +13,23 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
 
-    public $periodAverageService;
-    protected $dailySum;
+    protected object $dailySum;
+    protected object $stacksClass;
 
-    public function __construct(DailySumInterface $dailySum, PeriodAverageService $periodAverageService)
+    public function __construct(DailySumInterface $dailySum, StacksClass $stacksClass)
     {
         $this->middleware('auth');
-        $this->periodAverageService = $periodAverageService;
         $this->dailySum = $dailySum;
+        $this->stacksClass = $stacksClass;
     }
 
     public function index()
     {
         $array['weekPeriod'] = [
-            '13' => $this->periodAverageService->weekPeriodResultAverage(13, Carbon::now()->weekOfMonth),
-            '26' => $this->periodAverageService->weekPeriodResultAverage(26, Carbon::now()->weekOfMonth),
-            '39' => $this->periodAverageService->weekPeriodResultAverage(39, Carbon::now()->weekOfMonth),
-            '52' => $this->periodAverageService->weekPeriodResultAverage(52, Carbon::now()->weekOfMonth),
+            '13' => $this->stacksClass->weekPeriodResultAverage(13, Carbon::now()->weekOfMonth),
+            '26' => $this->stacksClass->weekPeriodResultAverage(26, Carbon::now()->weekOfMonth),
+            '39' => $this->stacksClass->weekPeriodResultAverage(39, Carbon::now()->weekOfMonth),
+            '52' => $this->stacksClass->weekPeriodResultAverage(52, Carbon::now()->weekOfMonth),
         ];
         $array['stacked'] = [
             'first' => Yearstacked::where('year', date('Y'))->first(),

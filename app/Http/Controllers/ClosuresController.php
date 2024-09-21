@@ -64,7 +64,13 @@ class ClosuresController extends AppBaseController
             if ($request->ajax()) {
                 return $this->dwData($this->getData($year));
             }
-            return view('closures.index');
+            $years = [" "] + Closures::selectRaw('year(closuredate) as year')
+                    ->groupBy('year')
+                    ->orderBy('year', 'desc')
+                    ->get()
+                    ->pluck('year', 'year')
+                    ->toArray();
+            return view('closures.index', ['years' => $years]);
         }
     }
 

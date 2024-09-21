@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Stacked;
+namespace App\Classes\Stackeds;
 
+use Carbon\Carbon;
 use App\Models\Weekstacked;
-use \Carbon\Carbon;
 
-class PeriodAverageService
+class GetWeekPeriodResultAverageClass
 {
-    public static function weekPeriodResultAverage(int $howmany, int $withweek): array
+    public function weekPeriodResultAverage(int $howmany, int $withweek): array
     {
         $date = new \DateTime;
         $resultArray = ['revenue' => 0, 'spend' => 0, 'result' => 0, 'number' => 0];
