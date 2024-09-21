@@ -3,10 +3,10 @@
         {{ $title }}
         <span class="{{ $c1 }}">
             @if ($witch === 'all')
-                {{ (new App\Services\YearstackedService)->getSumPercent($field) }} %
+                {{ $dataArray['yearStacked'][$field] }} %
             @endif
             @if ($witch === 'year')
-                {{ (new App\Services\MonthstackedService)->getSumPercent($field) }} %
+                {{ $dataArray['monthStacked'][$field] }} %
             @endif
         </span>
     </a>
