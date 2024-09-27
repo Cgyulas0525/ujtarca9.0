@@ -15,7 +15,10 @@ return new class extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
 
-            $table->morphs('model');
+            $table->string('model_type', 191); // Limit model_type length to avoid index issues
+            $table->unsignedBigInteger('model_id');
+            $table->index(['model_type', 'model_id']); // Create a composite index
+
             $table->uuid('uuid')->nullable()->unique();
             $table->string('collection_name');
             $table->string('name');

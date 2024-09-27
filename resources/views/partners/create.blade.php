@@ -22,7 +22,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    @include('formGroup.formGroupFromController', ['array' => App\Http\Controllers\PartnersController::fields(isset($invoices) ? $invoices : null),
+                    @include('formGroup.formGroupFromController', ['array' => App\Http\Controllers\PartnersController::fields(isset($partners) ? $partners : null),
                                                                    'scriptFile' => 'partners.fieldScript'])
                 </div>
 

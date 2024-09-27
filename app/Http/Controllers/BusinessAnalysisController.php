@@ -44,5 +44,4 @@ class BusinessAnalysisController extends Controller
         ];
         return view('businessanalysis.businessanalysis', ['dataArray' => $array]);
     }
-
 }

@@ -24,9 +24,16 @@ class PartnersController extends AppBaseController
     private $partnersRepository;
     private $delivery_customer;
 
-    public function __construct(PartnersRepository $partnersRepo)
+    protected static $settlementsClass;
+    protected static $partnerTypesController;
+
+    public function __construct(PartnersRepository $partnersRepo,
+                                SettlementsClass $settlementsClass,
+                                PartnerTypesController $partnerTypesController)
     {
         $this->partnersRepository = $partnersRepo;
+        self::$settlementsClass = $settlementsClass;
+        self::$partnerTypesController = $partnerTypesController;
         $this->delivery_customer = PartnerTypes::where('name', PartnerTypeEnum::DELIVERY_CUSTOMER->value)->first()->id;
     }
 
@@ -166,7 +173,7 @@ class PartnersController extends AppBaseController
         array_push($formGroupArray, $item);
 
         $item = ["label" => Form::label('partnertypes_id', 'Típus:'),
-            "field" => Form::select('partnertypes_id', PartnerTypesController::DDDW(), null,
+            "field" => Form::select('partnertypes_id', self::$partnerTypesController->DDDW(), null,
                 ['class' => 'select2 form-control', 'id' => 'partnertypes_id', 'required' => true, 'readonly' => isset($partners) ? ($partners->active == ActiveEnum::ACTIVE ? false : true) : false]),
             "width" => 6,
             "file" => false];
@@ -186,7 +193,7 @@ class PartnersController extends AppBaseController
         if (isset($partners) && $partners->active == 0) {
             $form = Form::text('postcode', $partners->postcode, ['class' => 'form-control', 'readonly' => true]);
         } else {
-            $form = Form::select('postcode', SettlementsClass::settlementsPostcodeDDDW(), null,
+            $form = Form::select('postcode', self::$settlementsClass->settlementsPostcodeDDDW(), null,
                 ['class' => 'select2 form-control', 'id' => 'postcode', 'readonly' => isset($partners) ? ($partners->active == ActiveEnum::ACTIVE ? false : true) : false]);
         }
         $item = ["label" => Form::label('postcode', 'Irányító szám:'),
@@ -197,7 +204,7 @@ class PartnersController extends AppBaseController
         if (isset($partners) && $partners->active == 0) {
             $form = Form::text('settlement_id', $partners->settlementName, ['class' => 'form-control', 'readonly' => true]);
         } else {
-            $form = Form::select('settlement_id', SettlementsClass::settlementsDDDW(), null,
+            $form = Form::select('settlement_id', self::$settlementsClass->settlementsDDDW(), null,
                 ['class' => 'select2 form-control', 'id' => 'settlement_id', 'readonly' => isset($partners) ? ($partners->active == ActiveEnum::ACTIVE ? false : true) : false]);
         }
         $item = ["label" => Form::label('settlement_id', 'Város:'),
@@ -237,13 +244,13 @@ class PartnersController extends AppBaseController
         return $formGroupArray;
     }
 
-    public function postcodeSettlementDDDW(Request $request): object
+    public function postcodeSettlementDDDW(Request $request, SettlementsClass $settlementsClass): object
     {
-        return SettlementsClass::postcodeSettlementDDDW($request->get('postcode'));
+        return self::$settlementsClass->postcodeSettlementDDDW($request->get('postcode'));
     }
 
-    public function settlementPostcodeByDDDW(Request $request): object
+    public function settlementPostcodeByDDDW(Request $request, SettlementsClass $settlementsClass): object
     {
-        return SettlementsClass::settlementPostcodeByDDDW($request->get('id'));
+        return self::$settlementsClass->settlementPostcodeByDDDW($request->get('id'));
     }
 }

@@ -50,7 +50,7 @@ class DatabaseCorrection extends Command
             $item->active = 'inaktív';
             $item->save();
         });
-        Models\Partners::where('aktív', "!=",  1)->each(function ($item) {
+        Models\Partners::where('active', "!=",  1)->each(function ($item) {
             $item->active = 'inaktív';
             $item->save();
         });
