@@ -195,9 +195,14 @@ class Partners extends Model
         return $query->where('active', ActiveEnum::INACTIVE->value);
     }
 
-    public function scopeActiveNumbers($query): mixed
+    public function scopeActiveDeliveries($query): mixed
     {
-        return $query->activePartner()->whereNotIn('partnertypes_id', [3, 5]);
+        return $query->activePartner()->whereNotIn('partnertypes_id', [3, 5, 9, 10]);
+    }
+
+    public function scopeActiveCustomers($query): mixed
+    {
+        return $query->activePartner()->whereIn('partnertypes_id', [3, 9, 10]);
     }
 
     public function scopeLastMonthsInactiveNumbers($query, $months): mixed

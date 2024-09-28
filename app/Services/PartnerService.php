@@ -16,4 +16,11 @@ class PartnerService
                 return $partner;
             });
     }
+
+    public static function activeDeliveriesDDDW()
+    {
+        return [" "] + Partners::activeDeliveries()->orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+
 }

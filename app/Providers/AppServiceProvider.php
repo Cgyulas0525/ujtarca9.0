@@ -28,6 +28,7 @@ use App\Interfaces\Reports\QueryTurnoverInterface;
 use App\Interfaces\Reports\ReportsInterface;
 use App\Interfaces\Reports\TurnoverLastTwoYearsInterface;
 use App\Interfaces\Reports\WeekInvoicesResultInterface;
+use App\Services\PartnerService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
@@ -56,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $singletons = [
+        $singletons = array(
             QueryTurnoverInterface::class => QueryTurnoverClass::class,
             WeekInvoicesResultInterface::class => WeekInvoicesResultClass::class,
             PaymentMethodLast30daysInterface::class => PaymentMethodLast30daysClass::class,
@@ -71,7 +72,9 @@ class AppServiceProvider extends ServiceProvider
             StackSumPercentClass::class => StackSumPercentClass::class,
             GetWeekPeriodResultAverageClass::class => GetWeekPeriodResultAverageClass::class,
             StacksClass::class => StacksClass::class,
-        ];
+            PartnerService::class => PartnerService::class,
+            OrderService::class => OrderService::class,
+        );
 
         foreach ($singletons as $interface => $implementation) {
             $this->app->singleton($interface, $implementation);
@@ -107,6 +110,7 @@ class AppServiceProvider extends ServiceProvider
             $loader->alias('ActiveEnum', ActiveEnum::class);
             $loader->alias('OrderTypeEnum', OrderTypeEnum::class);
             $loader->alias('OrderStatusEnum', OrderStatusEnum::class);
+            $loader->alias('PartnerService', PartnerService::class);
             session(['invoiceYear' => date('Y')]);
             session(['invoicePartner' => null]);
             session(['invoiceReferred' => 'Yes']);
