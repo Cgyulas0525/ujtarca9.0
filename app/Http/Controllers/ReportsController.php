@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\MonthPeriodsEnum;
 use Illuminate\Http\Request;
 use App\Traits\Reports\RevenueExpenditureIndexTrait;
 use App\Traits\Reports\RevenueExpenditureMonthIndexTrait;
@@ -49,6 +50,7 @@ class ReportsController extends Controller
             'paymentMethodLast30days' => $this->reports->paymentMethodLast30days(),
             'turnoverLastTwoYears' => $this->reports->turnoverLastTwoYears(),
             'monthInvoicesResult' => $this->reports->monthInvoicesResult(),
+            'monthPeriods' => MonthPeriodsEnum::options(),
         ];
         return view('riports.Turnover', ['parameters' => $parameters]);
     }

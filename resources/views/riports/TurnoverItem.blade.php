@@ -9,7 +9,7 @@
                     {!! Form::label('year', 'Időszak (hónap):') !!}
                 </div>
                 <div class="col-sm-2">
-                    {!! Form::select('year', ToolsClass::monthsPeriodDDDW(), 2,
+                    {!! Form::select('year', $parameters['monthPeriods'], 'SIX',
                             ['class'=>'select2 form-control', 'id' => 'period']) !!}
                 </div>
             </div>

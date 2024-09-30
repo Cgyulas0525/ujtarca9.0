@@ -1,8 +1,6 @@
 @extends('layouts.appblack')
 
 @section('css')
-    <link rel="stylesheet" href="pubic/css/app.css">
-    <link rel="stylesheet" href="public/css/Highcharts.css">
     @include('app-scaffold.css.costumcss')
 @endsection
 
@@ -125,19 +123,19 @@
                 chartDataUpload(<?php echo $parameters['weekInvoicesResult']['6']; ?>, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
 
             $('#period').change(function () {
-                let period = parseInt($(this).val());
+                let period = $(this).val();
                 let data = [];
                 switch (period) {
-                    case 0:
+                    case 'ONE':
                         data = <?php echo $parameters['weekInvoicesResult']['1']; ?>;
                         break;
-                    case 1:
+                    case 'THREE':
                         data = <?php echo $parameters['weekInvoicesResult']['3']; ?>;
                         break;
-                    case 2:
+                    case 'SIX':
                         data = <?php echo $parameters['weekInvoicesResult']['6']; ?>;
                         break;
-                    case 3:
+                    case 'TWELVE':
                         data = <?php echo $parameters['weekInvoicesResult']['12']; ?>;
                         break;
                     default:

@@ -19,7 +19,7 @@ class YearSpendAction
 
     public function handle(): object
     {
-        return $this->financePeriodClass->yearInviocesPeriod();
+        return $this->financePeriodClass->yearInvoicesPeriod();
     }
 
 }

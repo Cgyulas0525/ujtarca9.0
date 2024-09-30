@@ -19,6 +19,6 @@ class MonthSpendAction
 
     public function handle(): object
     {
-        return $this->financePeriodClass->mountInviocesPeriod();
+        return $this->financePeriodClass->mountInvoicesPeriod();
     }
 }

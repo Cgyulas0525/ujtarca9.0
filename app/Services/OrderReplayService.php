@@ -8,16 +8,18 @@ use DB;
 
 class OrderReplayService
 {
-    /**
-     * Create new orders record
-     *
-     * @param Orders $order
-     * @return Orders
-     */
-    public static function newOrder(Orders $order): Orders
+
+    protected $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
+
+    public function newOrder(Orders $order): Orders
     {
         $newOrder = new Orders();
-        $newOrder->ordernumber = OrderService::nextOrderNumber($order->ordertype->value);
+        $newOrder->ordernumber = $this->orderService->nextOrderNumber($order->ordertype->value);
         $newOrder->orderdate = now()->toDateString();
         $newOrder->partners_id = $order->partners_id;
         $newOrder->ordertype = $order->ordertype;
@@ -28,13 +30,7 @@ class OrderReplayService
         return $newOrder;
     }
 
-    /**
-     * Create new orderdetails records
-     *
-     * @param $id
-     * @param $newOrder
-     */
-    public static function newOrderDetails(Orders $order, $newOrder): void
+    public function newOrderDetails(Orders $order, $newOrder): void
     {
 
         foreach (Orderdetails::whereBelongsTo($order)->get() as $orderDetail) {
@@ -48,21 +44,14 @@ class OrderReplayService
         }
     }
 
-    /**
-     * Replay orders record
-     *
-     * @param $id
-     * @return object
-     * @throws \Throwable
-     */
-    public static function orderReplay(int $id): object
+    public function orderReplay(int $id): object
     {
         $order = Orders::find($id);
         if (!empty($order)) {
             DB::beginTransaction();
             try {
-                $newOrder = self::newOrder($order);
-                self::newOrderDetails($order, $newOrder);
+                $newOrder = $this->newOrder($order);
+                $this->newOrderDetails($order, $newOrder);
                 DB::commit();
             } catch (\Exception $e) {
                 DB::rollBack();

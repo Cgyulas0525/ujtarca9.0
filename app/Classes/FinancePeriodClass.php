@@ -39,7 +39,7 @@ class FinancePeriodClass
         return $this->closuresAmountPeriod() - $this->invoicesAmountPeriod();
     }
 
-    public function yearInviocesPeriod(): object
+    public function yearInvoicesPeriod(): object
     {
         return Invoices::selectRaw('year(dated) as year, sum(amount) as amount')
             ->whereBetween('dated', [$this->begin, $this->end])
@@ -61,7 +61,7 @@ class FinancePeriodClass
             ->get();
     }
 
-    public function mountInviocesPeriod(): object
+    public function mountInvoicesPeriod(): object
     {
         return Invoices::selectRaw('concat(year(dated), if(CAST(month(dated) AS UNSIGNED) < 10, concat("0", month(dated)), month(dated))) as yearmonth, sum(amount) as amount')
             ->whereBetween('dated', [$this->begin, $this->end])
@@ -70,7 +70,7 @@ class FinancePeriodClass
             ->get();
     }
 
-    public function mounthClosuresPeriod(): object
+    public function mountClosuresPeriod(): object
     {
         return Closures::selectRaw('concat(year(closuredate), if(CAST(month(closuredate) AS UNSIGNED) < 10, concat("0", month(closuredate)), month(closuredate))) as yearmonth,
                     sum(dailysum - 20000) as dailysum,
@@ -83,7 +83,7 @@ class FinancePeriodClass
             ->get();
     }
 
-    public function weekInviocesPeriod(): object
+    public function weekInvoicesPeriod(): object
     {
         return Invoices::selectRaw('concat(year(dated), if(CAST(week(dated, 1) AS UNSIGNED) < 10, concat("0", week(dated, 1)), week(dated, 1))) as yearweek, sum(amount) as amount')
             ->whereBetween('dated', [$this->begin, $this->end])

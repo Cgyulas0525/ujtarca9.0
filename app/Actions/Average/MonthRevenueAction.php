@@ -20,6 +20,6 @@ class MonthRevenueAction
 
     public function handle(): object
     {
-        return $this->financePeriodClass->mounthClosuresPeriod();
+        return $this->financePeriodClass->mountClosuresPeriod();
     }
 }

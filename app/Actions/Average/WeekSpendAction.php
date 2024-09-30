@@ -19,7 +19,7 @@ class WeekSpendAction
 
     public function handle(): object
     {
-        return $this->financePeriodClass->weekInviocesPeriod();
+        return $this->financePeriodClass->weekInvoicesPeriod();
     }
 
 }

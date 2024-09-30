@@ -2,14 +2,19 @@
 namespace App\Http\Controllers;
 
 use App\Services\OrderReplayService;
-use App\Classes\RedisClass;
 
 class OrderReplyController extends Controller
 {
+    protected $orderReplayService;
+
+    public function __construct(OrderReplayService $orderReplayService)
+    {
+        $this->orderReplayService = $orderReplayService;
+    }
+
     public function orderReplay($id): object
     {
-        OrderReplayService::orderReplay($id);
-        RedisClass::setexOrders();
+        $this->orderReplayService->orderReplay($id);
         return back();
     }
 }

@@ -1,5 +1,4 @@
 @section('css')
-    <link rel="stylesheet" href="pubic/css/app.css">
     @include('app-scaffold.css.costumcss')
 @endsection
 
@@ -7,10 +6,10 @@
 
     @include('partners.datapage.financialTurnover', ['title' => 'Forgalom összesen',
                                                      'card' => 'card bg-primary',
-                                                     'count' => number_format(App\Models\Invoices::PartnerYearInvoicesSumAmount($partners->id) ,0,",",".") ])
+                                                     'count' => number_format($parameters['sumAmount'] ,0,",",".") ])
     @include('partners.datapage.financialTurnover', ['title' => 'Idei forgalom összesen',
                                                      'card' => 'card bg-success',
-                                                     'count' => number_format(App\Models\Invoices::PartnerYearInvoicesSumAmount($partners->id, date('Y')),0,",",".") ])
+                                                     'count' => number_format($parameters['sumAmountThisYear'],0,",",".") ])
 
     <div class="mylabel col-sm-1">
         {!! Form::label('name', 'Név:') !!}
@@ -70,7 +69,7 @@
                             {!! Form::label('year', 'Év:') !!}
                         </div>
                         <div class="col-sm-5">
-                            {!! Form::select('year', SelectService::invoicesYearsSelect(),date('Y'),
+                            {!! Form::select('year', $parameters['selectYear'], date('Y'),
                                     ['class'=>'select2 form-control', 'id' => 'year']) !!}
                         </div>
                         <div class="col-sm-2" id="gifDiv">
@@ -95,10 +94,10 @@
                 <div class="form-group col-sm-6">
                     <div class="row">
                         <div class="mylabel col-sm-3">
-                            {!! Form::label('year', 'Időszak:') !!}
+                            {!! Form::label('period', 'Időszak:') !!}
                         </div>
                         <div class="col-sm-5">
-                            {!! Form::select('year', ToolsClass::monthsPeriodDDDW(), 2,
+                            {!! Form::select('period', $parameters['monthPeriods'], 'SIX',
                                     ['class'=>'select2 form-control', 'id' => 'period']) !!}
                         </div>
                         <div class="col-sm-3" id="gifDiv1">
@@ -289,18 +288,17 @@
 
                 var months = 0;
 
-                switch (parseInt(period)) {
-                    case 0:
+                switch (period) {
+                    case 'ONE':
                         months = 1;
                         break;
-                    case 1:
+                    case 'THREE':
                         months = 3;
-                        alert
                         break;
-                    case 2:
+                    case 'SIX':
                         months = 6;
                         break;
-                    case 3:
+                    case 'TWELVE':
                         months = 12;
                         break;
                 }

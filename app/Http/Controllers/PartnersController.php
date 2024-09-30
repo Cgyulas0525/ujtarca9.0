@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Classes\ToolsClass;
 use App\Enums\ActiveEnum;
+use App\Enums\MonthPeriodsEnum;
 use App\Enums\PartnerTypeEnum;
 use App\Http\Requests\CreatePartnersRequest;
 use App\Http\Requests\UpdatePartnersRequest;
 use App\Models\PartnerTypes;
+use App\Models\Invoices;
 use App\Repositories\PartnersRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Partners;
@@ -18,6 +20,7 @@ use DataTables;
 use Form;
 use App\Traits\Others\PartnerFactSheetTrait;
 use App\Traits\Others\PartnerPeriodicAccountsTrait;
+use App\Services\SelectService;
 
 class PartnersController extends AppBaseController
 {
@@ -112,7 +115,12 @@ class PartnersController extends AppBaseController
         if (empty($partners)) {
             return redirect(route('partners.index'));
         }
-        return view('partners.show')->with('partners', $partners);
+        $parameters['sumAmountThisYear'] = Invoices::PartnerYearInvoicesSumAmount($partners->id, date('Y'));
+        $parameters['sumAmount'] = Invoices::PartnerYearInvoicesSumAmount($id);
+        $parameters['selectYear'] = SelectService::invoicesYearsSelect();
+        $parameters['monthPeriods'] = MonthPeriodsEnum::options();
+
+        return view('partners.show')->with(['partners' => $partners, 'parameters' => $parameters]);
     }
 
     public function edit($id): object
