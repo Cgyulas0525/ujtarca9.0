@@ -50,7 +50,7 @@ class DatabaseCorrection extends Command
             $item->active = 'inaktív';
             $item->save();
         });
-        Models\Partners::where('aktív', "!=",  1)->each(function ($item) {
+        Models\Partners::where('active', "!=",  1)->each(function ($item) {
             $item->active = 'inaktív';
             $item->save();
         });
@@ -58,9 +58,12 @@ class DatabaseCorrection extends Command
 
     public function partnerTypes(string $type): void
     {
-        $partnerTypes = new Models\PartnerTypes();
-        $partnerTypes->name = $type;
-        $partnerTypes->save();
+        $partnerTypes = Models\PartnerTypes::where('name', $type);
+        if (!$partnerTypes) {
+            $partnerTypes = new Models\PartnerTypes();
+            $partnerTypes->name = $type;
+            $partnerTypes->save();
+        }
     }
 
     /**
@@ -84,8 +87,6 @@ class DatabaseCorrection extends Command
         $this->products();
         $this->info('Partners active!');
         $this->partners();
-        $this->partnerTypes('WEB vevő');
-        $this->partnerTypes('Kiszállítás vevő');
         $this->info('Seeders!');
         $this->call(QuantitiesSeeder::class);
         $this->call(FeatureSeeder::class);
