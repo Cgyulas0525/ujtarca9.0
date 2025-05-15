@@ -11,7 +11,9 @@ class DaysInvoicesResultClass implements DaysInvoicesResultInterface
 {
     public function daysInvoicesResult(?string $begin = NULL, ?string $end = NULL): object
     {
-        $begin = $begin ?? Closures::orderBy('closuredate', 'asc')->first()->closuredate->toDateString();
+        $begin = $begin ?? optional(
+            Closures::orderBy('closuredate', 'asc')->first()
+        )->closuredate?->toDateString();
         $end = $end ?? now()->toDateString();
 
         $invoices = Invoices::selectRaw('dated as nap, sum(amount) as amount, 0 as dailysum')

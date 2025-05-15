@@ -120,12 +120,18 @@ class Invoices extends Model
     ];
 
     protected $append = [
-        'paymentMethodName'
+        'paymentMethodName',
+        'partnerName',
     ];
 
     public function getPaymentMethodNameAttribute(): string
     {
         return !empty($this->paymentmethod_id) ? PaymentMethods::find($this->paymentmethod_id)->name : '';
+    }
+
+    public function getPartnerNameAttribute(): string
+    {
+        return !empty($this->partner_id) ? Partners::find($this->partner_id)->name : '';
     }
 
     public function paymentmethod(): string|BelongsTo

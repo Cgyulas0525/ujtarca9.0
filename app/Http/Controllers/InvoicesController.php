@@ -34,7 +34,7 @@ class InvoicesController extends AppBaseController
                 return ($data->paymentMethodName);
             })
             ->addColumn('partnerName', function ($data) {
-                return ($data->partner->name);
+                return ($data->partnerName);
             })
             ->addColumn('action', function ($row) {
                 $btn = '<a href="' . route('invoices.edit', [$row->id]) . '"
