@@ -2,9 +2,9 @@
     function indexTable() {
         var table = $('.partners-table').DataTable({
             serverSide: true,
-            scrollY:  550,
             scrollX: true,
-            paging: false,
+            scrollY: AppConfig.scrollY + 'px',
+            pageLength: AppConfig.pageLength,
             order: [[0, 'asc']],
             ajax: "{{ route('features.index') }}",
             columns: [

@@ -19,10 +19,10 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 500,
                 scrollX: true,
                 order: [[1, 'asc']],
-                paging: false,
+                scrollY: AppConfig.scrollY + 'px',
+                pageLength: AppConfig.pageLength,
                 ajax: "{{ route('deliveries.index') }}",
                 columns: [
                     {

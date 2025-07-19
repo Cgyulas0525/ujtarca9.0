@@ -72,9 +72,9 @@
             var table = $('.partners-table').DataTable({
                 processing: true,
                 serverSide: true,
-                scrollY: 390,
                 scrollX: true,
-                paging: false,
+                scrollY: AppConfig.scrollY + 'px',
+                pageLength: AppConfig.pageLength,
                 order: [[3, 'desc'], [1, 'asc'], [2, 'asc']],
                 ajax: "{{ route('pTIndex') }}",
                 columns: [

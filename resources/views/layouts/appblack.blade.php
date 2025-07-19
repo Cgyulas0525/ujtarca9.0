@@ -338,6 +338,13 @@
     });
 </script>
 
+<script>
+    window.AppConfig = {
+        scrollY: window.innerHeight - 400,
+        pageLength: 20
+    };
+</script>
+
 @yield('third_party_scripts')
 
 @stack('page_scripts')

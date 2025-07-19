@@ -2,7 +2,8 @@
     function indexTable() {
         var table = $('.partners-table').DataTable({
             serverSide: true,
-            scrollY: 390,
+            scrollY: AppConfig.scrollY + 'px',
+            pageLength: AppConfig.pageLength,
             scrollX: true,
             order: [[1, 'asc']],
             ajax: "{{ route('paymentMethods.index') }}",

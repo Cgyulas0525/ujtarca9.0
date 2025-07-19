@@ -2,7 +2,8 @@
     function indexTable() {
         return $('.partners-table').DataTable({
             serverSide: true,
-            scrollY: 550,
+            scrollY: AppConfig.scrollY + 'px',
+            pageLength: AppConfig.pageLength,
             scrollX: true,
             order: [[1, 'desc'], [2, 'asc']],
             ajax: "{{ route('ordersIndex', [empty($_COOKIE['orderType']) ? 'vevői' : (($_COOKIE['orderType'] == 'CUSTOMER') ? 'vevői' : 'szállítói'),

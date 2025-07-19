@@ -16,7 +16,9 @@
         {!! Form::label('name', 'Név:') !!}
     </div>
     <div class="mylabel col-sm-2">
-        <p>{{ $partners->name }}</p>
+        {!! Form::select('partner_id', SelectService::selectSupplier(), $partners->id,
+        ['class' => 'select2 form-control', 'id' => 'partner_id', 'required' => true]) !!}
+{{--        <p>{{ $partners->name }}</p>--}}
     </div>
     <div class="mylabel col-sm-1">
         {!! Form::label('name', 'Cím:') !!}
@@ -326,7 +328,15 @@
             $('#gifDiv1').hide();
         });
 
+        document.addEventListener('DOMContentLoaded', function () {
+        $('#partner_id').on('change', function () {
+            let selectedId = $(this).val();
+            let url = "{{ route('partners.show', ['partner' => ':id']) }}".replace(':id', selectedId);
+            window.location.href = url;
+        });
+    });
 
-    </script>
+
+</script>
 @endsection
 

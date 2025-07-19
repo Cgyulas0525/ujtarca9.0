@@ -50,11 +50,11 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 500,
                 scrollX: true,
                 order: [[1, 'desc']],
                 ajax: "{{ route('closuresIndex', ['ev' => date('Y')]) }}",
-                paging: false,
+                scrollY: AppConfig.scrollY + 'px',
+                pageLength: AppConfig.pageLength,
                 select: false,
 
                 columns: [

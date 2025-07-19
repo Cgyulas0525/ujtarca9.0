@@ -2,10 +2,10 @@
     function indexTable() {
         var table = $('.partners-table').DataTable({
             serverSide: true,
-            scrollY: 500,
             scrollX: true,
             order: [[2, 'asc']],
-            paging: false,
+            scrollY: AppConfig.scrollY + 'px',
+            pageLength: AppConfig.pageLength,
             ajax: "{{ route('cimlets.index') }}",
             columns: [
                 {

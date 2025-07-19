@@ -38,11 +38,11 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 390,
                 scrollX: true,
                 order: [[0, 'desc']],
                 ajax: "{{ route('averageDailyTurnover') }}",
-                paging: false,
+                scrollY: AppConfig.scrollY + 'px',
+                pageLength: AppConfig.pageLength,
                 select: false,
                 columns: [
                     {title: 'Hónap', data: 'yearweek', sClass: "text-center", width: '150px', name: 'yearweek'},

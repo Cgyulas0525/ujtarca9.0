@@ -54,9 +54,10 @@
 
             var table = $('.partners-table').DataTable({
                 serverSide: true,
-                scrollY: 550,
                 scrollX: true,
-                paging: false,
+                paging: true,
+                scrollY: AppConfig.scrollY + 'px',
+                pageLength: AppConfig.pageLength,
                 order: [[0, 'asc']],
                 ajax: "{{ route('partnersIndex', [empty($_COOKIE['partnersActive']) ? 'aktív' : (($_COOKIE['partnersActive'] == 'ACTIVE') ? 'aktív' : 'inaktív')]) }}",
                 columns: [
