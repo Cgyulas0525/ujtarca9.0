@@ -9,7 +9,7 @@ class MonthstackedUpdateOrInsert
 {
     public static function handle($spend): void
     {
-        TableUpdateOrInsert::handle('monthstacked',
+        TableUpdateOrInsert::handle('Monthstacked',
             [
                 'year' => $spend->count() > 0 ? (int)substr($spend->first()->yearmonth, 0, 4) : (int)date('Y'),
                 'month' => $spend->count() > 0 ? (int)substr($spend->first()->yearmonth, 4, 2) : (int)date('m'),

@@ -50,7 +50,7 @@ class DatabaseCorrection extends Command
             $item->active = 'inaktív';
             $item->save();
         });
-        Models\Partners::where('aktív', "!=",  1)->each(function ($item) {
+        Models\Partners::where('active', "!=",  1)->each(function ($item) {
             $item->active = 'inaktív';
             $item->save();
         });
@@ -70,13 +70,13 @@ class DatabaseCorrection extends Command
      */
     public function handle()
     {
-        $this->call('vendor:publish', [
-            '--tag' => 'telescope-migrations'
-        ]);
-        $this->call('vendor:publish', [
-            '--tag' => 'medialibrary-migrations'
-        ]);
-        $this->call('migrate');
+//        $this->call('vendor:publish', [
+//            '--tag' => 'telescope-migrations'
+//        ]);
+//        $this->call('vendor:publish', [
+//            '--tag' => 'medialibrary-migrations'
+//        ]);
+//        $this->call('migrate');
 
         $this->info('Invoices referred_date!');
         $this->invoices();
@@ -84,8 +84,8 @@ class DatabaseCorrection extends Command
         $this->products();
         $this->info('Partners active!');
         $this->partners();
-        $this->partnerTypes('WEB vevő');
-        $this->partnerTypes('Kiszállítás vevő');
+//        $this->partnerTypes('WEB vevő');
+//        $this->partnerTypes('Kiszállítás vevő');
         $this->info('Seeders!');
         $this->call(QuantitiesSeeder::class);
         $this->call(FeatureSeeder::class);
@@ -97,9 +97,6 @@ class DatabaseCorrection extends Command
         $this->call(ComponentSeeder::class);
         $this->invoices();
         $this->products();
-        $this->partners();
-        $this->partnerTypes('WEB vevő');
-        $this->partnerTypes('Kiszállítás vevő');
         $this->info('DatabaseCorrection command successfully');
         return Command::SUCCESS;
     }
