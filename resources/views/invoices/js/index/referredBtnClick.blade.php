@@ -1,10 +1,30 @@
 <script type="text/javascript">
+
+    const routes = {
+        referred: "{{ route('notReferredInvoicesIndex', ['year' => session("invoiceYear"),
+                                            'partner' => session("invoicePartner")]) }}",
+        referredPaid: "{{ route('invoicesIndex', ['year' => session("invoiceYear"),
+                                            'partner' => session("invoicePartner")]) }}"
+    };
+
     function referredBtnClick(table) {
         $('#referredBtn').click(function () {
-            putSession("invoiceReferred", "Yes");
-            let url = '{{ route('referredIndex') }}';
+            const btnText = $(this).text().trim();
+
+            let url;
+            if (btnText === 'Utalatlan') {
+                url = routes.referred;
+                $(this).text('Vissza');
+                putSession("invoiceReferred", "Yes");
+            } else {
+                url = routes.referredPaid;
+                $(this).text('Utalatlan');
+                putSession("invoiceReferred", "No");
+            }
+
             table.ajax.url(url).load();
-        })
+        });
     }
+
 </script>
 

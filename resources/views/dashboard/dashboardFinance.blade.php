@@ -7,7 +7,7 @@
                                                 'endlabel' => 'ft',
                                                 'function' => number_format((!is_null($params['stacked']['first']) ? $params['stacked']['first']->revenue : 0),0,",",".") ])
     @include('dashboard.dashboardFinanceItem', ['title' => 'Számla',
-                                                'route' => 'invoices.index',
+                                                'route' => 'invoicesIndex',
                                                 'icon' => 'ion ion-stats-bars',
                                                 'box' => 'small-box bg-warning',
                                                 'label' => date('Y'),
@@ -20,12 +20,12 @@
                                                 'label' => date('Y'),
                                                 'endlabel' => 'ft',
                                                 'function' => number_format((!is_null($params['stacked']['first']) ? $params['stacked']['first']->result : 0),0,",",".") ])
-    @include('dashboard.dashboardFinanceItem', ['title' => 'Partner',
-                                                'route' => 'partners.index',
+    @include('dashboard.dashboardFinanceItem', ['title' => 'Utalatlan számlák',
+                                                'route' => 'notReferredInvoicesIndex',
                                                 'icon' => 'ion ion-person-add',
                                                 'box' => 'small-box bg-info',
                                                 'label' => 'Össz',
                                                 'endlabel' => 'db',
-                                                'function' => number_format(App\Models\Partners::count(),0,",",".") ])
+                                                'function' => number_format(App\Models\Invoices::notReferred()->count(),0,",",".") ])
 </div>
 

@@ -1,14 +1,14 @@
 <script type="text/javascript">
     function filterBtnTopClick(table) {
-        $('.filterBtnTop').click(function () {
+        function reloadTable() {
             putSession("invoiceReferred", "No");
-            let year = $('#year').val();
-            let partner = $('#partner').val();
             let url = '{{ route('invoicesIndex', [":year", ":partner"]) }}';
-            url = url.replace(':year', year);
-            url = url.replace(':partner', partner);
+            url = url.replace(':year', $('#year').val());
+            url = url.replace(':partner', $('#partner').val());
             table.ajax.url(url).load();
-        })
+        }
+
+        $('#year, #partner').change(reloadTable);
     }
 </script>
 

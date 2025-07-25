@@ -6,7 +6,12 @@
                     <h4>Számla</h4>
                 </div>
                 <div class="col-sm-2">
-                    <a href="#" class="btn btn-info filterBtnTop" id="referredBtn">Utalatlan</a>
+                    @if (Route::currentRouteName() == 'invoicesIndex')
+                        <a href="#" class="btn btn-info filterBtnTop" id="referredBtn">Utalatlan</a>
+                    @endif
+                    @if (Route::currentRouteName() == 'notReferredInvoicesIndex')
+                        <a href="#" class="btn btn-info filterBtnTop" id="referredBtn">Vissza</a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -26,9 +31,6 @@
                     <div class="col-sm-5">
                         {!! Form::select('partner', SelectService::selectSupplier(), Illuminate\Support\Facades\Session::get('invoicePartner'),
                                 ['class'=>'select2 form-control', 'id' => 'partner']) !!}
-                    </div>
-                    <div class="col-sm-2">
-                        <a href="#" class="btn btn-success filterBtnTop">Szűrés</a>
                     </div>
                 @endif
             </div>

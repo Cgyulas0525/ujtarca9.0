@@ -7,6 +7,7 @@ use App\Http\Controllers\AppBaseController;
 
 use App\Models\Invoices;
 use App\Services\SelectService;
+use http\QueryString;
 use Illuminate\Http\Request;
 use Auth;
 use DataTables;
@@ -69,15 +70,56 @@ class InvoicesController extends AppBaseController
         return view('invoices.create');
     }
 
+    public function notReferredInvoicesIndex(Request $request, ?int $year = null, ?int $partner = null)
+    {
+        if (!Auth::check()) {
+            return view('invoices.index');
+        }
+
+        if (!$year && !$partner) {
+            $year = date('Y');
+        }
+
+        if (!is_null($year)) {
+            Session::put('invoiceYear', $year);
+        }
+
+        if (!is_null($partner)) {
+            Session::put('invoicePartner', $partner);
+        }
+
+        Session::put('invoicesReferred', 'Yes');
+
+        if ($request->ajax()) {
+            $invoicesQuery = Invoices::with(['paymentmethod', 'partner'])->notReferred();
+
+            if (!is_null($partner) && $partner != 0) {
+                $invoicesQuery->where('partner_id', '=', $partner);
+            }
+
+            if (!is_null($year) && $year != 0) {
+                $invoicesQuery->whereYear('dated', '=', $year);
+            }
+
+            return $this->dwData($invoicesQuery->get());
+        }
+        return view('invoices.index');
+    }
+
     public function invoicesIndex(Request $request, ?int $year = null, ?int $partner = null): mixed
     {
         if (!Auth::check()) {
             return view('invoices.index');
         }
 
+        if (!$year && !$partner) {
+            $year = date('Y');
+        }
+
         if (!is_null($year)) {
             Session::put('invoiceYear', $year);
         }
+
         if (!is_null($partner)) {
             Session::put('invoicePartner', $partner);
         }
