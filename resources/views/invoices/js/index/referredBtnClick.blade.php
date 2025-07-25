@@ -14,7 +14,7 @@
             let url;
             if (btnText === 'Utalatlan') {
                 url = routes.referred;
-                $(this).text('Vissza');
+                $(this).text('Mind');
                 putSession("invoiceReferred", "Yes");
             } else {
                 url = routes.referredPaid;
