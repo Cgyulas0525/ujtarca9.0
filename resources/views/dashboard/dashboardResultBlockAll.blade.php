@@ -1,7 +1,7 @@
 <div class="card card-widget widget-user-2">
     <!-- Add the bg color to the header using any of the bg-* classes -->
     <div class="widget-user-header bg-warning">
-        <h3 class="text-center">{{ $title }}</h3>
+{{--        <h3 class="text-center">{{ $title }}</h3>--}}
         <h3 class="text-center">{{ $title2 }}</h3>
     </div>
     <div class="card-footer p-0">

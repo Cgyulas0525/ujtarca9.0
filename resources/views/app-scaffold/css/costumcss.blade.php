@@ -16,7 +16,18 @@
         border: none;
         padding: 8px;
         margin-left: 10px;
+        background-color: #003366; /* sötét kék */
+        color: white;
+        transition: background-color 0.3s ease;
     }
+
+    .finance-button:focus,
+    .finance-button:active {
+        background-color: lightskyblue; /* piros kiválasztott állapotban */
+        color: black;
+        outline: none; /* ha nem akarod a fókusz körvonalat */
+    }
+
     .alapgomb {
         border: 2px solid gray;
         box-shadow: 0px 8px 15px rgba(0,0,0,0.1);

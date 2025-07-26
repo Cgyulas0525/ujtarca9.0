@@ -1,16 +1,18 @@
 <div class="card card-widget widget-user-2">
     <!-- Add the bg color to the header using any of the bg-* classes -->
     <div class="widget-user-header bg-warning">
-        <div class=" finance-button-container">
-            @if ( !is_null($values) && $values->year == date('Y') )
-                <a href="#" class="btn btn-default finance-button weekBtn">Heti</a>
-                <a href="#" class="btn btn-default finance-button mountBtn">Havi</a>
-                <a href="#" class="btn btn-default finance-button yearBtn">Éves</a>
+        <div class="finance-button-container">
+            @if (!is_null($values) && $values->year == date('Y'))
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <a href="#" class="btn btn-default finance-button weekBtn">Heti</a>
+
+                    <a href="#" class="btn btn-default finance-button mountBtn">Havi</a>
+                    <a href="#" class="btn btn-default finance-button yearBtn">Éves</a>
+                </div>
             @else
-                <h3 class="text-center">{{ $title }}</h3>
+                <h3 class="text-center">{{ $title2 }}</h3>
             @endif
         </div>
-        <h3 class="text-center">{{ $title2 }}</h3>
     </div>
     <div class="card-footer p-0">
         <ul class="nav flex-column">
