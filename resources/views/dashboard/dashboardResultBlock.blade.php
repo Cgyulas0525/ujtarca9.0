@@ -3,9 +3,9 @@
     <div class="widget-user-header bg-warning">
         <div class=" finance-button-container">
             @if ( !is_null($values) && $values->year == date('Y') )
-                <a href="#" class="btn btn-default finance-button yearBtn">Éves</a>
-                <a href="#" class="btn btn-default finance-button mountBtn">Havi</a>
                 <a href="#" class="btn btn-default finance-button weekBtn">Heti</a>
+                <a href="#" class="btn btn-default finance-button mountBtn">Havi</a>
+                <a href="#" class="btn btn-default finance-button yearBtn">Éves</a>
             @else
                 <h3 class="text-center">{{ $title }}</h3>
             @endif
