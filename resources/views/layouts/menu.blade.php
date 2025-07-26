@@ -105,7 +105,7 @@
     </a>
 </li>
 <li class="nav-item">
-    @if (session("invoiceReferred") === "No")
+    @if ((session("invoiceReferred") ?? "No") === "No")
         <a href="{{ route('invoicesIndex', ['year' => session("invoiceYear"),
                                             'partner' => session("invoicePartner")]) }}"
            class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
@@ -113,7 +113,7 @@
             <p>Számla</p>
         </a>
     @else
-        <a href="{{ route('referredIndex') }}"
+        <a href="{{ route('notReferredInvoicesIndex') }}"
            class="nav-link {{ Request::is('invoices*') ? 'active' : '' }}">
             <i class="fas fa-file-invoice"></i>
             <p>Számla</p>

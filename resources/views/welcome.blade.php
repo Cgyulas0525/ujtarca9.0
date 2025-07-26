@@ -52,7 +52,9 @@
     <!-- /.login-logo -->
     <div class="card-body login-card-body">
         <p class="login-box-msg">Bejelentkezés</p>
-
+        @php
+            session()->put("invoiceReferred", "No");
+        @endphp
         <form method="post" action="{{ url('/login') }}">
             {!! csrf_field() !!}
 
@@ -71,10 +73,9 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 @if ($errors->has('password'))
                     <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
                 @endif
-
             </div>
             <div class="row">
                 <div class="col-8">
