@@ -18,6 +18,7 @@
                 <span class="info-box-text">Napi bevétel</span>
                 <span class="info-box-number">{{ number_format($params['closure']['dailySum'],0,",",".") }} Ft.</span>
             </div>
+            <a href="{{ route('closures.edit', App\Models\Closures::max('id')) }}" class="small-box-footer">Utolsó zárás <i class="fas fa-arrow-circle-right"></i></a>
             <!-- /.info-box-content -->
         </div>
     </div>

@@ -15,14 +15,14 @@
                                                 'function' => number_format((!is_null($params['stacked']['first']) ? $params['stacked']['first']->spend : 0),0,",",".") ])
     @include('dashboard.dashboardFinanceItem', ['title' => 'Eredmény',
                                                 'route' => 'TurnoverIndex',
-                                                'icon' => 'ion-pie-graph',
+                                                'icon' => 'ion ion-pie-graph',
                                                 'box' => 'small-box bg-success',
                                                 'label' => date('Y'),
                                                 'endlabel' => 'ft',
                                                 'function' => number_format((!is_null($params['stacked']['first']) ? $params['stacked']['first']->result : 0),0,",",".") ])
     @include('dashboard.dashboardFinanceItem', ['title' => 'Utalatlan számlák',
                                                 'route' => 'notReferredInvoicesIndex',
-                                                'icon' => 'ion ion-person-add',
+                                                'icon' => 'ion ion-card',
                                                 'box' => 'small-box bg-info',
                                                 'label' => 'Össz',
                                                 'endlabel' => 'db',

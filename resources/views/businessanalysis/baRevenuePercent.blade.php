@@ -87,7 +87,7 @@
 
                     revenue.push(array[i].revenue);
                     spend.push(array[i].spend);
-                    amount.push(array[i].amount);
+                    amount.push(Number(array[i].amount));
 
                 }
 
