@@ -124,6 +124,8 @@ class InvoicesController extends AppBaseController
             Session::put('invoicePartner', $partner);
         }
 
+        Session::put('invoicesReferred', 'No');
+
         if ($request->ajax()) {
             $invoicesQuery = Invoices::with(['paymentmethod', 'partner']);
 
