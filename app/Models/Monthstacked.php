@@ -110,13 +110,19 @@ class Monthstacked extends Model
 
     protected $append = [
         'result',
-        ''
+        'yearmonth',
+        'resultPercent',
     ];
 
 
     public function getResultAttribute(): int
     {
         return $this->revenue - $this->spend;
+    }
+
+    public function getResultPercentAttribute(): int
+    {
+        return ($this->revenue - $this->spend) / ($this->revenue ?: 1) * 100;
     }
 
     public function getYearMonthAttribute(): string

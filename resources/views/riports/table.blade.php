@@ -1,0 +1,13 @@
+<thead>
+</thead>
+<tbody>
+</tbody>
+<tfoot>
+<tr>
+    <th>Összesen:</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+</tr>
+</tfoot>

@@ -106,13 +106,19 @@ class Yearstacked extends Model
     ];
 
     protected $append = [
-        'result'
+        'result',
+        'resultPercent',
     ];
 
 
     public function getResultAttribute(): int
     {
         return $this->revenue - $this->spend;
+    }
+
+    public function getResultPercentAttribute(): int
+    {
+        return ($this->revenue - $this->spend) / ($this->revenue ?: 1) * 100;
     }
 
     public function scopeGetCardPercent(): mixed

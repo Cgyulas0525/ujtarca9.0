@@ -19,6 +19,7 @@ trait RevenueExpenditureMonthIndexTrait
                 return Datatables::of($data)
                     ->addColumn('yearmonth', function($data) { return ($data->yearmonth); })
                     ->addColumn('result', function($data) { return ($data->result); })
+                    ->addColumn('resultPercent', function($data) { return ($data->resultPercent); })
                     ->addIndexColumn()
                     ->make(true);
 

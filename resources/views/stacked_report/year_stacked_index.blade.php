@@ -1,4 +1,4 @@
-@extends('app-scaffold.html.app')
+@extends('layouts.appblack')
 
 @section('css')
     <link rel="stylesheet" href="pubic/css/app.css">
@@ -12,15 +12,17 @@
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
-                        <h4>Bevétel - Kiadás havi bontás</h4>
+                        <div class="form-group col-sm-12">
+                            <h4>Éves fizetésimód</h4>
+                        </div>
                     </section>
                     @include('flash::message')
                     <div class="clearfix"></div>
-                    <div class="box box-primary">
+                    <div class="box box-primary" style="margin-top: 10px;">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 box-body">
                                 <table class="table table-hover table-bordered partners-table w-100">
-                                    @include('riports.table')
+                                    @include('stacked_report.table')
                                 </table>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 box-body">
@@ -38,58 +40,58 @@
 @endsection
 
 @section('scripts')
-    @include('functions.ajax_js')
     @include('functions.currencyFormatDE')
+    @include('functions.ajax_js')
+    @include('functions.highchart.highchartLine_js')
+    @include('functions.highchart.categoryUpload_js')
+    @include('functions.highchart.chartDataUpload_js')
+    @include('functions.highchart.highchartsTheme_js')
+
 
     <script type="text/javascript">
         $(function () {
 
             ajaxSetup();
+            hightchartsTheme();
 
             var table = $('.partners-table').DataTable({
+                processing: true,
                 serverSide: true,
                 scrollX: true,
-                order: [[0, 'desc']],
-                ajax: "{{ route('RevenueExpenditureMonthIndex') }}",
                 scrollY: AppConfig.scrollY + 'px',
                 pageLength: AppConfig.pageLength,
+                order: [[0, 'desc'], [1, 'desc']],
                 paging: false,
-                select: false,
+                searching: false,
+                ajax: "{{ route('getYearStackedIndex') }}",
                 columns: [
-                    {title: 'Hónap', data: 'yearmonth', sClass: "text-center", width: '150px', name: 'yearmonth'},
+                    {title: 'Év', data: 'year', name: 'year'},
                     {
-                        title: 'Bevétel',
-                        data: 'revenue',
+                        title: 'Készpénz',
+                        data: 'cash',
                         render: $.fn.dataTable.render.number('.', ',', 0),
                         sClass: "text-right",
-                        width: '150px',
-                        name: 'revenue'
+                        width: '100px',
+                        name: 'cash'
                     },
                     {
-                        title: 'Kiadás',
-                        data: 'spend',
+                        title: 'Kártya',
+                        data: 'card',
                         render: $.fn.dataTable.render.number('.', ',', 0),
                         sClass: "text-right",
-                        width: '150px',
-                        name: 'spend'
+                        width: '100px',
+                        name: 'card'
                     },
                     {
-                        title: 'Egyenleg',
-                        data: 'result',
+                        title: 'Szép kártya',
+                        data: 'szcard',
                         render: $.fn.dataTable.render.number('.', ',', 0),
                         sClass: "text-right",
-                        width: '150px',
-                        name: 'result'
-                    },
-                    {
-                        title: '%',
-                        data: 'resultPercent',
-                        render: $.fn.dataTable.render.number('.', ',', 2),
-                        sClass: "text-right",
-                        width: '150px',
-                        name: 'resultPercent'
+                        width: '100px',
+                        name: 'szcard'
                     },
                 ],
+                buttons: [],
                 footerCallback: function (row, data, start, end, display) {
                     var api = this.api();
 
@@ -126,10 +128,26 @@
                         $(api.column(colIdx).footer()).html(currencyFormatDE(total));
                     });
                 },
+
             });
 
+            var getYearStacked = <?php echo $data; ?>;
+
+            var chart_getYearStacked = highchartLine('getYearStacked', 'line', 450, setCategories(getYearStacked),
+                chartDataUpload(getYearStacked, ['card', 'szcard', 'cash'], ['Kártya', 'SZÉP kártya', 'Készpénz']), 'Fizetési mód', 'éves bontás', 'forint');
+
         });
+
+        function setCategories(data) {
+            category = [];
+            for (i = 0; i < data.length; i++){
+                category.push(data[i]['year']);
+            }
+            return category;
+        }
+
+
+
     </script>
 @endsection
-
 

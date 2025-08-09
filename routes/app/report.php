@@ -14,5 +14,7 @@ Route::get('RevenueExpenditureMonthIndex', [ReportsController::class, 'RevenueEx
 Route::get('TurnoverIndex', [ReportsController::class, 'TurnoverIndex'])->name('TurnoverIndex');
 
 Route::get('getMonthStackedIndex', [StackedReportsController::class, 'getMonthStackedIndex'])->name('getMonthStackedIndex');
+Route::get('getYearStackedIndex', [StackedReportsController::class, 'getYearStackedIndex'])->name('getYearStackedIndex');
+Route::get('getWeekStackedIndex', [StackedReportsController::class, 'getWeekStackedIndex'])->name('getWeekStackedIndex');
 
 

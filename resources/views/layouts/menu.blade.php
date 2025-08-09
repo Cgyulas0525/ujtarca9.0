@@ -158,9 +158,21 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('getWeekStackedIndex') }}" class="nav-link">
+                <i class="fas fa-wallet"></i>
+                <p>Heti fizetésimód</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('getMonthStackedIndex') }}" class="nav-link">
                 <i class="fas fa-wallet"></i>
-                <p>Month Stacked</p>
+                <p>Havi fizetésimód</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('getYearStackedIndex') }}" class="nav-link">
+                <i class="fas fa-wallet"></i>
+                <p>Éves fizetésimód</p>
             </a>
         </li>
     </ul>

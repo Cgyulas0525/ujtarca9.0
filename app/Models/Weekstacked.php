@@ -113,13 +113,19 @@ class Weekstacked extends Model
     protected $append = [
         'result',
         'yearweek',
-        'weekofmonth'
+        'weekofmonth',
+        'resultPercent'
     ];
 
 
     public function getResultAttribute(): int
     {
         return $this->revenue - $this->spend;
+    }
+
+    public function getResultPercentAttribute(): int
+    {
+        return ($this->revenue - $this->spend) / ($this->revenue ?: 1) * 100;
     }
 
     public function getYearWeekAttribute(): string
