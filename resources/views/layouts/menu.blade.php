@@ -157,6 +157,12 @@
                 <p>Partner időszaki forgalom</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('getMonthStackedIndex') }}" class="nav-link">
+                <i class="fas fa-wallet"></i>
+                <p>Month Stacked</p>
+            </a>
+        </li>
     </ul>
 </li>
 

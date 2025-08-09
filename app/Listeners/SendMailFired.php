@@ -35,7 +35,7 @@ class SendMailFired
         $data["datum"] = date('Y-m-d');
 
         $files = [
-            $$event->path,
+            $event->path,
         ];
 
         Mail::send($event->mail, $data, function($message) use($data, $files) {

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Yearstacked;
+use App\Models\Monthstacked;
 use App\Repositories\BaseRepository;
 
 /**
@@ -11,7 +11,7 @@ use App\Repositories\BaseRepository;
  * @version April 12, 2023, 8:13 am UTC
 */
 
-class YearstackedRepository extends BaseRepository
+class MonthstackedRepository extends BaseRepository
 {
     /**
      * @var array
@@ -37,7 +37,7 @@ class YearstackedRepository extends BaseRepository
      **/
     public function model()
     {
-        return Yearstacked::class;
+        return Monthstacked::class;
     }
 
 }

@@ -11,14 +11,18 @@ trait ProductPdfEmailTrait
 {
     public function pdfEmail()
     {
-        $owner = Partners::where('partnertypes_id', 5)->first();
         $partners = Partners::where('partnertypes_id', 3)->get();
-        $productPdfAction = new ProductPdfAction($owner, $partners);
-        foreach ($partners as $partner) {
-            $path = $productPdfAction->handle();
-            Event::dispatch(new SendMail($partner, $owner, $path, 'emails.pekaruMail', 'pékáru lista!', 'új pékáru listát küldött Önnek.'));
+        if ($partners) {
+
+            $owner = Partners::where('partnertypes_id', 5)->first();
+            $productPdfAction = new ProductPdfAction($owner, $partners);
+
+            foreach ($partners as $partner) {
+                $path = $productPdfAction->handle();
+                Event::dispatch(new SendMail($partner, $owner, $path, 'emails.pekaruMail', 'pékáru lista!', 'új pékáru listát küldött Önnek.'));
+            }
         }
+
         return back();
     }
-
 }

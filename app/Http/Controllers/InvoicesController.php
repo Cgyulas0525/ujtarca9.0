@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendMail;
+use App\Models\Partners;
 use App\Repositories\InvoicesRepository;
 use App\Http\Controllers\AppBaseController;
 
@@ -14,7 +16,9 @@ use DataTables;
 use Form;
 use App\Services\SWAlertService;
 use Illuminate\Support\Facades\Config;
+use Mail;
 use Illuminate\Support\Facades\Session;
+use Event;
 
 
 class InvoicesController extends AppBaseController
@@ -187,8 +191,33 @@ class InvoicesController extends AppBaseController
     {
         $input = $request->all();
         $result = $this->validating($request);
-        $invoices = $this->invoicesRepository->create($input);
-        return view('invoices.create');
+
+        if ($result) {
+            $invoices = $this->invoicesRepository->create($input);
+
+//            if ($invoices->paymentmethod_id == 2 && is_null($invoices->referred_date)) {
+//                $owner = Partners::where('partnertypes_id', 5)->first();
+//
+//                if ($owner && $owner->email) {
+//                    $data = [
+//                        "email" => $owner->email,
+//                        "title" => 'Utalandó számla!',
+//                        "body" => "{$owner->name} új utalandó számlát vett fel a rendszerbe!",
+//                        "ugyfel" => 'Cseszneki Gyula',
+//                        "datum" => date('Y-m-d'),
+//                    ];
+//
+//                    Mail::raw($data['body'], function ($message) use ($data) {
+//                        $message->to($data["email"])
+//                            ->subject($data["title"]);
+//                    });
+//                }
+//            }
+
+            return view('invoices.create');
+        }
+
+        return view('invoices.index');
     }
 
     public function show($id): object
