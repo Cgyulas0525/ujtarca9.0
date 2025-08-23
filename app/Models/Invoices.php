@@ -119,7 +119,7 @@ class Invoices extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
+    protected $appends = [
         'paymentMethodName'
     ];
 

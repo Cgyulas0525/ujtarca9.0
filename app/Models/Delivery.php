@@ -77,7 +77,7 @@ class Delivery extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
+    protected $appends = [
         'deliveryFullName',
         'orderNumber'
     ];

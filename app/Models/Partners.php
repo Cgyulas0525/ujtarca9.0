@@ -139,7 +139,7 @@ class Partners extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
+    protected $appends = [
         'settlementName',
         'fullAddress',
     ];

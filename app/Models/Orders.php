@@ -123,7 +123,7 @@ class Orders extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
+    protected $appends = [
         'detailsSum',
     ];
 

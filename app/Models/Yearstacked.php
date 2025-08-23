@@ -105,7 +105,7 @@ class Yearstacked extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
+    protected $appends = [
         'result',
         'resultPercent',
     ];

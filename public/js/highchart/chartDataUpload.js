@@ -7,5 +7,7 @@ function chartDataUpload(data, fields, names){
         }
         chartdata.push({name: names[i], data: array});
     }
+
+    console.log('chartdata');
     return chartdata;
 }

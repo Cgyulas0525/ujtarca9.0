@@ -97,7 +97,7 @@ class Closures extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
+    protected $appends = [
         'cash',
         'result'
     ];

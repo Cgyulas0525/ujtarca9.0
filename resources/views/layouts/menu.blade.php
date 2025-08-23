@@ -136,13 +136,19 @@
         <li class="nav-item">
             <a href="RevenueExpenditureIndex" class="nav-link">
                 <i class="fas fa-tasks"></i>
-                <p>Heti Bevétel - Kiadás</p>
+                <p>Heti </p>
             </a>
         </li>
         <li class="nav-item">
             <a href="RevenueExpenditureMonthIndex" class="nav-link">
                 <i class="fas fa-table"></i>
-                <p>Havi Bevétel - Kiadás</p>
+                <p>Havi </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('getYearStackedIndex') }}" class="nav-link">
+                <i class="fas fa-wallet"></i>
+                <p>Éves </p>
             </a>
         </li>
         <li class="nav-item">
@@ -157,24 +163,18 @@
                 <p>Partner időszaki forgalom</p>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="{{ route('getWeekStackedIndex') }}" class="nav-link">
-                <i class="fas fa-wallet"></i>
-                <p>Heti fizetésimód</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('getMonthStackedIndex') }}" class="nav-link">
-                <i class="fas fa-wallet"></i>
-                <p>Havi fizetésimód</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('getYearStackedIndex') }}" class="nav-link">
-                <i class="fas fa-wallet"></i>
-                <p>Éves fizetésimód</p>
-            </a>
-        </li>
+{{--        <li class="nav-item">--}}
+{{--            <a href="{{ route('getWeekStackedIndex') }}" class="nav-link">--}}
+{{--                <i class="fas fa-wallet"></i>--}}
+{{--                <p>Heti fizetésimód</p>--}}
+{{--            </a>--}}
+{{--        </li>--}}
+{{--        <li class="nav-item">--}}
+{{--            <a href="{{ route('getMonthStackedIndex') }}" class="nav-link">--}}
+{{--                <i class="fas fa-wallet"></i>--}}
+{{--                <p>Havi fizetésimód</p>--}}
+{{--            </a>--}}
+{{--        </li>--}}
     </ul>
 </li>
 

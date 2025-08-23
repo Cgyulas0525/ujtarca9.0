@@ -110,7 +110,7 @@ class Weekstacked extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
+    protected $appends = [
         'result',
         'yearweek',
         'weekofmonth',

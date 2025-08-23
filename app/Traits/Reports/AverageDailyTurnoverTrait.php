@@ -11,24 +11,24 @@ trait AverageDailyTurnoverTrait
 {
     public function AverageDailyTurnover(Request $request, $begin, $end)
     {
-
-        if (Auth::check()) {
-
-            if ($request->ajax()) {
-                $data = Closures::selectRaw('weekday(closuredate) nap, (Sum(dailysum - 20000) / Sum(1)) osszeg')
-                    ->whereNull('deleted_at')
-                    ->whereBetween('closuredate', [$begin, $end])
-                    ->groupBy('nap')
-                    ->orderby('nap')
-                    ->get();
-
-
-                return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->make(true);
-
-                return view('riports.RevenueExpenditureMonthIndex');
-            }
+        if (!Auth::check()) {
+            abort(401, 'Unauthorized');
         }
+
+        $data = Closures::selectRaw('weekday(closuredate) nap, (Sum(dailysum - 20000) / Sum(1)) osszeg')
+            ->whereNull('deleted_at')
+            ->whereBetween('closuredate', [$begin, $end])
+            ->groupBy('nap')
+            ->orderby('nap')
+            ->get();
+
+
+        if ($request->ajax()) {
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return view('riports.RevenueExpenditureMonthIndex', ['data' => $data]);
     }
 }

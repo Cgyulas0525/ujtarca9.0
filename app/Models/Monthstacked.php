@@ -108,7 +108,7 @@ class Monthstacked extends Model
         'deleted_at' => 'nullable'
     ];
 
-    protected $append = [
+    protected $appends = [
         'result',
         'yearmonth',
         'resultPercent',
