@@ -20,9 +20,9 @@ Route::get('partnersIndex/{active?}', [PartnersController::class, 'index'])->nam
 Route::get('partnerFactSheet/{partner}/{year}', [PartnersController::class, 'partnerFactSheet'])->name('partnerFactSheet');
 Route::get('partnerPeriodicAccounts/{partner}/{months}', [PartnersController::class, 'partnerPeriodicAccounts'])->name('partnerPeriodicAccounts');
 Route::get('partnerInvoicesPeriod/{witch}', [PartnersController::class, 'partnerInvoicesPeriod'])->name('partnerInvoicesPeriod');
-Route::get('partnerInvoicesPeriod/{witch}/{begin?}', [PartnersController::class, 'partnerInvoicesPeriod'])->name('partnerInvoicesPeriod');
-Route::get('partnerInvoicesPeriod/{witch}/{begin?}/{end?}', [PartnersController::class, 'partnerInvoicesPeriod'])->name('partnerInvoicesPeriod');
-Route::get('partnerInvoicesPeriod/{witch}/{begin?}/{end?}/{partner?}', [PartnersController::class, 'partnerInvoicesPeriod'])->name('partnerInvoicesPeriod');
+//Route::get('partnerInvoicesPeriod/{witch}/{begin?}', [PartnersController::class, 'partnerInvoicesPeriod'])->name('partnerInvoicesPeriod');
+//Route::get('partnerInvoicesPeriod/{witch}/{begin?}/{end?}', [PartnersController::class, 'partnerInvoicesPeriod'])->name('partnerInvoicesPeriod');
+//Route::get('partnerInvoicesPeriod/{witch}/{begin?}/{end?}/{partner?}', [PartnersController::class, 'partnerInvoicesPeriod'])->name('partnerInvoicesPeriod');
 
 
 // PartnerTrafic
