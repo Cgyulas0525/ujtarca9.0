@@ -154,7 +154,6 @@
             });
 
             var chartData = <?php echo json_encode($chartData); ?>;
-            console.log(chartData);
 
             var chart = Highcharts.chart('getYearStacked', {
                 chart: { type: 'column' },
