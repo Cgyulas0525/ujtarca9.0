@@ -133,7 +133,7 @@ class Weekstacked extends Model
         return $this->year . "." . str_pad($this->week, 2, '0', STR_PAD_LEFT);
     }
 
-    public function getWeekOfMOnthAttribute(): string
+    public function getWeekOfMonthAttribute(): string
     {
         return Carbon::create(date('Y-m-d', strtotime($this->year . 'W' . str_pad($this->week, 2, '0', STR_PAD_LEFT))))->weekOfMonth;
     }

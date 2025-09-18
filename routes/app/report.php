@@ -3,6 +3,7 @@
 use App\Http\Controllers\StackedReportsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ForecastNextYearController;
 /*
 |----------------------------------------------------------------------------------------------------------------
 | Homepage / Core / Profile / Login / Logout
@@ -16,5 +17,7 @@ Route::get('TurnoverIndex', [ReportsController::class, 'TurnoverIndex'])->name('
 Route::get('getMonthStackedIndex', [StackedReportsController::class, 'getMonthStackedIndex'])->name('getMonthStackedIndex');
 Route::get('getYearStackedIndex', [StackedReportsController::class, 'getYearStackedIndex'])->name('getYearStackedIndex');
 Route::get('getWeekStackedIndex', [StackedReportsController::class, 'getWeekStackedIndex'])->name('getWeekStackedIndex');
+
+Route::get('forecastNext12MonthsIndex', [ForecastNextYearController::class, 'forecastNext12MonthsIndex'])->name('forecastNext12MonthsIndex');
 
 

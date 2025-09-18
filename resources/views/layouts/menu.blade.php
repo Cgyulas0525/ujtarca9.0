@@ -163,28 +163,16 @@
                 <p>Partner időszaki forgalom</p>
             </a>
         </li>
-{{--        <li class="nav-item">--}}
-{{--            <a href="{{ route('getWeekStackedIndex') }}" class="nav-link">--}}
-{{--                <i class="fas fa-wallet"></i>--}}
-{{--                <p>Heti fizetésimód</p>--}}
-{{--            </a>--}}
-{{--        </li>--}}
-{{--        <li class="nav-item">--}}
-{{--            <a href="{{ route('getMonthStackedIndex') }}" class="nav-link">--}}
-{{--                <i class="fas fa-wallet"></i>--}}
-{{--                <p>Havi fizetésimód</p>--}}
-{{--            </a>--}}
-{{--        </li>--}}
+        <li class="nav-item">
+            <a href="{{ route('forecastNext12MonthsIndex') }}" class="nav-link">
+                <i class="fas fa-wallet"></i>
+                <p>Előrejelzés</p>
+            </a>
+        </li>
     </ul>
 </li>
 
 
-{{--<li class="nav-item">--}}
-{{--    <a href="{{ route('orderdetails.index') }}" class="nav-link {{ Request::is('orderdetails*') ? 'active' : '' }}">--}}
-{{--        <i class="nav-icon fas fa-home"></i>--}}
-{{--        <p>Orderdetails</p>--}}
-{{--    </a>--}}
-{{--</li>--}}
 
 
 

@@ -66,6 +66,7 @@ class InvoicesController extends AppBaseController
             }
             return view('invoices.index');
         }
+
         return view('invoices.index');
     }
 

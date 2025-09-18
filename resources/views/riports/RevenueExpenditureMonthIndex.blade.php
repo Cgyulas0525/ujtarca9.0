@@ -174,7 +174,7 @@
             function setCategories(data) {
                 var category = [];
                 for (var i = 0; i < data.length; i++) {
-                    category.push(data[i]['year']);
+                    category.push(data[i]['yearmonth']);
                 }
                 return category;
             }
