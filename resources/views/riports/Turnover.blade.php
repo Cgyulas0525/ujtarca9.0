@@ -116,13 +116,13 @@
                 chartDataUpload(paymentMethodLast30days, ['card', 'szcard', 'dayCash'], ['Kártya', 'SZÉP kártya', 'Készpénz']), 'Fizetési mód', 'napi bontás', 'forint');
 
             var chart_twoy = highchartLine('twoyears', 'line', 450, categoryUpload(turnoverLastTwoYears, 'nap'),
-                chartDataUpload(turnoverLastTwoYears, ['elso', 'masodik'], ['-1 év', '-2 év']), 'Fizetési mód', 'napi bontás', 'forint');
+                chartDataUpload(turnoverLastTwoYears, ['elso', 'masodik'], ['-1 év', '-2 év']), 'Bevétel alakulás', 'havii bontás', 'forint');
 
             var chart_bevk = highchartLine('bevkiad', 'line', 450, categoryUpload(monthInvoicesResult, 'nap'),
-                chartDataUpload(monthInvoicesResult, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
+                chartDataUpload(monthInvoicesResult, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'havi bontás', 'forint');
 
             var chart_bevkheti = highchartLine('bevkiadheti', 'line', 450, categoryUpload(<?php echo $parameters['weekInvoicesResult']['6']; ?>, 'nap'),
-                chartDataUpload(<?php echo $parameters['weekInvoicesResult']['6']; ?>, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'napi bontás', 'forint');
+                chartDataUpload(<?php echo $parameters['weekInvoicesResult']['6']; ?>, ['elso', 'masodik'], ['Kiadás', 'Bevétel']), 'Fizetési mód', 'heti bontás', 'forint');
 
             $('#period').change(function () {
                 let period = parseInt($(this).val());

@@ -50,6 +50,7 @@ class ReportsController extends Controller
             'turnoverLastTwoYears' => $this->reports->turnoverLastTwoYears(),
             'monthInvoicesResult' => $this->reports->monthInvoicesResult(),
         ];
+
         return view('riports.Turnover', ['parameters' => $parameters]);
     }
 }

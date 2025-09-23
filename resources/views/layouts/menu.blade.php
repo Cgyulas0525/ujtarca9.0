@@ -165,7 +165,7 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('forecastNext12MonthsIndex') }}" class="nav-link">
-                <i class="fas fa-wallet"></i>
+                <i class="fas fa-chart-bar"></i>
                 <p>Előrejelzés</p>
             </a>
         </li>

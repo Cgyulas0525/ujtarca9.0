@@ -17,13 +17,18 @@ class ForecastService
 
         [$cagrRevenue, $cagrSpend, $revenueReg, $spendReg, $last, $lastIndex] = $this->prepareGrowthModels($data);
 
+        $seasonalityRevenue = $this->calculateSeasonality($data, 'revenue');
+        $seasonalitySpend   = $this->calculateSeasonality($data, 'spend');
+
         return $this->generateForecast(
             $cagrRevenue,
             $cagrSpend,
             $revenueReg,
             $spendReg,
             $last,
-            $lastIndex
+            $lastIndex,
+            $seasonalityRevenue,
+            $seasonalitySpend
         );
     }
 
@@ -111,13 +116,44 @@ class ForecastService
         return ['a' => $a, 'b' => $b];
     }
 
+    private function calculateSeasonality(Collection $data, string $field): array
+    {
+        $seasonality = [];
+        $yearGroups = $data->groupBy('year');
+        $ratios = [];
+
+        foreach ($yearGroups as $year => $records) {
+            $yearAvg = $records->avg($field);
+            if ($yearAvg <= 0) {
+                continue;
+            }
+
+            foreach ($records->groupBy('month') as $month => $monthRecords) {
+                $monthAvg = $monthRecords->avg($field);
+                $ratios[$month][] = $monthAvg / $yearAvg;
+            }
+        }
+
+        for ($m = 1; $m <= 12; $m++) {
+            if (!empty($ratios[$m])) {
+                $seasonality[$m] = array_sum($ratios[$m]) / count($ratios[$m]);
+            } else {
+                $seasonality[$m] = 1.0;
+            }
+        }
+
+        return $seasonality;
+    }
+
     private function generateForecast(
         ?float $cagrRevenue,
         ?float $cagrSpend,
         ?array $revenueReg,
         ?array $spendReg,
                $last,
-        int $lastIndex
+        int $lastIndex,
+        array $seasonalityRevenue,
+        array $seasonalitySpend
     ): Collection {
         $forecast = collect();
         $start = Carbon::now()->startOfMonth();
@@ -125,8 +161,12 @@ class ForecastService
         for ($i = 0; $i < 12; $i++) {
             $date = (clone $start)->addMonths($i);
 
-            $revenue = $this->forecastValue($cagrRevenue, $revenueReg, $last->revenue, $lastIndex, $i);
-            $spend   = $this->forecastValue($cagrSpend, $spendReg, $last->spend, $lastIndex, $i);
+            $revenue = $this->forecastValue(
+                $cagrRevenue, $revenueReg, $last->revenue, $lastIndex, $i, $seasonalityRevenue, $date->month
+            );
+            $spend = $this->forecastValue(
+                $cagrSpend, $spendReg, $last->spend, $lastIndex, $i, $seasonalitySpend, $date->month
+            );
 
             $forecast->push([
                 'year' => $date->year,
@@ -144,19 +184,28 @@ class ForecastService
         return $forecast;
     }
 
-    private function forecastValue(?float $cagr, ?array $reg, float $lastValue, int $lastIndex, int $i): int
-    {
+    private function forecastValue(
+        ?float $cagr,
+        ?array $reg,
+        float $lastValue,
+        int $lastIndex,
+        int $i,
+        array $seasonality,
+        int $month
+    ): int {
+        $base = 0.0;
+
         if ($cagr !== null) {
             $monthlyGrowth = pow(1 + $cagr, 1 / 12);
-            return max(0, (int)round($lastValue * pow($monthlyGrowth, $i + 1)));
-        }
-
-        if ($reg !== null) {
+            $base = $lastValue * pow($monthlyGrowth, $i + 1);
+        } elseif ($reg !== null) {
             $t = $lastIndex + 1 + $i;
-            return max(0, (int)round($reg['a'] + $reg['b'] * $t));
+            $base = $reg['a'] + $reg['b'] * $t;
         }
 
-        return 0;
+        $factor = $seasonality[$month] ?? 1.0;
+
+        return max(0, (int)round($base * $factor));
     }
 
     private function formatYearMonth(int $year, int $month): string
@@ -164,48 +213,40 @@ class ForecastService
         return $year . '.' . str_pad($month, 2, '0', STR_PAD_LEFT);
     }
 
-    public function getChartData(string $field)
+    /**
+     * Javított getChartData: chronological categories (year_month), a három sorozat egymás után: prev12, last12, forecast.
+     * Hiányzó értékeket null-lal töltünk (chartban gap lesz). Ha 0-t szeretnél, cseréld le a null-okat 0-ra.
+     */
+    public function getChartData(string $field, bool $useNullForMissing = true)
     {
         $allData = Monthstacked::orderBy('year')->orderBy('month')->get();
-        $forecastData = (new \App\Services\ForecastService())->forecastNext12Months();
+        $forecastData = $this->forecastNext12Months();
 
-        // utolsó 12 hónap tényleges
         $last12 = $allData->slice(-12)->values();
-        // az azt megelőző 12 hónap
         $prev12 = $allData->slice(-24, 12)->values();
 
-        // készítünk üres 12 elemű tömböket havonként
-        $months = range(1,12);
-        $series = [
-            'prev12' => array_fill(0, 12, 0),
-            'last12' => array_fill(0, 12, 0),
-            'forecast' => array_fill(0, 12, 0),
-        ];
+        $months = $forecastData->pluck('month')->all();
 
-        // előző 12 hónap adat feltöltése
-        foreach ($prev12 as $r) {
-            $monthIndex = ((int)$r->month - 1); // 0..11
-            $series['prev12'][$monthIndex] += $r->$field;
-        }
+        $prevSeries = [];
+        $lastSeries = [];
+        $forecastSeries = [];
 
-        // utolsó 12 hónap adat
-        foreach ($last12 as $r) {
-            $monthIndex = ((int)$r->month - 1);
-            $series['last12'][$monthIndex] += $r->$field;
-        }
+        foreach ($months as $m) {
+            $prevVal = $prev12->firstWhere('month', $m)?->{$field} ?? ($useNullForMissing ? null : 0);
+            $lastVal = $last12->firstWhere('month', $m)?->{$field} ?? ($useNullForMissing ? null : 0);
+            $forecastVal = collect($forecastData)->firstWhere('month', $m)[$field] ?? ($useNullForMissing ? null : 0);
 
-        // forecast
-        foreach ($forecastData as $r) {
-            $monthIndex = ((int)$r['month'] - 1);
-            $series['forecast'][$monthIndex] += $r[$field];
+            $prevSeries[] = $prevVal;
+            $lastSeries[] = $lastVal;
+            $forecastSeries[] = $forecastVal;
         }
 
         return [
-            'categories' => ['01','02','03','04','05','06','07','08','09','10','11','12'],
+            'categories' => array_map(fn($m) => str_pad($m, 2, '0', STR_PAD_LEFT), $months),
             'series' => [
-                ['name' => 'Előző év', 'data' => $series['prev12']],
-                ['name' => 'Tavaly', 'data' => $series['last12']],
-                ['name' => 'Terv', 'data' => $series['forecast']],
+                ['name' => 'Előző év', 'data' => $prevSeries],
+                ['name' => 'Tavaly',    'data' => $lastSeries],
+                ['name' => 'Terv',      'data' => $forecastSeries],
             ]
         ];
     }

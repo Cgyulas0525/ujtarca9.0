@@ -27,7 +27,7 @@ services:
       MYSQL_USER: budget
       MYSQL_PASSWORD: budget
     ports:
-      - "3308:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
@@ -39,7 +39,7 @@ services:
     container_name: budget-redis
     restart: always
     ports:
-      - "6380:6379"
+      - "6379:6379"
     networks:
       - budget
 
@@ -48,8 +48,8 @@ services:
     container_name: budget-mailhog
     restart: always
     ports:
-      - "8027:8025"
-      - "1027:1025"
+      - "8025:8025"
+      - "1025:1025"
     networks:
       - budget
 
@@ -72,4 +72,3 @@ networks:
 
 volumes:
   db_data:
-
