@@ -2,14 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\OrderClass;
-use App\Classes\RedisClass;
-use App\Enums\OrderTypeEnum;
 use App\Enums\OrderStatusEnum;
 use App\Enums\PartnerTypeEnum;
-use App\Http\Requests\CreateOrdersRequest;
-use App\Http\Requests\UpdateOrdersRequest;
-use App\Http\Controllers\AppBaseController;
 use App\Models\Orderdetails;
 use App\Models\Orders;
 use App\Models\Partners;

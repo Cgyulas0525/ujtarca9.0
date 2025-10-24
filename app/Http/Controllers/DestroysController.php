@@ -11,19 +11,6 @@ use Illuminate\Support\Facades\Config;
 class DestroysController extends Controller
 {
 
-    public function setex($table): void
-    {
-        $tablesArray = ['Orders', 'Products', 'Partners'];
-
-        if (collect($tablesArray)->contains($table)) {
-            match ($table) {
-                'Orders' => RedisClass::setexOrders(),
-                'Products' => RedisClass::setexProducts(),
-                'Partners' => RedisClass::setexPartners(),
-            };
-        }
-    }
-
     public function beforeDestroys($table, $id, $route): object
     {
         $model_name = 'App\Models\\' . $table;
@@ -59,7 +46,6 @@ class DestroysController extends Controller
             return redirect(route($route));
         }
         $data->delete();
-        $this->setex($table);
         return redirect(route($route));
     }
 
@@ -71,7 +57,6 @@ class DestroysController extends Controller
             return redirect(route($route, $param));
         }
         $data->delete();
-        $this->setex($table);
         return redirect(route($route, $param));
     }
 

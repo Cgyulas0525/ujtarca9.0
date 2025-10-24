@@ -5,7 +5,7 @@
 
 <div class="form-group col-sm-12">
     {!! Form::label('email', 'Email:') !!}
-    {!! Form::email('email', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'email', 'required' => true]) !!}
+    {!! Form::email('email', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'email']) !!}
     {!! Form::hidden('active', App\Enums\ActiveEnum::ACTIVE->value, ['class' => 'form-control', 'id' => 'active']) !!}
 </div>
 <!-- Name Field -->
@@ -25,19 +25,19 @@
     <div class="form-group col-sm-3">
         {!! Form::label('postcode', 'Ir.szám:') !!}
         {!! Form::select('postcode', App\Classes\SettlementsClass::settlementsPostcodeDDDW(), null,
-            ['class' => 'select2 form-control', 'id' => 'postcode', 'required' => true]) !!}
+            ['class' => 'select2 form-control', 'id' => 'postcode']) !!}
     </div>
 
     <div class="form-group col-sm-9">
         {!! Form::label('settlement_id', 'Település:') !!}
         {!! Form::select('settlement_id', App\Classes\SettlementsClass::settlementsDDDW(), null,
-            ['class' => 'select2 form-control', 'id' => 'settlement_id', 'required' => true]) !!}
+            ['class' => 'select2 form-control', 'id' => 'settlement_id']) !!}
     </div>
 </div>
 
 <div class="form-group col-sm-12">
     {!! Form::label('address', 'Cím:') !!}
-    {!! Form::text('address', null, ['class' => 'form-control', 'maxlength' => 100, 'id' => 'address', 'required' => true]) !!}
+    {!! Form::text('address', null, ['class' => 'form-control', 'maxlength' => 100, 'id' => 'address']) !!}
 </div>
 
 

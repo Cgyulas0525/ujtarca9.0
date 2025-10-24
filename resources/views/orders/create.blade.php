@@ -9,6 +9,7 @@
     @include('functions.sweetalert_js')
     @include('functions.requiredField')
     @include('functions.ajax_js')
+    @include('orders.js.otherBtn_js')
     <script type="text/javascript">
         $(function () {
             ajaxSetup();

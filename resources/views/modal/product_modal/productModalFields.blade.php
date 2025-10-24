@@ -25,7 +25,7 @@
 
     <div class="form-group col-sm-6">
         {!! Form::label('supplierprice', 'Beszerzési ár:') !!}
-        {!! Form::number('supplierprice', isset($products) ? $products->supplierprice : 0, ['class' => 'form-control  text-right', 'id' => 'supplierprice', 'required' => true]) !!}
+        {!! Form::number('supplierprice', isset($products) ? $products->supplierprice : 0, ['class' => 'form-control  text-right', 'id' => 'supplierprice']) !!}
     </div>
 </div>
 
