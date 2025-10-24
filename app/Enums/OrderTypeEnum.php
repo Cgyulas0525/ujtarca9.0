@@ -16,8 +16,8 @@ enum OrderTypeEnum: string
 {
     use InvokableCases, Options, Names, Values, From, Metadata;
 
-    #[Description('Vevői megrendelés')] #[Color('red')]
+    #[Description('vevői megrendelés')] #[Color('red')]
     case CUSTOMER = 'vevői';
-    #[Description('Szállítói megrendelés')] #[Color('green')]
+    #[Description('szállítói megrendelés')] #[Color('green')]
     case SUPPLIER = 'szállítói';
 }

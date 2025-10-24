@@ -43,6 +43,9 @@ class OrderService
      */
     public static function orderTypeByCookie(): string
     {
+        if (!isset($_COOKIE['orderType'])) {
+            $_COOKIE['orderType'] = OrderTypeEnum::CUSTOMER->description();
+        }
 
         return ($_COOKIE['orderType'] == 'CUSTOMER') ? OrderTypeEnum::CUSTOMER->description() : OrderTypeEnum::SUPPLIER->description();
     }

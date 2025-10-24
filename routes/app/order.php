@@ -16,7 +16,7 @@ use App\Http\Controllers\OrderdetailsController;
 
 Route::resource('orders', OrdersController::class);
 Route::get('orders.index/{orderType?}/{orderStatus?}',[OrdersController::class, 'index'])->name('ordersIndex');
-Route::get('ordersStore',[OrdersController::class, 'store'])->name('ordersStore');
+Route::post('ordersStore',[OrdersController::class, 'store'])->name('ordersStore');
 Route::post('ordersUpdate',[OrdersController::class, 'update'])->name('ordersUpdate');
 Route::get('orders.print/{id}',[OrdersController::class, 'print'])->name('orderPrint');
 Route::get('orderEmail/{id}',[OrdersController::class, 'orderEmail'])->name('orderEmail');

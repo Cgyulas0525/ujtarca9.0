@@ -23,22 +23,13 @@
         }
     }
 
-
     $('#addPartnerBtn').click(function() {
         addPartnerBtnEvent();
     });
 
     function partnerModalRequiredFields() {
-        if (requiredField('email', 'Email')) {
-            if (requiredField('name', 'Név')) {
-                if (requiredField('partnertypes_id', 'Típus')) {
-                    if (requiredField('postcode', 'Irányító szám')) {
-                        if (requiredField('settlement_id', 'Település')) {
-                            requiredField('address', 'Cím');
-                        }
-                    }
-                }
-            }
+        if (requiredField('name', 'Név')) {
+            requiredField('partnertypes_id', 'Típus');
         }
         return true;
     }
@@ -52,7 +43,7 @@
         let address =  $('#address').val();
 
         if ($('#addPartnerBtn').text() === 'Ellenőrzés') {
-            if (name.length === 0 || postcode === '0' || settlement_id === '0' || email.length === 0 || partnertypes_id === '0' || address.length === 0) {
+            if (name.length === 0 || partnertypes_id === '0') {
                 partnerModalRequiredFields()
             } else {
                 if (emailChange()) {

@@ -1,8 +1,8 @@
 {!! Form::label('partners_id', 'Partner:') !!}
 @if (!isset($detail))
     {!! Form::select('partners_id',
-                (new App\Http\Controllers\LocationPartnerController)->getLocationPartnersToArray(
-                    isset($orders) ? $orders->delivery_id : null), null,
+                [" " ] + App\Models\Partners::whereIn('partnertypes_id', [3,9,10])->pluck('name', 'id')->toArray(),
+                    isset($orders) ? $orders->partners_id : null,
                 ['class'=>'select2 form-control', 'id' => 'partners_id',
                  'required' => true]) !!}
 @else

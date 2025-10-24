@@ -1,8 +1,9 @@
-<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addProductModalLabel">Új kiszállítás hozzáadás</h5>
+                <h5 class="modal-title" id="addProductModalLabel">Új termék hozzáadás</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -19,4 +20,34 @@
         </div>
     </div>
 </div>
+
+@section('scripts')
+    @include('functions.required_js')
+    @include('functions.currencyFormatDE')
+
+    @include('functions.sweetalert_js')
+    @include('functions.requiredField')
+    @include('functions.ajax_js')
+
+    @include('modal.product_modal.productModalScript')
+
+    @include('functions.productScript.newProductByModal')
+    @include('modal.product_modal.add-product-btn-event')
+
+    <script type="text/javascript">
+
+        ajaxSetup();
+        RequiredBackgroundModify('.form-control')
+
+        $('#otherBtn').click(function (e) {
+            var id = $('#id').val();
+            if (id == null || id === 0 || id.length === 0) {
+                otherBtnEvent('store');
+            } else {
+                otherBtnEvent('modify');
+            }
+        });
+
+    </script>
+@endsection
 

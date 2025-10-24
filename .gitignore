@@ -27,3 +27,6 @@ fields_sample.json
 /storage/output/
 /trash/
 /storage/logs/laravel.log
+
+docker-compose.yml
+/docker
