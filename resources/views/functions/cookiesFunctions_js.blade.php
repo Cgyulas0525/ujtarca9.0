@@ -7,7 +7,11 @@
             var expires = "; expires="+date.toGMTString();
         }
         else var expires = "";
-        document.cookie = name+"="+value+expires+"; path=/; Domain=localhost";
+        var domain = window.location.hostname !== 'localhost'
+            ? "; domain=" + window.location.hostname
+            : "";
+
+        document.cookie = name + "=" + value + expires + "; path=/" + domain;
     }
 
     function check_cookie_name(name)
