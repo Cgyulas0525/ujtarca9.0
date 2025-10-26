@@ -1,6 +1,6 @@
 <div class="form-group col-sm-6">
     {!! Form::label('name', 'Név:') !!}
-    {!! Form::text('name', null, ['class' => 'form-control','maxlength' => 100]) !!}
+    {!! Form::text('name', null, ['class' => 'form-control','maxlength' => 100, 'required' => true]) !!}
 </div>
 
 <!-- Quantities Id Field -->
@@ -13,7 +13,7 @@
 <!-- Price Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('price', 'Eladási ár:') !!}
-    {!! Form::number('price', isset($products) ? $products->price : 0, ['class' => 'form-control  text-right', 'id' => 'price']) !!}
+    {!! Form::number('price', isset($products) ? $products->price : 0, ['class' => 'form-control  text-right', 'id' => 'price', 'required' => true]) !!}
 </div>
 
 <div class="form-group col-sm-6">

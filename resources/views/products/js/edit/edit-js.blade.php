@@ -7,10 +7,13 @@
     @include('products.js.edit.components-table-js')
     @include('products.js.edit.features-table-js')
     @include('products.js.table.features-saving')
+    @include('functions.required_js')
 
     <script type="text/javascript">
         $(function () {
             ajaxSetup();
+
+            RequiredBackgroundModify('.form-control')
 
             $('#price').change(function () {
                 priceControll();
