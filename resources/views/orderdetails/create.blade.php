@@ -6,4 +6,6 @@
     @include('modal.product_modal.product_modal')
 @endsection
 
-@include('orderdetails.js.orderdetail-create-script')
+@section('scripts')
+    @include('orderdetails.js.orderdetail-create-script')
+@endsection

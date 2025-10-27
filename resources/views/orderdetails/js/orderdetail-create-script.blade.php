@@ -1,4 +1,4 @@
-@section('scripts')
+{{--@section('scripts')--}}
 
     @include('functions.required_js')
     @include('functions.sweetalert_js')
@@ -48,14 +48,12 @@
 
             function productModalRequiredFields() {
                 if (requiredField('name', 'Név')) {
-                    if (requiredField('quantities', 'Mennyiségi egység')) {
-                        if (requiredField('price', 'Eladási ár')) {
-                            requiredField('supplierprice', 'Beszerzési ár');
-                        }
+                    if (requiredField('quantities_id', 'Mennyiségi egység')) {
+                        requiredField('price', 'Eladási ár')
                     }
                 }
                 return true;
             }
         });
     </script>
-@endsection
+{{--@endsection--}}
