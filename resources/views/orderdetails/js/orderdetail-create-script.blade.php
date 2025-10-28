@@ -1,4 +1,4 @@
-@section('scripts')
+{{--@section('scripts')--}}
 
     @include('functions.required_js')
     @include('functions.sweetalert_js')
@@ -36,7 +36,7 @@
                 let supplierprice =  $('#supplierprice').val();
 
                 if ($('#addProductBtn').text() === 'Ellenőrzés') {
-                    if (name.length === 0 || quantities_id === '0' || price === '0' || supplierprice === '0') {
+                    if (name.length === 0 || quantities_id === '0' || price === '0') {
                         productModalRequiredFields()
                     } else {
                         $('#addProductBtn').text('Ment');
@@ -49,13 +49,11 @@
             function productModalRequiredFields() {
                 if (requiredField('name', 'Név')) {
                     if (requiredField('quantities', 'Mennyiségi egység')) {
-                        if (requiredField('price', 'Eladási ár')) {
-                            requiredField('supplierprice', 'Beszerzési ár');
-                        }
+                        requiredField('price', 'Eladási ár')
                     }
                 }
                 return true;
             }
         });
     </script>
-@endsection
+{{--@endsection--}}

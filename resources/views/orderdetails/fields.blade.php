@@ -17,7 +17,7 @@
 <!-- Quantities Id Field -->
 <div class="form-group col-sm-3">
     {!! Form::label('quantities_text', 'Mennyiségi egység:') !!}
-    {!! Form::text('quantities_text', null, ['class' => 'form-control', 'id' => 'quantities_text', 'readonly' => true ]) !!}
+    {!! Form::text('quantities_text', null, ['class' => 'form-control', 'id' => 'quantities_text']) !!}
     {!! Form::hidden('quantities_id', null, ['class' => 'form-control', 'id' => 'quantities_id' ]) !!}
 </div>
 
@@ -39,5 +39,8 @@
     {!! Form::hidden('ordertype', (($_COOKIE['orderType'] == 'CUSTOMER') ? 'vevői' : 'szállítói'), ['class' => 'form-control']) !!}
 </div>
 
+@section('scripts')
+    @include('orderdetails.js.orderdetail-create-script')
+@endsection
 
 

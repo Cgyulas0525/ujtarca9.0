@@ -20,7 +20,7 @@
             if ($('#addProductBtn').text() === 'Ellenőrzés') {
                 if (name.length === 0 || quantities_id === '0' || price === '0') {
                     if (requiredField('name', 'Név')) {
-                        if (requiredField('quantities', 'Mennyiségi egység')) {
+                        if (requiredField('quantities_id', 'Mennyiségi egység')) {
                             requiredField('price', 'Eladási ár');
                         }
                     }
