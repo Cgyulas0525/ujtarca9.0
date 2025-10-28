@@ -40,6 +40,7 @@
         RequiredBackgroundModify('.form-control')
 
         $('#otherBtn').click(function (e) {
+
             var id = $('#id').val();
             if (id == null || id === 0 || id.length === 0) {
                 otherBtnEvent('store');
